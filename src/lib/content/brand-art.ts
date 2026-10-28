@@ -12,6 +12,13 @@ export const WELCOME_BANNER = {
   alt: "Welcome to Vermont. Make Yourself at Home. Everything you need for a wonderful stay, all in one place.",
 } as const;
 
+export const WELCOME_BANNER_DARK = {
+  src: "/images/brand/banner-dark.webp",
+  width: 2164,
+  height: 703,
+  alt: WELCOME_BANNER.alt,
+} as const;
+
 export type BrandLogo = {
   src: string;
   width: number;
