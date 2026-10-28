@@ -39,13 +39,15 @@ const components: Components = {
 
 export function GuidebookMarkdown({ markdown }: { markdown: string }) {
   return (
-    <Markdown
-      skipHtml
-      rehypePlugins={[[rehypeSanitize, guidebookMarkdownSchema]]}
-      urlTransform={(url) => safeUrl(url)}
-      components={components}
-    >
-      {markdown}
-    </Markdown>
+    <div className="grid gap-4 text-lg leading-8 [&_a]:text-forest [&_a]:underline [&_a]:underline-offset-4 [&_h2]:font-heading [&_h2]:text-2xl [&_h3]:font-heading [&_h3]:text-xl [&_ol]:list-decimal [&_ol]:pl-6 [&_ul]:list-disc [&_ul]:pl-6">
+      <Markdown
+        skipHtml
+        rehypePlugins={[[rehypeSanitize, guidebookMarkdownSchema]]}
+        urlTransform={(url) => safeUrl(url)}
+        components={components}
+      >
+        {markdown}
+      </Markdown>
+    </div>
   );
 }

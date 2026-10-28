@@ -47,4 +47,20 @@ values ('PASTE-USER-UUID', 'owner', 'Owner');
 
 ## Deploy
 
-Phase 2 is the first phone-ready Vercel deploy. The production build already runs without Supabase keys.
+Indexing stays off. Do not change `src/app/robots.ts` or the `robots` setting in `src/app/layout.tsx` for this deploy. `allow_indexing` in the database still does nothing.
+
+The GitHub remote is `https://github.com/tspillane47/Raddish-Roost.git`. Commit and push the Phase 2 work yourself, then connect Vercel:
+
+1. Open [vercel.com/new](https://vercel.com/new) and import **Raddish-Roost**.
+2. Framework preset: **Next.js**. Root directory: the repository root. Leave the build command as `next build`.
+3. Add these environment variables before the first deploy. Copy the values from `.env.local`. Do not paste the service role key.
+
+```text
+NEXT_PUBLIC_SUPABASE_URL
+NEXT_PUBLIC_SUPABASE_ANON_KEY
+NEXT_PUBLIC_SITE_URL
+```
+
+Set `NEXT_PUBLIC_SITE_URL` to the `https://….vercel.app` address Vercel assigns. If you do not know it yet, deploy once, copy the address, set the variable, and redeploy.
+
+4. Deploy, then open the site on your phone. Check `/`, `/raddish-roost`, a guidebook section, and `/not-a-real-stay` (that last one should be a 404).

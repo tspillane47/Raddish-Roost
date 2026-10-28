@@ -24,11 +24,15 @@ describe("PropertyCard", () => {
     render(<PropertyCard property={property} />);
 
     expect(screen.getByRole("heading", { name: "The Raddish Roost" })).toBeInTheDocument();
+    expect(screen.getByRole("link", { name: "Logo for The Raddish Roost" })).toHaveAttribute(
+      "href",
+      "/raddish-roost",
+    );
     expect(screen.getByRole("link", { name: "Explore Your Stay" })).toHaveAttribute(
       "href",
       "/raddish-roost",
     );
     expect(screen.getByText("Sample")).toBeInTheDocument();
-    expect(screen.getByText("Photograph coming soon")).toBeInTheDocument();
+    expect(screen.queryByText("Photograph coming soon")).not.toBeInTheDocument();
   });
 });

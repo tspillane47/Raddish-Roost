@@ -35,7 +35,7 @@ export function Essentials({ property }: { property: PropertyGuide }) {
         <Item icon={LogOut} label="Checkout">
           {property.checkOutTime ?? "Not added yet"}
         </Item>
-        <Item icon={Car} label="Parking">
+        <Item id="parking" icon={Car} label="Parking">
           {property.parkingSummary ?? "Not added yet"}
         </Item>
         <Item icon={MessageCircle} label="Contact">
@@ -59,7 +59,7 @@ export function Essentials({ property }: { property: PropertyGuide }) {
             </Link>
           )}
         </Item>
-        <Item icon={Phone} label="Emergency">
+        <Item id="emergency" icon={Phone} label="Emergency">
           {EMERGENCY_COPY}
         </Item>
       </dl>
@@ -68,16 +68,18 @@ export function Essentials({ property }: { property: PropertyGuide }) {
 }
 
 function Item({
+  id,
   icon: Icon,
   label,
   children,
 }: {
+  id?: string;
   icon: typeof Wifi;
   label: string;
   children: React.ReactNode;
 }) {
   return (
-    <div className="rounded-xl bg-beige/70 p-4">
+    <div id={id} className="scroll-mt-28 rounded-xl bg-beige/70 p-4">
       <dt className="flex items-center gap-2 text-sm font-medium text-forest">
         <Icon aria-hidden="true" className="size-5" />
         {label}

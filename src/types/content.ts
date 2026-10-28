@@ -5,6 +5,51 @@ export type GuideSection = {
   sectionType: string;
 };
 
+export type GuideBlockView =
+  | { id: string; title: string | null; kind: "rich_text"; markdown: string }
+  | {
+      id: string;
+      title: string | null;
+      kind: "steps";
+      steps: { title: string; detail?: string }[];
+    }
+  | {
+      id: string;
+      title: string | null;
+      kind: "callout";
+      tone: "note" | "important";
+      markdown: string;
+    }
+  | {
+      id: string;
+      title: string | null;
+      kind: "checklist";
+      items: { id: string; label: string; detail?: string }[];
+    }
+  | {
+      id: string;
+      title: string | null;
+      kind: "link_list";
+      links: { label: string; href: string }[];
+    }
+  | {
+      id: string;
+      title: string | null;
+      kind: "media";
+      url: string;
+      alt: string;
+      caption?: string;
+    };
+
+export type GuideSectionDetail = {
+  propertySlug: string;
+  propertyName: string;
+  slug: string;
+  title: string;
+  summary: string | null;
+  blocks: GuideBlockView[];
+};
+
 export type PublicWifi = {
   networkName: string | null;
   password: string | null;
@@ -46,4 +91,8 @@ export type ContentResult<T> =
 
 export type PropertyResult =
   | { ok: true; source: ContentSource; property: PropertyGuide }
+  | { ok: false; error: "unavailable" | "not_found" };
+
+export type SectionResult =
+  | { ok: true; source: ContentSource; section: GuideSectionDetail }
   | { ok: false; error: "unavailable" | "not_found" };

@@ -1,6 +1,8 @@
 import { Suspense } from "react";
-import { PreviewBanner } from "@/components/layout/preview-banner";
+import { CollectionHero } from "@/components/homepage/collection-hero";
 import { PropertyCardFallback, PropertyCardGrid } from "@/components/homepage/property-card";
+import { PreviewBanner } from "@/components/layout/preview-banner";
+import { orderLikeArtwork } from "@/lib/content/brand-art";
 import { getPublishedProperties } from "@/lib/data/properties";
 
 export default function HomePage() {
@@ -9,9 +11,9 @@ export default function HomePage() {
       <Suspense fallback={null}>
         <PreviewSlot />
       </Suspense>
+      <CollectionHero />
       <div className="mx-auto w-full max-w-6xl px-5 py-14 md:py-20">
-        <p className="text-sm tracking-[0.14em] text-forest uppercase">Vermont</p>
-        <h1 className="mt-4 max-w-3xl font-heading text-4xl leading-tight text-charcoal md:text-6xl">
+        <h1 className="max-w-3xl font-heading text-4xl leading-tight text-charcoal md:text-6xl">
           Welcome to Vermont.
           <span className="block">Make Yourself at Home.</span>
         </h1>
@@ -59,5 +61,5 @@ async function PropertyList() {
       </p>
     );
   }
-  return <PropertyCardGrid properties={result.data} />;
+  return <PropertyCardGrid properties={orderLikeArtwork(result.data)} />;
 }

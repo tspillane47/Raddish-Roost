@@ -2,6 +2,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { PhotoPlaceholder } from "@/components/property/photo-placeholder";
 import { buttonVariants } from "@/components/ui/button";
+import { brandLogo } from "@/lib/content/brand-art";
 import { placeholderTone } from "@/lib/content/sections";
 import { isMarkedSample } from "@/lib/data/map-content";
 import { cn } from "@/lib/utils";
@@ -9,23 +10,40 @@ import type { PropertySummary } from "@/types/content";
 
 export function PropertyCard({ property }: { property: PropertySummary }) {
   const sample = isMarkedSample(property.tagline) || isMarkedSample(property.description);
+  const logo = brandLogo(property.slug);
+  const href = `/${property.slug}`;
 
   return (
-    <article className="flex h-full flex-col overflow-hidden rounded-xl border border-beige bg-card">
-      <div className="relative">
-        {property.heroImageUrl ? (
+    <article
+      className="flex h-full flex-col overflow-hidden rounded-xl border border-beige bg-card motion-safe:transition-transform motion-safe:duration-200 motion-safe:hover:-translate-y-1"
+      style={logo ? { boxShadow: `inset 0 4px 0 ${logo.accent}` } : undefined}
+    >
+      {logo ? (
+        <Link
+          href={href}
+          className="block bg-cream focus-visible:outline-2 focus-visible:outline-offset-[-2px] focus-visible:outline-forest"
+        >
           <Image
-            src={property.heroImageUrl}
-            alt={property.heroImageAlt}
-            width={1200}
-            height={900}
-            className="aspect-[4/3] w-full object-cover"
+            src={logo.src}
+            alt={logo.alt}
+            width={logo.width}
+            height={logo.height}
             sizes="(max-width: 768px) 100vw, 33vw"
+            className="h-auto w-full motion-safe:transition-transform motion-safe:duration-200 motion-safe:hover:scale-[1.02]"
           />
-        ) : (
-          <PhotoPlaceholder name={property.name} tone={placeholderTone(property.slug)} />
-        )}
-      </div>
+        </Link>
+      ) : property.heroImageUrl ? (
+        <Image
+          src={property.heroImageUrl}
+          alt={property.heroImageAlt}
+          width={1200}
+          height={900}
+          className="aspect-[4/3] w-full object-cover"
+          sizes="(max-width: 768px) 100vw, 33vw"
+        />
+      ) : (
+        <PhotoPlaceholder name={property.name} tone={placeholderTone(property.slug)} />
+      )}
       <div className="flex flex-1 flex-col gap-4 p-6">
         <div className="flex items-start justify-between gap-3">
           <h3 className="font-heading text-3xl leading-tight text-forest">{property.name}</h3>
@@ -36,10 +54,7 @@ export function PropertyCard({ property }: { property: PropertySummary }) {
           ) : null}
         </div>
         {property.tagline ? <p className="text-base leading-7">{property.tagline}</p> : null}
-        <Link
-          href={`/${property.slug}`}
-          className={cn(buttonVariants({ size: "guest" }), "mt-auto w-full")}
-        >
+        <Link href={href} className={cn(buttonVariants({ size: "guest" }), "mt-auto w-full")}>
           Explore Your Stay
         </Link>
       </div>

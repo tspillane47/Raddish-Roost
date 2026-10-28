@@ -4,7 +4,7 @@ import { parseGuidebookBlock } from "@/lib/validation/blocks";
 import { toContactHref } from "@/lib/validation/contact";
 import { propertySlugSchema } from "@/lib/validation/slug";
 import { safeUrl } from "@/lib/content/markdown";
-import { previewProperty, toPublicWifi } from "@/lib/data/map-content";
+import { previewGuideSection, previewProperty, toPublicWifi } from "@/lib/data/map-content";
 import { guidebookImageUrl } from "@/lib/media";
 
 function contrast(foreground: string, background: string) {
@@ -85,6 +85,9 @@ describe("preview content", () => {
     expect(property?.sections).toHaveLength(12);
     expect(property?.welcomeMessage.startsWith("[Sample]")).toBe(true);
     expect(previewProperty("unknown")).toBeNull();
+    expect(previewGuideSection("raddish-roost", "check-in")?.blocks[0]?.kind).toBe("steps");
+    expect(previewGuideSection("raddish-roost", "wifi")?.propertyName).toBe("The Raddish Roost");
+    expect(previewGuideSection("raddish-roost", "not-a-section")).toBeNull();
     expect(toPublicWifi({ network_name: "   ", password: null, router_note: null })).toBeNull();
   });
 });

@@ -1,9 +1,11 @@
 import { NextResponse } from "next/server";
 import type { NextRequest } from "next/server";
 import { DEFAULT_BRAND_NAME } from "@/lib/brand";
+import { GUIDE_SECTIONS } from "@/lib/content/sections";
 import { SAMPLE_PROPERTIES } from "@/lib/content/sample-catalog";
-import { slugToReject } from "@/lib/routing/property-path";
+import { guideSectionFromPath, slugToReject } from "@/lib/routing/property-path";
 import { getSupabaseEnv } from "@/lib/supabase/env";
+import { propertySlugSchema } from "@/lib/validation/slug";
 
 const sampleSlugs = () => new Set(SAMPLE_PROPERTIES.map((property) => property.slug));
 
@@ -65,10 +67,42 @@ function notFoundResponse() {
   });
 }
 
+async function guideSectionMissing(pathname: string): Promise<boolean> {
+  const target = guideSectionFromPath(pathname);
+  if (!target) return false;
+  if (!propertySlugSchema.safeParse(target.section).success) return true;
+
+  const env = getSupabaseEnv();
+  if (!env) return !GUIDE_SECTIONS.some((section) => section.slug === target.section);
+
+  try {
+    const url = new URL(`${env.url}/rest/v1/guidebook_sections`);
+    url.searchParams.set("select", "slug,properties!inner(slug)");
+    url.searchParams.set("slug", `eq.${target.section}`);
+    url.searchParams.set("is_visible", "eq.true");
+    url.searchParams.set("published_at", "not.is.null");
+    url.searchParams.set("properties.slug", `eq.${target.property}`);
+    url.searchParams.set("properties.status", "eq.published");
+    const response = await fetch(url, {
+      headers: {
+        apikey: env.key,
+        Authorization: `Bearer ${env.key}`,
+        Accept: "application/json",
+      },
+      cache: "no-store",
+    });
+    if (!response.ok) return false;
+    const rows: unknown = await response.json();
+    return Array.isArray(rows) && rows.length === 0;
+  } catch {
+    return false;
+  }
+}
+
 export async function proxy(request: NextRequest) {
   const rejected = slugToReject(request.nextUrl.pathname, await publishedSlugs());
-  if (!rejected) return NextResponse.next();
-  return notFoundResponse();
+  if (rejected || (await guideSectionMissing(request.nextUrl.pathname))) return notFoundResponse();
+  return NextResponse.next();
 }
 
 export const config = {

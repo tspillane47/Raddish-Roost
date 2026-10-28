@@ -1,10 +1,22 @@
 import { Suspense } from "react";
+import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { PreviewBanner } from "@/components/layout/preview-banner";
 import { PropertyHome, PropertyHomeFallback } from "@/components/property/property-home";
 import { getPropertyGuide } from "@/lib/data/properties";
 
-export default function PropertyPage({ params }: { params: Promise<{ propertySlug: string }> }) {
+type PropertyParams = { params: Promise<{ propertySlug: string }> };
+
+export async function generateMetadata({ params }: PropertyParams): Promise<Metadata> {
+  const { propertySlug } = await params;
+  const result = await getPropertyGuide(propertySlug);
+  return {
+    title: result.ok ? result.property.name : "Stay",
+    robots: { index: false, follow: false },
+  };
+}
+
+export default function PropertyPage({ params }: PropertyParams) {
   return (
     <Suspense fallback={<PropertyHomeFallback />}>
       <PropertyContent params={params} />

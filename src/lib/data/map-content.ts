@@ -1,8 +1,12 @@
+import { ARRIVAL_STEPS, GUIDE_SECTIONS, SAMPLE_SECTION_SUMMARY } from "@/lib/content/sections";
 import { SAMPLE_PROPERTIES, sampleSections } from "@/lib/content/sample-catalog";
 import { guidebookImageUrl } from "@/lib/media";
+import { parseGuidebookBlock } from "@/lib/validation/blocks";
 import { toContactHref, type ContactChannel } from "@/lib/validation/contact";
 import type {
+  GuideBlockView,
   GuideSection,
+  GuideSectionDetail,
   PropertyGuide,
   PropertySummary,
   PublicContact,
@@ -41,6 +45,13 @@ export type ContactRow = {
   channel: string;
   label: string;
   value: string;
+};
+
+export type BlockRow = {
+  id: string;
+  title: string | null;
+  body: unknown;
+  sort_order: number;
 };
 
 const CONTACT_CHANNELS = new Set<ContactChannel>(["airbnb", "email", "phone", "sms"]);
@@ -127,6 +138,67 @@ export function previewProperties(): PropertySummary[] {
     heroImageUrl: null,
     heroImageAlt: `Photograph of ${property.name}`,
   }));
+}
+
+function blockFromRow(row: BlockRow, supabaseUrl: string | null): GuideBlockView | null {
+  const parsed = parseGuidebookBlock(row.body);
+  if (!parsed.success) return null;
+  const block = parsed.data;
+  const title = row.title?.trim() || null;
+  if (block.type === "rich_text") return { id: row.id, title, kind: "rich_text", markdown: block.markdown };
+  if (block.type === "steps") return { id: row.id, title, kind: "steps", steps: block.steps };
+  if (block.type === "callout") {
+    return { id: row.id, title, kind: "callout", tone: block.tone, markdown: block.markdown };
+  }
+  if (block.type === "checklist") return { id: row.id, title, kind: "checklist", items: block.items };
+  if (block.type === "link_list") return { id: row.id, title, kind: "link_list", links: block.links };
+  const url = supabaseUrl ? guidebookImageUrl(supabaseUrl, block.path) : null;
+  if (!url) return null;
+  return { id: row.id, title, kind: "media", url, alt: block.alt, caption: block.caption };
+}
+
+export function toGuideBlocks(rows: BlockRow[], supabaseUrl: string | null): GuideBlockView[] {
+  return rows
+    .slice()
+    .sort((a, b) => a.sort_order - b.sort_order)
+    .flatMap((row) => {
+      const block = blockFromRow(row, supabaseUrl);
+      return block ? [block] : [];
+    });
+}
+
+export function previewGuideSection(propertySlug: string, sectionSlug: string): GuideSectionDetail | null {
+  const property = SAMPLE_PROPERTIES.find((item) => item.slug === propertySlug);
+  const section = GUIDE_SECTIONS.find((item) => item.slug === sectionSlug);
+  if (!property || !section) return null;
+
+  const blocks: GuideBlockView[] =
+    section.sectionType === "check_in"
+      ? [
+          {
+            id: "sample-steps",
+            title: "[Sample] Arrival steps",
+            kind: "steps",
+            steps: ARRIVAL_STEPS.map((title) => ({ title })),
+          },
+        ]
+      : [
+          {
+            id: "sample-notes",
+            title: "[Sample] Notes",
+            kind: "rich_text",
+            markdown: "[Sample] Your notes for this section will appear here.",
+          },
+        ];
+
+  return {
+    propertySlug: property.slug,
+    propertyName: property.name,
+    slug: section.slug,
+    title: section.title,
+    summary: SAMPLE_SECTION_SUMMARY,
+    blocks,
+  };
 }
 
 export function previewProperty(slug: string): PropertyGuide | null {

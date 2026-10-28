@@ -13,5 +13,9 @@ describe("unknown property paths", () => {
     expect(slugToReject("/contact", published)).toBeNull();
     expect(slugToReject("/privacy", published)).toBeNull();
     expect(slugToReject("/", published)).toBeNull();
+    expect(slugToReject("/raddish-roost/guide/wifi", published)).toBeNull();
+    expect(slugToReject("/images/brand/hero.webp", published)).toBeNull();
+    expect(slugToReject("/images/brand/logo-raddish-roost.webp", published)).toBeNull();
+    expect(slugToReject("/not-a-real-stay/guide/wifi", published)).toBe("not-a-real-stay");
   });
 });
