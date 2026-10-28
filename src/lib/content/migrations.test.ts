@@ -13,6 +13,10 @@ const seed = readFileSync(
   path.join(root, "supabase/migrations/20261028120200_seed.sql"),
   "utf8",
 );
+const listing = readFileSync(
+  path.join(root, "supabase/migrations/20261028143000_raddish_roost_listing.sql"),
+  "utf8",
+);
 
 const tables = [
   "locations",
@@ -81,5 +85,31 @@ describe("seed sql", () => {
     expect(seed).not.toMatch(/insert into public\.recommendations/i);
     expect(seed).not.toMatch(/\b\d{1,5}\s+\w+\s+(street|st|road|rd|avenue|ave|lane|ln)\b/i);
     expect(seed).not.toMatch(/\b\d{3}-\d{3}-\d{4}\b/);
+  });
+});
+
+describe("Raddish Roost listing sql", () => {
+  it("publishes the listing facts without sample copy or a door code", () => {
+    expect(listing).toContain("slug = 'raddish-roost'");
+    expect(listing).toContain("The Raddish Roost");
+    expect(listing).toContain("A restored 1899 farmhouse right on Main Street in Waterbury");
+    expect(listing).toContain("Main Street, Waterbury, Vermont");
+    expect(listing).toContain("https://www.airbnb.com/rooms/1477625352327415954");
+    expect(listing).toContain(
+      "https://www.airbnb.com/contact_host/1477625352327415954/send_message",
+    );
+    for (const name of ["The Reservoir", "Prohibition Pig", "Blackback Pub", "Hen of the Wood"]) {
+      expect(listing).toContain(name);
+    }
+    expect(listing).toContain("onion-ranch");
+    expect(listing).toContain("Details coming soon");
+    expect(listing).toContain("food_drink");
+    expect(listing).not.toContain("[Sample]");
+    expect(listing).not.toContain("—");
+    expect(listing).not.toContain("The Radish Roost");
+    expect(listing).not.toContain("radish-roost");
+    expect(listing).not.toContain("shallot-chalet");
+    expect(listing).not.toMatch(/insert into public\.property_wifi/i);
+    expect(listing).not.toMatch(/\b\d{1,5}\s+Main Street\b/);
   });
 });
