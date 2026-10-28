@@ -1,5 +1,6 @@
 import Image from "next/image";
 import Link from "next/link";
+import { BookNow } from "@/components/property/book-now";
 import { brandLogo } from "@/lib/content/brand-art";
 import type { PropertyPhoto } from "@/lib/content/property-photos";
 import { isMarkedSample } from "@/lib/data/map-content";
@@ -22,7 +23,7 @@ export function PropertyHero({ property, hero }: { property: PropertyGuide; hero
 
   return (
     <header>
-      <div className="relative h-[58vh] overflow-hidden md:h-[65vh]">
+      <div className="relative h-[44vh] overflow-hidden md:h-[54vh]">
         {photo ? (
           <Image
             src={photo.src}
@@ -86,6 +87,7 @@ export function PropertyHero({ property, hero }: { property: PropertyGuide; hero
           {property.tagline ? (
             <p className="mx-auto mt-3 max-w-2xl text-lg leading-8 text-forest md:mx-0">{property.tagline}</p>
           ) : null}
+          <BookNow propertySlug={property.slug} bookings={property.bookings} accent={accent} />
         </div>
       </div>
     </header>

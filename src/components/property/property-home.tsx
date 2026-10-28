@@ -75,7 +75,7 @@ export function PropertyHomeFallback() {
   return (
     <div aria-busy="true" aria-live="polite">
       <p className="sr-only">Loading this stay</p>
-      <div className="h-[58vh] bg-beige/80 md:h-[65vh]" />
+      <div className="h-[44vh] bg-beige/80 md:h-[54vh]" />
       <div className="mx-auto w-full max-w-6xl px-5">
         <div className="-mt-14 size-28 rounded-full bg-beige" />
         <div className="mt-6 h-12 w-2/3 rounded bg-beige" />

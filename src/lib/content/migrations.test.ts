@@ -25,6 +25,14 @@ const onionListing = readFileSync(
   path.join(root, "supabase/migrations/20261028190000_onion_ranch_listing.sql"),
   "utf8",
 );
+const bookingLinks = readFileSync(
+  path.join(root, "supabase/migrations/20261028201000_booking_links.sql"),
+  "utf8",
+);
+const vrboLinks = readFileSync(
+  path.join(root, "supabase/migrations/20261028220000_vrbo_booking_links.sql"),
+  "utf8",
+);
 
 const tables = [
   "locations",
@@ -202,5 +210,35 @@ describe("onion ranch listing migration", () => {
     expect(onionListing).not.toMatch(/insert into public\.property_wifi/i);
     expect(onionListing).not.toMatch(/keypad|lockbox|door code/i);
     expect(onionListing).not.toMatch(/\b\d{1,5}\s+\w+\s+(street|st|road|rd|avenue|ave|lane|ln)\b/i);
+  });
+});
+
+describe("booking links migration", () => {
+  it("saves one https Airbnb link per stay and records booking clicks", () => {
+    expect(bookingLinks).toContain("https://www.airbnb.com/rooms/1477625352327415954");
+    expect(bookingLinks).toContain("https://www.airbnb.com/rooms/1064639214342902592");
+    expect(bookingLinks).toContain("https://www.airbnb.com/rooms/862913226430309914");
+    expect(bookingLinks).toContain("bl.channel = 'airbnb'");
+    expect(bookingLinks).toContain("not exists");
+    expect(bookingLinks).toContain("'booking_click'");
+    expect(bookingLinks).toContain("platform");
+    expect(bookingLinks).not.toContain("channel = 'direct'");
+    expect(bookingLinks).not.toContain("channel = 'vrbo'");
+    expect(bookingLinks).not.toMatch(/http:\/\//);
+    expect(bookingLinks).not.toContain("—");
+  });
+});
+
+describe("vrbo booking links migration", () => {
+  it("saves one https VRBO link per stay without a direct link", () => {
+    expect(vrboLinks).toContain("https://www.vrbo.com/p4832729vb");
+    expect(vrboLinks).toContain("https://www.vrbo.com/p4832731vb");
+    expect(vrboLinks).toContain("https://www.vrbo.com/p4832726vb");
+    expect(vrboLinks).toContain("bl.channel = 'vrbo'");
+    expect(vrboLinks).toContain("not exists");
+    expect(vrboLinks).not.toContain("channel = 'direct'");
+    expect(vrboLinks).not.toContain("channel = 'airbnb'");
+    expect(vrboLinks).not.toMatch(/http:\/\//);
+    expect(vrboLinks).not.toContain("—");
   });
 });

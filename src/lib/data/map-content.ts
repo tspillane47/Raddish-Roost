@@ -1,3 +1,4 @@
+import { toBookingLinks, type BookingRow } from "@/lib/content/booking-links";
 import { ARRIVAL_STEPS, GUIDE_SECTIONS, SAMPLE_SECTION_SUMMARY } from "@/lib/content/sections";
 import { SAMPLE_PROPERTIES, sampleSections } from "@/lib/content/sample-catalog";
 import { guidebookImageUrl } from "@/lib/media";
@@ -108,6 +109,7 @@ export function toPropertyGuide(
   sections: SectionRow[],
   wifi: WifiRow | null,
   contacts: ContactRow[],
+  bookings: BookingRow[],
   supabaseUrl: string | null,
 ): PropertyGuide {
   return {
@@ -122,6 +124,7 @@ export function toPropertyGuide(
       const mapped = toPublicContact(contact);
       return mapped ? [mapped] : [];
     }),
+    bookings: toBookingLinks(bookings),
     sections: sections
       .slice()
       .sort((a, b) => a.sort_order - b.sort_order)
@@ -198,6 +201,7 @@ export function previewGuideSection(propertySlug: string, sectionSlug: string): 
     title: section.title,
     summary: SAMPLE_SECTION_SUMMARY,
     blocks,
+    bookings: [],
   };
 }
 
@@ -218,6 +222,7 @@ export function previewProperty(slug: string): PropertyGuide | null {
     parkingSummary: null,
     wifi: null,
     contacts: [],
+    bookings: [],
     sections: sampleSections(),
   };
 }

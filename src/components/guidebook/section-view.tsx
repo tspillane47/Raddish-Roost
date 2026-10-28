@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { SectionBlocks } from "@/components/guidebook/section-blocks";
+import { BookingChoices } from "@/components/property/book-now";
 import { PropertyGallery } from "@/components/property/property-gallery";
 import { photosForSection } from "@/lib/content/property-photos";
 import { isMarkedSample } from "@/lib/data/map-content";
@@ -32,6 +33,14 @@ export function SectionView({ section }: { section: GuideSectionDetail }) {
         </div>
         {section.summary ? <p className="mt-4 text-lg leading-8">{section.summary}</p> : null}
       </header>
+      {section.slug === "stay-again" && section.bookings.length > 0 ? (
+        <div className="mt-8">
+          <h2 className="font-heading text-3xl text-charcoal">Book Your Stay</h2>
+          <div className="mt-4">
+            <BookingChoices propertySlug={section.propertySlug} bookings={section.bookings} />
+          </div>
+        </div>
+      ) : null}
       {photos.length > 0 ? (
         <div className="mt-8">
           <PropertyGallery photos={photos} />

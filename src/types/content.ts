@@ -1,3 +1,7 @@
+import type { BookingLink } from "@/lib/content/booking-links";
+
+export type { BookingLink };
+
 export type GuideSection = {
   slug: string;
   title: string;
@@ -48,6 +52,7 @@ export type GuideSectionDetail = {
   title: string;
   summary: string | null;
   blocks: GuideBlockView[];
+  bookings: BookingLink[];
 };
 
 export type PublicWifi = {
@@ -80,6 +85,7 @@ export type PropertyGuide = PropertySummary & {
   parkingSummary: string | null;
   wifi: PublicWifi | null;
   contacts: PublicContact[];
+  bookings: BookingLink[];
   sections: GuideSection[];
 };
 

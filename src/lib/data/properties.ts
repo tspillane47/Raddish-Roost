@@ -2,6 +2,7 @@ import "server-only";
 
 import { connection } from "next/server";
 import { cache } from "react";
+import { toBookingLinks, type BookingRow } from "@/lib/content/booking-links";
 import { brandNameFromValue, DEFAULT_BRAND_NAME } from "@/lib/brand";
 import {
   previewGuideSection,
@@ -125,7 +126,7 @@ export const getPropertyGuide = cache(async (slug: string): Promise<PropertyResu
   if (!data) return { ok: false, error: "not_found" };
 
   const property = data as PropertyRow;
-  const [sectionsResult, wifiResult, contactsResult] = await Promise.all([
+  const [sectionsResult, wifiResult, contactsResult, bookingsResult] = await Promise.all([
     supabase
       .from("guidebook_sections")
       .select("slug, title, summary, section_type, sort_order")
@@ -144,6 +145,11 @@ export const getPropertyGuide = cache(async (slug: string): Promise<PropertyResu
       .eq("property_id", property.id)
       .eq("is_public", true)
       .order("sort_order", { ascending: true }),
+    supabase
+      .from("booking_links")
+      .select("channel, url, sort_order")
+      .eq("property_id", property.id)
+      .order("sort_order", { ascending: true }),
   ]);
 
   if (sectionsResult.error) {
@@ -161,6 +167,11 @@ export const getPropertyGuide = cache(async (slug: string): Promise<PropertyResu
     logSupabaseError("contacts", contactsResult.error.message);
     return { ok: false, error: "unavailable" };
   }
+  if (bookingsResult.error) {
+    rethrowPrerenderAbort(bookingsResult.error);
+    logSupabaseError("bookings", bookingsResult.error.message);
+    return { ok: false, error: "unavailable" };
+  }
 
   return {
     ok: true,
@@ -170,6 +181,7 @@ export const getPropertyGuide = cache(async (slug: string): Promise<PropertyResu
       (sectionsResult.data ?? []) as SectionRow[],
       (wifiResult.data as WifiRow | null) ?? null,
       (contactsResult.data ?? []) as ContactRow[],
+      (bookingsResult.data ?? []) as BookingRow[],
       env?.url ?? null,
     ),
   };
@@ -236,6 +248,22 @@ export const getGuideSection = cache(
       return { ok: false, error: "unavailable" };
     }
 
+    let bookings: BookingRow[] = [];
+    if (section.slug === "stay-again") {
+      const { data: bookingRows, error: bookingsError } = await supabase
+        .from("booking_links")
+        .select("channel, url, sort_order")
+        .eq("property_id", property.id)
+        .order("sort_order", { ascending: true });
+
+      if (bookingsError) {
+        rethrowPrerenderAbort(bookingsError);
+        logSupabaseError("section-bookings", bookingsError.message);
+        return { ok: false, error: "unavailable" };
+      }
+      bookings = (bookingRows ?? []) as BookingRow[];
+    }
+
     return {
       ok: true,
       source: "database",
@@ -246,6 +274,7 @@ export const getGuideSection = cache(
         title: section.title?.trim() || "Guide section",
         summary: section.summary,
         blocks: toGuideBlocks((blocks ?? []) as BlockRow[], env?.url ?? null),
+        bookings: toBookingLinks(bookings),
       },
     };
   },
