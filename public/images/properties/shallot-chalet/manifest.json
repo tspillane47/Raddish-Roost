@@ -1,5 +1,10 @@
 {
   "hero": "living-room.webp",
+  "heroPhotos": [
+    "living-room.webp",
+    "kitchen-wide.webp",
+    "bedroom-armchair.webp"
+  ],
   "groups": [
     {
       "id": "living",
@@ -42,7 +47,8 @@
       "height": 1069,
       "alt": "Upstairs living room with a brown leather sofa, a wood coffee table, a striped rug, and the stair railing.",
       "sections": [],
-      "group": "living"
+      "group": "living",
+      "focus": "center"
     },
     {
       "file": "living-room-wide.webp",
@@ -78,7 +84,8 @@
       "sections": [
         "amenities"
       ],
-      "group": "kitchen-dining"
+      "group": "kitchen-dining",
+      "focus": "bottom"
     },
     {
       "file": "kitchen-island.webp",
@@ -156,7 +163,8 @@
       "height": 1069,
       "alt": "Bedroom with a cream coverlet, a wood armchair, a wood dresser, and linen curtains.",
       "sections": [],
-      "group": "bedrooms"
+      "group": "bedrooms",
+      "focus": "center"
     },
     {
       "file": "bedroom-dresser.webp",

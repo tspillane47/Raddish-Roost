@@ -23,6 +23,10 @@ describe("PropertyHome", () => {
     expect(screen.queryByRole("heading", { name: "Welcome to The Raddish Roost" })).not.toBeInTheDocument();
     expect(screen.getByRole("img", { name: "Logo for The Raddish Roost" })).toBeInTheDocument();
     expect(screen.getByRole("img", { name: /dark-shingled farmhouse/ })).toBeInTheDocument();
+    expect(screen.getByRole("button", { name: "Show photo 2 of 3" })).toBeInTheDocument();
+    fireEvent.click(screen.getByRole("button", { name: /dark-shingled farmhouse/ }));
+    expect(within(screen.getByRole("dialog")).getByText("1 of 27")).toBeInTheDocument();
+    fireEvent.click(within(screen.getByRole("dialog")).getByRole("button", { name: "Close" }));
     expect(screen.getByRole("heading", { name: "A Look Around" })).toBeInTheDocument();
     expect(screen.getByRole("heading", { name: "Living Spaces" })).toBeInTheDocument();
     expect(screen.getByRole("heading", { name: "Kitchen and Dining" })).toBeInTheDocument();

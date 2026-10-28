@@ -1,6 +1,10 @@
 import { existsSync, readFileSync } from "node:fs";
 import path from "node:path";
+import type { PhotoFocus } from "@/lib/content/photo-focus";
 import { propertySlugSchema } from "@/lib/validation/slug";
+
+export type { PhotoFocus } from "@/lib/content/photo-focus";
+export { photoObjectPosition } from "@/lib/content/photo-focus";
 
 export type PropertyPhoto = {
   file: string;
@@ -10,6 +14,7 @@ export type PropertyPhoto = {
   height: number;
   sections: string[];
   group: string | null;
+  focus: PhotoFocus;
 };
 
 export type PhotoGroup = {
@@ -31,6 +36,7 @@ type ManifestPhoto = {
   height?: unknown;
   sections?: unknown;
   group?: unknown;
+  focus?: unknown;
 };
 
 type ManifestGroup = {
@@ -41,6 +47,7 @@ type ManifestGroup = {
 
 type Manifest = {
   hero?: unknown;
+  heroPhotos?: unknown;
   photos?: unknown;
   groups?: unknown;
 };
@@ -53,7 +60,12 @@ const DEFAULT_GROUPS: PhotoGroup[] = [
   { id: "outside", label: "Outside and Around Town", preview: [] },
 ];
 
-const EMPTY = { hero: null, photos: [] as PropertyPhoto[], groups: [] as PhotoGroup[] };
+const EMPTY = {
+  hero: null,
+  heroPhotos: [] as PropertyPhoto[],
+  photos: [] as PropertyPhoto[],
+  groups: [] as PhotoGroup[],
+};
 
 /**
  * Photos live in public/images/properties/{slug}/manifest.json.
@@ -61,6 +73,7 @@ const EMPTY = { hero: null, photos: [] as PropertyPhoto[], groups: [] as PhotoGr
  */
 export function getPropertyPhotos(slug: string): {
   hero: PropertyPhoto | null;
+  heroPhotos: PropertyPhoto[];
   photos: PropertyPhoto[];
   groups: PhotoGroup[];
 } {
@@ -96,13 +109,32 @@ export function getPropertyPhotos(slug: string): {
         height: photo.height,
         sections: sectionSlugs(photo.sections),
         group: isSlug(photo.group) ? photo.group : null,
+        focus: photoFocus(photo.focus),
       },
     ];
   });
 
   const groups = parseGroups(manifest.groups);
   const hero = photos.find((photo) => photo.file === manifest.hero) ?? null;
-  return { hero, photos, groups };
+  const listed = Array.isArray(manifest.heroPhotos) ? manifest.heroPhotos.filter(isPhotoFile) : [];
+  const heroPhotos = chooseHeroPhotos(photos, listed, typeof manifest.hero === "string" ? manifest.hero : null);
+  return { hero, heroPhotos, photos, groups };
+}
+
+/** Up to three banner photos. A short gallery uses what it has. */
+export function chooseHeroPhotos(
+  photos: PropertyPhoto[],
+  listed: string[],
+  heroFile: string | null,
+): PropertyPhoto[] {
+  const fromList = listed
+    .flatMap((file) => photos.find((photo) => photo.file === file) ?? [])
+    .slice(0, 3);
+  if (fromList.length > 0) return fromList;
+
+  const hero = photos.find((photo) => photo.file === heroFile) ?? null;
+  const rest = photos.filter((photo) => photo.file !== hero?.file);
+  return [hero, ...rest].filter((photo): photo is PropertyPhoto => photo !== null).slice(0, 3);
 }
 
 export function photosForSection(slug: string, sectionSlug: string): PropertyPhoto[] {
@@ -115,12 +147,16 @@ export function photoSets(slug: string): PhotoSet[] {
   if (gallery.photos.length === 0) return [];
 
   const groups = gallery.groups.length > 0 ? gallery.groups : groupsFromPhotos(gallery.photos);
+  const heroFiles = new Set(gallery.heroPhotos.map((photo) => photo.file));
   return groups.flatMap((group) => {
     const members = gallery.photos.filter((photo) => photo.group === group.id);
-    const chosen =
+    const listed =
       group.preview.length > 0
         ? group.preview.flatMap((file) => members.find((photo) => photo.file === file) ?? [])
         : members.slice(0, 2);
+    const nonHero = listed.filter((photo) => !heroFiles.has(photo.file));
+    const heroOnes = listed.filter((photo) => heroFiles.has(photo.file));
+    const chosen = listed.length > 0 ? [...nonHero, ...heroOnes] : members.slice(0, 2);
     if (chosen.length === 0) return [];
     return [{ id: group.id, label: group.label, photos: chosen }];
   });
@@ -146,6 +182,11 @@ function isPhotoFile(file: unknown): file is string {
 
 function isSlug(value: unknown): value is string {
   return typeof value === "string" && /^[a-z0-9]+(?:-[a-z0-9]+)*$/.test(value);
+}
+
+function photoFocus(value: unknown): PhotoFocus {
+  if (value === "top" || value === "bottom" || value === "center") return value;
+  return "center";
 }
 
 function isPositiveNumber(value: unknown): value is number {

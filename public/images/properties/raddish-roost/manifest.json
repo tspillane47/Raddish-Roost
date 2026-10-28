@@ -1,5 +1,10 @@
 {
   "hero": "front-of-house.webp",
+  "heroPhotos": [
+    "front-of-house.webp",
+    "living-room.webp",
+    "kitchen.webp"
+  ],
   "groups": [
     {
       "id": "living",
@@ -52,7 +57,8 @@
         "amenities",
         "check-in"
       ],
-      "group": "outside"
+      "group": "outside",
+      "focus": "center"
     },
     {
       "file": "front-and-driveway.webp",
@@ -73,7 +79,8 @@
       "sections": [
         "wifi"
       ],
-      "group": "living"
+      "group": "living",
+      "focus": "center"
     },
     {
       "file": "living-room-wide.webp",
@@ -123,7 +130,8 @@
       "sections": [
         "house-guide"
       ],
-      "group": "kitchen-dining"
+      "group": "kitchen-dining",
+      "focus": "center"
     },
     {
       "file": "gas-stove.webp",

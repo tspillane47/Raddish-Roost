@@ -1,6 +1,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import { BookNow } from "@/components/property/book-now";
+import { HeroBanner } from "@/components/property/hero-banner";
 import { brandLogo } from "@/lib/content/brand-art";
 import type { PropertyPhoto } from "@/lib/content/property-photos";
 import { isMarkedSample } from "@/lib/data/map-content";
@@ -8,46 +9,41 @@ import type { PropertyGuide } from "@/types/content";
 
 const FOREST = "#263F35";
 
-export function PropertyHero({ property, hero }: { property: PropertyGuide; hero: PropertyPhoto | null }) {
+export function PropertyHero({
+  property,
+  heroPhotos,
+  photos,
+}: {
+  property: PropertyGuide;
+  heroPhotos: PropertyPhoto[];
+  photos: PropertyPhoto[];
+}) {
   const logo = brandLogo(property.slug);
   const accent = logo?.accent ?? FOREST;
   const sample =
     isMarkedSample(property.welcomeMessage) ||
     isMarkedSample(property.description) ||
     isMarkedSample(property.tagline);
-  const photo = hero
-    ? { src: hero.src, alt: hero.alt, width: hero.width, height: hero.height }
-    : property.heroImageUrl
-      ? { src: property.heroImageUrl, alt: property.heroImageAlt, width: 1600, height: 900 }
+  const remote =
+    heroPhotos.length === 0 && property.heroImageUrl
+      ? { src: property.heroImageUrl, alt: property.heroImageAlt }
       : null;
 
   return (
     <header>
-      <div className="relative h-[44vh] overflow-hidden md:h-[54vh]">
-        {photo ? (
-          <Image
-            src={photo.src}
-            alt={photo.alt}
-            fill
-            preload
-            sizes="100vw"
-            className="object-cover"
-            style={{ objectPosition: "center 42%" }}
-          />
+      <div className="relative">
+        {heroPhotos.length > 0 ? (
+          <HeroBanner photos={heroPhotos} gallery={photos} />
+        ) : remote ? (
+          <div className="relative h-[45vh] max-h-[480px] overflow-hidden">
+            <Image src={remote.src} alt={remote.alt} fill preload sizes="100vw" className="object-cover" />
+          </div>
         ) : (
           <div
-            className="absolute inset-0"
-            style={{
-              background: `linear-gradient(165deg, ${accent} 0%, #F7F4ED 58%)`,
-            }}
+            className="h-[45vh] max-h-[480px]"
+            style={{ background: `linear-gradient(165deg, ${accent} 0%, #F7F4ED 58%)` }}
           />
         )}
-        {photo ? (
-          <div
-            className="pointer-events-none absolute inset-x-0 bottom-0 h-2/5 bg-gradient-to-t from-charcoal/55 via-charcoal/15 to-transparent"
-            aria-hidden="true"
-          />
-        ) : null}
         <Link
           href="/"
           className="absolute top-4 left-4 z-10 inline-flex min-h-11 items-center rounded-full bg-cream/95 px-4 text-sm text-forest shadow-sm focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-forest"
@@ -70,7 +66,7 @@ export function PropertyHero({ property, hero }: { property: PropertyGuide; hero
                 fill
                 sizes="9rem"
                 className="object-cover"
-                preload={!photo}
+                preload={heroPhotos.length === 0 && !remote}
               />
             </div>
           </div>

@@ -1,5 +1,10 @@
 {
   "hero": "front-entrance.webp",
+  "heroPhotos": [
+    "front-entrance.webp",
+    "living-room.webp",
+    "kitchen.webp"
+  ],
   "groups": [
     {
       "id": "living",
@@ -47,8 +52,12 @@
       "width": 1600,
       "height": 1150,
       "alt": "Light blue house with a white front door, a welcome mat, and a gravel walkway.",
-      "sections": ["getting-here", "check-in"],
-      "group": "outside"
+      "sections": [
+        "getting-here",
+        "check-in"
+      ],
+      "group": "outside",
+      "focus": "center"
     },
     {
       "file": "living-room.webp",
@@ -56,7 +65,8 @@
       "height": 1067,
       "alt": "Living room with a brown sofa, a wood coffee table, a floor lamp, and a patterned rug.",
       "sections": [],
-      "group": "living"
+      "group": "living",
+      "focus": "center"
     },
     {
       "file": "dining-room.webp",
@@ -87,15 +97,22 @@
       "width": 1600,
       "height": 1162,
       "alt": "Kitchen with a white stove, a range hood, white cabinets, and a drip coffee maker.",
-      "sections": ["house-guide", "amenities"],
-      "group": "kitchen-dining"
+      "sections": [
+        "house-guide",
+        "amenities"
+      ],
+      "group": "kitchen-dining",
+      "focus": "center"
     },
     {
       "file": "workspace.webp",
       "width": 1600,
       "height": 1067,
       "alt": "Workspace with a wood desk, a monitor, a desk lamp, and blue botanical wallpaper.",
-      "sections": ["amenities", "wifi"],
+      "sections": [
+        "amenities",
+        "wifi"
+      ],
       "group": "living"
     },
     {
@@ -143,7 +160,9 @@
       "width": 1600,
       "height": 1147,
       "alt": "Stairs with a wood handrail, seen from the top looking down.",
-      "sections": ["house-guide"],
+      "sections": [
+        "house-guide"
+      ],
       "group": "living"
     },
     {
@@ -151,7 +170,9 @@
       "width": 1600,
       "height": 1218,
       "alt": "Bathroom with a toilet, gray towels, and a blue floral shower curtain.",
-      "sections": ["house-guide"],
+      "sections": [
+        "house-guide"
+      ],
       "group": "bath-laundry"
     },
     {

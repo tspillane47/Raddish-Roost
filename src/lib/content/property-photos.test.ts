@@ -1,7 +1,8 @@
 import { readdirSync } from "node:fs";
 import path from "node:path";
 import { describe, expect, it } from "vitest";
-import { getPropertyPhotos, photosForSection, photoSets } from "@/lib/content/property-photos";
+import { chooseHeroPhotos, getPropertyPhotos, photosForSection, photoSets } from "@/lib/content/property-photos";
+import type { PropertyPhoto } from "@/lib/content/property-photos";
 
 describe("property photos", () => {
   it("loads The Raddish Roost gallery from its folder", () => {
@@ -13,6 +14,11 @@ describe("property photos", () => {
 
     expect(hero?.file).toBe("front-of-house.webp");
     expect(hero?.src).toBe("/images/properties/raddish-roost/front-of-house.webp");
+    expect(getPropertyPhotos("raddish-roost").heroPhotos.map((photo) => photo.file)).toEqual([
+      "front-of-house.webp",
+      "living-room.webp",
+      "kitchen.webp",
+    ]);
     expect(photos.map((photo) => photo.file).sort()).toEqual(files);
     expect(photos.length).toBeGreaterThan(0);
 
@@ -55,14 +61,17 @@ describe("property photos", () => {
     ]);
     expect(sets[0]?.photos.map((photo) => photo.file)).toEqual([
       "living-room-wide.webp",
-      "living-room.webp",
       "sitting-room.webp",
+      "living-room.webp",
     ]);
     expect(sets[1]?.photos.map((photo) => photo.file)).toEqual([
-      "kitchen.webp",
       "dining-room.webp",
       "gas-stove.webp",
+      "kitchen.webp",
     ]);
+    expect(sets[0]?.photos[0]?.file).not.toBe(
+      getPropertyPhotos("raddish-roost").heroPhotos[0]?.file,
+    );
     const shown = sets.reduce((count, set) => count + set.photos.length, 0);
     expect(shown).toBeGreaterThanOrEqual(8);
     expect(shown).toBeLessThanOrEqual(10);
@@ -76,6 +85,12 @@ describe("property photos", () => {
       .sort();
 
     expect(hero?.file).toBe("living-room.webp");
+    expect(getPropertyPhotos("shallot-chalet").heroPhotos.map((photo) => photo.file)).toEqual([
+      "living-room.webp",
+      "kitchen-wide.webp",
+      "bedroom-armchair.webp",
+    ]);
+    expect(getPropertyPhotos("shallot-chalet").heroPhotos[1]?.focus).toBe("bottom");
     expect(photos.map((photo) => photo.file).sort()).toEqual(files);
     expect(photos).toHaveLength(18);
     expect(photosForSection("shallot-chalet", "house-guide").map((photo) => photo.file)[0]).toBe("kitchen.webp");
@@ -105,6 +120,11 @@ describe("property photos", () => {
       .sort();
 
     expect(hero?.file).toBe("front-entrance.webp");
+    expect(getPropertyPhotos("onion-ranch").heroPhotos.map((photo) => photo.file)).toEqual([
+      "front-entrance.webp",
+      "living-room.webp",
+      "kitchen.webp",
+    ]);
     expect(photos.map((photo) => photo.file).sort()).toEqual(files);
     expect(photos).toHaveLength(16);
     expect(photosForSection("onion-ranch", "house-guide").map((photo) => photo.file)[0]).toBe("kitchen.webp");
@@ -126,8 +146,37 @@ describe("property photos", () => {
   });
 
   it("returns nothing for a slug with no photo folder", () => {
-    expect(getPropertyPhotos("../secrets")).toEqual({ hero: null, photos: [], groups: [] });
+    expect(getPropertyPhotos("../secrets")).toEqual({ hero: null, heroPhotos: [], photos: [], groups: [] });
     expect(photosForSection("extra-cabin", "house-guide")).toEqual([]);
     expect(photoSets("extra-cabin")).toEqual([]);
   });
+
+  it("uses a shorter hero list when a stay has fewer photos", () => {
+    const photos = [
+      samplePhoto("porch.webp"),
+      samplePhoto("sofa.webp"),
+    ];
+    expect(chooseHeroPhotos(photos, ["missing.webp"], "porch.webp").map((photo) => photo.file)).toEqual([
+      "porch.webp",
+      "sofa.webp",
+    ]);
+    expect(chooseHeroPhotos(photos, [], null).map((photo) => photo.file)).toEqual([
+      "porch.webp",
+      "sofa.webp",
+    ]);
+    expect(chooseHeroPhotos([], ["porch.webp"], null)).toEqual([]);
+  });
 });
+
+function samplePhoto(file: string): PropertyPhoto {
+  return {
+    file,
+    src: `/images/${file}`,
+    alt: "A sample room with a window and a chair.",
+    width: 1600,
+    height: 1000,
+    sections: [],
+    group: null,
+    focus: "center",
+  };
+}
