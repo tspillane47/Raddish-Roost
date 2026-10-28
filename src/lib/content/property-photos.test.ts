@@ -1,7 +1,7 @@
 import { readdirSync } from "node:fs";
 import path from "node:path";
 import { describe, expect, it } from "vitest";
-import { getPropertyPhotos, photosForSection } from "@/lib/content/property-photos";
+import { getPropertyPhotos, photosForSection, photoSets } from "@/lib/content/property-photos";
 
 describe("property photos", () => {
   it("loads The Raddish Roost gallery from its folder", () => {
@@ -44,10 +44,35 @@ describe("property photos", () => {
     ]);
   });
 
+  it("builds labeled preview sets from the manifest", () => {
+    const sets = photoSets("raddish-roost");
+    expect(sets.map((set) => set.label)).toEqual([
+      "Living Spaces",
+      "Kitchen and Dining",
+      "Bedrooms",
+      "Bath and Laundry",
+      "Outside and Around Town",
+    ]);
+    expect(sets[0]?.photos.map((photo) => photo.file)).toEqual([
+      "living-room-wide.webp",
+      "living-room.webp",
+      "sitting-room.webp",
+    ]);
+    expect(sets[1]?.photos.map((photo) => photo.file)).toEqual([
+      "kitchen.webp",
+      "dining-room.webp",
+      "gas-stove.webp",
+    ]);
+    const shown = sets.reduce((count, set) => count + set.photos.length, 0);
+    expect(shown).toBeGreaterThanOrEqual(8);
+    expect(shown).toBeLessThanOrEqual(10);
+    expect(photoSets("shallot-chalet")).toEqual([]);
+  });
+
   it("returns nothing until another stay adds a photo folder", () => {
-    expect(getPropertyPhotos("shallot-chalet")).toEqual({ hero: null, photos: [] });
-    expect(getPropertyPhotos("onion-ranch")).toEqual({ hero: null, photos: [] });
-    expect(getPropertyPhotos("../secrets")).toEqual({ hero: null, photos: [] });
+    expect(getPropertyPhotos("shallot-chalet")).toEqual({ hero: null, photos: [], groups: [] });
+    expect(getPropertyPhotos("onion-ranch")).toEqual({ hero: null, photos: [], groups: [] });
+    expect(getPropertyPhotos("../secrets")).toEqual({ hero: null, photos: [], groups: [] });
     expect(photosForSection("shallot-chalet", "house-guide")).toEqual([]);
   });
 });

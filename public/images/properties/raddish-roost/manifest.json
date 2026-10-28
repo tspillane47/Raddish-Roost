@@ -1,194 +1,283 @@
 {
   "hero": "front-of-house.webp",
+  "groups": [
+    {
+      "id": "living",
+      "label": "Living Spaces",
+      "preview": [
+        "living-room-wide.webp",
+        "living-room.webp",
+        "sitting-room.webp"
+      ]
+    },
+    {
+      "id": "kitchen-dining",
+      "label": "Kitchen and Dining",
+      "preview": [
+        "kitchen.webp",
+        "dining-room.webp",
+        "gas-stove.webp"
+      ]
+    },
+    {
+      "id": "bedrooms",
+      "label": "Bedrooms",
+      "preview": [
+        "bedroom-floral.webp"
+      ]
+    },
+    {
+      "id": "bath-laundry",
+      "label": "Bath and Laundry",
+      "preview": [
+        "bathroom.webp",
+        "laundry-room.webp"
+      ]
+    },
+    {
+      "id": "outside",
+      "label": "Outside and Around Town",
+      "preview": [
+        "front-and-driveway.webp"
+      ]
+    }
+  ],
   "photos": [
     {
       "file": "front-of-house.webp",
       "width": 1600,
       "height": 1199,
       "alt": "The front of The Raddish Roost on a sunny day, a dark-shingled farmhouse with green trim, a covered porch, a white screen door, and hostas along the lawn.",
-      "sections": ["amenities", "check-in"]
+      "sections": [
+        "amenities",
+        "check-in"
+      ],
+      "group": "outside"
     },
     {
       "file": "front-and-driveway.webp",
       "width": 1600,
       "height": 1088,
       "alt": "The front of The Raddish Roost seen through evergreen trees, with the driveway along the side of the house.",
-      "sections": ["getting-here", "parking"]
+      "sections": [
+        "getting-here",
+        "parking"
+      ],
+      "group": "outside"
     },
     {
       "file": "living-room.webp",
       "width": 1600,
       "height": 1075,
       "alt": "Living room with a brown leather sofa and chairs, a wall-mounted television, crossed wooden skis, and a black wood stove.",
-      "sections": ["wifi"]
+      "sections": [
+        "wifi"
+      ],
+      "group": "living"
     },
     {
       "file": "living-room-wide.webp",
       "width": 1600,
       "height": 1068,
       "alt": "A wide view of the living room opening toward the kitchen, with a leather sofa, a jute rug, and wide pine floors.",
-      "sections": []
+      "sections": [],
+      "group": "living"
     },
     {
       "file": "living-room-sofa.webp",
       "width": 1200,
       "height": 800,
       "alt": "Brown leather sofa and chairs around a wood and glass coffee table, with windows, a wooden ladder, and a round wall clock.",
-      "sections": []
+      "sections": [],
+      "group": "living"
     },
     {
       "file": "sitting-room.webp",
       "width": 1600,
       "height": 1068,
       "alt": "A sitting area with brown leather chairs, snowshoes on the wall, white cabinets, and an antler chandelier.",
-      "sections": []
+      "sections": [],
+      "group": "living"
     },
     {
       "file": "sitting-room-and-stairs.webp",
       "width": 1600,
       "height": 1066,
       "alt": "Leather chairs and a live-edge coffee table, with the stairs visible down the hall.",
-      "sections": []
+      "sections": [],
+      "group": "living"
     },
     {
       "file": "dining-room.webp",
       "width": 1600,
       "height": 1068,
       "alt": "Dining room with a wooden farm table, a bench, black chairs, a black chandelier, and a sign that reads Farmhouse.",
-      "sections": []
+      "sections": [],
+      "group": "kitchen-dining"
     },
     {
       "file": "kitchen.webp",
       "width": 1600,
       "height": 1067,
       "alt": "Kitchen with sage green cabinets, a dark countertop, a sink and dishwasher, and a white refrigerator, looking through to the dining room.",
-      "sections": ["house-guide"]
+      "sections": [
+        "house-guide"
+      ],
+      "group": "kitchen-dining"
     },
     {
       "file": "gas-stove.webp",
       "width": 1600,
       "height": 1066,
       "alt": "Gas stove in the kitchen under a wooden sign that reads Raddish Roost, Waterbury, VT, with the dining room through the doorway.",
-      "sections": ["house-guide"]
+      "sections": [
+        "house-guide"
+      ],
+      "group": "kitchen-dining"
     },
     {
       "file": "kitchen-sink.webp",
       "width": 1600,
       "height": 1067,
       "alt": "Kitchen sink and dishwasher in a sage green island, with the laundry room doorway to the right.",
-      "sections": []
+      "sections": [],
+      "group": "kitchen-dining"
     },
     {
       "file": "kitchen-counter.webp",
       "width": 1600,
       "height": 1068,
       "alt": "Kitchen pass-through with two stools, the gas stove and refrigerator behind it, and the living room through the left doorway.",
-      "sections": []
+      "sections": [],
+      "group": "kitchen-dining"
     },
     {
       "file": "laundry-room.webp",
       "width": 1600,
       "height": 1067,
       "alt": "Laundry room with a stacked washer and dryer, a wood folding counter, and a laundry basket.",
-      "sections": ["amenities"]
+      "sections": [
+        "amenities"
+      ],
+      "group": "bath-laundry"
     },
     {
       "file": "bathroom.webp",
       "width": 1600,
       "height": 1066,
       "alt": "Bathroom with a tub and shower, a brown gingham curtain, wood-paneled walls, a toilet, and a wall-mounted sink.",
-      "sections": ["house-guide"]
+      "sections": [
+        "house-guide"
+      ],
+      "group": "bath-laundry"
     },
     {
       "file": "bathroom-doorway.webp",
       "width": 1600,
       "height": 1066,
       "alt": "Sitting area with the bathroom door open, showing the sink and wood-paneled walls inside.",
-      "sections": []
+      "sections": [],
+      "group": "bath-laundry"
     },
     {
       "file": "stairs.webp",
       "width": 1600,
       "height": 1069,
       "alt": "Stairs seen from the upstairs landing, with a metal handrail and a Ski Lodge sign on the wall.",
-      "sections": ["house-guide"]
+      "sections": [
+        "house-guide"
+      ],
+      "group": "living"
     },
     {
       "file": "bedroom-floral.webp",
       "width": 1600,
       "height": 1066,
       "alt": "Bedroom under a sloped ceiling with a dark wood bed, a floral quilt, and a window with linen curtains.",
-      "sections": []
+      "sections": [],
+      "group": "bedrooms"
     },
     {
       "file": "bedroom-navy.webp",
       "width": 1600,
       "height": 1077,
       "alt": "Bedroom under a sloped ceiling with a bed in a navy quilt, a white nightstand, and a window with linen curtains.",
-      "sections": []
+      "sections": [],
+      "group": "bedrooms"
     },
     {
       "file": "bedroom-striped.webp",
       "width": 1600,
       "height": 1057,
       "alt": "Bedroom under a sloped ceiling with a striped coverlet, rolled blankets, a wood nightstand, and a patterned rug.",
-      "sections": []
+      "sections": [],
+      "group": "bedrooms"
     },
     {
       "file": "coffee-table.webp",
       "width": 1600,
       "height": 1074,
       "alt": "Close view of a live-edge wood coffee table with a book about vintage skiing.",
-      "sections": []
+      "sections": [],
+      "group": "living"
     },
     {
       "file": "console-table.webp",
       "width": 1600,
       "height": 1067,
       "alt": "Wood console table with a dark vase, wooden beads, a book, and a small wooden sculpture.",
-      "sections": []
+      "sections": [],
+      "group": "living"
     },
     {
       "file": "welcome-sign.webp",
       "width": 1600,
       "height": 1059,
       "alt": "Wooden letter tiles on a board spelling Welcome to the Raddish Roost.",
-      "sections": []
+      "sections": [],
+      "group": "living"
     },
     {
       "file": "downtown-waterbury.webp",
       "width": 1600,
       "height": 1199,
       "alt": "Aerial view of downtown Waterbury, with Main Street running between shops and a white church, and green mountains beyond.",
-      "sections": ["getting-here"]
+      "sections": [
+        "getting-here"
+      ],
+      "group": "outside"
     },
     {
       "file": "main-street.webp",
       "width": 1600,
       "height": 1199,
       "alt": "Aerial view of Main Street in Waterbury looking toward the mountains, with houses, a church, and storefronts along the road.",
-      "sections": []
+      "sections": [],
+      "group": "outside"
     },
     {
       "file": "downtown-wide.webp",
       "width": 1600,
       "height": 1198,
       "alt": "A wider aerial view of Waterbury, with the town center, surrounding homes, and forested hills.",
-      "sections": []
+      "sections": [],
+      "group": "outside"
     },
     {
       "file": "neighborhood.webp",
       "width": 1600,
       "height": 1199,
       "alt": "Aerial view of houses, lawns, and a green hillside beside a road in Waterbury.",
-      "sections": []
+      "sections": [],
+      "group": "outside"
     },
     {
       "file": "brewery-sign.webp",
       "width": 1600,
       "height": 1069,
       "alt": "The word Brewery painted in white on a brick wall, with arrows on either side and a basket of pink flowers.",
-      "sections": []
+      "sections": [],
+      "group": "outside"
     }
   ]
 }
