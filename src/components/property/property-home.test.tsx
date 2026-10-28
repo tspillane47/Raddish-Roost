@@ -38,13 +38,25 @@ describe("PropertyHome", () => {
     expect(within(dialog).getByText("1 of 27")).toBeInTheDocument();
   });
 
-  it("uses the logo alone when a stay has no photos yet", () => {
+  it("uses the Shallot Chalet living room as the hero and keeps the logo", () => {
     const property = previewProperty("shallot-chalet");
     expect(property).not.toBeNull();
     render(<PropertyHome property={property!} />);
 
     expect(screen.getAllByRole("heading", { name: "The Shallot Chalet" })).toHaveLength(1);
-    expect(screen.getAllByRole("img", { name: "Logo for The Shallot Chalet" })).toHaveLength(1);
+    expect(screen.getByRole("img", { name: "Logo for The Shallot Chalet" })).toBeInTheDocument();
+    expect(screen.getAllByRole("img", { name: /Upstairs living room/ }).length).toBeGreaterThan(0);
+    expect(screen.getByRole("button", { name: "See all 18 photos" })).toBeInTheDocument();
+    expect(screen.queryByRole("heading", { name: "Outside and Around Town" })).not.toBeInTheDocument();
+  });
+
+  it("uses the logo alone when a stay has no photos yet", () => {
+    const property = previewProperty("onion-ranch");
+    expect(property).not.toBeNull();
+    render(<PropertyHome property={property!} />);
+
+    expect(screen.getAllByRole("heading", { name: "The Onion Ranch" })).toHaveLength(1);
+    expect(screen.getAllByRole("img", { name: "Logo for The Onion Ranch" })).toHaveLength(1);
     expect(screen.queryByRole("heading", { name: "A Look Around" })).not.toBeInTheDocument();
     expect(screen.queryByRole("button", { name: /See all/ })).not.toBeInTheDocument();
   });

@@ -66,13 +66,41 @@ describe("property photos", () => {
     const shown = sets.reduce((count, set) => count + set.photos.length, 0);
     expect(shown).toBeGreaterThanOrEqual(8);
     expect(shown).toBeLessThanOrEqual(10);
-    expect(photoSets("shallot-chalet")).toEqual([]);
+  });
+
+  it("loads The Shallot Chalet gallery from its folder", () => {
+    const { hero, photos } = getPropertyPhotos("shallot-chalet");
+    const directory = path.join(process.cwd(), "public/images/properties/shallot-chalet");
+    const files = readdirSync(directory)
+      .filter((file) => file.endsWith(".webp"))
+      .sort();
+
+    expect(hero?.file).toBe("living-room.webp");
+    expect(photos.map((photo) => photo.file).sort()).toEqual(files);
+    expect(photos).toHaveLength(18);
+    expect(photosForSection("shallot-chalet", "house-guide").map((photo) => photo.file)[0]).toBe("kitchen.webp");
+    expect(photosForSection("shallot-chalet", "amenities").map((photo) => photo.file)).toEqual([
+      "kitchen-wide.webp",
+    ]);
+    expect(photosForSection("shallot-chalet", "wifi").map((photo) => photo.file)).toEqual([
+      "living-room-wide.webp",
+    ]);
+    expect(photosForSection("shallot-chalet", "getting-here")).toEqual([]);
+    expect(photoSets("shallot-chalet").map((set) => set.label)).toEqual([
+      "Living Spaces",
+      "Kitchen and Dining",
+      "Bedrooms",
+      "Bath and Laundry",
+    ]);
+    for (const photo of photos) {
+      expect(photo.alt.toLowerCase()).not.toMatch(/keypad|lockbox|door code/);
+    }
   });
 
   it("returns nothing until another stay adds a photo folder", () => {
-    expect(getPropertyPhotos("shallot-chalet")).toEqual({ hero: null, photos: [], groups: [] });
     expect(getPropertyPhotos("onion-ranch")).toEqual({ hero: null, photos: [], groups: [] });
     expect(getPropertyPhotos("../secrets")).toEqual({ hero: null, photos: [], groups: [] });
-    expect(photosForSection("shallot-chalet", "house-guide")).toEqual([]);
+    expect(photosForSection("onion-ranch", "house-guide")).toEqual([]);
+    expect(photoSets("onion-ranch")).toEqual([]);
   });
 });

@@ -1,0 +1,194 @@
+{
+  "hero": "living-room.webp",
+  "groups": [
+    {
+      "id": "living",
+      "label": "Living Spaces",
+      "preview": [
+        "living-room.webp",
+        "living-room-sofa.webp",
+        "living-room-wide.webp"
+      ]
+    },
+    {
+      "id": "kitchen-dining",
+      "label": "Kitchen and Dining",
+      "preview": [
+        "kitchen-wide.webp",
+        "kitchen.webp",
+        "kitchen-island.webp"
+      ]
+    },
+    {
+      "id": "bedrooms",
+      "label": "Bedrooms",
+      "preview": [
+        "bedroom-armchair.webp"
+      ]
+    },
+    {
+      "id": "bath-laundry",
+      "label": "Bath and Laundry",
+      "preview": [
+        "bathroom.webp",
+        "bathroom-shower.webp"
+      ]
+    }
+  ],
+  "photos": [
+    {
+      "file": "living-room.webp",
+      "width": 1600,
+      "height": 1069,
+      "alt": "Upstairs living room with a brown leather sofa, a wood coffee table, a striped rug, and the stair railing.",
+      "sections": [],
+      "group": "living"
+    },
+    {
+      "file": "living-room-wide.webp",
+      "width": 1600,
+      "height": 1069,
+      "alt": "Living room with a brown leather sofa, a wood coffee table, a television on a slatted wood stand, and a Ski Vermont poster.",
+      "sections": [
+        "wifi"
+      ],
+      "group": "living"
+    },
+    {
+      "file": "living-room-sofa.webp",
+      "width": 1600,
+      "height": 1069,
+      "alt": "Brown leather sofa and wood coffee table in the living room, with a framed poster and a floor lamp.",
+      "sections": [],
+      "group": "living"
+    },
+    {
+      "file": "living-room-tv.webp",
+      "width": 1600,
+      "height": 1069,
+      "alt": "Living room seating with a television on a wood stand, a brown leather chair, and a framed poster.",
+      "sections": [],
+      "group": "living"
+    },
+    {
+      "file": "kitchen-wide.webp",
+      "width": 1600,
+      "height": 1069,
+      "alt": "Kitchen with a white island, a granite countertop, beige curtains, and a mountain print on the wall.",
+      "sections": [
+        "amenities"
+      ],
+      "group": "kitchen-dining"
+    },
+    {
+      "file": "kitchen-island.webp",
+      "width": 1600,
+      "height": 1069,
+      "alt": "Kitchen island with three stools, a black refrigerator, white cabinets, and a microwave on a side cabinet.",
+      "sections": [],
+      "group": "kitchen-dining"
+    },
+    {
+      "file": "kitchen.webp",
+      "width": 1600,
+      "height": 1069,
+      "alt": "Kitchen with a black refrigerator, a white electric stove, a double sink, and white cabinets.",
+      "sections": [
+        "house-guide"
+      ],
+      "group": "kitchen-dining"
+    },
+    {
+      "file": "stairs.webp",
+      "width": 1600,
+      "height": 1069,
+      "alt": "Wooden stairs with a metal handrail, seen from the bottom looking up.",
+      "sections": [
+        "house-guide"
+      ],
+      "group": "living"
+    },
+    {
+      "file": "kitchen-stove.webp",
+      "width": 1600,
+      "height": 1069,
+      "alt": "White electric stove and granite counters in the kitchen, with subway tile and a mountain print.",
+      "sections": [],
+      "group": "kitchen-dining"
+    },
+    {
+      "file": "kitchen-and-stairs.webp",
+      "width": 1600,
+      "height": 1069,
+      "alt": "Kitchen island in the foreground, with the stairs and a white door behind it.",
+      "sections": [],
+      "group": "kitchen-dining"
+    },
+    {
+      "file": "bathroom.webp",
+      "width": 1600,
+      "height": 1069,
+      "alt": "Bathroom with a white vanity, a round mirror, a toilet, and a gray towel.",
+      "sections": [
+        "house-guide"
+      ],
+      "group": "bath-laundry"
+    },
+    {
+      "file": "bathroom-vanity.webp",
+      "width": 1600,
+      "height": 1069,
+      "alt": "Bathroom vanity with a round mirror, a black faucet, and linen curtains over the window.",
+      "sections": [],
+      "group": "bath-laundry"
+    },
+    {
+      "file": "bathroom-shower.webp",
+      "width": 1600,
+      "height": 1069,
+      "alt": "Bathroom with a tub and shower, a white curtain, a toilet, and a white paneled door.",
+      "sections": [],
+      "group": "bath-laundry"
+    },
+    {
+      "file": "bedroom-armchair.webp",
+      "width": 1600,
+      "height": 1069,
+      "alt": "Bedroom with a cream coverlet, a wood armchair, a wood dresser, and linen curtains.",
+      "sections": [],
+      "group": "bedrooms"
+    },
+    {
+      "file": "bedroom-dresser.webp",
+      "width": 1600,
+      "height": 1069,
+      "alt": "Bedroom with a patterned coverlet, a wood dresser, a nightstand, and a tall plant.",
+      "sections": [],
+      "group": "bedrooms"
+    },
+    {
+      "file": "bedroom-closet.webp",
+      "width": 1600,
+      "height": 1069,
+      "alt": "Bedroom with a patterned coverlet, a white closet, a luggage rack, and linen curtains.",
+      "sections": [],
+      "group": "bedrooms"
+    },
+    {
+      "file": "bedroom-gray.webp",
+      "width": 1600,
+      "height": 1069,
+      "alt": "Bedroom with a gray coverlet, a wood desk and chair, a wood dresser, and a round mirror.",
+      "sections": [],
+      "group": "bedrooms"
+    },
+    {
+      "file": "bedroom-desk.webp",
+      "width": 1600,
+      "height": 1069,
+      "alt": "Bedroom with a gray coverlet and a blue desk with a chair and a lamp.",
+      "sections": [],
+      "group": "bedrooms"
+    }
+  ]
+}

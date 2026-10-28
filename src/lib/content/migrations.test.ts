@@ -17,6 +17,10 @@ const listing = readFileSync(
   path.join(root, "supabase/migrations/20261028143000_raddish_roost_listing.sql"),
   "utf8",
 );
+const shallotListing = readFileSync(
+  path.join(root, "supabase/migrations/20261028170000_shallot_chalet_listing.sql"),
+  "utf8",
+);
 
 const tables = [
   "locations",
@@ -111,5 +115,41 @@ describe("Raddish Roost listing sql", () => {
     expect(listing).not.toContain("shallot-chalet");
     expect(listing).not.toMatch(/insert into public\.property_wifi/i);
     expect(listing).not.toMatch(/\b\d{1,5}\s+Main Street\b/);
+  });
+});
+
+describe("Shallot Chalet listing sql", () => {
+  it("publishes the listing facts for this stay only", () => {
+    expect(shallotListing).toContain("slug = 'shallot-chalet'");
+    expect(shallotListing).toContain("The Shallot Chalet");
+    expect(shallotListing).toContain("A cozy two-level stay steps from the Winooski Circle");
+    expect(shallotListing).toContain("Winooski, Vermont");
+    expect(shallotListing).toContain("https://www.airbnb.com/rooms/1064639214342902592");
+    expect(shallotListing).toContain(
+      "https://www.airbnb.com/contact_host/1064639214342902592/send_message",
+    );
+    for (const name of [
+      "Waterworks",
+      "Our House",
+      "Mule Bar",
+      "Onion City Chicken & Oysters",
+      "Four Quarters Brewery",
+      "Scout Coffee",
+      "Winooski Falls and river trails",
+    ]) {
+      expect(shallotListing).toContain(name);
+    }
+    expect(shallotListing).toContain("where p.slug = 'shallot-chalet'");
+    expect(shallotListing).toContain("food_drink");
+    expect(shallotListing).toContain("outdoors");
+    expect(shallotListing).toContain("Details coming soon");
+    expect(shallotListing).toContain("usually reply within an hour");
+    expect(shallotListing).not.toContain("[Sample]");
+    expect(shallotListing).not.toContain("—");
+    expect(shallotListing).not.toContain("raddish-roost");
+    expect(shallotListing).not.toContain("onion-ranch");
+    expect(shallotListing).not.toMatch(/insert into public\.property_wifi/i);
+    expect(shallotListing).not.toMatch(/keypad|lockbox|door code/i);
+    expect(shallotListing).not.toMatch(/\b\d{1,5}\s+\w+\s+(street|st|road|rd|avenue|ave|lane|ln)\b/i);
   });
 });
