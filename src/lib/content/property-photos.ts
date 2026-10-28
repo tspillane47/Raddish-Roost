@@ -57,7 +57,7 @@ const EMPTY = { hero: null, photos: [] as PropertyPhoto[], groups: [] as PhotoGr
 
 /**
  * Photos live in public/images/properties/{slug}/manifest.json.
- * A stay with no folder, including The Shallot Chalet and The Onion Ranch, gets none.
+ * A stay with no folder gets none.
  */
 export function getPropertyPhotos(slug: string): {
   hero: PropertyPhoto | null;

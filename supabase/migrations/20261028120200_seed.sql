@@ -11,13 +11,13 @@ insert into public.locations (id, name, notes)
 values
   (
     'a1000000-0000-4000-8000-000000000001',
-    'Shared building',
-    '[Sample] The Raddish Roost and The Onion Ranch share this building. Add the town and address when you have them.'
+    'Main Street, Waterbury, Vermont',
+    '[Sample] The Raddish Roost is on its own on Main Street in Waterbury, Vermont. No street number yet.'
   ),
   (
     'a1000000-0000-4000-8000-000000000002',
-    'Shallot Chalet location',
-    '[Sample] The Shallot Chalet is in a different town. Add the town and address when you have them.'
+    'Winooski, Vermont',
+    '[Sample] The Shallot Chalet and The Onion Ranch share this building in Winooski, Vermont. No street address yet.'
   );
 
 insert into public.properties (
@@ -53,7 +53,7 @@ values
   ),
   (
     'b2000000-0000-4000-8000-000000000003',
-    'a1000000-0000-4000-8000-000000000001',
+    'a1000000-0000-4000-8000-000000000002',
     'onion-ranch',
     'The Onion Ranch',
     '[Sample] A short description will go here.',

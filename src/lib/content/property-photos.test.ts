@@ -97,10 +97,37 @@ describe("property photos", () => {
     }
   });
 
-  it("returns nothing until another stay adds a photo folder", () => {
-    expect(getPropertyPhotos("onion-ranch")).toEqual({ hero: null, photos: [], groups: [] });
+  it("loads The Onion Ranch gallery from its folder", () => {
+    const { hero, photos } = getPropertyPhotos("onion-ranch");
+    const directory = path.join(process.cwd(), "public/images/properties/onion-ranch");
+    const files = readdirSync(directory)
+      .filter((file) => file.endsWith(".webp"))
+      .sort();
+
+    expect(hero?.file).toBe("front-entrance.webp");
+    expect(photos.map((photo) => photo.file).sort()).toEqual(files);
+    expect(photos).toHaveLength(16);
+    expect(photosForSection("onion-ranch", "house-guide").map((photo) => photo.file)[0]).toBe("kitchen.webp");
+    expect(photosForSection("onion-ranch", "getting-here").map((photo) => photo.file)).toEqual([
+      "front-entrance.webp",
+    ]);
+    expect(photosForSection("onion-ranch", "wifi").map((photo) => photo.file)).toEqual(["workspace.webp"]);
+    expect(photoSets("onion-ranch").map((set) => set.label)).toEqual([
+      "Living Spaces",
+      "Kitchen and Dining",
+      "Bedrooms",
+      "Bath and Laundry",
+      "Outside and Around Town",
+    ]);
+    for (const photo of photos) {
+      expect(photo.alt.toLowerCase()).not.toMatch(/keypad|lockbox|door code|\b122\b/);
+      expect(photo.alt).not.toMatch(/—|–/);
+    }
+  });
+
+  it("returns nothing for a slug with no photo folder", () => {
     expect(getPropertyPhotos("../secrets")).toEqual({ hero: null, photos: [], groups: [] });
-    expect(photosForSection("onion-ranch", "house-guide")).toEqual([]);
-    expect(photoSets("onion-ranch")).toEqual([]);
+    expect(photosForSection("extra-cabin", "house-guide")).toEqual([]);
+    expect(photoSets("extra-cabin")).toEqual([]);
   });
 });

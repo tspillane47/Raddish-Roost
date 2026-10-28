@@ -1,8 +1,8 @@
 -- The Raddish Roost listing content.
 -- Paste once in the Supabase SQL Editor after the original three files have already run.
 -- This updates existing rows. It does not change the seed file and it does not rewrite
--- The Shallot Chalet. The shared building location is updated, and the four Main Street
--- favorites are linked to both The Raddish Roost and The Onion Ranch.
+-- The Shallot Chalet. The Raddish Roost is on its own on Main Street in Waterbury.
+-- The four Main Street favorites are linked to The Raddish Roost only.
 -- The spelling "The Raddish Roost" is intentional.
 -- No door code is stored. Wi-Fi network details stay in the guest's Airbnb messages.
 
@@ -17,7 +17,7 @@ $$;
 update public.locations
 set
   name = 'Main Street, Waterbury, Vermont',
-  notes = 'The Raddish Roost and The Onion Ranch share this building on Main Street in Waterbury, Vermont. No street number yet.'
+  notes = 'The Raddish Roost is on its own on Main Street in Waterbury, Vermont. No street number yet.'
 where id = (
   select location_id from public.properties where slug = 'raddish-roost'
 );
@@ -72,7 +72,7 @@ set
   title = 'Finding the house',
   body = jsonb_build_object(
     'type', 'rich_text',
-    'markdown', $copy$The Raddish Roost is on Main Street in Waterbury, Vermont. It shares the building with The Onion Ranch.
+    'markdown', $copy$The Raddish Roost is on Main Street in Waterbury, Vermont. It is on its own.
 
 You can walk to downtown restaurants, cafes, and a grocery store.
 
@@ -526,7 +526,7 @@ join (
     ('c3000000-0000-4000-8000-000000000003'::uuid, 30),
     ('c3000000-0000-4000-8000-000000000004'::uuid, 40)
 ) as r(recommendation_id, sort_order) on true
-where p.slug in ('raddish-roost', 'onion-ranch')
+where p.slug = 'raddish-roost'
 on conflict (property_id, recommendation_id) do update
 set
   is_featured = true,

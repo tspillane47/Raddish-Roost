@@ -21,6 +21,10 @@ const shallotListing = readFileSync(
   path.join(root, "supabase/migrations/20261028170000_shallot_chalet_listing.sql"),
   "utf8",
 );
+const onionListing = readFileSync(
+  path.join(root, "supabase/migrations/20261028190000_onion_ranch_listing.sql"),
+  "utf8",
+);
 
 const tables = [
   "locations",
@@ -105,7 +109,9 @@ describe("Raddish Roost listing sql", () => {
     for (const name of ["The Reservoir", "Prohibition Pig", "Blackback Pub", "Hen of the Wood"]) {
       expect(listing).toContain(name);
     }
-    expect(listing).toContain("onion-ranch");
+    expect(listing).toContain("It is on its own.");
+    expect(listing).not.toContain("onion-ranch");
+    expect(listing).not.toContain("The Onion Ranch");
     expect(listing).toContain("Details coming soon");
     expect(listing).toContain("food_drink");
     expect(listing).not.toContain("[Sample]");
@@ -139,6 +145,7 @@ describe("Shallot Chalet listing sql", () => {
     ]) {
       expect(shallotListing).toContain(name);
     }
+    expect(shallotListing).toContain("shares the building with The Onion Ranch");
     expect(shallotListing).toContain("where p.slug = 'shallot-chalet'");
     expect(shallotListing).toContain("food_drink");
     expect(shallotListing).toContain("outdoors");
@@ -151,5 +158,49 @@ describe("Shallot Chalet listing sql", () => {
     expect(shallotListing).not.toMatch(/insert into public\.property_wifi/i);
     expect(shallotListing).not.toMatch(/keypad|lockbox|door code/i);
     expect(shallotListing).not.toMatch(/\b\d{1,5}\s+\w+\s+(street|st|road|rd|avenue|ave|lane|ln)\b/i);
+  });
+});
+
+describe("onion ranch listing migration", () => {
+  it("publishes the real listing, separates Waterbury, and shares Winooski", () => {
+    expect(onionListing).toContain("onion-ranch");
+    expect(onionListing).toContain("The Onion Ranch");
+    expect(onionListing).toContain("A cozy two-bedroom in the heart of downtown Winooski");
+    expect(onionListing).toContain("Winooski, Vermont");
+    expect(onionListing).toContain("Main Street, Waterbury, Vermont");
+    expect(onionListing).toContain("It is on its own.");
+    expect(onionListing).toContain("https://www.airbnb.com/rooms/862913226430309914");
+    expect(onionListing).toContain(
+      "https://www.airbnb.com/contact_host/862913226430309914/send_message",
+    );
+    expect(onionListing).toContain("usually reply within an hour");
+    expect(onionListing).toContain("Free parking on site.");
+    expect(onionListing).toContain("Netflix");
+    expect(onionListing).toContain("HBO");
+    expect(onionListing).toContain("$1,000");
+    expect(onionListing).toContain("Pets are welcome.");
+    for (const name of [
+      "Waterworks",
+      "Our House",
+      "Mule Bar",
+      "Onion City Chicken & Oysters",
+      "Four Quarters Brewery",
+      "Scout Coffee",
+      "Winooski Falls and river trails",
+    ]) {
+      expect(onionListing).toContain(name);
+    }
+    expect(onionListing).toContain("where p.slug in ('shallot-chalet', 'onion-ranch')");
+    expect(onionListing).toContain("c3000000-0000-4000-8000-000000000001");
+    expect(onionListing).toContain("c3000000-0000-4000-8000-000000000004");
+    expect(onionListing).toContain("and p.slug = 'onion-ranch'");
+    expect(onionListing).toContain("food_drink");
+    expect(onionListing).toContain("outdoors");
+    expect(onionListing).toContain("Details coming soon");
+    expect(onionListing).not.toContain("[Sample]");
+    expect(onionListing).not.toContain("—");
+    expect(onionListing).not.toMatch(/insert into public\.property_wifi/i);
+    expect(onionListing).not.toMatch(/keypad|lockbox|door code/i);
+    expect(onionListing).not.toMatch(/\b\d{1,5}\s+\w+\s+(street|st|road|rd|avenue|ave|lane|ln)\b/i);
   });
 });

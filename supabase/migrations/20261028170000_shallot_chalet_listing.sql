@@ -15,7 +15,7 @@ $$;
 update public.locations
 set
   name = 'Winooski, Vermont',
-  notes = 'The Shallot Chalet is in Winooski, Vermont. No street address yet. It does not share a building with the other stays.'
+  notes = 'The Shallot Chalet and The Onion Ranch share this building in Winooski, Vermont. No street address yet.'
 where id = (
   select location_id from public.properties where slug = 'shallot-chalet'
 );
@@ -70,7 +70,7 @@ set
   title = 'Finding the house',
   body = jsonb_build_object(
     'type', 'rich_text',
-    'markdown', $copy$The Shallot Chalet is in Winooski, Vermont. It does not share a building with the other stays.
+    'markdown', $copy$The Shallot Chalet is in Winooski, Vermont. It shares the building with The Onion Ranch.
 
 You can walk to the Winooski Circle, with shops, bars, restaurants, and coffee shops. The Winooski River and Winooski Falls are nearby, with waterfalls and trails. Burlington is close by.
 

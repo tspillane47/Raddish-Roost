@@ -1,0 +1,174 @@
+{
+  "hero": "front-entrance.webp",
+  "groups": [
+    {
+      "id": "living",
+      "label": "Living Spaces",
+      "preview": [
+        "living-room.webp",
+        "workspace.webp"
+      ]
+    },
+    {
+      "id": "kitchen-dining",
+      "label": "Kitchen and Dining",
+      "preview": [
+        "kitchen-and-dining.webp",
+        "kitchen.webp",
+        "dining-table.webp"
+      ]
+    },
+    {
+      "id": "bedrooms",
+      "label": "Bedrooms",
+      "preview": [
+        "bedroom-navy-wide.webp"
+      ]
+    },
+    {
+      "id": "bath-laundry",
+      "label": "Bath and Laundry",
+      "preview": [
+        "bathroom.webp",
+        "bathroom-shower.webp"
+      ]
+    },
+    {
+      "id": "outside",
+      "label": "Outside and Around Town",
+      "preview": [
+        "front-entrance.webp"
+      ]
+    }
+  ],
+  "photos": [
+    {
+      "file": "front-entrance.webp",
+      "width": 1600,
+      "height": 1150,
+      "alt": "Light blue house with a white front door, a welcome mat, and a gravel walkway.",
+      "sections": ["getting-here", "check-in"],
+      "group": "outside"
+    },
+    {
+      "file": "living-room.webp",
+      "width": 1600,
+      "height": 1067,
+      "alt": "Living room with a brown sofa, a wood coffee table, a floor lamp, and a patterned rug.",
+      "sections": [],
+      "group": "living"
+    },
+    {
+      "file": "dining-room.webp",
+      "width": 1600,
+      "height": 1067,
+      "alt": "Dining area with a wood table, white chairs, and a view into the living room.",
+      "sections": [],
+      "group": "kitchen-dining"
+    },
+    {
+      "file": "dining-table.webp",
+      "width": 1600,
+      "height": 1121,
+      "alt": "Dining table with white chairs, and a doorway into the workspace.",
+      "sections": [],
+      "group": "kitchen-dining"
+    },
+    {
+      "file": "kitchen-and-dining.webp",
+      "width": 1600,
+      "height": 1088,
+      "alt": "White kitchen seen from the dining table.",
+      "sections": [],
+      "group": "kitchen-dining"
+    },
+    {
+      "file": "kitchen.webp",
+      "width": 1600,
+      "height": 1162,
+      "alt": "Kitchen with a white stove, a range hood, white cabinets, and a drip coffee maker.",
+      "sections": ["house-guide", "amenities"],
+      "group": "kitchen-dining"
+    },
+    {
+      "file": "workspace.webp",
+      "width": 1600,
+      "height": 1067,
+      "alt": "Workspace with a wood desk, a monitor, a desk lamp, and blue botanical wallpaper.",
+      "sections": ["amenities", "wifi"],
+      "group": "living"
+    },
+    {
+      "file": "bedroom-cream.webp",
+      "width": 1600,
+      "height": 1067,
+      "alt": "Bedroom with a cream coverlet, beige curtains, and a blue-gray rug.",
+      "sections": [],
+      "group": "bedrooms"
+    },
+    {
+      "file": "bedroom-cream-side.webp",
+      "width": 1600,
+      "height": 1067,
+      "alt": "Bedroom with a cream coverlet, a wood side table, and a lamp.",
+      "sections": [],
+      "group": "bedrooms"
+    },
+    {
+      "file": "bedroom-dresser.webp",
+      "width": 1600,
+      "height": 1067,
+      "alt": "Bedroom with a cream coverlet, a pine dresser, and a luggage rack.",
+      "sections": [],
+      "group": "bedrooms"
+    },
+    {
+      "file": "bedroom-navy.webp",
+      "width": 1600,
+      "height": 1067,
+      "alt": "Bedroom with a navy coverlet, a white dresser, and a framed mirror.",
+      "sections": [],
+      "group": "bedrooms"
+    },
+    {
+      "file": "bedroom-navy-wide.webp",
+      "width": 1600,
+      "height": 1067,
+      "alt": "Bedroom with a navy coverlet, three framed paintings, and a wicker chest.",
+      "sections": [],
+      "group": "bedrooms"
+    },
+    {
+      "file": "stairs.webp",
+      "width": 1600,
+      "height": 1147,
+      "alt": "Stairs with a wood handrail, seen from the top looking down.",
+      "sections": ["house-guide"],
+      "group": "living"
+    },
+    {
+      "file": "bathroom.webp",
+      "width": 1600,
+      "height": 1218,
+      "alt": "Bathroom with a toilet, gray towels, and a blue floral shower curtain.",
+      "sections": ["house-guide"],
+      "group": "bath-laundry"
+    },
+    {
+      "file": "bathroom-shower.webp",
+      "width": 1600,
+      "height": 1058,
+      "alt": "Bathroom with a pedestal sink and a white shower.",
+      "sections": [],
+      "group": "bath-laundry"
+    },
+    {
+      "file": "bathroom-sink.webp",
+      "width": 1600,
+      "height": 1133,
+      "alt": "Pedestal sink with a black-framed mirror and a gray towel.",
+      "sections": [],
+      "group": "bath-laundry"
+    }
+  ]
+}
