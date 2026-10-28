@@ -33,6 +33,10 @@ const vrboLinks = readFileSync(
   path.join(root, "supabase/migrations/20261028220000_vrbo_booking_links.sql"),
   "utf8",
 );
+const thingsToDo = readFileSync(
+  path.join(root, "supabase/migrations/20261028233000_winooski_things_to_do.sql"),
+  "utf8",
+);
 
 const tables = [
   "locations",
@@ -226,6 +230,69 @@ describe("booking links migration", () => {
     expect(bookingLinks).not.toContain("channel = 'vrbo'");
     expect(bookingLinks).not.toMatch(/http:\/\//);
     expect(bookingLinks).not.toContain("—");
+  });
+});
+
+describe("Winooski things to do migration", () => {
+  it("saves the guidebook places for both Winooski stays", () => {
+    const readable = thingsToDo.replaceAll("''", "'");
+    for (const name of [
+      "Waterworks Food + Drink",
+      "Pho Hong",
+      "Trattoria Delia",
+      "Restaurant Poco",
+      "Santiago's Cuban Cuisine",
+      "Honey Road",
+      "Hen of the Wood (Burlington)",
+      "Shanty on the Shore",
+      "Onion City Chicken & Oysters",
+      "Taco Gordo",
+      "Farmhouse Tap & Grill",
+      "Pascolo Ristorante",
+      "A Single Pebble",
+      "Leunig's Bistro",
+      "May Day",
+      "Spot on the Dock",
+      "Four Quarters Brewing",
+      "Foam Brewers",
+      "Burlington Beer Co.",
+      "Devil Takes a Holiday",
+      "Zero Gravity Brewery",
+      "The 126",
+      "Smugglers' Notch",
+      "Stowe Mountain Resort",
+      "Sugarbush Resort",
+      "Bolton Valley Resort",
+      "Trapp Family Lodge",
+      "Shelburne Farms",
+      "Church Street",
+      "Spirit of Ethan Allen",
+      "Upper Hollow Road",
+      "Mount Philo",
+      "Indian Brook Reservoir",
+      "Sterling Pond Trail",
+      "Burnt Rock Mountain",
+      "Camel's Hump",
+      "Vermont Comedy Club",
+      "Catamount Outdoor Family Center",
+      "Shy Guy Gelato",
+      "Mr. Creemee Stand",
+    ]) {
+      expect(readable).toContain(name);
+    }
+    expect(readable.replaceAll("Hen of the Wood (Burlington)", "")).not.toContain("Hen of the Wood");
+    expect(thingsToDo).toContain("where p.slug in ('shallot-chalet', 'onion-ranch')");
+    expect(thingsToDo).not.toContain("raddish-roost");
+    expect(thingsToDo).toContain("subcategory");
+    expect(thingsToDo).toContain("'ski_ride'");
+    expect(thingsToDo).toContain("'sweet_treats'");
+    expect(thingsToDo).toContain("is_featured");
+    expect(thingsToDo).toContain("Waterworks|Waterworks Food + Drink");
+    expect(thingsToDo).toContain("Four Quarters Brewery|Four Quarters Brewing");
+    expect(thingsToDo).toContain("https://www.google.com/maps/search/");
+    expect(thingsToDo).not.toContain("—");
+    expect(thingsToDo).not.toMatch(/http:\/\//);
+    expect(thingsToDo).not.toMatch(/\b\d{1,5}\s+\w+\s+(street|st|road|rd|avenue|ave|lane|ln)\b/i);
   });
 });
 

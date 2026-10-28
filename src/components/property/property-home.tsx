@@ -44,7 +44,11 @@ export function PropertyHome({ property }: { property: PropertyGuide }) {
                 return (
                   <li key={section.slug}>
                     <Link
-                      href={`/${property.slug}/guide/${section.slug}`}
+                      href={
+                        section.slug === "local-recommendations"
+                          ? `/${property.slug}/explore`
+                          : `/${property.slug}/guide/${section.slug}`
+                      }
                       className="flex min-h-24 items-stretch gap-4 rounded-2xl bg-beige/50 p-4 focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-forest"
                     >
                       {thumb ? (

@@ -35,6 +35,10 @@ describe("PropertyHome", () => {
     expect(screen.getByRole("heading", { name: "Outside and Around Town" })).toBeInTheDocument();
     expect(screen.queryByRole("button", { name: "Book Now" })).not.toBeInTheDocument();
     expect(screen.getByRole("link", { name: /House Guide/ })).toHaveAttribute("href", "/raddish-roost/guide/house-guide");
+    expect(screen.getByRole("link", { name: /Local Recommendations/ })).toHaveAttribute(
+      "href",
+      "/raddish-roost/explore",
+    );
     expect(screen.getByRole("link", { name: /Stay With Us Again/ })).toBeInTheDocument();
 
     fireEvent.click(screen.getByRole("button", { name: "See all 27 photos" }));
