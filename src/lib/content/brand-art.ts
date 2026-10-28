@@ -5,6 +5,13 @@ export const COLLECTION_HERO = {
   alt: "An onion cowboy, a shallot skier, and a raddish snowboarder in a Vermont mountain scene",
 } as const;
 
+export const WELCOME_BANNER = {
+  src: "/images/brand/banner.webp",
+  width: 2164,
+  height: 703,
+  alt: "Welcome to Vermont. Make Yourself at Home. Everything you need for a wonderful stay, all in one place.",
+} as const;
+
 export type BrandLogo = {
   src: string;
   width: number;

@@ -1,8 +1,9 @@
 import { Suspense } from "react";
+import Image from "next/image";
 import { CollectionHero } from "@/components/homepage/collection-hero";
 import { PropertyCardFallback, PropertyCardGrid } from "@/components/homepage/property-card";
 import { PreviewBanner } from "@/components/layout/preview-banner";
-import { orderLikeArtwork } from "@/lib/content/brand-art";
+import { orderLikeArtwork, WELCOME_BANNER } from "@/lib/content/brand-art";
 import { getPublishedProperties } from "@/lib/data/properties";
 
 export default function HomePage() {
@@ -12,16 +13,20 @@ export default function HomePage() {
         <PreviewSlot />
       </Suspense>
       <CollectionHero />
-      <div className="mx-auto w-full max-w-6xl px-5 py-14 md:py-20">
-        <h1 className="max-w-3xl font-heading text-4xl leading-tight text-charcoal md:text-6xl">
-          Welcome to Vermont.
-          <span className="block">Make Yourself at Home.</span>
-        </h1>
-        <p className="mt-5 max-w-xl text-lg leading-8">
-          Everything you need for a wonderful stay, all in one place.
-        </p>
-        <div className="mt-6 h-px w-16 bg-terracotta" aria-hidden="true" />
-        <h2 id="where-staying" className="mt-14 font-heading text-3xl text-forest md:text-4xl">
+      <div className="mx-auto w-full max-w-6xl px-5 pb-16 pt-8 md:pb-20 md:pt-12">
+        <h1 className="sr-only">Welcome to Vermont. Make Yourself at Home.</h1>
+        <div className="mx-auto w-full max-w-4xl">
+          <Image
+            src={WELCOME_BANNER.src}
+            alt={WELCOME_BANNER.alt}
+            width={WELCOME_BANNER.width}
+            height={WELCOME_BANNER.height}
+            sizes="(min-width: 896px) 56rem, 100vw"
+            className="h-auto w-full"
+            style={{ width: "100%", height: "auto" }}
+          />
+        </div>
+        <h2 id="where-staying" className="mt-10 font-heading text-3xl text-forest md:mt-14 md:text-4xl">
           Where are you staying?
         </h2>
         <div className="mt-8">

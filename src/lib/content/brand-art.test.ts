@@ -1,10 +1,11 @@
 import { describe, expect, it } from "vitest";
-import { ARTWORK_ORDER, brandLogo, orderLikeArtwork } from "@/lib/content/brand-art";
+import { ARTWORK_ORDER, WELCOME_BANNER, brandLogo, orderLikeArtwork } from "@/lib/content/brand-art";
 
 describe("brand artwork", () => {
   it("keeps the painted order and the Raddish logo", () => {
     expect(ARTWORK_ORDER).toEqual(["onion-ranch", "shallot-chalet", "raddish-roost"]);
     expect(brandLogo("raddish-roost")?.src).toBe("/images/brand/logo-raddish-roost.webp");
+    expect(WELCOME_BANNER.src).toBe("/images/brand/banner.webp");
     expect(brandLogo("raddish-roost")?.alt).toBe("Logo for The Raddish Roost");
     expect(brandLogo("somewhere-else")).toBeNull();
 
