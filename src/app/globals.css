@@ -149,6 +149,22 @@
   }
 }
 
+.photo-viewer {
+  width: 100vw;
+  height: 100dvh;
+  max-width: none;
+  max-height: none;
+  margin: 0;
+  padding: 0;
+  border: 0;
+  background: #262626;
+  color: #f7f4ed;
+}
+
+.photo-viewer::backdrop {
+  background: #262626;
+}
+
 @media (max-width: 767px) {
   body:has([data-property-dock]) {
     padding-bottom: calc(4.75rem + env(safe-area-inset-bottom));

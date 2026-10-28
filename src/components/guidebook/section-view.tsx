@@ -1,5 +1,7 @@
 import Link from "next/link";
 import { SectionBlocks } from "@/components/guidebook/section-blocks";
+import { PropertyGallery } from "@/components/property/property-gallery";
+import { photosForSection } from "@/lib/content/property-photos";
 import { isMarkedSample } from "@/lib/data/map-content";
 import type { GuideSectionDetail } from "@/types/content";
 
@@ -7,6 +9,7 @@ export function SectionView({ section }: { section: GuideSectionDetail }) {
   const sample =
     isMarkedSample(section.summary) ||
     section.blocks.some((block) => isMarkedSample(block.title) || blockHasSample(block));
+  const photos = photosForSection(section.propertySlug, section.slug);
 
   return (
     <article className="mx-auto w-full max-w-3xl px-5 py-10">
@@ -29,6 +32,11 @@ export function SectionView({ section }: { section: GuideSectionDetail }) {
         </div>
         {section.summary ? <p className="mt-4 text-lg leading-8">{section.summary}</p> : null}
       </header>
+      {photos.length > 0 ? (
+        <div className="mt-8">
+          <PropertyGallery photos={photos} />
+        </div>
+      ) : null}
       <div className="mt-10">
         <SectionBlocks blocks={section.blocks} />
       </div>

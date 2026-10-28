@@ -2,7 +2,9 @@ import Image from "next/image";
 import Link from "next/link";
 import { Essentials } from "@/components/property/essentials";
 import { PhotoPlaceholder } from "@/components/property/photo-placeholder";
+import { PropertyGallery } from "@/components/property/property-gallery";
 import { brandLogo } from "@/lib/content/brand-art";
+import { getPropertyPhotos, type PropertyPhoto } from "@/lib/content/property-photos";
 import { placeholderTone } from "@/lib/content/sections";
 import { isMarkedSample } from "@/lib/data/map-content";
 import type { PropertyGuide } from "@/types/content";
@@ -12,6 +14,8 @@ export function PropertyHome({ property }: { property: PropertyGuide }) {
     isMarkedSample(property.welcomeMessage) ||
     isMarkedSample(property.description) ||
     isMarkedSample(property.tagline);
+  const gallery = getPropertyPhotos(property.slug);
+  const parkingPhoto = gallery.photos.find((photo) => photo.sections.includes("parking")) ?? null;
 
   return (
     <article className="mx-auto w-full max-w-3xl px-5 py-10">
@@ -23,7 +27,7 @@ export function PropertyHome({ property }: { property: PropertyGuide }) {
           All stays
         </Link>
       </p>
-      <PropertyHeaderArt property={property} />
+      <PropertyHeaderArt property={property} hero={gallery.hero} />
       <header className="mt-8">
         <div className="flex items-start justify-between gap-3">
           <h1 className="font-heading text-4xl leading-tight text-charcoal md:text-5xl">
@@ -38,8 +42,13 @@ export function PropertyHome({ property }: { property: PropertyGuide }) {
         <p className="mt-4 font-heading text-2xl text-forest">{property.welcomeTitle}</p>
         <p className="mt-4 text-lg leading-8">{property.welcomeMessage}</p>
       </header>
+      {gallery.photos.length > 0 ? (
+        <div className="mt-12">
+          <PropertyGallery photos={gallery.photos} />
+        </div>
+      ) : null}
       <div className="mt-12">
-        <Essentials property={property} />
+        <Essentials property={property} parkingPhoto={parkingPhoto} />
       </div>
       <section id="guidebook" aria-labelledby="guidebook-heading" className="mt-14 scroll-mt-28">
         <h2 id="guidebook-heading" className="font-heading text-3xl text-forest">
@@ -72,7 +81,7 @@ export function PropertyHome({ property }: { property: PropertyGuide }) {
   );
 }
 
-function PropertyHeaderArt({ property }: { property: PropertyGuide }) {
+function PropertyHeaderArt({ property, hero }: { property: PropertyGuide; hero: PropertyPhoto | null }) {
   const logo = brandLogo(property.slug);
 
   return (
@@ -84,13 +93,23 @@ function PropertyHeaderArt({ property }: { property: PropertyGuide }) {
             alt={logo.alt}
             width={logo.width}
             height={logo.height}
-            preload
+            preload={!hero}
             className="h-auto w-full"
             sizes="(max-width: 768px) 80vw, 24rem"
           />
         </div>
       ) : null}
-      {property.heroImageUrl ? (
+      {hero ? (
+        <Image
+          src={hero.src}
+          alt={hero.alt}
+          width={hero.width}
+          height={hero.height}
+          preload
+          className="h-auto w-full rounded-xl"
+          sizes="(max-width: 768px) 100vw, 48rem"
+        />
+      ) : property.heroImageUrl ? (
         <Image
           src={property.heroImageUrl}
           alt={property.heroImageAlt}

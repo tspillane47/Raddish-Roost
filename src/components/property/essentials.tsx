@@ -1,11 +1,19 @@
 import { Car, KeyRound, LogOut, MessageCircle, Phone, Wifi } from "lucide-react";
+import Image from "next/image";
 import Link from "next/link";
+import type { GalleryPhoto } from "@/components/property/property-gallery";
 import type { PropertyGuide } from "@/types/content";
 
 const EMERGENCY_COPY =
   "For immediate danger, call 911. Property emergency contacts have not been added.";
 
-export function Essentials({ property }: { property: PropertyGuide }) {
+export function Essentials({
+  property,
+  parkingPhoto = null,
+}: {
+  property: PropertyGuide;
+  parkingPhoto?: GalleryPhoto | null;
+}) {
   const contact = property.contacts[0];
 
   return (
@@ -36,7 +44,19 @@ export function Essentials({ property }: { property: PropertyGuide }) {
           {property.checkOutTime ?? "Not added yet"}
         </Item>
         <Item id="parking" icon={Car} label="Parking">
-          {property.parkingSummary ?? "Not added yet"}
+          <span className="grid gap-3">
+            <span>{property.parkingSummary ?? "Not added yet"}</span>
+            {parkingPhoto ? (
+              <Image
+                src={parkingPhoto.src}
+                alt={parkingPhoto.alt}
+                width={parkingPhoto.width}
+                height={parkingPhoto.height}
+                className="aspect-[4/3] w-full rounded-lg object-cover"
+                sizes="(max-width: 640px) 100vw, 20rem"
+              />
+            ) : null}
+          </span>
         </Item>
         <Item icon={MessageCircle} label="Contact">
           {contact ? (

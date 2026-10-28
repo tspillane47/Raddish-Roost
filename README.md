@@ -53,7 +53,7 @@ The GitHub remote is `https://github.com/tspillane47/Raddish-Roost.git`. Commit 
 
 1. Open [vercel.com/new](https://vercel.com/new) and import **Raddish-Roost**.
 2. Framework preset: **Next.js**. Root directory: the repository root. Leave the build command as `next build`.
-3. Add these environment variables before the first deploy. Copy the values from `.env.local`. Do not paste the service role key.
+3. Add these environment variables before the first deploy, for **Production** and **Preview**. Copy the values from `.env.local`. Do not paste the service role key. If these two Supabase values are missing at build time, the live site shows the sample guidebook and a “Preview mode” banner even after the database has real copy.
 
 ```text
 NEXT_PUBLIC_SUPABASE_URL
