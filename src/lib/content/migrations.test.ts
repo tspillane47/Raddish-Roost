@@ -53,6 +53,10 @@ const checkInTimes = readFileSync(
   path.join(root, "supabase/migrations/20261029130000_check_in_times.sql"),
   "utf8",
 );
+const lateCheckout = readFileSync(
+  path.join(root, "supabase/migrations/20261029140000_late_checkout_portals.sql"),
+  "utf8",
+);
 
 const tables = [
   "locations",
@@ -415,6 +419,30 @@ describe("check-in times migration", () => {
     expect(checkInTimes).not.toContain("—");
     expect(checkInTimes).not.toMatch(/http:\/\//);
     expect(checkInTimes).not.toContain("shallot-chalet' then 'https");
+  });
+});
+
+describe("late checkout portal migration", () => {
+  it("saves one https portal link per stay and records late checkout clicks", () => {
+    expect(lateCheckout).toContain("20261029130000_check_in_times.sql");
+    expect(lateCheckout).toContain("'late_checkout_click'");
+    expect(lateCheckout).toContain("where event_name = 'guest_portal_click'");
+    const allowedEvents = lateCheckout.slice(lateCheckout.indexOf("event_name in ("));
+    expect(allowedEvents.slice(0, allowedEvents.indexOf(")"))).not.toContain("guest_portal_click");
+    expect(lateCheckout).toContain("set guest_portal_url = v.url");
+    for (const url of [
+      "https://stay.hospitable.com/7f2dc4a2-c49d-4fba-af96-4d92d9870635/login?returnUrl=%2F7f2dc4a2-c49d-4fba-af96-4d92d9870635%2Fupgrade%3F_t%3Dsc_su",
+      "https://stay.hospitable.com/53bf07d7-1177-43f0-bd73-36427f1b1289/upgrade?_t=sc_su",
+      "https://stay.hospitable.com/72b4adbe-4aa2-4d62-a077-55829eeba0d1/login?returnUrl=%2F72b4adbe-4aa2-4d62-a077-55829eeba0d1%2Fupgrade%3F_t%3Dsc_su",
+    ]) {
+      expect(lateCheckout).toContain(url);
+    }
+    expect(lateCheckout).toContain("'raddish-roost'");
+    expect(lateCheckout).toContain("'shallot-chalet'");
+    expect(lateCheckout).toContain("'onion-ranch'");
+    expect(lateCheckout).not.toContain("—");
+    expect(lateCheckout).not.toMatch(/http:\/\//);
+    expect(lateCheckout).not.toMatch(/insert into public\.properties/i);
   });
 });
 

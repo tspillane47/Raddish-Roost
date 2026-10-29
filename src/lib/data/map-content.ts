@@ -1,5 +1,5 @@
 import { toBookingLinks, type BookingRow } from "@/lib/content/booking-links";
-import { guestPortalUrl, RADDISH_GUEST_PORTAL_URL } from "@/lib/content/guest-portal";
+import { GUEST_PORTAL_URLS, guestPortalUrl } from "@/lib/content/guest-portal";
 import { ARRIVAL_STEPS, GUIDE_SECTIONS, SAMPLE_SECTION_SUMMARY } from "@/lib/content/sections";
 import { SAMPLE_PROPERTIES, sampleSections } from "@/lib/content/sample-catalog";
 import { guidebookImageUrl } from "@/lib/media";
@@ -207,7 +207,7 @@ export function previewGuideSection(propertySlug: string, sectionSlug: string): 
     bookings: [],
     checkInTime: "4:00 PM",
     checkOutTime: "10:00 AM",
-    guestPortalUrl: property.slug === "raddish-roost" ? RADDISH_GUEST_PORTAL_URL : null,
+    guestPortalUrl: GUEST_PORTAL_URLS[property.slug] ?? null,
   };
 }
 
@@ -225,7 +225,7 @@ export function previewProperty(slug: string): PropertyGuide | null {
     welcomeMessage: property.welcomeMessage,
     checkInTime: "4:00 PM",
     checkOutTime: "10:00 AM",
-    guestPortalUrl: property.slug === "raddish-roost" ? RADDISH_GUEST_PORTAL_URL : null,
+    guestPortalUrl: GUEST_PORTAL_URLS[property.slug] ?? null,
     parkingSummary: null,
     wifi: null,
     contacts: [],

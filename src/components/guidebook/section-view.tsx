@@ -1,7 +1,7 @@
 import Link from "next/link";
 import { SectionBlocks } from "@/components/guidebook/section-blocks";
 import { BookingChoices } from "@/components/property/book-now";
-import { EarlyArrival } from "@/components/property/early-arrival";
+import { LateCheckout } from "@/components/property/late-checkout";
 import { PropertyGallery } from "@/components/property/property-gallery";
 import { photosForSection } from "@/lib/content/property-photos";
 import { isMarkedSample } from "@/lib/data/map-content";
@@ -40,8 +40,8 @@ export function SectionView({ section }: { section: GuideSectionDetail }) {
         {showSummary ? <p className="mt-4 text-lg leading-8">{summary}</p> : null}
         {checkInLine ? <p className="mt-4 font-heading text-3xl text-charcoal">{checkInLine}</p> : null}
         {checkoutLine ? <p className="mt-4 font-heading text-3xl text-charcoal">{checkoutLine}</p> : null}
-        {section.slug === "check-in" ? (
-          <EarlyArrival propertySlug={section.propertySlug} portalUrl={section.guestPortalUrl} />
+        {section.slug === "checkout" ? (
+          <LateCheckout propertySlug={section.propertySlug} portalUrl={section.guestPortalUrl} />
         ) : null}
       </header>
       {section.slug === "stay-again" && section.bookings.length > 0 ? (

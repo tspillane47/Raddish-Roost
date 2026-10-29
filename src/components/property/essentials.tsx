@@ -1,7 +1,7 @@
 import { Car, KeyRound, LogOut, MessageCircle, Phone, Wifi } from "lucide-react";
 import Link from "next/link";
 import { CopyPassword } from "@/components/property/copy-password";
-import { EarlyArrival } from "@/components/property/early-arrival";
+import { LateCheckout } from "@/components/property/late-checkout";
 import type { PropertyGuide } from "@/types/content";
 
 const EMERGENCY_COPY =
@@ -30,21 +30,21 @@ export function Essentials({ property }: { property: PropertyGuide }) {
           )}
         </Item>
         <Item icon={KeyRound} label="Check-in">
-          <div className="grid gap-1">
-            {property.checkInTime ? (
-              <span className="font-heading text-3xl leading-tight text-charcoal">{property.checkInTime}</span>
-            ) : (
-              "Not added yet"
-            )}
-            <EarlyArrival propertySlug={property.slug} portalUrl={property.guestPortalUrl} />
-          </div>
-        </Item>
-        <Item icon={LogOut} label="Checkout">
-          {property.checkOutTime ? (
-            <span className="font-heading text-3xl leading-tight text-charcoal">{property.checkOutTime}</span>
+          {property.checkInTime ? (
+            <span className="font-heading text-3xl leading-tight text-charcoal">{property.checkInTime}</span>
           ) : (
             "Not added yet"
           )}
+        </Item>
+        <Item icon={LogOut} label="Checkout">
+          <div className="grid gap-1">
+            {property.checkOutTime ? (
+              <span className="font-heading text-3xl leading-tight text-charcoal">{property.checkOutTime}</span>
+            ) : (
+              "Not added yet"
+            )}
+            <LateCheckout propertySlug={property.slug} portalUrl={property.guestPortalUrl} />
+          </div>
         </Item>
         <Item id="parking" icon={Car} label="Parking">
           {property.parkingSummary ?? "Not added yet"}
