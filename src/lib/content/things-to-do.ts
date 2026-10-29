@@ -1,9 +1,11 @@
 export const THING_SECTIONS = [
   { id: "eat", label: "Eat" },
   { id: "drink", label: "Drink" },
+  { id: "coffee", label: "Coffee" },
   { id: "ski_ride", label: "Ski & Ride" },
   { id: "see", label: "See" },
   { id: "hike", label: "Hike" },
+  { id: "bike", label: "Bike" },
   { id: "winter_fun", label: "Winter Fun" },
   { id: "sweet_treats", label: "Sweet Treats" },
 ] as const;
@@ -16,6 +18,7 @@ export type ThingToDo = {
   id: string;
   name: string;
   town: string | null;
+  description: string | null;
   tip: string | null;
   section: ThingSectionId;
   season: ThingSeason | null;

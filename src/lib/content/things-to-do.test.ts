@@ -4,6 +4,7 @@ import {
   directionsUrl,
   sectionForPlace,
   stayHasThingSections,
+  THING_SECTIONS,
   thingSeason,
   thingTip,
 } from "@/lib/content/things-to-do";
@@ -36,6 +37,19 @@ describe("things to do", () => {
     expect(sectionForPlace(places[1], true)).toBeNull();
     expect(sectionForPlace({ subcategory: null, category: "food_drink" }, false)).toBe("eat");
     expect(sectionForPlace({ subcategory: "ski_ride", category: "outdoors" }, true)).toBe("ski_ride");
+    expect(sectionForPlace({ subcategory: "coffee", category: "food_drink" }, true)).toBe("coffee");
+    expect(sectionForPlace({ subcategory: "bike", category: "outdoors" }, true)).toBe("bike");
+    expect(THING_SECTIONS.map((section) => section.id)).toEqual([
+      "eat",
+      "drink",
+      "coffee",
+      "ski_ride",
+      "see",
+      "hike",
+      "bike",
+      "winter_fun",
+      "sweet_treats",
+    ]);
   });
 });
 
@@ -80,5 +94,12 @@ describe("recommendation photos", () => {
     expect(recommendationPhoto("Bolton Valley Resort")?.src).toBe("/images/recommendations/bolton-valley.webp");
     expect(recommendationPhoto("Bolton Valley Resort")?.credit).toBeNull();
     expect(recommendationPhoto("Waterworks Food + Drink")).toBeNull();
+    expect(recommendationPhoto("Little River State Park")?.credit?.author).toBe("Magicpiano");
+    expect(recommendationPhoto("Stowe Pinnacle")?.credit?.license).toBe("CC BY-SA 2.0");
+    expect(recommendationPhoto("Mount Mansfield")?.src).toBe("/images/recommendations/mount-mansfield.webp");
+    expect(recommendationPhoto("Stowe Mountain Resort")?.src).toBe("/images/recommendations/stowe-mountain.webp");
+    expect(recommendationPhoto("Cady Hill Forest")).toBeNull();
+    expect(recommendationPhoto("Ben & Jerry's Factory")).toBeNull();
+    expect(recommendationPhoto("Cold Hollow Cider Mill")).toBeNull();
   });
 });

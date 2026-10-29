@@ -1,13 +1,15 @@
-import { IceCreamCone, Mountain, Snowflake, Utensils, Wine } from "lucide-react";
+import { Bike, Coffee, IceCreamCone, Mountain, Snowflake, Utensils, Wine } from "lucide-react";
 import type { ThingSectionId } from "@/lib/content/things-to-do";
 
 export function SectionIcon({ id, className = "size-7" }: { id: ThingSectionId; className?: string }) {
   const props = { className, "aria-hidden": true as const, strokeWidth: 1.75 };
   if (id === "eat") return <Utensils {...props} />;
   if (id === "drink") return <Wine {...props} />;
+  if (id === "coffee") return <Coffee {...props} />;
   if (id === "ski_ride") return <Skier className={className} />;
   if (id === "see") return <Mountain {...props} />;
   if (id === "hike") return <HikingBoot className={className} />;
+  if (id === "bike") return <Bike {...props} />;
   if (id === "winter_fun") return <Snowflake {...props} />;
   return <IceCreamCone {...props} />;
 }

@@ -3,6 +3,7 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { ThingsToDo } from "@/components/explore/things-to-do";
+import { brandLogo } from "@/lib/content/brand-art";
 import { getThingsToDo } from "@/lib/data/things-to-do";
 
 type ExploreParams = { params: Promise<{ propertySlug: string }> };
@@ -50,7 +51,7 @@ async function ExploreContent({ params }: ExploreParams) {
         </Link>
       </p>
       <h1 className="mt-4 font-heading text-4xl text-charcoal md:text-5xl">Things to Do</h1>
-      <ThingsToDo places={result.places} />
+      <ThingsToDo places={result.places} accent={brandLogo(result.propertySlug)?.accent ?? "#263F35"} />
     </article>
   );
 }

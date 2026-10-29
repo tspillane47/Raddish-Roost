@@ -5,7 +5,7 @@ import { useState } from "react";
 import { SectionIcon } from "@/components/explore/section-icon";
 import { seasonLabel, THING_SECTIONS, type ThingToDo } from "@/lib/content/things-to-do";
 
-export function ThingsToDo({ places }: { places: ThingToDo[] }) {
+export function ThingsToDo({ places, accent = "#263F35" }: { places: ThingToDo[]; accent?: string }) {
   const sections = THING_SECTIONS.filter((section) => places.some((place) => place.section === section.id));
   const [active, setActive] = useState(sections[0]?.id ?? "eat");
   const current = sections.some((section) => section.id === active) ? active : sections[0]?.id;
@@ -57,7 +57,7 @@ export function ThingsToDo({ places }: { places: ThingToDo[] }) {
       >
         {shown.map((place) => (
           <li key={place.id}>
-            <ThingCard place={place} />
+            <ThingCard place={place} accent={accent} />
           </li>
         ))}
       </ul>
@@ -65,7 +65,7 @@ export function ThingsToDo({ places }: { places: ThingToDo[] }) {
   );
 }
 
-function ThingCard({ place }: { place: ThingToDo }) {
+function ThingCard({ place, accent }: { place: ThingToDo; accent: string }) {
   const season = seasonLabel(place.season);
   return (
     <article className="flex gap-4 rounded-2xl bg-beige/50 p-4">
@@ -77,9 +77,22 @@ function ThingCard({ place }: { place: ThingToDo }) {
         )}
       </div>
       <div className="min-w-0">
-        <h2 className="font-heading text-2xl leading-tight text-charcoal">{place.name}</h2>
+        <h2 className="font-heading text-2xl leading-tight break-words text-charcoal">{place.name}</h2>
         {place.town ? <p className="mt-1 text-sm text-forest">{place.town}</p> : null}
-        {place.tip ? <p className="mt-2 text-base leading-7">{place.tip}</p> : null}
+        {place.description ? <p className="mt-2 text-base leading-7">{place.description}</p> : null}
+        {place.tip ? (
+          <p
+            className="mt-3 rounded-lg px-3 py-2 text-sm leading-6"
+            style={{
+              color: accent,
+              backgroundColor: `${accent}18`,
+              boxShadow: `inset 3px 0 0 ${accent}`,
+            }}
+          >
+            <span className="font-semibold">Host tip: </span>
+            {place.tip}
+          </p>
+        ) : null}
         {place.photo?.credit ? (
           <p className="mt-2 text-xs leading-5 text-muted-foreground">
             <a

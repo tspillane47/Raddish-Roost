@@ -20,7 +20,7 @@ alter table public.recommendations drop constraint if exists recommendations_sub
 alter table public.recommendations
   add constraint recommendations_subcategory check (
     subcategory is null or subcategory in (
-      'eat', 'drink', 'ski_ride', 'see', 'hike', 'winter_fun', 'sweet_treats'
+      'eat', 'drink', 'coffee', 'ski_ride', 'see', 'hike', 'bike', 'winter_fun', 'sweet_treats'
     )
   );
 

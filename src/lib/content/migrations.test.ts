@@ -41,6 +41,14 @@ const winooskiFalls = readFileSync(
   path.join(root, "supabase/migrations/20261028234500_winooski_falls_place.sql"),
   "utf8",
 );
+const raddishThings = readFileSync(
+  path.join(root, "supabase/migrations/20261028235900_raddish_roost_things_to_do.sql"),
+  "utf8",
+);
+const thingsCopy = readFileSync(
+  path.join(root, "supabase/migrations/20261029010000_things_to_do_copy.sql"),
+  "utf8",
+);
 
 const tables = [
   "locations",
@@ -297,6 +305,82 @@ describe("Winooski things to do migration", () => {
     expect(thingsToDo).not.toContain("—");
     expect(thingsToDo).not.toMatch(/http:\/\//);
     expect(thingsToDo).not.toMatch(/\b\d{1,5}\s+\w+\s+(street|st|road|rd|avenue|ave|lane|ln)\b/i);
+  });
+});
+
+describe("Raddish Roost things to do migration", () => {
+  it("adds Waterbury places for The Raddish Roost and keeps shared places linked", () => {
+    const readable = raddishThings.replaceAll("''", "'");
+    for (const name of [
+      "Blackback Pub",
+      "Gallus Handcrafted Pasta",
+      "The Reservoir",
+      "Park Row Cafe",
+      "Salt & Rind",
+      "Maxi's",
+      "Michael's on the Hill",
+      "Stone's Throw Pizza",
+      "Prohibition Pig",
+      "The Alchemist Brewery",
+      "Stowe Cider",
+      "Lawson's Finest Liquids",
+      "Hender's Bake Shop & Cafe",
+      "K.C.'s Bagel Café",
+      "Black Cap Coffee & Bakery",
+      "Stowe Street Café",
+      "Vermont Artisan Coffee & Tea",
+      "Bolton Valley Resort",
+      "Sugarbush Resort",
+      "Stowe Mountain Resort",
+      "Ben & Jerry's Factory",
+      "Cold Hollow Cider Mill",
+      "Cabot Farmers' Store",
+      "Little River State Park",
+      "Stowe Pinnacle",
+      "Burnt Rock Mountain",
+      "Camel's Hump",
+      "Mount Mansfield",
+      "Cady Hill Forest",
+      "The Driving Range Adaptive Mountain Bike Trails",
+    ]) {
+      expect(readable).toContain(name);
+    }
+    expect(readable).toContain("Great food and an excellent beer selection.");
+    expect(readable).toContain("Brewery around the back!");
+    expect(readable).toContain("'coffee'");
+    expect(readable).toContain("'bike'");
+    expect(readable).toContain("rec.link_only");
+    expect(raddishThings).toContain("where p.slug = 'raddish-roost'");
+    expect(raddishThings).not.toContain("shallot-chalet");
+    expect(raddishThings).not.toContain("onion-ranch");
+    expect(readable).not.toContain("Hen of the Wood");
+    expect(raddishThings).toContain("is_featured");
+    expect(raddishThings).toContain("https://www.google.com/maps/search/");
+    expect(raddishThings).not.toContain("—");
+    expect(raddishThings).not.toMatch(/http:\/\//);
+    expect(raddishThings).not.toMatch(/\b\d{1,5}\s+\w+\s+(street|st|road|rd|avenue|ave|lane|ln)\b/i);
+  });
+});
+
+describe("Things to Do copy migration", () => {
+  it("updates descriptions and host tips by name without changing stay links", () => {
+    expect(thingsCopy).toContain("where name = rec.name");
+    expect(thingsCopy).toContain("The steak frites are to die for. Ask for a table by the windows.");
+    expect(thingsCopy).toContain("A lively restaurant in a restored mill building right on the Winooski River");
+    expect(thingsCopy).toContain("Hen of the Wood (Burlington)");
+    expect(thingsCopy.replaceAll("Hen of the Wood (Burlington)", "")).not.toContain("Hen of the Wood");
+    expect(thingsCopy).toContain("Winooski Falls and river trails");
+    expect(thingsCopy).toContain("The Driving Range Adaptive Mountain Bike Trails");
+    expect(thingsCopy).toContain("subcategory = coalesce(rec.subcategory, subcategory)");
+    expect(thingsCopy).toContain("$n$Prohibition Pig$n$, $d$A Waterbury institution");
+    expect(thingsCopy).toMatch(/\$n\$Prohibition Pig\$n\$, \$d\$[\s\S]*?, 'eat'\)/);
+    expect(thingsCopy).toContain("null::text, null::text");
+    expect(thingsCopy).not.toMatch(/property_recommendations/i);
+    expect(thingsCopy).not.toContain("shallot-chalet");
+    expect(thingsCopy).not.toContain("onion-ranch");
+    expect(thingsCopy).not.toContain("raddish-roost");
+    expect(thingsCopy).not.toContain("—");
+    expect(thingsCopy).not.toMatch(/http:\/\//);
   });
 });
 

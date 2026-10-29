@@ -20,6 +20,7 @@ type RecommendationJoin = {
   subcategory?: string | null;
   season: string | null;
   name: string | null;
+  description: string | null;
   host_note: string | null;
   town?: string | null;
   is_active: boolean;
@@ -32,9 +33,9 @@ type LinkRow = {
 };
 
 const FULL_COLUMNS =
-  "sort_order, recommendations(id, category, subcategory, season, name, host_note, town, is_active, published_at)";
+  "sort_order, recommendations(id, category, subcategory, season, name, description, host_note, town, is_active, published_at)";
 const BASIC_COLUMNS =
-  "sort_order, recommendations(id, category, season, name, host_note, is_active, published_at)";
+  "sort_order, recommendations(id, category, season, name, description, host_note, is_active, published_at)";
 
 export type ThingsResult =
   | { ok: true; propertySlug: string; propertyName: string; places: ThingToDo[] }
@@ -116,6 +117,7 @@ export const getThingsToDo = cache(async (slug: string): Promise<ThingsResult> =
         id: recommendation.id,
         name,
         town,
+        description: thingTip(recommendation.description),
         tip: thingTip(recommendation.host_note),
         section,
         season: thingSeason(recommendation.season),
