@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { SectionBlocks } from "@/components/guidebook/section-blocks";
 import { BookingChoices } from "@/components/property/book-now";
+import { EarlyArrival } from "@/components/property/early-arrival";
 import { PropertyGallery } from "@/components/property/property-gallery";
 import { photosForSection } from "@/lib/content/property-photos";
 import { isMarkedSample } from "@/lib/data/map-content";
@@ -11,6 +12,11 @@ export function SectionView({ section }: { section: GuideSectionDetail }) {
     isMarkedSample(section.summary) ||
     section.blocks.some((block) => isMarkedSample(block.title) || blockHasSample(block));
   const photos = photosForSection(section.propertySlug, section.slug);
+  const checkInLine = section.slug === "check-in" && section.checkInTime ? `Check-in is at ${section.checkInTime}` : null;
+  const checkoutLine =
+    section.slug === "checkout" && section.checkOutTime ? `Checkout is at ${section.checkOutTime}` : null;
+  const summary = section.summary?.trim() || null;
+  const showSummary = summary && summary !== checkoutLine && summary !== `${checkoutLine}.`;
 
   return (
     <article className="mx-auto w-full max-w-3xl px-5 pt-10 pb-16">
@@ -31,7 +37,12 @@ export function SectionView({ section }: { section: GuideSectionDetail }) {
             </span>
           ) : null}
         </div>
-        {section.summary ? <p className="mt-4 text-lg leading-8">{section.summary}</p> : null}
+        {showSummary ? <p className="mt-4 text-lg leading-8">{summary}</p> : null}
+        {checkInLine ? <p className="mt-4 font-heading text-3xl text-charcoal">{checkInLine}</p> : null}
+        {checkoutLine ? <p className="mt-4 font-heading text-3xl text-charcoal">{checkoutLine}</p> : null}
+        {section.slug === "check-in" ? (
+          <EarlyArrival propertySlug={section.propertySlug} portalUrl={section.guestPortalUrl} />
+        ) : null}
       </header>
       {section.slug === "stay-again" && section.bookings.length > 0 ? (
         <div className="mt-8">

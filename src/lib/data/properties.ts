@@ -3,6 +3,7 @@ import "server-only";
 import { connection } from "next/server";
 import { cache } from "react";
 import { toBookingLinks, type BookingRow } from "@/lib/content/booking-links";
+import { guestPortalUrl } from "@/lib/content/guest-portal";
 import { brandNameFromValue, DEFAULT_BRAND_NAME } from "@/lib/brand";
 import {
   previewGuideSection,
@@ -24,6 +25,7 @@ import type { ContentResult, PropertyResult, PropertySummary, SectionResult } fr
 
 const PROPERTY_COLUMNS =
   "id, slug, name, tagline, description, welcome_title, welcome_message, check_in_time, check_out_time, parking_summary, hero_image_path, sort_order";
+const PROPERTY_COLUMNS_WITH_PORTAL = `${PROPERTY_COLUMNS}, guest_portal_url`;
 
 function logSupabaseError(scope: string, message: string) {
   console.error(`[guidebook] ${scope}: ${message}`);
@@ -111,12 +113,25 @@ export const getPropertyGuide = cache(async (slug: string): Promise<PropertyResu
 
   await whenServingRequest();
   const env = getSupabaseEnv();
-  const { data, error } = await supabase
+  const full = await supabase
     .from("properties")
-    .select(PROPERTY_COLUMNS)
+    .select(PROPERTY_COLUMNS_WITH_PORTAL)
     .eq("slug", slug)
     .eq("status", "published")
     .maybeSingle();
+
+  let data = full.data;
+  let error = full.error;
+  if (error && /guest_portal_url/.test(error.message)) {
+    const basic = await supabase
+      .from("properties")
+      .select(PROPERTY_COLUMNS)
+      .eq("slug", slug)
+      .eq("status", "published")
+      .maybeSingle();
+    data = basic.data ? { ...basic.data, guest_portal_url: null } : null;
+    error = basic.error;
+  }
 
   if (error) {
     rethrowPrerenderAbort(error);
@@ -205,12 +220,25 @@ export const getGuideSection = cache(
 
     await whenServingRequest();
     const env = getSupabaseEnv();
-    const { data: property, error: propertyError } = await supabase
+    const fullProperty = await supabase
       .from("properties")
-      .select("id, slug, name")
+      .select("id, slug, name, check_in_time, check_out_time, guest_portal_url")
       .eq("slug", propertySlug)
       .eq("status", "published")
       .maybeSingle();
+
+    let property = fullProperty.data;
+    let propertyError = fullProperty.error;
+    if (propertyError && /guest_portal_url/.test(propertyError.message)) {
+      const basicProperty = await supabase
+        .from("properties")
+        .select("id, slug, name, check_in_time, check_out_time")
+        .eq("slug", propertySlug)
+        .eq("status", "published")
+        .maybeSingle();
+      property = basicProperty.data ? { ...basicProperty.data, guest_portal_url: null } : null;
+      propertyError = basicProperty.error;
+    }
 
     if (propertyError) {
       rethrowPrerenderAbort(propertyError);
@@ -219,10 +247,19 @@ export const getGuideSection = cache(
     }
     if (!property) return { ok: false, error: "not_found" };
 
+    const stay = property as {
+      id: string;
+      slug: string;
+      name: string;
+      check_in_time?: string | null;
+      check_out_time?: string | null;
+      guest_portal_url?: string | null;
+    };
+
     const { data: section, error: sectionError } = await supabase
       .from("guidebook_sections")
       .select("id, slug, title, summary")
-      .eq("property_id", property.id)
+      .eq("property_id", stay.id)
       .eq("slug", sectionSlug)
       .eq("is_visible", true)
       .not("published_at", "is", null)
@@ -253,7 +290,7 @@ export const getGuideSection = cache(
       const { data: bookingRows, error: bookingsError } = await supabase
         .from("booking_links")
         .select("channel, url, sort_order")
-        .eq("property_id", property.id)
+        .eq("property_id", stay.id)
         .order("sort_order", { ascending: true });
 
       if (bookingsError) {
@@ -268,13 +305,16 @@ export const getGuideSection = cache(
       ok: true,
       source: "database",
       section: {
-        propertySlug: property.slug,
-        propertyName: property.name,
+        propertySlug: stay.slug,
+        propertyName: stay.name,
         slug: section.slug,
         title: section.title?.trim() || "Guide section",
         summary: section.summary,
         blocks: toGuideBlocks((blocks ?? []) as BlockRow[], env?.url ?? null),
         bookings: toBookingLinks(bookings),
+        checkInTime: stay.check_in_time?.trim() || null,
+        checkOutTime: stay.check_out_time?.trim() || null,
+        guestPortalUrl: guestPortalUrl(stay.guest_portal_url),
       },
     };
   },

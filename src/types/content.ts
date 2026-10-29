@@ -53,6 +53,9 @@ export type GuideSectionDetail = {
   summary: string | null;
   blocks: GuideBlockView[];
   bookings: BookingLink[];
+  checkInTime: string | null;
+  checkOutTime: string | null;
+  guestPortalUrl: string | null;
 };
 
 export type PublicWifi = {
@@ -82,6 +85,7 @@ export type PropertyGuide = PropertySummary & {
   welcomeMessage: string;
   checkInTime: string | null;
   checkOutTime: string | null;
+  guestPortalUrl: string | null;
   parkingSummary: string | null;
   wifi: PublicWifi | null;
   contacts: PublicContact[];

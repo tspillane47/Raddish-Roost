@@ -1,4 +1,5 @@
 import { toBookingLinks, type BookingRow } from "@/lib/content/booking-links";
+import { guestPortalUrl, RADDISH_GUEST_PORTAL_URL } from "@/lib/content/guest-portal";
 import { ARRIVAL_STEPS, GUIDE_SECTIONS, SAMPLE_SECTION_SUMMARY } from "@/lib/content/sections";
 import { SAMPLE_PROPERTIES, sampleSections } from "@/lib/content/sample-catalog";
 import { guidebookImageUrl } from "@/lib/media";
@@ -24,6 +25,7 @@ export type PropertyRow = {
   welcome_message: string | null;
   check_in_time: string | null;
   check_out_time: string | null;
+  guest_portal_url?: string | null;
   parking_summary: string | null;
   hero_image_path: string | null;
 };
@@ -118,6 +120,7 @@ export function toPropertyGuide(
     welcomeMessage: row.welcome_message?.trim() || "Your host has not added a welcome message yet.",
     checkInTime: row.check_in_time?.trim() || null,
     checkOutTime: row.check_out_time?.trim() || null,
+    guestPortalUrl: guestPortalUrl(row.guest_portal_url),
     parkingSummary: row.parking_summary?.trim() || null,
     wifi: toPublicWifi(wifi),
     contacts: contacts.flatMap((contact) => {
@@ -202,6 +205,9 @@ export function previewGuideSection(propertySlug: string, sectionSlug: string): 
     summary: SAMPLE_SECTION_SUMMARY,
     blocks,
     bookings: [],
+    checkInTime: "4:00 PM",
+    checkOutTime: "10:00 AM",
+    guestPortalUrl: property.slug === "raddish-roost" ? RADDISH_GUEST_PORTAL_URL : null,
   };
 }
 
@@ -217,8 +223,9 @@ export function previewProperty(slug: string): PropertyGuide | null {
     heroImageAlt: `Photograph of ${property.name}`,
     welcomeTitle: property.welcomeTitle,
     welcomeMessage: property.welcomeMessage,
-    checkInTime: null,
-    checkOutTime: null,
+    checkInTime: "4:00 PM",
+    checkOutTime: "10:00 AM",
+    guestPortalUrl: property.slug === "raddish-roost" ? RADDISH_GUEST_PORTAL_URL : null,
     parkingSummary: null,
     wifi: null,
     contacts: [],

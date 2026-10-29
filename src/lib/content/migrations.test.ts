@@ -49,6 +49,10 @@ const thingsCopy = readFileSync(
   path.join(root, "supabase/migrations/20261029010000_things_to_do_copy.sql"),
   "utf8",
 );
+const checkInTimes = readFileSync(
+  path.join(root, "supabase/migrations/20261029130000_check_in_times.sql"),
+  "utf8",
+);
 
 const tables = [
   "locations",
@@ -391,6 +395,26 @@ describe("Winooski Falls place migration", () => {
     expect(winooskiFalls).toContain("p.slug in ('shallot-chalet', 'onion-ranch')");
     expect(winooskiFalls).not.toContain("raddish-roost");
     expect(winooskiFalls).not.toContain("—");
+  });
+});
+
+describe("check-in times migration", () => {
+  it("sets the same times for every stay and a portal link only for The Raddish Roost", () => {
+    expect(checkInTimes).toContain("check_in_time = '4:00 PM'");
+    expect(checkInTimes).toContain("check_out_time = '10:00 AM'");
+    expect(checkInTimes).toContain("guest_portal_url");
+    expect(checkInTimes).toContain(
+      "https://stay.hospitable.com/7f2dc4a2-c49d-4fba-af96-4d92d9870635/login?returnUrl=%2F7f2dc4a2-c49d-4fba-af96-4d92d9870635%2Fupgrade%3F_t%3Dsc_su",
+    );
+    expect(checkInTimes).toContain("when 'raddish-roost' then");
+    expect(checkInTimes).toContain("else null");
+    expect(checkInTimes).toContain("'guest_portal_click'");
+    expect(checkInTimes).toContain("Check-in is at 4:00 PM. Checkout is at 10:00 AM.");
+    expect(checkInTimes).toContain("Checkout is at 10:00 AM.");
+    expect(checkInTimes).toContain("grant select (guest_portal_url)");
+    expect(checkInTimes).not.toContain("—");
+    expect(checkInTimes).not.toMatch(/http:\/\//);
+    expect(checkInTimes).not.toContain("shallot-chalet' then 'https");
   });
 });
 
