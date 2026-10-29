@@ -13,11 +13,11 @@ export function SectionView({ section }: { section: GuideSectionDetail }) {
   const photos = photosForSection(section.propertySlug, section.slug);
 
   return (
-    <article className="mx-auto w-full max-w-3xl px-5 py-10">
+    <article className="mx-auto w-full max-w-3xl px-5 pt-10 pb-16">
       <p>
         <Link
           href={`/${section.propertySlug}`}
-          className="inline-flex min-h-11 items-center text-sm text-forest underline-offset-4 hover:underline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-forest"
+          className="inline-flex min-h-11 items-center text-base text-forest underline-offset-4 hover:underline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-forest"
         >
           Back to {section.propertyName}
         </Link>

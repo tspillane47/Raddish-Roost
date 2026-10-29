@@ -41,11 +41,11 @@ async function ExploreContent({ params }: ExploreParams) {
   }
 
   return (
-    <article className="mx-auto w-full max-w-3xl px-5 pt-8 pb-28 md:pb-16">
+    <article className="mx-auto w-full max-w-3xl px-5 pt-8 pb-16">
       <p>
         <Link
           href={`/${result.propertySlug}`}
-          className="inline-flex min-h-11 items-center text-sm text-forest underline-offset-4 hover:underline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-forest"
+          className="inline-flex min-h-11 items-center text-base text-forest underline-offset-4 hover:underline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-forest"
         >
           Back to {result.propertyName}
         </Link>

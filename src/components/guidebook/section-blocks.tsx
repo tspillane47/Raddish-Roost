@@ -97,9 +97,9 @@ function BlockBody({ block }: { block: GuideBlockView }) {
         width={1600}
         height={1000}
         className="h-auto w-full rounded-xl"
-        sizes="(max-width: 768px) 100vw, 48rem"
+        sizes="(max-width: 768px) calc(100vw - 2.5rem), 48rem"
       />
-      {block.caption ? <figcaption className="text-sm leading-6">{block.caption}</figcaption> : null}
+      {block.caption ? <figcaption className="text-base leading-7">{block.caption}</figcaption> : null}
     </figure>
   );
 }

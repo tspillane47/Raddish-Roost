@@ -69,8 +69,13 @@ export function PropertyLookAround({
                         src={photo.src}
                         alt={photo.alt}
                         fill
-                        sizes={wide ? "(max-width: 768px) 100vw, 72rem" : "(max-width: 768px) 50vw, 36rem"}
+                        sizes={
+                          wide
+                            ? "(max-width: 768px) calc(100vw - 2.5rem), 72rem"
+                            : "(max-width: 768px) calc(50vw - 1.6rem), 36rem"
+                        }
                         className="object-cover"
+                        fetchPriority="low"
                       />
                     </button>
                   </li>

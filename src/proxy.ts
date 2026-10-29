@@ -45,7 +45,8 @@ function notFoundResponse() {
 <html lang="en">
 <head>
   <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <meta name="theme-color" content="#263F35" />
   <meta name="robots" content="noindex, nofollow" />
   <title>Page not found · ${DEFAULT_BRAND_NAME}</title>
 </head>

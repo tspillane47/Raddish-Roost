@@ -33,7 +33,7 @@ export function PropertyGallery({ photos, heading = "Photos" }: { photos: Galler
                 src={item.src}
                 alt={item.alt}
                 fill
-                sizes="(max-width: 640px) 50vw, 16rem"
+                sizes="(max-width: 640px) calc(50vw - 1.4rem), (max-width: 1024px) 30vw, 16rem"
                 className="object-cover"
               />
             </button>
@@ -121,8 +121,8 @@ export function PhotoViewer({
         }
       }}
     >
-      <div className="flex items-center justify-between gap-3 px-4 pt-[max(0.75rem,env(safe-area-inset-top))] pb-3">
-        <p aria-live="polite" className="text-sm text-cream">
+      <div className="flex items-center justify-between gap-3 pr-[max(1rem,env(safe-area-inset-right))] pl-[max(1rem,env(safe-area-inset-left))] pt-[max(0.75rem,env(safe-area-inset-top))] pb-3">
+        <p aria-live="polite" className="text-base text-cream">
           {index + 1} of {photos.length}
         </p>
         <button
@@ -138,10 +138,10 @@ export function PhotoViewer({
         {photo.alt}
       </h2>
       <div className="relative min-h-0 flex-1 touch-none" onPointerDown={onPointerDown} onPointerUp={onPointerUp}>
-        <Image src={photo.src} alt={photo.alt} fill sizes="100vw" className="object-contain" preload />
+        <Image src={photo.src} alt={photo.alt} fill sizes="100vw" className="object-contain" />
       </div>
       {photos.length > 1 ? (
-        <div className="flex gap-3 px-4 pt-3 pb-[max(0.75rem,env(safe-area-inset-bottom))]">
+        <div className="flex gap-3 pr-[max(1rem,env(safe-area-inset-right))] pl-[max(1rem,env(safe-area-inset-left))] pt-3 pb-[max(0.75rem,env(safe-area-inset-bottom))]">
           <button
             type="button"
             className="inline-flex min-h-12 flex-1 items-center justify-center rounded-full border border-cream text-base font-medium text-cream focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-cream"

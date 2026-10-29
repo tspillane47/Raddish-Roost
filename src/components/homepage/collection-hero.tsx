@@ -10,6 +10,9 @@ export function CollectionHero() {
         width={COLLECTION_HERO.width}
         height={COLLECTION_HERO.height}
         preload
+        fetchPriority="high"
+        decoding="sync"
+        quality={60}
         sizes="100vw"
         className="aspect-[3/2] w-full object-cover object-center md:aspect-[1536/497]"
       />

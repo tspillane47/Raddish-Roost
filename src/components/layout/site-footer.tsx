@@ -14,7 +14,7 @@ export function SiteFooter({
       <div className="mx-auto grid w-full max-w-6xl gap-8 px-5 py-12 sm:grid-cols-2">
         <div>
           <p className="font-heading text-2xl text-forest">{brandName}</p>
-          <p className="mt-3 max-w-sm text-sm leading-6 text-muted-foreground">
+          <p className="mt-3 max-w-sm text-base leading-7 text-muted-foreground">
             A small collection of Vermont stays, each with its own guidebook.
           </p>
         </div>

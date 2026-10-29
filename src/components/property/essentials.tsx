@@ -1,5 +1,6 @@
 import { Car, KeyRound, LogOut, MessageCircle, Phone, Wifi } from "lucide-react";
 import Link from "next/link";
+import { CopyPassword } from "@/components/property/copy-password";
 import type { PropertyGuide } from "@/types/content";
 
 const EMERGENCY_COPY =
@@ -18,9 +19,7 @@ export function Essentials({ property }: { property: PropertyGuide }) {
           {property.wifi ? (
             <span className="grid gap-1">
               {property.wifi.networkName ? <span>Network: {property.wifi.networkName}</span> : null}
-              {property.wifi.password ? (
-                <span className="font-mono text-sm">Password: {property.wifi.password}</span>
-              ) : (
+              {property.wifi.password ? <CopyPassword password={property.wifi.password} /> : (
                 <span>Password has not been added.</span>
               )}
               {property.wifi.routerNote ? <span>{property.wifi.routerNote}</span> : null}
@@ -79,8 +78,8 @@ function Item({
   children: React.ReactNode;
 }) {
   return (
-    <div id={id} className="scroll-mt-28 rounded-xl bg-beige/70 p-4">
-      <dt className="flex items-center gap-2 text-sm font-medium text-forest">
+    <div id={id} className="scroll-mt-[calc(var(--site-header)+1rem)] rounded-xl bg-beige/70 p-4">
+      <dt className="flex items-center gap-2 text-base font-medium text-forest">
         <Icon aria-hidden="true" className="size-5" />
         {label}
       </dt>

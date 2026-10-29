@@ -21,11 +21,11 @@ export function ThingsToDo({ places, accent = "#263F35" }: { places: ThingToDo[]
 
   return (
     <div className="mt-6">
-      <div className="sticky top-0 z-30 -mx-5 border-b border-beige bg-cream/95 px-5 backdrop-blur-sm">
+      <div className="sticky top-[var(--site-header)] z-30 -mx-5 border-b border-beige bg-cream/95 px-5 backdrop-blur-sm">
         <div
           role="tablist"
           aria-label="Things to do"
-          className="flex gap-2 overflow-x-auto py-3 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden"
+          className="flex gap-2 overflow-x-auto overscroll-x-contain py-3 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden"
         >
           {sections.map((section) => {
             const selected = section.id === current;
@@ -37,7 +37,7 @@ export function ThingsToDo({ places, accent = "#263F35" }: { places: ThingToDo[]
                 id={`things-tab-${section.id}`}
                 aria-selected={selected}
                 aria-controls={`things-panel-${section.id}`}
-                className={`inline-flex min-h-11 shrink-0 items-center gap-2 rounded-full px-4 text-sm whitespace-nowrap focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-forest ${
+                className={`inline-flex min-h-11 shrink-0 items-center gap-2 rounded-full px-4 text-base whitespace-nowrap focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-forest ${
                   selected ? "bg-forest text-cream" : "bg-beige/80 text-charcoal"
                 }`}
                 onClick={() => setActive(section.id)}
@@ -78,11 +78,11 @@ function ThingCard({ place, accent }: { place: ThingToDo; accent: string }) {
       </div>
       <div className="min-w-0">
         <h2 className="font-heading text-2xl leading-tight break-words text-charcoal">{place.name}</h2>
-        {place.town ? <p className="mt-1 text-sm text-forest">{place.town}</p> : null}
+        {place.town ? <p className="mt-1 text-base leading-7 text-forest">{place.town}</p> : null}
         {place.description ? <p className="mt-2 text-base leading-7">{place.description}</p> : null}
         {place.tip ? (
           <p
-            className="mt-3 rounded-lg px-3 py-2 text-sm leading-6"
+            className="mt-3 rounded-lg px-3 py-2 text-base leading-7"
             style={{
               color: accent,
               backgroundColor: `${accent}18`,
@@ -94,7 +94,7 @@ function ThingCard({ place, accent }: { place: ThingToDo; accent: string }) {
           </p>
         ) : null}
         {place.photo?.credit ? (
-          <p className="mt-2 text-xs leading-5 text-muted-foreground">
+          <p className="mt-2 text-sm leading-6 text-muted-foreground">
             <a
               href={place.photo.credit.url}
               target="_blank"
@@ -117,7 +117,7 @@ function ThingCard({ place, accent }: { place: ThingToDo; accent: string }) {
             href={place.directionsUrl}
             target="_blank"
             rel="noopener noreferrer"
-            className="inline-flex min-h-11 items-center rounded-full bg-forest px-4 text-sm text-cream focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-forest"
+            className="inline-flex min-h-11 items-center rounded-full bg-forest px-4 text-base text-cream focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-forest"
           >
             Get Directions
           </a>

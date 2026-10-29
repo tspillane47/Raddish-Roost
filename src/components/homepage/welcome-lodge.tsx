@@ -4,12 +4,18 @@ import { Fraunces, Lilita_One } from "next/font/google";
 const lodgeDisplay = Lilita_One({
   subsets: ["latin"],
   weight: "400",
+  display: "swap",
+  adjustFontFallback: true,
+  preload: false,
 });
 
 const lodgeItalic = Fraunces({
   subsets: ["latin"],
   weight: "600",
   style: "italic",
+  display: "swap",
+  adjustFontFallback: true,
+  preload: false,
 });
 
 const ink = "#F8F6F0";
@@ -43,12 +49,12 @@ export function WelcomeLodge() {
             </SeasonIcon>
           </li>
         </ul>
-        <h1 className="max-w-full">
-          <span className="block font-sans text-[0.72rem] font-semibold uppercase tracking-[0.34em] md:text-sm md:tracking-[0.52em]">
+        <h1 className="w-full max-w-full [container-type:inline-size]">
+          <span className="block font-sans text-xs font-semibold uppercase tracking-[0.28em] min-[380px]:text-[0.72rem] min-[380px]:tracking-[0.34em] md:text-sm md:tracking-[0.52em]">
             Welcome to
           </span>
           <span
-            className={`${lodgeDisplay.className} mt-1 block whitespace-nowrap text-[clamp(3.25rem,17.5vw,8.75rem)] uppercase leading-[0.8]`}
+            className={`${lodgeDisplay.className} mt-1 block whitespace-nowrap text-center uppercase leading-[0.8] [font-size:clamp(1.9rem,10.6cqi,8.75rem)]`}
           >
             Vermont.
           </span>

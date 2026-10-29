@@ -26,7 +26,7 @@ export function PropertyHome({ property }: { property: PropertyGuide }) {
         <div className="mt-12">
           <Essentials property={property} />
         </div>
-        <section id="guidebook" aria-labelledby="guidebook-heading" className="mt-16 scroll-mt-28">
+        <section id="guidebook" aria-labelledby="guidebook-heading" className="mt-16 scroll-mt-[var(--site-header)]">
           <h2 id="guidebook-heading" className="font-heading text-3xl text-forest">
             Guidebook
           </h2>
@@ -59,7 +59,7 @@ export function PropertyHome({ property }: { property: PropertyGuide }) {
                       <span className="min-w-0">
                         <h3 className="font-heading text-2xl text-charcoal">{section.title}</h3>
                         {section.summary ? (
-                          <p className="mt-2 line-clamp-3 text-sm leading-6 text-muted-foreground">{section.summary}</p>
+                          <p className="mt-2 line-clamp-3 text-base leading-7 text-muted-foreground">{section.summary}</p>
                         ) : null}
                       </span>
                     </Link>
@@ -79,7 +79,7 @@ export function PropertyHomeFallback() {
   return (
     <div aria-busy="true" aria-live="polite">
       <p className="sr-only">Loading this stay</p>
-      <div className="h-[45vh] max-h-[480px] bg-beige/80" />
+      <div className="h-[45svh] max-h-[480px] min-h-40 bg-beige/80" />
       <div className="mx-auto w-full max-w-6xl px-5">
         <div className="-mt-14 size-28 rounded-full bg-beige" />
         <div className="mt-6 h-12 w-2/3 rounded bg-beige" />

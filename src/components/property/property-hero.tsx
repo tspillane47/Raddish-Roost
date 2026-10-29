@@ -35,18 +35,27 @@ export function PropertyHero({
         {heroPhotos.length > 0 ? (
           <HeroBanner photos={heroPhotos} gallery={photos} />
         ) : remote ? (
-          <div className="relative h-[45vh] max-h-[480px] overflow-hidden">
-            <Image src={remote.src} alt={remote.alt} fill preload sizes="100vw" className="object-cover" />
+          <div className="relative h-[45svh] max-h-[480px] min-h-40 overflow-hidden">
+            <Image
+              src={remote.src}
+              alt={remote.alt}
+              fill
+              preload
+              fetchPriority="high"
+              decoding="sync"
+              sizes="100vw"
+              className="object-cover"
+            />
           </div>
         ) : (
           <div
-            className="h-[45vh] max-h-[480px]"
+            className="h-[45svh] max-h-[480px] min-h-40"
             style={{ background: `linear-gradient(165deg, ${accent} 0%, #F7F4ED 58%)` }}
           />
         )}
         <Link
           href="/"
-          className="absolute top-4 left-4 z-10 inline-flex min-h-11 items-center rounded-full bg-cream/95 px-4 text-sm text-forest shadow-sm focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-forest"
+          className="absolute top-4 left-4 z-10 inline-flex min-h-11 items-center rounded-full bg-cream/95 px-4 text-base text-forest shadow-sm focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-forest"
         >
           All stays
         </Link>
@@ -67,6 +76,8 @@ export function PropertyHero({
                 sizes="9rem"
                 className="object-cover"
                 preload={heroPhotos.length === 0 && !remote}
+                fetchPriority={heroPhotos.length === 0 && !remote ? "high" : "low"}
+                loading={heroPhotos.length === 0 && !remote ? undefined : "lazy"}
               />
             </div>
           </div>
@@ -79,7 +90,7 @@ export function PropertyHero({
               </span>
             </p>
           ) : null}
-          <h1 className="font-heading text-4xl leading-tight text-charcoal md:text-5xl">{property.name}</h1>
+          <h1 className="font-heading text-4xl leading-tight break-words text-charcoal md:text-5xl">{property.name}</h1>
           {property.tagline ? (
             <p className="mx-auto mt-3 max-w-2xl text-lg leading-8 text-forest md:mx-0">{property.tagline}</p>
           ) : null}

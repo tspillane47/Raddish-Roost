@@ -32,7 +32,7 @@ export function BookNow({
       <dialog
         ref={dialogRef}
         aria-labelledby="book-your-stay"
-        className="m-0 h-dvh max-h-none w-full max-w-none border-0 bg-transparent p-0 backdrop:bg-charcoal/45"
+        className="m-0 h-dvh max-h-none w-full max-w-none overscroll-none border-0 bg-transparent p-0 backdrop:bg-charcoal/45"
         onClick={(event) => {
           const target = event.target;
           if (!(target instanceof HTMLElement)) return;
@@ -42,14 +42,14 @@ export function BookNow({
         }}
       >
         <div data-dismiss="true" className="flex h-full items-end justify-center md:items-center">
-          <div className="relative w-full rounded-t-3xl bg-cream px-5 pt-6 text-left shadow-xl md:max-w-md md:rounded-3xl md:p-6">
+          <div className="relative max-h-[85dvh] w-full overflow-y-auto rounded-t-3xl bg-cream pr-[max(1.25rem,env(safe-area-inset-right))] pl-[max(1.25rem,env(safe-area-inset-left))] pt-6 text-left shadow-xl md:max-w-md md:rounded-3xl md:p-6">
             <div className="flex items-start justify-between gap-4">
               <h2 id="book-your-stay" className="font-heading text-3xl text-charcoal">
                 Book Your Stay
               </h2>
               <button
                 type="button"
-                className="inline-flex min-h-11 items-center rounded-full px-3 text-sm text-forest focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-forest"
+                className="inline-flex min-h-11 shrink-0 items-center rounded-full px-4 text-base text-forest focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-forest"
                 onClick={() => dialogRef.current?.close()}
               >
                 Close
@@ -86,7 +86,7 @@ export function BookingChoices({
             onClick={() => trackBookingClick(propertySlug, booking.channel)}
           >
             <span className="font-heading text-2xl text-charcoal">{booking.name}</span>
-            <span className="mt-1 text-sm leading-6 text-muted-foreground">{booking.detail}</span>
+            <span className="mt-1 text-base leading-7 text-muted-foreground">{booking.detail}</span>
           </a>
         </li>
       ))}

@@ -28,7 +28,7 @@ export function PropertyCard({ property }: { property: PropertySummary }) {
             alt={logo.alt}
             width={logo.width}
             height={logo.height}
-            sizes="(max-width: 768px) 100vw, 33vw"
+            sizes="(max-width: 768px) calc(100vw - 2.5rem), 24rem"
             className="h-auto w-full motion-safe:transition-transform motion-safe:duration-200 motion-safe:hover:scale-[1.02]"
           />
         </Link>
@@ -39,7 +39,7 @@ export function PropertyCard({ property }: { property: PropertySummary }) {
           width={1200}
           height={900}
           className="aspect-[4/3] w-full object-cover"
-          sizes="(max-width: 768px) 100vw, 33vw"
+          sizes="(max-width: 768px) calc(100vw - 2.5rem), 24rem"
         />
       ) : (
         <PhotoPlaceholder name={property.name} tone={placeholderTone(property.slug)} />

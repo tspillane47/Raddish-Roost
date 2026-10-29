@@ -33,7 +33,7 @@ export function PropertyDock({ slug }: { slug: string }) {
     <nav
       aria-label="Stay"
       data-property-dock=""
-      className="fixed inset-x-0 bottom-0 z-40 border-t border-beige bg-cream/95 pb-[env(safe-area-inset-bottom)] backdrop-blur-sm md:hidden"
+      className="fixed inset-x-0 bottom-0 z-40 border-t border-beige bg-cream/95 pr-[env(safe-area-inset-right)] pb-[env(safe-area-inset-bottom)] pl-[env(safe-area-inset-left)] backdrop-blur-sm md:hidden"
     >
       <ul className="mx-auto grid max-w-lg grid-cols-4 list-none p-0">
         {items.map((item) => {
@@ -43,7 +43,7 @@ export function PropertyDock({ slug }: { slug: string }) {
               <Link
                 href={item.href}
                 aria-current={item.current ? "page" : undefined}
-                className="flex min-h-16 flex-col items-center justify-center gap-1 text-xs text-muted-foreground focus-visible:outline-2 focus-visible:outline-offset-[-2px] focus-visible:outline-forest aria-[current=page]:font-medium aria-[current=page]:text-forest"
+                className="flex min-h-16 flex-col items-center justify-center gap-1 px-1 text-sm text-muted-foreground focus-visible:outline-2 focus-visible:outline-offset-[-2px] focus-visible:outline-forest aria-[current=page]:font-medium aria-[current=page]:text-forest"
               >
                 <Icon aria-hidden="true" className="size-5" />
                 {item.label}
