@@ -37,6 +37,10 @@ const thingsToDo = readFileSync(
   path.join(root, "supabase/migrations/20261028233000_winooski_things_to_do.sql"),
   "utf8",
 );
+const winooskiFalls = readFileSync(
+  path.join(root, "supabase/migrations/20261028234500_winooski_falls_place.sql"),
+  "utf8",
+);
 
 const tables = [
   "locations",
@@ -293,6 +297,16 @@ describe("Winooski things to do migration", () => {
     expect(thingsToDo).not.toContain("—");
     expect(thingsToDo).not.toMatch(/http:\/\//);
     expect(thingsToDo).not.toMatch(/\b\d{1,5}\s+\w+\s+(street|st|road|rd|avenue|ave|lane|ln)\b/i);
+  });
+});
+
+describe("Winooski Falls place migration", () => {
+  it("puts the existing falls on Things to Do for the Winooski stays", () => {
+    expect(winooskiFalls).toContain("Winooski Falls and river trails");
+    expect(winooskiFalls).toContain("subcategory = 'see'");
+    expect(winooskiFalls).toContain("p.slug in ('shallot-chalet', 'onion-ranch')");
+    expect(winooskiFalls).not.toContain("raddish-roost");
+    expect(winooskiFalls).not.toContain("—");
   });
 });
 

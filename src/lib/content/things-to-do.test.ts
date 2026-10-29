@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { photoFromManifest } from "@/lib/content/recommendation-photos";
+import { creditForFile, photoFromManifest, recommendationPhoto } from "@/lib/content/recommendation-photos";
 import {
   directionsUrl,
   sectionForPlace,
@@ -53,5 +53,32 @@ describe("recommendation photos", () => {
     expect(photoFromManifest(photos, "Pho Hong", () => true)).toBeNull();
     expect(photoFromManifest(photos, "Honey Road", () => false)).toBeNull();
     expect(photoFromManifest([], "Honey Road", () => true)).toBeNull();
+  });
+
+  it("shows a credit only when the license requires one", () => {
+    const credits = {
+      photos: [
+        {
+          file: "camels-hump.webp",
+          sourceUrl: "https://commons.wikimedia.org/wiki/File:CamelsHumpMt_fromCharlotteVT_20140824.jpg",
+          author: "Niranjan Arminius",
+          license: "CC BY-SA 4.0",
+          attributionRequired: true,
+        },
+        {
+          file: "bolton-valley.webp",
+          sourceUrl: "https://commons.wikimedia.org/wiki/File:Bolton_valley_windmill.jpg",
+          author: "Storylanding",
+          license: "CC0",
+          attributionRequired: false,
+        },
+      ],
+    };
+    expect(creditForFile(credits, "camels-hump.webp")?.license).toBe("CC BY-SA 4.0");
+    expect(creditForFile(credits, "bolton-valley.webp")).toBeNull();
+    expect(recommendationPhoto("Camel's Hump")?.credit?.author).toBe("Niranjan Arminius");
+    expect(recommendationPhoto("Bolton Valley Resort")?.src).toBe("/images/recommendations/bolton-valley.webp");
+    expect(recommendationPhoto("Bolton Valley Resort")?.credit).toBeNull();
+    expect(recommendationPhoto("Waterworks Food + Drink")).toBeNull();
   });
 });

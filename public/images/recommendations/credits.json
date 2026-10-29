@@ -1,0 +1,88 @@
+{
+  "photos": [
+    {
+      "file": "camels-hump.webp",
+      "sourceUrl": "https://commons.wikimedia.org/wiki/File:CamelsHumpMt_fromCharlotteVT_20140824.jpg",
+      "author": "Niranjan Arminius",
+      "license": "CC BY-SA 4.0",
+      "attributionRequired": true
+    },
+    {
+      "file": "mount-philo.webp",
+      "sourceUrl": "https://commons.wikimedia.org/wiki/File:MtPhiloVT_20221002.jpg",
+      "author": "Niranjan Arminius",
+      "license": "CC BY-SA 4.0",
+      "attributionRequired": true
+    },
+    {
+      "file": "indian-brook.webp",
+      "sourceUrl": "https://commons.wikimedia.org/wiki/File:Indian_Brook_Dam.jpg",
+      "author": "Mbdfar",
+      "license": "CC BY-SA 4.0",
+      "attributionRequired": true
+    },
+    {
+      "file": "shelburne-farms.webp",
+      "sourceUrl": "https://commons.wikimedia.org/wiki/File:Shelburne_Farm_VT.jpg",
+      "author": "Marc N. Belanger",
+      "license": "Public domain",
+      "attributionRequired": false
+    },
+    {
+      "file": "church-street.webp",
+      "sourceUrl": "https://commons.wikimedia.org/wiki/File:Church_Street_Marketplace_in_autumn.jpg",
+      "author": "Sdkb",
+      "license": "CC BY-SA 4.0",
+      "attributionRequired": true
+    },
+    {
+      "file": "lake-champlain.webp",
+      "sourceUrl": "https://commons.wikimedia.org/wiki/File:Lake_Champlain_from_Burlington,_Vermont.jpg",
+      "author": "Farragutful",
+      "license": "CC BY-SA 4.0",
+      "attributionRequired": true
+    },
+    {
+      "file": "smugglers-notch.webp",
+      "sourceUrl": "https://commons.wikimedia.org/wiki/File:Smugglers_Notch_VT_20151008.jpg",
+      "author": "Niranjan Arminius",
+      "license": "CC BY-SA 4.0",
+      "attributionRequired": true
+    },
+    {
+      "file": "stowe-mountain.webp",
+      "sourceUrl": "https://commons.wikimedia.org/wiki/File:Stowe_1_Stevage.jpg",
+      "author": "Stevage",
+      "license": "CC BY-SA 3.0",
+      "attributionRequired": true
+    },
+    {
+      "file": "sugarbush.webp",
+      "sourceUrl": "https://commons.wikimedia.org/wiki/File:Sugarbush_Base_Area_-_panoramio.jpg",
+      "author": "bill-now",
+      "license": "CC BY-SA 3.0",
+      "attributionRequired": true
+    },
+    {
+      "file": "bolton-valley.webp",
+      "sourceUrl": "https://commons.wikimedia.org/wiki/File:Bolton_valley_windmill.jpg",
+      "author": "Storylanding",
+      "license": "CC0",
+      "attributionRequired": false
+    },
+    {
+      "file": "trapp-family-lodge.webp",
+      "sourceUrl": "https://commons.wikimedia.org/wiki/File:Trapp_Family_Lodge_with_Christmas_trees_24_Nov_2017.jpg",
+      "author": "Dicklyon",
+      "license": "CC BY-SA 4.0",
+      "attributionRequired": true
+    },
+    {
+      "file": "winooski-falls.webp",
+      "sourceUrl": "https://commons.wikimedia.org/wiki/File:Winooski_River_Falls_Aug_2019.jpg",
+      "author": "Ken Gallager",
+      "license": "CC BY-SA 4.0",
+      "attributionRequired": true
+    }
+  ]
+}

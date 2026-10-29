@@ -80,6 +80,18 @@ function ThingCard({ place }: { place: ThingToDo }) {
         <h2 className="font-heading text-2xl leading-tight text-charcoal">{place.name}</h2>
         {place.town ? <p className="mt-1 text-sm text-forest">{place.town}</p> : null}
         {place.tip ? <p className="mt-2 text-base leading-7">{place.tip}</p> : null}
+        {place.photo?.credit ? (
+          <p className="mt-2 text-xs leading-5 text-muted-foreground">
+            <a
+              href={place.photo.credit.url}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="underline-offset-2 hover:underline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-forest"
+            >
+              Photo: {place.photo.credit.author}, {place.photo.credit.license}
+            </a>
+          </p>
+        ) : null}
         {season ? (
           <p className="mt-2">
             <span className="rounded-full bg-cream px-2 py-0.5 text-xs font-medium tracking-wide text-forest">

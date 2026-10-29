@@ -20,7 +20,11 @@ export type ThingToDo = {
   section: ThingSectionId;
   season: ThingSeason | null;
   directionsUrl: string;
-  photo: { src: string; alt: string } | null;
+  photo: {
+    src: string;
+    alt: string;
+    credit: { author: string; license: string; url: string } | null;
+  } | null;
 };
 
 const SEASON_LABELS: Record<ThingSeason, string> = {

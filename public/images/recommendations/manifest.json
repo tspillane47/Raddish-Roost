@@ -1,3 +1,64 @@
 {
-  "photos": []
+  "photos": [
+    {
+      "name": "Camel's Hump",
+      "file": "camels-hump.webp",
+      "alt": "The western face of Camel's Hump, a rounded summit above forested hills and a cornfield, seen from Charlotte."
+    },
+    {
+      "name": "Mount Philo",
+      "file": "mount-philo.webp",
+      "alt": "The wooded western face of Mount Philo in Charlotte, with a rocky outcrop near the summit and fields in the foreground."
+    },
+    {
+      "name": "Indian Brook Reservoir",
+      "file": "indian-brook.webp",
+      "alt": "The dam and green railing at Indian Brook Reservoir in Essex, with snow along the bank and the water beyond."
+    },
+    {
+      "name": "Shelburne Farms",
+      "file": "shelburne-farms.webp",
+      "alt": "The brick and green timber farm barn at Shelburne Farms, with sheep grazing in the yard."
+    },
+    {
+      "name": "Church Street",
+      "file": "church-street.webp",
+      "alt": "Church Street Marketplace in Burlington in October, a brick pedestrian street under yellow autumn trees."
+    },
+    {
+      "name": "Spirit of Ethan Allen",
+      "file": "lake-champlain.webp",
+      "alt": "Lake Champlain from the Burlington waterfront, with the Adirondack Mountains across the water."
+    },
+    {
+      "name": "Smugglers' Notch",
+      "file": "smugglers-notch.webp",
+      "alt": "Smugglers' Notch in October, with cliffs on the mountainside and fall color in the valley."
+    },
+    {
+      "name": "Stowe Mountain Resort",
+      "file": "stowe-mountain.webp",
+      "alt": "A ski trail at Stowe Mountain Resort, looking down over a frozen pond and the mountains beyond."
+    },
+    {
+      "name": "Sugarbush Resort",
+      "file": "sugarbush.webp",
+      "alt": "The base lodge at Sugarbush Resort in winter, seen from the slope above the parking area."
+    },
+    {
+      "name": "Bolton Valley Resort",
+      "file": "bolton-valley.webp",
+      "alt": "The windmill at Bolton Valley Resort, rimed with snow above frosted spruce trees."
+    },
+    {
+      "name": "Trapp Family Lodge",
+      "file": "trapp-family-lodge.webp",
+      "alt": "The Trapp Family Lodge in Stowe at dusk, with lighted Christmas trees along the balconies."
+    },
+    {
+      "name": "Winooski Falls and river trails",
+      "file": "winooski-falls.webp",
+      "alt": "Winooski Falls on the Winooski River, with water spilling over the rock ledge and a brick mill chimney behind the trees."
+    }
+  ]
 }

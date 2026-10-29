@@ -50,6 +50,7 @@ describe("Things to Do", () => {
     expect(screen.getByRole("heading", { name: "Hen of the Wood (Burlington)" })).toBeInTheDocument();
     expect(screen.getByText("Burlington")).toBeInTheDocument();
     expect(screen.queryByText(/details coming soon/i)).not.toBeInTheDocument();
+    expect(screen.queryByRole("link", { name: /^Photo:/ })).not.toBeInTheDocument();
     expect(screen.queryByText("A host favorite.")).not.toBeInTheDocument();
 
     const directions = screen.getAllByRole("link", { name: "Get Directions" })[0];
@@ -61,6 +62,38 @@ describe("Things to Do", () => {
     expect(screen.getByRole("heading", { name: "Spot on the Dock" })).toBeInTheDocument();
     expect(screen.getByText("Summer")).toBeInTheDocument();
     expect(screen.queryByRole("heading", { name: "Waterworks Food + Drink" })).not.toBeInTheDocument();
+  });
+
+  it("links the photo credit when the license asks for it", () => {
+    render(
+      <ThingsToDo
+        places={[
+          {
+            id: "hump",
+            name: "Camel's Hump",
+            town: "Huntington / Duxbury",
+            tip: "Famous Vermont hike! Not recommended for beginners.",
+            section: "hike",
+            season: null,
+            directionsUrl: "https://www.google.com/maps/search/?api=1&query=Camel%27s%20Hump%20Vermont",
+            photo: {
+              src: "/images/recommendations/camels-hump.webp",
+              alt: "The western face of Camel's Hump.",
+              credit: {
+                author: "Niranjan Arminius",
+                license: "CC BY-SA 4.0",
+                url: "https://commons.wikimedia.org/wiki/File:CamelsHumpMt_fromCharlotteVT_20140824.jpg",
+              },
+            },
+          },
+        ]}
+      />,
+    );
+    expect(screen.getByRole("img", { name: "The western face of Camel's Hump." })).toBeInTheDocument();
+    expect(screen.getByRole("link", { name: "Photo: Niranjan Arminius, CC BY-SA 4.0" })).toHaveAttribute(
+      "href",
+      "https://commons.wikimedia.org/wiki/File:CamelsHumpMt_fromCharlotteVT_20140824.jpg",
+    );
   });
 
   it("says when a stay has no places yet", () => {
