@@ -1,11 +1,13 @@
 "use client";
 
 import { useState } from "react";
+import { REVIEW_NOTE } from "@/lib/content/guest-note";
 import type { CheckoutTask } from "@/types/content";
 
 export function CheckoutList({ items }: { items: CheckoutTask[] }) {
   const [done, setDone] = useState<Record<string, boolean>>({});
   if (items.length === 0) return null;
+  const finished = items.every((item) => done[item.id] === true);
 
   return (
     <section id="checkout-list" aria-labelledby="checkout-list-heading" className="scroll-mt-[var(--site-header)]">
@@ -33,6 +35,9 @@ export function CheckoutList({ items }: { items: CheckoutTask[] }) {
           );
         })}
       </ul>
+      <p role={finished ? "status" : undefined} className="mt-4 text-base leading-7">
+        {REVIEW_NOTE}
+      </p>
     </section>
   );
 }

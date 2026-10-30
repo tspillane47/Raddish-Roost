@@ -61,6 +61,14 @@ const guidebookSections = readFileSync(
   path.join(root, "supabase/migrations/20261029150000_guidebook_sections.sql"),
   "utf8",
 );
+const guestNotes = readFileSync(
+  path.join(root, "supabase/migrations/20261030120000_guest_notes.sql"),
+  "utf8",
+);
+const perfectDays = readFileSync(
+  path.join(root, "supabase/migrations/20261030130000_perfect_days.sql"),
+  "utf8",
+);
 
 const SEEDED_SECTIONS = [
   ["getting-here", "Getting Here"],
@@ -485,6 +493,52 @@ describe("late checkout portal migration", () => {
     expect(lateCheckout).not.toContain("—");
     expect(lateCheckout).not.toMatch(/http:\/\//);
     expect(lateCheckout).not.toMatch(/insert into public\.properties/i);
+  });
+});
+
+describe("guest notes migration", () => {
+  it("lets anonymous guests send a note without reading the table", () => {
+    expect(guestNotes).toContain("alter column name drop not null");
+    expect(guestNotes).toContain("alter column email drop not null");
+    expect(guestNotes).toContain("visitor_hash");
+    expect(guestNotes).toContain("submit_guest_note");
+    expect(guestNotes).toContain("grant execute on function public.submit_guest_note(text, text, text, text) to anon");
+    expect(guestNotes).toContain("revoke all on table public.contact_messages from anon");
+    expect(guestNotes).toContain("Please wait a bit and try again.");
+    expect(guestNotes).toContain("'Something not right'");
+    expect(guestNotes).toContain("v_count >= 5");
+    expect(guestNotes).not.toMatch(/grant select[\s\S]*contact_messages to anon/);
+    expect(guestNotes).not.toMatch(/grant insert[\s\S]*contact_messages to anon/);
+    expect(guestNotes).not.toContain("—");
+    expect(guestNotes).not.toContain("Radish");
+  });
+});
+
+describe("perfect days migration", () => {
+  it("stores a fall and winter day for every stay and links each stop", () => {
+    expect(perfectDays).toContain("create table if not exists public.itineraries");
+    expect(perfectDays).toContain("create table if not exists public.itinerary_stops");
+    expect(perfectDays).toContain("itineraries_public_read");
+    expect(perfectDays).toContain("grant select");
+    expect(perfectDays).toContain("on conflict (property_id, recommendation_id) do nothing");
+    expect(perfectDays).toContain("on conflict (property_id, season) do nothing");
+    expect(perfectDays).toContain("existing.sort_order = s.sort_order");
+    expect(perfectDays).toContain("'Our perfect day'");
+    expect(perfectDays).toContain("Upper Hollow Road");
+    expect(perfectDays).toContain("Coffee and a pastry, a short walk from the house.");
+    expect(perfectDays).toContain("Dinner, then a beer at the brewery around the back.");
+    expect(perfectDays).toContain("Night skiing is a fun alternative to an early night.");
+    expect(perfectDays).toContain("A walk along the falls and the river trails.");
+    expect(perfectDays).toContain("Dinner. Book well in advance.");
+    expect(perfectDays).toContain("'shallot-chalet'");
+    expect(perfectDays).toContain("'onion-ranch'");
+    expect(perfectDays).toContain("'raddish-roost'");
+    expect(perfectDays).toContain("The Raddish Roost fall day should have 8 stops.");
+    expect(perfectDays).toContain("Each Winooski winter day should have 7 stops.");
+    expect(perfectDays).not.toMatch(/delete from public\.guidebook/i);
+    expect(perfectDays).not.toMatch(/discount|perk|reward|coupon/i);
+    expect(perfectDays).not.toContain("—");
+    expect(perfectDays).not.toContain("Radish");
   });
 });
 

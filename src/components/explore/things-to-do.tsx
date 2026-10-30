@@ -3,10 +3,32 @@
 import Image from "next/image";
 import { useState } from "react";
 import { SectionIcon } from "@/components/explore/section-icon";
-import { seasonLabel, THING_SECTIONS, type ThingToDo } from "@/lib/content/things-to-do";
+import {
+  currentItinerarySeason,
+  directionsUrl,
+  seasonLabel,
+  THING_SECTIONS,
+  type PerfectDay,
+  type PerfectDaySeason,
+  type ThingToDo,
+} from "@/lib/content/things-to-do";
 
-export function ThingsToDo({ places, accent = "#263F35" }: { places: ThingToDo[]; accent?: string }) {
-  const sections = THING_SECTIONS.filter((section) => places.some((place) => place.section === section.id));
+export function ThingsToDo({
+  places,
+  itineraries = [],
+  accent = "#263F35",
+  today = new Date(),
+}: {
+  places: ThingToDo[];
+  itineraries?: PerfectDay[];
+  accent?: string;
+  today?: Date;
+}) {
+  const days = itineraries.filter((day) => day.stops.length > 0);
+  const sections = [
+    ...(days.length > 0 ? [{ id: "perfect_day" as const, label: "Perfect Day" }] : []),
+    ...THING_SECTIONS.filter((section) => places.some((place) => place.section === section.id)),
+  ];
   const [active, setActive] = useState(sections[0]?.id ?? "eat");
   const current = sections.some((section) => section.id === active) ? active : sections[0]?.id;
   const shown = places.filter((place) => place.section === current);
@@ -42,25 +64,97 @@ export function ThingsToDo({ places, accent = "#263F35" }: { places: ThingToDo[]
                 }`}
                 onClick={() => setActive(section.id)}
               >
-                <SectionIcon id={section.id} className="size-4" />
+                {section.id === "perfect_day" ? null : <SectionIcon id={section.id} className="size-4" />}
                 {section.label}
               </button>
             );
           })}
         </div>
       </div>
-      <ul
-        id={`things-panel-${current}`}
-        role="tabpanel"
-        aria-labelledby={`things-tab-${current}`}
-        className="mt-4 grid list-none gap-4 p-0"
-      >
-        {shown.map((place) => (
-          <li key={place.id}>
-            <ThingCard place={place} accent={accent} />
-          </li>
+      {current === "perfect_day" ? (
+        <PerfectDayPanel days={days} accent={accent} today={today} />
+      ) : (
+        <ul
+          id={`things-panel-${current}`}
+          role="tabpanel"
+          aria-labelledby={`things-tab-${current}`}
+          className="mt-4 grid list-none gap-4 p-0"
+        >
+          {shown.map((place) => (
+            <li key={place.id}>
+              <ThingCard place={place} accent={accent} />
+            </li>
+          ))}
+        </ul>
+      )}
+    </div>
+  );
+}
+
+function PerfectDayPanel({ days, accent, today }: { days: PerfectDay[]; accent: string; today: Date }) {
+  const preferred = currentItinerarySeason(today);
+  const initial = days.some((day) => day.season === preferred) ? preferred : (days[0]?.season ?? preferred);
+  const [season, setSeason] = useState<PerfectDaySeason>(initial);
+  const day = days.find((item) => item.season === season) ?? null;
+
+  return (
+    <div
+      id="things-panel-perfect_day"
+      role="tabpanel"
+      aria-labelledby="things-tab-perfect_day"
+      className="mt-4 min-w-0"
+    >
+      <div role="group" aria-label="Season" className="flex gap-2">
+        {(["fall", "winter"] as const).map((choice) => (
+          <button
+            key={choice}
+            type="button"
+            aria-pressed={season === choice}
+            onClick={() => setSeason(choice)}
+            className={`inline-flex min-h-11 items-center rounded-full px-4 text-base focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-forest ${
+              season === choice ? "bg-forest text-cream" : "bg-beige/80 text-charcoal"
+            }`}
+          >
+            {choice === "fall" ? "Fall" : "Winter"}
+          </button>
         ))}
-      </ul>
+      </div>
+      {day ? (
+        <ol className="mt-6 grid list-none gap-0 p-0">
+          {day.stops.map((stop) => (
+            <li key={stop.id} className="relative border-l border-beige py-3 pl-5">
+              <span className="absolute top-5 -left-1.5 size-3 rounded-full bg-forest" aria-hidden="true" />
+              <p className="text-base font-medium text-forest">{stop.timeLabel}</p>
+              <h2 className="mt-1 font-heading text-2xl leading-tight break-words text-charcoal">{stop.name}</h2>
+              <p className="mt-1 text-base leading-7">{stop.detail}</p>
+              <div className="mt-3 flex flex-wrap gap-2">
+                {stop.place ? (
+                  <details className="min-w-0">
+                    <summary className="inline-flex min-h-11 cursor-pointer list-none items-center rounded-full border border-forest px-4 text-base text-forest focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-forest [&::-webkit-details-marker]:hidden">
+                      See this place
+                    </summary>
+                    <div className="mt-3">
+                      <ThingCard place={stop.place} accent={accent} />
+                    </div>
+                  </details>
+                ) : null}
+                <a
+                  href={stop.place?.directionsUrl ?? directionsUrl(stop.name, null)}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex min-h-11 items-center rounded-full bg-forest px-4 text-base text-cream focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-forest"
+                >
+                  Get Directions
+                </a>
+              </div>
+            </li>
+          ))}
+        </ol>
+      ) : (
+        <p role="status" className="mt-6 text-base leading-7">
+          A perfect day for this season has not been added yet.
+        </p>
+      )}
     </div>
   );
 }

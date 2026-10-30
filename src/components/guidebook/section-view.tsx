@@ -1,23 +1,26 @@
 import Link from "next/link";
 import { SectionBlocks } from "@/components/guidebook/section-blocks";
 import { CheckoutList } from "@/components/guidebook/checkout-list";
+import { GuestNote } from "@/components/guidebook/guest-note";
 import { ThingsToDo } from "@/components/explore/things-to-do";
 import { BookingChoices } from "@/components/property/book-now";
 import { LateCheckout } from "@/components/property/late-checkout";
 import { PropertyGallery } from "@/components/property/property-gallery";
 import { MERGED_BLOCK_SORT } from "@/lib/content/sections";
 import { photosForSection } from "@/lib/content/property-photos";
-import type { ThingToDo } from "@/lib/content/things-to-do";
+import type { PerfectDay, ThingToDo } from "@/lib/content/things-to-do";
 import { isMarkedSample } from "@/lib/data/map-content";
 import type { GuideSectionDetail, HouseAmenity } from "@/types/content";
 
 export function SectionView({
   section,
   places = [],
+  itineraries = [],
   accent = "#263F35",
 }: {
   section: GuideSectionDetail;
   places?: ThingToDo[];
+  itineraries?: PerfectDay[];
   accent?: string;
 }) {
   const sample =
@@ -74,17 +77,23 @@ export function SectionView({
         </div>
       ) : null}
       <div className="mt-10 grid gap-10">
+        {section.slug === "contact" ? <GuestNoteCard section={section} /> : null}
         {arrival ? (
           <ArrivalBody section={section} />
         ) : section.slug === "the-house" ? (
           <HouseBody section={section} />
         ) : section.slug === "things-to-do" ? (
-          <ThingsBody section={section} places={places} accent={accent} />
+          <ThingsBody section={section} places={places} itineraries={itineraries} accent={accent} />
         ) : (
           <>
-            <SectionBlocks blocks={section.blocks} />
+            <SectionBlocks blocks={section.blocks} empty={section.slug === "contact" ? "hide" : "message"} />
             {section.slug === "getting-here" ? <ParkingNote summary={section.parkingSummary} /> : null}
-            {section.slug === "checkout" ? <CheckoutList items={section.checkoutItems} /> : null}
+            {section.slug === "checkout" ? (
+              <>
+                <CheckoutList items={section.checkoutItems} />
+                <GuestNoteCard section={section} compact />
+              </>
+            ) : null}
           </>
         )}
       </div>
@@ -109,7 +118,19 @@ function ArrivalBody({ section }: { section: GuideSectionDetail }) {
       <LateCheckout propertySlug={section.propertySlug} portalUrl={section.guestPortalUrl} />
       <SectionBlocks blocks={leaving} empty="hide" />
       <CheckoutList items={section.checkoutItems} />
+      <GuestNoteCard section={section} compact />
     </>
+  );
+}
+
+function GuestNoteCard({ section, compact = false }: { section: GuideSectionDetail; compact?: boolean }) {
+  return (
+    <GuestNote
+      propertySlug={section.propertySlug}
+      propertyName={section.propertyName}
+      airbnbHref={section.airbnbHref}
+      compact={compact}
+    />
   );
 }
 
@@ -169,16 +190,18 @@ function AmenityList({ amenities }: { amenities: HouseAmenity[] }) {
 function ThingsBody({
   section,
   places,
+  itineraries,
   accent,
 }: {
   section: GuideSectionDetail;
   places: ThingToDo[];
+  itineraries: PerfectDay[];
   accent: string;
 }) {
   return (
     <>
       <SectionBlocks blocks={section.blocks} empty="hide" />
-      <ThingsToDo places={places} accent={accent} />
+      <ThingsToDo places={places} itineraries={itineraries} accent={accent} />
     </>
   );
 }

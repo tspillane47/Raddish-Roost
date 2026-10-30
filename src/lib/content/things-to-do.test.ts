@@ -1,6 +1,7 @@
 import { describe, expect, it } from "vitest";
 import { creditForFile, photoFromManifest, recommendationPhoto } from "@/lib/content/recommendation-photos";
 import {
+  currentItinerarySeason,
   directionsUrl,
   sectionForPlace,
   stayHasThingSections,
@@ -39,6 +40,15 @@ describe("things to do", () => {
     expect(sectionForPlace({ subcategory: "ski_ride", category: "outdoors" }, true)).toBe("ski_ride");
     expect(sectionForPlace({ subcategory: "coffee", category: "food_drink" }, true)).toBe("coffee");
     expect(sectionForPlace({ subcategory: "bike", category: "outdoors" }, true)).toBe("bike");
+    expect(currentItinerarySeason(new Date(2026, 9, 30))).toBe("fall");
+    expect(currentItinerarySeason(new Date(2026, 8, 1))).toBe("fall");
+    expect(currentItinerarySeason(new Date(2026, 10, 30))).toBe("fall");
+    expect(currentItinerarySeason(new Date(2026, 3, 15))).toBe("fall");
+    expect(currentItinerarySeason(new Date(2026, 5, 1))).toBe("fall");
+    expect(currentItinerarySeason(new Date(2026, 7, 20))).toBe("fall");
+    expect(currentItinerarySeason(new Date(2026, 11, 1))).toBe("winter");
+    expect(currentItinerarySeason(new Date(2027, 0, 15))).toBe("winter");
+    expect(currentItinerarySeason(new Date(2027, 2, 31))).toBe("winter");
     expect(THING_SECTIONS.map((section) => section.id)).toEqual([
       "eat",
       "drink",

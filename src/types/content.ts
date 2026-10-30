@@ -73,6 +73,7 @@ export type GuideSectionDetail = {
   parkingSummary: string | null;
   checkoutItems: CheckoutTask[];
   amenities: HouseAmenity[];
+  airbnbHref: string | null;
 };
 
 export type PublicWifi = {

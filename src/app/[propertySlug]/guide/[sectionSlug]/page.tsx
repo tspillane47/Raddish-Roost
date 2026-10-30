@@ -4,9 +4,9 @@ import { notFound } from "next/navigation";
 import { PreviewBanner } from "@/components/layout/preview-banner";
 import { SectionFallback, SectionView } from "@/components/guidebook/section-view";
 import { brandLogo } from "@/lib/content/brand-art";
-import type { ThingToDo } from "@/lib/content/things-to-do";
+import type { PerfectDay, ThingToDo } from "@/lib/content/things-to-do";
 import { getGuideSection } from "@/lib/data/properties";
-import { getThingsToDo } from "@/lib/data/things-to-do";
+import { getPerfectDays, getThingsToDo } from "@/lib/data/things-to-do";
 
 type SectionParams = { params: Promise<{ propertySlug: string; sectionSlug: string }> };
 
@@ -29,9 +29,10 @@ export default function GuideSectionPage({ params }: SectionParams) {
 
 async function SectionContent({ params }: SectionParams) {
   const { propertySlug, sectionSlug } = await params;
-  const [result, places] = await Promise.all([
+  const [result, places, itineraries] = await Promise.all([
     getGuideSection(propertySlug, sectionSlug),
-    sectionSlug === "things-to-do" ? loadPlaces(propertySlug) : Promise.resolve([]),
+    sectionSlug === "things-to-do" ? loadPlaces(propertySlug) : Promise.resolve([] as ThingToDo[]),
+    sectionSlug === "things-to-do" ? getPerfectDays(propertySlug) : Promise.resolve([] as PerfectDay[]),
   ]);
 
   if (!result.ok) {
@@ -49,7 +50,12 @@ async function SectionContent({ params }: SectionParams) {
   return (
     <>
       {result.source === "preview" ? <PreviewBanner /> : null}
-      <SectionView section={result.section} places={places} accent={brandLogo(propertySlug)?.accent} />
+      <SectionView
+        section={result.section}
+        places={places}
+        itineraries={itineraries}
+        accent={brandLogo(propertySlug)?.accent}
+      />
     </>
   );
 }

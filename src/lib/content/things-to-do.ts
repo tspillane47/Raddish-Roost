@@ -14,6 +14,29 @@ export type ThingSectionId = (typeof THING_SECTIONS)[number]["id"];
 
 export type ThingSeason = "spring" | "summer" | "fall" | "winter";
 
+export type PerfectDaySeason = "fall" | "winter";
+
+export type PerfectDayStop = {
+  id: string;
+  timeLabel: string;
+  name: string;
+  detail: string;
+  place: ThingToDo | null;
+};
+
+export type PerfectDay = {
+  season: PerfectDaySeason;
+  title: string;
+  stops: PerfectDayStop[];
+};
+
+/** Fall is September through November. Winter is December through March. Other months use Fall for now. */
+export function currentItinerarySeason(date: Date): PerfectDaySeason {
+  const month = date.getMonth();
+  if (month === 11 || month <= 2) return "winter";
+  return "fall";
+}
+
 export type ThingToDo = {
   id: string;
   name: string;

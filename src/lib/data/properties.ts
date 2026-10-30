@@ -4,6 +4,7 @@ import { connection } from "next/server";
 import { cache } from "react";
 import { toBookingLinks, type BookingRow } from "@/lib/content/booking-links";
 import { guestPortalUrl } from "@/lib/content/guest-portal";
+import { toContactHref } from "@/lib/validation/contact";
 import { brandNameFromValue, DEFAULT_BRAND_NAME } from "@/lib/brand";
 import {
   previewGuideSection,
@@ -340,6 +341,27 @@ export const getGuideSection = cache(
       amenities = toHouseAmenities(amenityRows ?? []);
     }
 
+    let airbnbHref: string | null = null;
+    if (section.slug === "contact" || section.slug === "check-in-checkout" || section.slug === "checkout") {
+      const { data: airbnbRow, error: airbnbError } = await supabase
+        .from("contact_channels")
+        .select("value")
+        .eq("property_id", stay.id)
+        .eq("channel", "airbnb")
+        .eq("is_public", true)
+        .order("sort_order", { ascending: true })
+        .limit(1)
+        .maybeSingle();
+
+      if (airbnbError) {
+        rethrowPrerenderAbort(airbnbError);
+        logSupabaseError("airbnb-contact", airbnbError.message);
+        return { ok: false, error: "unavailable" };
+      }
+      const value = (airbnbRow as { value?: string | null } | null)?.value;
+      airbnbHref = value ? toContactHref("airbnb", value) : null;
+    }
+
     return {
       ok: true,
       source: "database",
@@ -357,6 +379,7 @@ export const getGuideSection = cache(
         parkingSummary: stay.parking_summary?.trim() || null,
         checkoutItems,
         amenities,
+        airbnbHref,
       },
     };
   },

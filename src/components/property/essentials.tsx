@@ -2,10 +2,8 @@ import { Car, KeyRound, LogOut, MessageCircle, Phone, Wifi } from "lucide-react"
 import Link from "next/link";
 import { CopyPassword } from "@/components/property/copy-password";
 import { LateCheckout } from "@/components/property/late-checkout";
+import { EMERGENCY_COPY } from "@/lib/content/guest-note";
 import type { PropertyGuide } from "@/types/content";
-
-const EMERGENCY_COPY =
-  "For immediate danger, call 911. Property emergency contacts have not been added.";
 
 export function Essentials({ property }: { property: PropertyGuide }) {
   const contact = property.contacts[0];

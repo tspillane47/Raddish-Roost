@@ -1,7 +1,7 @@
 import { fireEvent, render, screen } from "@testing-library/react";
 import { describe, expect, it } from "vitest";
 import { ThingsToDo } from "@/components/explore/things-to-do";
-import type { ThingToDo } from "@/lib/content/things-to-do";
+import type { PerfectDay, ThingToDo } from "@/lib/content/things-to-do";
 
 const places: ThingToDo[] = [
   {
@@ -146,6 +146,74 @@ describe("Things to Do", () => {
       "href",
       "https://commons.wikimedia.org/wiki/File:CamelsHumpMt_fromCharlotteVT_20140824.jpg",
     );
+  });
+
+  it("opens Perfect Day first and switches season", () => {
+    const coffee: ThingToDo = {
+      id: "black-cap",
+      name: "Black Cap Coffee & Bakery",
+      town: "Waterbury",
+      description: "A Waterbury coffee shop and bakery.",
+      tip: null,
+      section: "coffee",
+      season: null,
+      directionsUrl:
+        "https://www.google.com/maps/search/?api=1&query=Black%20Cap%20Coffee%20%26%20Bakery%20Waterbury%20Vermont",
+      photo: null,
+    };
+    const bagels: ThingToDo = {
+      ...coffee,
+      id: "kc",
+      name: "K.C.'s Bagel Café",
+      description: "Fresh bagels in Waterbury.",
+      directionsUrl: "https://www.google.com/maps/search/?api=1&query=K.C.%27s%20Bagel%20Cafe%20Vermont",
+    };
+    const days: PerfectDay[] = [
+      {
+        season: "fall",
+        title: "Our perfect day",
+        stops: [
+          {
+            id: "fall-morning",
+            timeLabel: "Morning",
+            name: coffee.name,
+            detail: "Coffee and a pastry, a short walk from the house.",
+            place: coffee,
+          },
+        ],
+      },
+      {
+        season: "winter",
+        title: "Our perfect day",
+        stops: [
+          {
+            id: "winter-morning",
+            timeLabel: "Morning",
+            name: bagels.name,
+            detail: "Bagels to start the day.",
+            place: bagels,
+          },
+        ],
+      },
+    ];
+
+    render(<ThingsToDo places={[coffee]} itineraries={days} today={new Date(2026, 9, 30)} />);
+
+    const tabs = screen.getAllByRole("tab");
+    expect(tabs[0]).toHaveAccessibleName("Perfect Day");
+    expect(tabs[0]).toHaveAttribute("aria-selected", "true");
+    expect(screen.getByRole("button", { name: "Fall" })).toHaveAttribute("aria-pressed", "true");
+    expect(screen.getByText("Coffee and a pastry, a short walk from the house.")).toBeInTheDocument();
+    expect(screen.queryByText(/discount|perk|reward|coupon/i)).not.toBeInTheDocument();
+
+    fireEvent.click(screen.getByText("See this place"));
+    expect(screen.getByText("A Waterbury coffee shop and bakery.")).toBeInTheDocument();
+    expect(screen.getAllByRole("link", { name: "Get Directions" })[0]).toHaveAttribute("href", coffee.directionsUrl);
+
+    fireEvent.click(screen.getByRole("button", { name: "Winter" }));
+    expect(screen.getByRole("button", { name: "Winter" })).toHaveAttribute("aria-pressed", "true");
+    expect(screen.getByText("Bagels to start the day.")).toBeInTheDocument();
+    expect(screen.queryByText("Coffee and a pastry, a short walk from the house.")).not.toBeInTheDocument();
   });
 
   it("says when a stay has no places yet", () => {

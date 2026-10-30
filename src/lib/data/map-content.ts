@@ -1,5 +1,6 @@
 import { toBookingLinks, type BookingRow } from "@/lib/content/booking-links";
 import { GUEST_PORTAL_URLS, guestPortalUrl } from "@/lib/content/guest-portal";
+import { AIRBNB_MESSAGE_URLS } from "@/lib/content/airbnb-messages";
 import { ARRIVAL_STEPS, GUIDE_SECTIONS, MERGED_BLOCK_SORT, SAMPLE_SECTION_SUMMARY } from "@/lib/content/sections";
 import { SAMPLE_PROPERTIES, sampleSections } from "@/lib/content/sample-catalog";
 import { guidebookImageUrl } from "@/lib/media";
@@ -264,6 +265,7 @@ export function previewGuideSection(propertySlug: string, sectionSlug: string): 
         ? [{ id: "sample-checkout", label: "[Sample] Run through the checkout list.", detail: "Details coming soon." }]
         : [],
     amenities: [],
+    airbnbHref: AIRBNB_MESSAGE_URLS[property.slug] ?? null,
   };
 }
 
