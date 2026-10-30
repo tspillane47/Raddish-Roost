@@ -137,8 +137,16 @@ export function chooseHeroPhotos(
   return [hero, ...rest].filter((photo): photo is PropertyPhoto => photo !== null).slice(0, 3);
 }
 
+const SECTION_PHOTO_ALIASES: Record<string, readonly string[]> = {
+  "check-in-checkout": ["check-in", "checkout"],
+  "the-house": ["house-guide", "amenities"],
+  "getting-here": ["parking"],
+  "things-to-do": ["local-recommendations", "recommendations"],
+};
+
 export function photosForSection(slug: string, sectionSlug: string): PropertyPhoto[] {
-  return getPropertyPhotos(slug).photos.filter((photo) => photo.sections.includes(sectionSlug));
+  const names = new Set([sectionSlug, ...(SECTION_PHOTO_ALIASES[sectionSlug] ?? [])]);
+  return getPropertyPhotos(slug).photos.filter((photo) => photo.sections.some((section) => names.has(section)));
 }
 
 /** Labeled preview sets for the property page. Other stays opt in by filling manifest.json. */

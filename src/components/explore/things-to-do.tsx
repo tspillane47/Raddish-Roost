@@ -20,12 +20,12 @@ export function ThingsToDo({ places, accent = "#263F35" }: { places: ThingToDo[]
   }
 
   return (
-    <div className="mt-6">
-      <div className="sticky top-[var(--site-header)] z-30 -mx-5 border-b border-beige bg-cream/95 px-5 backdrop-blur-sm">
+    <div className="mt-6 min-w-0">
+      <div className="sticky top-[var(--site-header)] z-30 -mx-5 max-w-full border-b border-beige bg-cream/95 px-5 backdrop-blur-sm">
         <div
           role="tablist"
           aria-label="Things to do"
-          className="flex gap-2 overflow-x-auto overscroll-x-contain py-3 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden"
+          className="flex w-full min-w-0 gap-2 overflow-x-auto overscroll-x-contain py-3 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden"
         >
           {sections.map((section) => {
             const selected = section.id === current;

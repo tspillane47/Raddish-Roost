@@ -7,7 +7,7 @@ import { brandLogo } from "@/lib/content/brand-art";
 import { getPropertyPhotos, photosForSection, photoSets } from "@/lib/content/property-photos";
 import type { PropertyGuide } from "@/types/content";
 
-const THUMBNAIL_SECTIONS = new Set(["getting-here", "house-guide", "amenities"]);
+const THUMBNAIL_SECTIONS = new Set(["getting-here", "the-house", "house-guide", "amenities"]);
 const FOREST = "#263F35";
 
 export function PropertyHome({ property }: { property: PropertyGuide }) {
@@ -44,11 +44,7 @@ export function PropertyHome({ property }: { property: PropertyGuide }) {
                 return (
                   <li key={section.slug}>
                     <Link
-                      href={
-                        section.slug === "local-recommendations"
-                          ? `/${property.slug}/explore`
-                          : `/${property.slug}/guide/${section.slug}`
-                      }
+                      href={`/${property.slug}/guide/${section.slug}`}
                       className="flex min-h-24 items-stretch gap-4 rounded-2xl bg-beige/50 p-4 focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-forest"
                     >
                       {thumb ? (

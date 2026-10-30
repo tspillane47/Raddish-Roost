@@ -1,8 +1,10 @@
 import { fireEvent, render, screen, within } from "@testing-library/react";
 import type { ReactNode } from "react";
 import { describe, expect, it, vi } from "vitest";
+import { PropertyDock } from "@/components/property/property-dock";
 import { PropertyHome } from "@/components/property/property-home";
 import { photoFrame } from "@/components/property/property-look";
+import { PropertyTools } from "@/components/property/property-tools";
 import { previewProperty } from "@/lib/data/map-content";
 
 vi.mock("next/link", () => ({
@@ -11,6 +13,10 @@ vi.mock("next/link", () => ({
       {children}
     </a>
   ),
+}));
+
+vi.mock("next/navigation", () => ({
+  usePathname: () => "/raddish-roost/guide/things-to-do",
 }));
 
 describe("PropertyHome", () => {
@@ -34,10 +40,10 @@ describe("PropertyHome", () => {
     expect(screen.getByRole("heading", { name: "Bath and Laundry" })).toBeInTheDocument();
     expect(screen.getByRole("heading", { name: "Outside and Around Town" })).toBeInTheDocument();
     expect(screen.queryByRole("button", { name: "Book Now" })).not.toBeInTheDocument();
-    expect(screen.getByRole("link", { name: /House Guide/ })).toHaveAttribute("href", "/raddish-roost/guide/house-guide");
-    expect(screen.getByRole("link", { name: /Local Recommendations/ })).toHaveAttribute(
+    expect(screen.getByRole("link", { name: /The House/ })).toHaveAttribute("href", "/raddish-roost/guide/the-house");
+    expect(screen.getByRole("link", { name: /Things to Do/ })).toHaveAttribute(
       "href",
-      "/raddish-roost/explore",
+      "/raddish-roost/guide/things-to-do",
     );
     expect(screen.getByRole("link", { name: /Stay With Us Again/ })).toBeInTheDocument();
 
@@ -79,6 +85,47 @@ describe("PropertyHome", () => {
     expect(screen.getAllByRole("heading", { name: "Extra Cabin" })).toHaveLength(1);
     expect(screen.queryByRole("heading", { name: "A Look Around" })).not.toBeInTheDocument();
     expect(screen.queryByRole("button", { name: /See all/ })).not.toBeInTheDocument();
+  });
+});
+
+describe("guidebook links", () => {
+  it("points Essentials and the bottom bar at the eight sections", () => {
+    render(
+      <>
+        <PropertyTools slug="raddish-roost" />
+        <PropertyDock slug="raddish-roost" />
+      </>,
+    );
+
+    expect(screen.getByRole("link", { name: "Wi-Fi", hidden: true })).toHaveAttribute(
+      "href",
+      "/raddish-roost/guide/wifi",
+    );
+    expect(screen.getByRole("link", { name: "Check-in", hidden: true })).toHaveAttribute(
+      "href",
+      "/raddish-roost/guide/check-in-checkout",
+    );
+    expect(screen.getByRole("link", { name: "Checkout", hidden: true })).toHaveAttribute(
+      "href",
+      "/raddish-roost/guide/check-in-checkout#checkout-list",
+    );
+    expect(screen.getByRole("link", { name: "Parking", hidden: true })).toHaveAttribute(
+      "href",
+      "/raddish-roost/guide/getting-here#parking",
+    );
+    expect(screen.getAllByRole("link", { name: "Contact", hidden: true }).map((link) => link.getAttribute("href"))).toEqual([
+      "/raddish-roost/guide/contact",
+      "/raddish-roost/guide/contact",
+    ]);
+    expect(screen.getByRole("link", { name: "Emergency", hidden: true })).toHaveAttribute(
+      "href",
+      "/raddish-roost/guide/contact#emergency",
+    );
+    expect(screen.getByRole("link", { name: "Explore" })).toHaveAttribute(
+      "href",
+      "/raddish-roost/guide/things-to-do",
+    );
+    expect(screen.getByRole("link", { name: "Explore" })).toHaveAttribute("aria-current", "page");
   });
 });
 

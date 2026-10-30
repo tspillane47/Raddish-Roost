@@ -1,14 +1,16 @@
 import { toBookingLinks, type BookingRow } from "@/lib/content/booking-links";
 import { GUEST_PORTAL_URLS, guestPortalUrl } from "@/lib/content/guest-portal";
-import { ARRIVAL_STEPS, GUIDE_SECTIONS, SAMPLE_SECTION_SUMMARY } from "@/lib/content/sections";
+import { ARRIVAL_STEPS, GUIDE_SECTIONS, MERGED_BLOCK_SORT, SAMPLE_SECTION_SUMMARY } from "@/lib/content/sections";
 import { SAMPLE_PROPERTIES, sampleSections } from "@/lib/content/sample-catalog";
 import { guidebookImageUrl } from "@/lib/media";
 import { parseGuidebookBlock } from "@/lib/validation/blocks";
 import { toContactHref, type ContactChannel } from "@/lib/validation/contact";
 import type {
+  CheckoutTask,
   GuideBlockView,
   GuideSection,
   GuideSectionDetail,
+  HouseAmenity,
   PropertyGuide,
   PropertySummary,
   PublicContact,
@@ -151,16 +153,38 @@ function blockFromRow(row: BlockRow, supabaseUrl: string | null): GuideBlockView
   if (!parsed.success) return null;
   const block = parsed.data;
   const title = row.title?.trim() || null;
-  if (block.type === "rich_text") return { id: row.id, title, kind: "rich_text", markdown: block.markdown };
-  if (block.type === "steps") return { id: row.id, title, kind: "steps", steps: block.steps };
+  const sortOrder = row.sort_order;
+  if (block.type === "rich_text") return { id: row.id, sortOrder, title, kind: "rich_text", markdown: block.markdown };
+  if (block.type === "steps") return { id: row.id, sortOrder, title, kind: "steps", steps: block.steps };
   if (block.type === "callout") {
-    return { id: row.id, title, kind: "callout", tone: block.tone, markdown: block.markdown };
+    return { id: row.id, sortOrder, title, kind: "callout", tone: block.tone, markdown: block.markdown };
   }
-  if (block.type === "checklist") return { id: row.id, title, kind: "checklist", items: block.items };
-  if (block.type === "link_list") return { id: row.id, title, kind: "link_list", links: block.links };
+  if (block.type === "checklist") return { id: row.id, sortOrder, title, kind: "checklist", items: block.items };
+  if (block.type === "link_list") return { id: row.id, sortOrder, title, kind: "link_list", links: block.links };
   const url = supabaseUrl ? guidebookImageUrl(supabaseUrl, block.path) : null;
   if (!url) return null;
-  return { id: row.id, title, kind: "media", url, alt: block.alt, caption: block.caption };
+  return { id: row.id, sortOrder, title, kind: "media", url, alt: block.alt, caption: block.caption };
+}
+
+export function toCheckoutTasks(
+  rows: { id: string; label: string | null; details: string | null }[],
+): CheckoutTask[] {
+  return rows.flatMap((row) => {
+    const label = row.label?.trim() ?? "";
+    if (!label) return [];
+    const detail = row.details?.trim();
+    return [detail ? { id: row.id, label, detail } : { id: row.id, label }];
+  });
+}
+
+export function toHouseAmenities(
+  rows: { id: string; name: string | null; description: string | null }[],
+): HouseAmenity[] {
+  return rows.flatMap((row) => {
+    const name = row.name?.trim() ?? "";
+    if (!name) return [];
+    return [{ id: row.id, name, description: row.description?.trim() || null }];
+  });
 }
 
 export function toGuideBlocks(rows: BlockRow[], supabaseUrl: string | null): GuideBlockView[] {
@@ -183,31 +207,63 @@ export function previewGuideSection(propertySlug: string, sectionSlug: string): 
       ? [
           {
             id: "sample-steps",
+            sortOrder: 10,
             title: "[Sample] Arrival steps",
             kind: "steps",
             steps: ARRIVAL_STEPS.map((title) => ({ title })),
           },
-        ]
-      : [
           {
-            id: "sample-notes",
-            title: "[Sample] Notes",
+            id: "sample-leave",
+            sortOrder: MERGED_BLOCK_SORT,
+            title: "[Sample] Before you leave",
             kind: "rich_text",
-            markdown: "[Sample] Your notes for this section will appear here.",
+            markdown: "[Sample] Checkout notes will appear here.",
           },
-        ];
+        ]
+      : section.sectionType === "house_guide"
+        ? [
+            {
+              id: "sample-how",
+              sortOrder: 10,
+              title: "[Sample] Heat",
+              kind: "rich_text",
+              markdown: "[Sample] How the heat works will appear here.",
+            },
+            {
+              id: "sample-what",
+              sortOrder: MERGED_BLOCK_SORT,
+              title: "[Sample] In the house",
+              kind: "rich_text",
+              markdown: "[Sample] Amenities will appear here.",
+            },
+          ]
+        : [
+            {
+              id: "sample-notes",
+              sortOrder: 10,
+              title: "[Sample] Notes",
+              kind: "rich_text",
+              markdown: "[Sample] Your notes for this section will appear here.",
+            },
+          ];
 
   return {
     propertySlug: property.slug,
     propertyName: property.name,
     slug: section.slug,
     title: section.title,
-    summary: SAMPLE_SECTION_SUMMARY,
+    summary: section.sectionType === "check_in" ? "Check-in is at 4:00 PM. Checkout is at 10:00 AM." : SAMPLE_SECTION_SUMMARY,
     blocks,
     bookings: [],
     checkInTime: "4:00 PM",
     checkOutTime: "10:00 AM",
     guestPortalUrl: GUEST_PORTAL_URLS[property.slug] ?? null,
+    parkingSummary: section.sectionType === "getting_here" ? "[Sample] Park in the driveway." : null,
+    checkoutItems:
+      section.sectionType === "check_in"
+        ? [{ id: "sample-checkout", label: "[Sample] Run through the checkout list.", detail: "Details coming soon." }]
+        : [],
+    amenities: [],
   };
 }
 

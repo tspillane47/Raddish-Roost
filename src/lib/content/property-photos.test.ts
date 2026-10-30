@@ -48,6 +48,15 @@ describe("property photos", () => {
     expect(photosForSection("raddish-roost", "parking").map((photo) => photo.file)).toEqual([
       "front-and-driveway.webp",
     ]);
+    expect(photosForSection("raddish-roost", "the-house").map((photo) => photo.file)).toEqual(
+      expect.arrayContaining(["kitchen.webp", "front-of-house.webp", "laundry-room.webp", "stairs.webp"]),
+    );
+    expect(photosForSection("raddish-roost", "check-in-checkout").map((photo) => photo.file)).toContain(
+      "front-of-house.webp",
+    );
+    expect(photosForSection("raddish-roost", "getting-here").map((photo) => photo.file)).toContain(
+      "front-and-driveway.webp",
+    );
   });
 
   it("builds labeled preview sets from the manifest", () => {

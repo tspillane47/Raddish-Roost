@@ -3,7 +3,10 @@ import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { PreviewBanner } from "@/components/layout/preview-banner";
 import { SectionFallback, SectionView } from "@/components/guidebook/section-view";
+import { brandLogo } from "@/lib/content/brand-art";
+import type { ThingToDo } from "@/lib/content/things-to-do";
 import { getGuideSection } from "@/lib/data/properties";
+import { getThingsToDo } from "@/lib/data/things-to-do";
 
 type SectionParams = { params: Promise<{ propertySlug: string; sectionSlug: string }> };
 
@@ -26,7 +29,10 @@ export default function GuideSectionPage({ params }: SectionParams) {
 
 async function SectionContent({ params }: SectionParams) {
   const { propertySlug, sectionSlug } = await params;
-  const result = await getGuideSection(propertySlug, sectionSlug);
+  const [result, places] = await Promise.all([
+    getGuideSection(propertySlug, sectionSlug),
+    sectionSlug === "things-to-do" ? loadPlaces(propertySlug) : Promise.resolve([]),
+  ]);
 
   if (!result.ok) {
     if (result.error === "not_found") notFound();
@@ -43,7 +49,12 @@ async function SectionContent({ params }: SectionParams) {
   return (
     <>
       {result.source === "preview" ? <PreviewBanner /> : null}
-      <SectionView section={result.section} />
+      <SectionView section={result.section} places={places} accent={brandLogo(propertySlug)?.accent} />
     </>
   );
+}
+
+async function loadPlaces(propertySlug: string): Promise<ThingToDo[]> {
+  const things = await getThingsToDo(propertySlug);
+  return things.ok ? things.places : [];
 }

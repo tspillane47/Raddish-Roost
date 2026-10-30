@@ -3,11 +3,11 @@ import Link from "next/link";
 
 const LINKS = [
   { key: "wifi", label: "Wi-Fi", path: "/guide/wifi", icon: Wifi },
-  { key: "check-in", label: "Check-in", path: "/guide/check-in", icon: KeyRound },
-  { key: "checkout", label: "Checkout", path: "/guide/checkout", icon: LogOut },
-  { key: "parking", label: "Parking", path: "#parking", icon: Car },
+  { key: "check-in", label: "Check-in", path: "/guide/check-in-checkout", icon: KeyRound },
+  { key: "checkout", label: "Checkout", path: "/guide/check-in-checkout#checkout-list", icon: LogOut },
+  { key: "parking", label: "Parking", path: "/guide/getting-here#parking", icon: Car },
   { key: "contact", label: "Contact", path: "/guide/contact", icon: MessageCircle },
-  { key: "emergency", label: "Emergency", path: "#emergency", icon: Phone },
+  { key: "emergency", label: "Emergency", path: "/guide/contact#emergency", icon: Phone },
 ] as const;
 
 export function PropertyTools({ slug }: { slug: string }) {

@@ -1,22 +1,36 @@
+/** Blocks moved in from a second section start at this sort order. */
+export const MERGED_BLOCK_SORT = 1000;
+
 export const GUIDE_SECTIONS = [
-  { sectionType: "getting_here", slug: "getting-here", title: "Getting Here", sortOrder: 10 },
-  { sectionType: "check_in", slug: "check-in", title: "Check-In & Access", sortOrder: 20 },
-  { sectionType: "wifi", slug: "wifi", title: "Wi-Fi & Technology", sortOrder: 30 },
-  { sectionType: "house_guide", slug: "house-guide", title: "House Guide", sortOrder: 40 },
-  { sectionType: "amenities", slug: "amenities", title: "Amenities", sortOrder: 50 },
   {
-    sectionType: "recommendations",
-    slug: "local-recommendations",
-    title: "Local Recommendations",
-    sortOrder: 60,
+    sectionType: "check_in",
+    slug: "check-in-checkout",
+    title: "Check-In & Checkout",
+    sortOrder: 10,
   },
-  { sectionType: "things_to_do", slug: "things-to-do", title: "Things to Do", sortOrder: 70 },
-  { sectionType: "house_rules", slug: "house-rules", title: "House Rules", sortOrder: 80 },
-  { sectionType: "checkout", slug: "checkout", title: "Checkout Instructions", sortOrder: 90 },
-  { sectionType: "faq", slug: "faq", title: "Frequently Asked Questions", sortOrder: 100 },
-  { sectionType: "contact", slug: "contact", title: "Contact Your Hosts", sortOrder: 110 },
-  { sectionType: "stay_again", slug: "stay-again", title: "Stay With Us Again", sortOrder: 120 },
+  {
+    sectionType: "getting_here",
+    slug: "getting-here",
+    title: "Getting Here & Parking",
+    sortOrder: 20,
+  },
+  { sectionType: "wifi", slug: "wifi", title: "Wi-Fi & TV", sortOrder: 30 },
+  { sectionType: "house_guide", slug: "the-house", title: "The House", sortOrder: 40 },
+  { sectionType: "house_rules", slug: "house-rules", title: "House Rules", sortOrder: 50 },
+  { sectionType: "things_to_do", slug: "things-to-do", title: "Things to Do", sortOrder: 60 },
+  { sectionType: "contact", slug: "contact", title: "Contact & Emergency", sortOrder: 70 },
+  { sectionType: "stay_again", slug: "stay-again", title: "Stay With Us Again", sortOrder: 80 },
 ] as const;
+
+/** Old guidebook addresses. They forward once the new section is published. */
+export const LEGACY_SECTION_REDIRECTS: Record<string, string> = {
+  "check-in": "check-in-checkout",
+  checkout: "check-in-checkout",
+  "house-guide": "the-house",
+  amenities: "the-house",
+  "local-recommendations": "things-to-do",
+  recommendations: "things-to-do",
+};
 
 export const SAMPLE_SECTION_SUMMARY = "[Sample] This section is ready for your notes.";
 

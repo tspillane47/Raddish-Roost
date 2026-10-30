@@ -57,6 +57,25 @@ const lateCheckout = readFileSync(
   path.join(root, "supabase/migrations/20261029140000_late_checkout_portals.sql"),
   "utf8",
 );
+const guidebookSections = readFileSync(
+  path.join(root, "supabase/migrations/20261029150000_guidebook_sections.sql"),
+  "utf8",
+);
+
+const SEEDED_SECTIONS = [
+  ["getting-here", "Getting Here"],
+  ["check-in", "Check-In & Access"],
+  ["wifi", "Wi-Fi & Technology"],
+  ["house-guide", "House Guide"],
+  ["amenities", "Amenities"],
+  ["local-recommendations", "Local Recommendations"],
+  ["things-to-do", "Things to Do"],
+  ["house-rules", "House Rules"],
+  ["checkout", "Checkout Instructions"],
+  ["faq", "Frequently Asked Questions"],
+  ["contact", "Contact Your Hosts"],
+  ["stay-again", "Stay With Us Again"],
+] as const;
 
 const tables = [
   "locations",
@@ -107,9 +126,9 @@ describe("seed sql", () => {
       expect(seed).toContain(property.name);
       expect(seed).toContain(property.welcomeMessage);
     }
-    for (const section of GUIDE_SECTIONS) {
-      expect(seed).toContain(section.slug);
-      expect(seed).toContain(section.title);
+    for (const [slug, title] of SEEDED_SECTIONS) {
+      expect(seed).toContain(slug);
+      expect(seed).toContain(title);
     }
     for (const step of ARRIVAL_STEPS) {
       expect(seed).toContain(step);
@@ -419,6 +438,29 @@ describe("check-in times migration", () => {
     expect(checkInTimes).not.toContain("—");
     expect(checkInTimes).not.toMatch(/http:\/\//);
     expect(checkInTimes).not.toContain("shallot-chalet' then 'https");
+  });
+});
+
+describe("guidebook sections migration", () => {
+  it("merges to eight sections and keeps the hidden rows", () => {
+    expect(GUIDE_SECTIONS).toHaveLength(8);
+    for (const section of GUIDE_SECTIONS) {
+      expect(guidebookSections).toContain(section.slug);
+      expect(guidebookSections).toContain(section.title);
+    }
+    expect(guidebookSections).toContain("seed_guidebook_sections");
+    expect(guidebookSections).toContain("is_visible = false");
+    expect(guidebookSections).toContain("'faq'");
+    expect(guidebookSections).toContain("1000 + block.sort_order");
+    expect(guidebookSections).toContain("check-in-checkout");
+    expect(guidebookSections).toContain("the-house");
+    expect(guidebookSections).toContain("Getting Here & Parking");
+    expect(guidebookSections).toContain("Wi-Fi & TV");
+    expect(guidebookSections).toContain("Contact & Emergency");
+    expect(guidebookSections).not.toMatch(/delete from public\.guidebook_sections/i);
+    expect(guidebookSections).not.toMatch(/delete from public\.guidebook_blocks/i);
+    expect(guidebookSections).not.toContain("—");
+    expect(guidebookSections).not.toContain("Radish");
   });
 });
 

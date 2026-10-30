@@ -82,10 +82,10 @@ describe("preview content", () => {
   it("hides wifi and marks the three sample homes", () => {
     const property = previewProperty("raddish-roost");
     expect(property?.wifi).toBeNull();
-    expect(property?.sections).toHaveLength(12);
+    expect(property?.sections).toHaveLength(8);
     expect(property?.welcomeMessage.startsWith("[Sample]")).toBe(true);
     expect(previewProperty("unknown")).toBeNull();
-    expect(previewGuideSection("raddish-roost", "check-in")?.blocks[0]?.kind).toBe("steps");
+    expect(previewGuideSection("raddish-roost", "check-in-checkout")?.blocks[0]?.kind).toBe("steps");
     expect(previewGuideSection("raddish-roost", "wifi")?.propertyName).toBe("The Raddish Roost");
     expect(previewGuideSection("raddish-roost", "not-a-section")).toBeNull();
     expect(toPublicWifi({ network_name: "   ", password: null, router_note: null })).toBeNull();

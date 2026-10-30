@@ -4,6 +4,7 @@ import { DEFAULT_BRAND_NAME } from "@/lib/brand";
 import { GUIDE_SECTIONS } from "@/lib/content/sections";
 import { SAMPLE_PROPERTIES } from "@/lib/content/sample-catalog";
 import { guideSectionFromPath, slugToReject } from "@/lib/routing/property-path";
+import { guideRedirectRequest } from "@/lib/routing/section-redirect";
 import { getSupabaseEnv } from "@/lib/supabase/env";
 import { propertySlugSchema } from "@/lib/validation/slug";
 
@@ -101,8 +102,21 @@ async function guideSectionMissing(pathname: string): Promise<boolean> {
 }
 
 export async function proxy(request: NextRequest) {
-  const rejected = slugToReject(request.nextUrl.pathname, await publishedSlugs());
-  if (rejected || (await guideSectionMissing(request.nextUrl.pathname))) return notFoundResponse();
+  const pathname = request.nextUrl.pathname;
+  const rejected = slugToReject(pathname, await publishedSlugs());
+  if (rejected) return notFoundResponse();
+
+  const forward = guideRedirectRequest(pathname);
+  if (forward) {
+    const destination = `/${forward.property}/guide/${forward.section}`;
+    if (destination !== pathname && !(await guideSectionMissing(destination))) {
+      const url = request.nextUrl.clone();
+      url.pathname = destination;
+      return NextResponse.redirect(url, 308);
+    }
+  }
+
+  if (await guideSectionMissing(pathname)) return notFoundResponse();
   return NextResponse.next();
 }
 

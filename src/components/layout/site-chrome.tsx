@@ -17,7 +17,7 @@ export function SiteChrome({ children }: { children: React.ReactNode }) {
       <Suspense fallback={<SiteHeader brandName={DEFAULT_BRAND_NAME} />}>
         <HeaderSlot />
       </Suspense>
-      <main id="main" className="flex-1">
+      <main id="main" className="w-full min-w-0 flex-1">
         {children}
       </main>
       <Suspense

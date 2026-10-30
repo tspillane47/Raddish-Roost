@@ -13,13 +13,16 @@ export function PropertyDock({ slug }: { slug: string }) {
       href: `${home}#guidebook`,
       label: "Guide",
       icon: BookOpen,
-      current: pathname.startsWith(`${home}/guide`) && pathname !== `${home}/guide/contact`,
+      current:
+        pathname.startsWith(`${home}/guide`) &&
+        pathname !== `${home}/guide/contact` &&
+        pathname !== `${home}/guide/things-to-do`,
     },
     {
-      href: `${home}/explore`,
+      href: `${home}/guide/things-to-do`,
       label: "Explore",
       icon: Compass,
-      current: pathname.startsWith(`${home}/explore`),
+      current: pathname === `${home}/guide/things-to-do` || pathname.startsWith(`${home}/explore`),
     },
     {
       href: `${home}/guide/contact`,

@@ -2,12 +2,38 @@ import Image from "next/image";
 import { GuidebookMarkdown } from "@/lib/content/markdown";
 import type { GuideBlockView } from "@/types/content";
 
-export function SectionBlocks({ blocks }: { blocks: GuideBlockView[] }) {
+export function SectionBlocks({
+  blocks,
+  accordion = false,
+  empty = "message",
+}: {
+  blocks: GuideBlockView[];
+  accordion?: boolean;
+  empty?: "message" | "hide";
+}) {
   if (blocks.length === 0) {
+    if (empty === "hide") return null;
     return (
       <p role="status" className="text-lg leading-8">
         This section has not been written yet.
       </p>
+    );
+  }
+
+  if (accordion) {
+    return (
+      <div className="grid gap-3">
+        {blocks.map((block) => (
+          <details key={block.id} className="rounded-xl bg-beige/70 px-4">
+            <summary className="flex min-h-11 cursor-pointer list-none items-center text-base font-medium text-charcoal focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-forest [&::-webkit-details-marker]:hidden">
+              {block.title ?? "Details"}
+            </summary>
+            <div className="pb-4">
+              <BlockBody block={block} />
+            </div>
+          </details>
+        ))}
+      </div>
     );
   }
 

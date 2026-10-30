@@ -9,7 +9,9 @@ import {
   previewGuideSection,
   previewProperties,
   previewProperty,
+  toCheckoutTasks,
   toGuideBlocks,
+  toHouseAmenities,
   toPropertyGuide,
   toPropertySummary,
   type BlockRow,
@@ -222,7 +224,7 @@ export const getGuideSection = cache(
     const env = getSupabaseEnv();
     const fullProperty = await supabase
       .from("properties")
-      .select("id, slug, name, check_in_time, check_out_time, guest_portal_url")
+      .select("id, slug, name, check_in_time, check_out_time, guest_portal_url, parking_summary")
       .eq("slug", propertySlug)
       .eq("status", "published")
       .maybeSingle();
@@ -232,7 +234,7 @@ export const getGuideSection = cache(
     if (propertyError && /guest_portal_url/.test(propertyError.message)) {
       const basicProperty = await supabase
         .from("properties")
-        .select("id, slug, name, check_in_time, check_out_time")
+        .select("id, slug, name, check_in_time, check_out_time, parking_summary")
         .eq("slug", propertySlug)
         .eq("status", "published")
         .maybeSingle();
@@ -254,6 +256,7 @@ export const getGuideSection = cache(
       check_in_time?: string | null;
       check_out_time?: string | null;
       guest_portal_url?: string | null;
+      parking_summary?: string | null;
     };
 
     const { data: section, error: sectionError } = await supabase
@@ -301,6 +304,42 @@ export const getGuideSection = cache(
       bookings = (bookingRows ?? []) as BookingRow[];
     }
 
+    let checkoutItems: ReturnType<typeof toCheckoutTasks> = [];
+    if (section.slug === "check-in-checkout" || section.slug === "checkout") {
+      const { data: checkoutRows, error: checkoutError } = await supabase
+        .from("checkout_items")
+        .select("id, label, details, sort_order")
+        .eq("property_id", stay.id)
+        .eq("is_visible", true)
+        .not("published_at", "is", null)
+        .order("sort_order", { ascending: true });
+
+      if (checkoutError) {
+        rethrowPrerenderAbort(checkoutError);
+        logSupabaseError("checkout-items", checkoutError.message);
+        return { ok: false, error: "unavailable" };
+      }
+      checkoutItems = toCheckoutTasks(checkoutRows ?? []);
+    }
+
+    let amenities: ReturnType<typeof toHouseAmenities> = [];
+    if (section.slug === "the-house") {
+      const { data: amenityRows, error: amenityError } = await supabase
+        .from("amenities")
+        .select("id, name, description, sort_order")
+        .eq("property_id", stay.id)
+        .eq("is_visible", true)
+        .not("published_at", "is", null)
+        .order("sort_order", { ascending: true });
+
+      if (amenityError) {
+        rethrowPrerenderAbort(amenityError);
+        logSupabaseError("amenities", amenityError.message);
+        return { ok: false, error: "unavailable" };
+      }
+      amenities = toHouseAmenities(amenityRows ?? []);
+    }
+
     return {
       ok: true,
       source: "database",
@@ -315,6 +354,9 @@ export const getGuideSection = cache(
         checkInTime: stay.check_in_time?.trim() || null,
         checkOutTime: stay.check_out_time?.trim() || null,
         guestPortalUrl: guestPortalUrl(stay.guest_portal_url),
+        parkingSummary: stay.parking_summary?.trim() || null,
+        checkoutItems,
+        amenities,
       },
     };
   },

@@ -9,7 +9,7 @@ export type GuideSection = {
   sectionType: string;
 };
 
-export type GuideBlockView =
+type GuideBlockFields =
   | { id: string; title: string | null; kind: "rich_text"; markdown: string }
   | {
       id: string;
@@ -45,6 +45,20 @@ export type GuideBlockView =
       caption?: string;
     };
 
+export type GuideBlockView = GuideBlockFields & { sortOrder: number };
+
+export type CheckoutTask = {
+  id: string;
+  label: string;
+  detail?: string;
+};
+
+export type HouseAmenity = {
+  id: string;
+  name: string;
+  description: string | null;
+};
+
 export type GuideSectionDetail = {
   propertySlug: string;
   propertyName: string;
@@ -56,6 +70,9 @@ export type GuideSectionDetail = {
   checkInTime: string | null;
   checkOutTime: string | null;
   guestPortalUrl: string | null;
+  parkingSummary: string | null;
+  checkoutItems: CheckoutTask[];
+  amenities: HouseAmenity[];
 };
 
 export type PublicWifi = {

@@ -62,22 +62,44 @@ describe("check-in and checkout times", () => {
     );
   });
 
-  it("states the checkout time and offers late checkout on the Checkout section", () => {
-    const section = previewGuideSection("onion-ranch", "checkout");
+  it("states both times, then late checkout, on Check-In & Checkout", () => {
+    const section = previewGuideSection("onion-ranch", "check-in-checkout");
     expect(section).not.toBeNull();
     render(<SectionView section={section!} />);
+    expect(screen.getByText("Check-in is at 4:00 PM")).toBeInTheDocument();
     expect(screen.getByText("Checkout is at 10:00 AM")).toBeInTheDocument();
     expect(screen.getByRole("link", { name: "Request Late Checkout" })).toHaveAttribute(
       "href",
       GUEST_PORTAL_URLS["onion-ranch"],
     );
+    expect(screen.getByRole("checkbox", { name: /Run through the checkout list/ })).toBeInTheDocument();
+    expect(screen.getByText("Arrive at the property.")).toBeInTheDocument();
   });
 
-  it("keeps check-in free of the portal button", () => {
-    const section = previewGuideSection("raddish-roost", "check-in");
+  it("groups the house into what is here and how things work", () => {
+    const section = previewGuideSection("raddish-roost", "the-house");
     expect(section).not.toBeNull();
     render(<SectionView section={section!} />);
-    expect(screen.getByText("Check-in is at 4:00 PM")).toBeInTheDocument();
+    expect(screen.getByRole("heading", { name: "What's here" })).toBeInTheDocument();
+    expect(screen.getByRole("heading", { name: "How things work" })).toBeInTheDocument();
+    expect(screen.getByText("[Sample] Amenities will appear here.")).toBeInTheDocument();
+    fireEvent.click(screen.getByText("[Sample] Heat"));
+    expect(screen.getByText("[Sample] How the heat works will appear here.")).toBeInTheDocument();
+  });
+
+  it("adds parking to Getting Here", () => {
+    const section = previewGuideSection("shallot-chalet", "getting-here");
+    expect(section).not.toBeNull();
+    render(<SectionView section={section!} />);
+    expect(screen.getByRole("heading", { name: "Parking" })).toBeInTheDocument();
+    expect(screen.getByText("[Sample] Park in the driveway.")).toBeInTheDocument();
+  });
+
+  it("keeps other sections free of the late checkout note", () => {
+    const section = previewGuideSection("raddish-roost", "wifi");
+    expect(section).not.toBeNull();
+    render(<SectionView section={section!} />);
+    expect(screen.queryByText("Check-in is at 4:00 PM")).not.toBeInTheDocument();
     expect(screen.queryByText("Want to stay a little longer?")).not.toBeInTheDocument();
     expect(screen.queryByRole("link", { name: "Request Late Checkout" })).not.toBeInTheDocument();
   });
