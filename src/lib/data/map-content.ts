@@ -1,6 +1,8 @@
 import { toBookingLinks, type BookingRow } from "@/lib/content/booking-links";
 import { GUEST_PORTAL_URLS, guestPortalUrl } from "@/lib/content/guest-portal";
 import { AIRBNB_MESSAGE_URLS } from "@/lib/content/airbnb-messages";
+import { nearbyForTown, PROPERTY_TOWNS } from "@/lib/content/nearby";
+import { TOWN_COORDINATES } from "@/lib/content/weather";
 import { ARRIVAL_STEPS, GUIDE_SECTIONS, MERGED_BLOCK_SORT, SAMPLE_SECTION_SUMMARY } from "@/lib/content/sections";
 import { SAMPLE_PROPERTIES, sampleSections } from "@/lib/content/sample-catalog";
 import { guidebookImageUrl } from "@/lib/media";
@@ -29,6 +31,8 @@ export type PropertyRow = {
   check_in_time: string | null;
   check_out_time: string | null;
   guest_portal_url?: string | null;
+  weather_latitude?: number | string | null;
+  weather_longitude?: number | string | null;
   parking_summary: string | null;
   hero_image_path: string | null;
 };
@@ -135,7 +139,18 @@ export function toPropertyGuide(
       .slice()
       .sort((a, b) => a.sort_order - b.sort_order)
       .map(toGuideSection),
+    weatherLatitude: coordinate(row.weather_latitude),
+    weatherLongitude: coordinate(row.weather_longitude),
   };
+}
+
+function coordinate(value: number | string | null | undefined): number | null {
+  if (typeof value === "number" && Number.isFinite(value)) return value;
+  if (typeof value === "string" && value.trim()) {
+    const parsed = Number(value);
+    return Number.isFinite(parsed) ? parsed : null;
+  }
+  return null;
 }
 
 export function previewProperties(): PropertySummary[] {
@@ -266,6 +281,10 @@ export function previewGuideSection(propertySlug: string, sectionSlug: string): 
         : [],
     amenities: [],
     airbnbHref: AIRBNB_MESSAGE_URLS[property.slug] ?? null,
+    nearbyEssentials:
+      section.sectionType === "getting_here" || section.sectionType === "contact"
+        ? nearbyForTown(PROPERTY_TOWNS[property.slug] ?? "Vermont")
+        : [],
   };
 }
 
@@ -289,5 +308,7 @@ export function previewProperty(slug: string): PropertyGuide | null {
     contacts: [],
     bookings: [],
     sections: sampleSections(),
+    weatherLatitude: TOWN_COORDINATES[property.slug]?.latitude ?? null,
+    weatherLongitude: TOWN_COORDINATES[property.slug]?.longitude ?? null,
   };
 }

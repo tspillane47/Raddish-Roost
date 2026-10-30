@@ -5,6 +5,7 @@ import { cache } from "react";
 import { recommendationPhoto } from "@/lib/content/recommendation-photos";
 import {
   directionsUrl,
+  guestTags,
   sectionForPlace,
   stayHasThingSections,
   thingSeason,
@@ -31,9 +32,12 @@ type RecommendationJoin = {
 
 type LinkRow = {
   sort_order: number;
+  guest_tags?: string[] | null;
   recommendations: RecommendationJoin | RecommendationJoin[] | null;
 };
 
+const TAGGED_COLUMNS =
+  "sort_order, guest_tags, recommendations(id, category, subcategory, season, name, description, host_note, town, is_active, published_at)";
 const FULL_COLUMNS =
   "sort_order, recommendations(id, category, subcategory, season, name, description, host_note, town, is_active, published_at)";
 const BASIC_COLUMNS =
@@ -64,19 +68,30 @@ export const getThingsToDo = cache(async (slug: string): Promise<ThingsResult> =
   }
   if (!property) return { ok: false, error: "not_found" };
 
-  const full = await supabase
+  const tagged = await supabase
     .from("property_recommendations")
-    .select(FULL_COLUMNS)
+    .select(TAGGED_COLUMNS)
     .eq("property_id", property.id)
     .not("published_at", "is", null)
     .order("sort_order", { ascending: true });
 
-  let rows = (full.data ?? []) as unknown as LinkRow[];
-  if (full.error) {
-    rethrowPrerenderAbort(full.error);
-    const missingColumn = /subcategory|town/.test(full.error.message);
+  let rows = (tagged.data ?? []) as unknown as LinkRow[];
+  let listError = tagged.error;
+  if (listError && /guest_tags/.test(listError.message)) {
+    const full = await supabase
+      .from("property_recommendations")
+      .select(FULL_COLUMNS)
+      .eq("property_id", property.id)
+      .not("published_at", "is", null)
+      .order("sort_order", { ascending: true });
+    rows = (full.data ?? []) as unknown as LinkRow[];
+    listError = full.error;
+  }
+  if (listError) {
+    rethrowPrerenderAbort(listError);
+    const missingColumn = /subcategory|town/.test(listError.message);
     if (!missingColumn) {
-      console.error(`[guidebook] things: ${full.error.message}`);
+      console.error(`[guidebook] things: ${listError.message}`);
       return { ok: false, error: "unavailable" };
     }
     const basic = await supabase
@@ -96,7 +111,7 @@ export const getThingsToDo = cache(async (slug: string): Promise<ThingsResult> =
   const joined = rows.flatMap((row) => {
     const recommendation = Array.isArray(row.recommendations) ? row.recommendations[0] : row.recommendations;
     if (!recommendation?.is_active || !recommendation.published_at || !recommendation.name?.trim()) return [];
-    return [{ sort: row.sort_order, recommendation }];
+    return [{ sort: row.sort_order, recommendation, tags: guestTags(row.guest_tags) }];
   });
   const hasSections = stayHasThingSections(
     joined.map((item) => ({
@@ -123,6 +138,7 @@ export const getThingsToDo = cache(async (slug: string): Promise<ThingsResult> =
         tip: thingTip(recommendation.host_note),
         section,
         season: thingSeason(recommendation.season),
+        tags: item.tags,
         directionsUrl: directionsUrl(name, town),
         photo: recommendationPhoto(name),
       },

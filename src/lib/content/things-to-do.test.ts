@@ -3,11 +3,13 @@ import { creditForFile, photoFromManifest, recommendationPhoto } from "@/lib/con
 import {
   currentItinerarySeason,
   directionsUrl,
+  placesMatchingFilters,
   sectionForPlace,
   stayHasThingSections,
   THING_SECTIONS,
   thingSeason,
   thingTip,
+  type ThingToDo,
 } from "@/lib/content/things-to-do";
 
 describe("things to do", () => {
@@ -112,4 +114,32 @@ describe("recommendation photos", () => {
     expect(recommendationPhoto("Ben & Jerry's Factory")).toBeNull();
     expect(recommendationPhoto("Cold Hollow Cider Mill")).toBeNull();
   });
+
+  it("keeps a place only when it has every selected tag", () => {
+    const cafe = place("cafe", ["walkable", "rainy_day", "kid_friendly"]);
+    const trail = place("trail", ["walkable", "dog_friendly"]);
+    const pub = place("pub", ["walkable", "rainy_day"]);
+
+    expect(placesMatchingFilters([cafe, trail, pub], [])).toHaveLength(3);
+    expect(placesMatchingFilters([cafe, trail, pub], ["walkable", "rainy_day"]).map((item) => item.id)).toEqual([
+      "cafe",
+      "pub",
+    ]);
+    expect(placesMatchingFilters([cafe, trail, pub], ["dog_friendly", "rainy_day"])).toEqual([]);
+  });
 });
+
+function place(id: string, tags: ThingToDo["tags"]): ThingToDo {
+  return {
+    id,
+    name: id,
+    town: "Waterbury",
+    description: null,
+    tip: null,
+    section: "eat",
+    season: null,
+    tags,
+    directionsUrl: "https://www.google.com/maps/search/?api=1&query=Waterbury",
+    photo: null,
+  };
+}

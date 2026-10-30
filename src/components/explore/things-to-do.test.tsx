@@ -1,7 +1,7 @@
 import { fireEvent, render, screen } from "@testing-library/react";
 import { describe, expect, it } from "vitest";
 import { ThingsToDo } from "@/components/explore/things-to-do";
-import type { PerfectDay, ThingToDo } from "@/lib/content/things-to-do";
+import type { PerfectDay, ThingFilterId, ThingToDo } from "@/lib/content/things-to-do";
 
 const places: ThingToDo[] = [
   {
@@ -219,5 +219,45 @@ describe("Things to Do", () => {
   it("says when a stay has no places yet", () => {
     render(<ThingsToDo places={[]} />);
     expect(screen.getByRole("status")).toHaveTextContent("Things to do have not been added yet.");
+  });
+
+  it("filters with chips and leaves Perfect Day unfiltered", () => {
+    const tagged: ThingToDo[] = places.map((place, index) => ({
+      ...place,
+      tags: (index === 0 ? ["walkable", "rainy_day"] : index === 1 ? ["walkable"] : []) as ThingFilterId[],
+    }));
+    const days: PerfectDay[] = [
+      {
+        season: "fall",
+        title: "Our perfect day",
+        stops: [
+          {
+            id: "morning",
+            timeLabel: "Morning",
+            name: tagged[0]!.name,
+            detail: "Start here.",
+            place: tagged[0]!,
+          },
+        ],
+      },
+    ];
+
+    render(<ThingsToDo places={[...tagged]} itineraries={days} today={new Date(2026, 9, 30)} />);
+    expect(screen.queryByRole("button", { name: "Walkable" })).not.toBeInTheDocument();
+
+    fireEvent.click(screen.getByRole("tab", { name: "Eat" }));
+    const walkable = screen.getByRole("button", { name: "Walkable" });
+    expect(walkable.parentElement?.className).toContain("overflow-x-auto");
+    expect(screen.getByText("2 places")).toBeInTheDocument();
+
+    fireEvent.click(walkable);
+    fireEvent.click(screen.getByRole("button", { name: "Rainy Day" }));
+    expect(screen.getByText("1 place")).toBeInTheDocument();
+    expect(screen.getByRole("heading", { name: "Waterworks Food + Drink" })).toBeInTheDocument();
+    expect(screen.queryByRole("heading", { name: "Hen of the Wood (Burlington)" })).not.toBeInTheDocument();
+
+    fireEvent.click(screen.getByRole("button", { name: "Clear" }));
+    expect(screen.getByText("2 places")).toBeInTheDocument();
+    expect(screen.getByRole("heading", { name: "Hen of the Wood (Burlington)" })).toBeInTheDocument();
   });
 });

@@ -22,6 +22,13 @@ export const GUIDE_SECTIONS = [
   { sectionType: "stay_again", slug: "stay-again", title: "Stay With Us Again", sortOrder: 80 },
 ] as const;
 
+/** Pages that live at /{stay}/guide/... without a card in the guidebook grid. */
+export const EXTRA_GUIDE_PAGES = ["vermont-101"] as const;
+
+export function isExtraGuidePage(slug: string): boolean {
+  return (EXTRA_GUIDE_PAGES as readonly string[]).includes(slug);
+}
+
 /** Old guidebook addresses. They forward once the new section is published. */
 export const LEGACY_SECTION_REDIRECTS: Record<string, string> = {
   "check-in": "check-in-checkout",

@@ -37,6 +37,30 @@ export function currentItinerarySeason(date: Date): PerfectDaySeason {
   return "fall";
 }
 
+export const THING_FILTERS = [
+  { id: "walkable", label: "Walkable" },
+  { id: "rainy_day", label: "Rainy Day" },
+  { id: "kid_friendly", label: "Kid Friendly" },
+  { id: "dog_friendly", label: "Dog Friendly" },
+] as const;
+
+export type ThingFilterId = (typeof THING_FILTERS)[number]["id"];
+
+export function isThingFilter(value: string): value is ThingFilterId {
+  return THING_FILTERS.some((filter) => filter.id === value);
+}
+
+export function guestTags(value: unknown): ThingFilterId[] {
+  if (!Array.isArray(value)) return [];
+  return value.filter((tag): tag is ThingFilterId => typeof tag === "string" && isThingFilter(tag));
+}
+
+/** A place has to match every selected chip. */
+export function placesMatchingFilters(places: ThingToDo[], filters: readonly ThingFilterId[]): ThingToDo[] {
+  if (filters.length === 0) return places;
+  return places.filter((place) => filters.every((filter) => place.tags?.includes(filter)));
+}
+
 export type ThingToDo = {
   id: string;
   name: string;
@@ -45,6 +69,7 @@ export type ThingToDo = {
   tip: string | null;
   section: ThingSectionId;
   season: ThingSeason | null;
+  tags?: ThingFilterId[];
   directionsUrl: string;
   photo: {
     src: string;

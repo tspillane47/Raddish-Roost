@@ -3,7 +3,10 @@ import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { PreviewBanner } from "@/components/layout/preview-banner";
 import { PropertyHome, PropertyHomeFallback } from "@/components/property/property-home";
+import type { PropertyGuide } from "@/types/content";
+import type { WeatherSnapshot } from "@/lib/content/weather";
 import { getPropertyGuide } from "@/lib/data/properties";
+import { getStayWeather } from "@/lib/weather/forecast";
 
 type PropertyParams = { params: Promise<{ propertySlug: string }> };
 
@@ -40,11 +43,25 @@ async function PropertyContent({ params }: { params: Promise<{ propertySlug: str
     );
   }
 
+  const weather = await loadWeather(result.property);
+
   return (
     <>
       {result.source === "preview" ? <PreviewBanner /> : null}
-      <PropertyHome property={result.property} />
+      <PropertyHome property={result.property} weather={weather} />
     </>
   );
+}
+
+async function loadWeather(property: PropertyGuide): Promise<WeatherSnapshot | null> {
+  const latitude = property.weatherLatitude;
+  const longitude = property.weatherLongitude;
+  if (latitude === null || longitude === null) return null;
+  try {
+    return await getStayWeather(latitude, longitude);
+  } catch (error) {
+    console.error("[guidebook] weather:", error instanceof Error ? error.message : "unavailable");
+    return null;
+  }
 }
 

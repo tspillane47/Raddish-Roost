@@ -3,14 +3,22 @@ import Link from "next/link";
 import { Essentials } from "@/components/property/essentials";
 import { PropertyHero } from "@/components/property/property-hero";
 import { PropertyLookAround } from "@/components/property/property-look";
+import { WeatherCard } from "@/components/property/weather-card";
 import { brandLogo } from "@/lib/content/brand-art";
 import { getPropertyPhotos, photosForSection, photoSets } from "@/lib/content/property-photos";
+import type { WeatherSnapshot } from "@/lib/content/weather";
 import type { PropertyGuide } from "@/types/content";
 
 const THUMBNAIL_SECTIONS = new Set(["getting-here", "the-house", "house-guide", "amenities"]);
 const FOREST = "#263F35";
 
-export function PropertyHome({ property }: { property: PropertyGuide }) {
+export function PropertyHome({
+  property,
+  weather = null,
+}: {
+  property: PropertyGuide;
+  weather?: WeatherSnapshot | null;
+}) {
   const gallery = getPropertyPhotos(property.slug);
   const accent = brandLogo(property.slug)?.accent ?? FOREST;
 
@@ -22,6 +30,11 @@ export function PropertyHome({ property }: { property: PropertyGuide }) {
           <section className="mt-12" aria-label="Welcome">
             <p className="max-w-2xl text-lg leading-8">{property.welcomeMessage}</p>
           </section>
+        ) : null}
+        {weather ? (
+          <div className="mt-8 max-w-md">
+            <WeatherCard weather={weather} />
+          </div>
         ) : null}
         <div className="mt-12">
           <Essentials property={property} />
@@ -64,6 +77,17 @@ export function PropertyHome({ property }: { property: PropertyGuide }) {
               })}
             </ul>
           )}
+          <Link
+            href={`/${property.slug}/guide/vermont-101`}
+            className="mt-4 flex min-h-24 items-center rounded-2xl border border-beige px-4 py-4 focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-forest"
+          >
+            <span>
+              <h3 className="font-heading text-2xl text-charcoal">Vermont 101</h3>
+              <p className="mt-2 text-base leading-7 text-muted-foreground">
+                Creemees, maple, mud season, foliage, and a few other local habits.
+              </p>
+            </span>
+          </Link>
         </section>
         <PropertyLookAround photos={gallery.photos} sets={photoSets(property.slug)} accent={accent} />
       </div>

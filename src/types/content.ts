@@ -1,4 +1,5 @@
 import type { BookingLink } from "@/lib/content/booking-links";
+import type { NearbyEssential } from "@/lib/content/nearby";
 
 export type { BookingLink };
 
@@ -74,6 +75,7 @@ export type GuideSectionDetail = {
   checkoutItems: CheckoutTask[];
   amenities: HouseAmenity[];
   airbnbHref: string | null;
+  nearbyEssentials: NearbyEssential[];
 };
 
 export type PublicWifi = {
@@ -109,6 +111,8 @@ export type PropertyGuide = PropertySummary & {
   contacts: PublicContact[];
   bookings: BookingLink[];
   sections: GuideSection[];
+  weatherLatitude: number | null;
+  weatherLongitude: number | null;
 };
 
 export type ContentSource = "preview" | "database";

@@ -3,7 +3,10 @@ import { fireEvent, render, screen } from "@testing-library/react";
 import { describe, expect, it, vi } from "vitest";
 import { CheckoutList } from "@/components/guidebook/checkout-list";
 import { GuestNote } from "@/components/guidebook/guest-note";
+import { NearbyEssentials } from "@/components/guidebook/nearby-essentials";
 import { SectionView } from "@/components/guidebook/section-view";
+import { Vermont101 } from "@/components/guidebook/vermont-101";
+import { nearbyForTown } from "@/lib/content/nearby";
 import { EMERGENCY_COPY, GUEST_NOTE_TEXT, REVIEW_NOTE } from "@/lib/content/guest-note";
 import { previewGuideSection } from "@/lib/data/map-content";
 
@@ -48,6 +51,65 @@ describe("Something not right", () => {
       "https://www.airbnb.com/contact_host/1064639214342902592/send_message",
     );
     expect(screen.getByText(REVIEW_NOTE)).toBeInTheDocument();
+  });
+});
+
+describe("nearby essentials", () => {
+  it("adds the card on Getting Here and a link from Contact", () => {
+    const gettingHere = previewGuideSection("shallot-chalet", "getting-here");
+    expect(gettingHere).not.toBeNull();
+    const { unmount } = render(<SectionView section={gettingHere!} />);
+    expect(screen.getByRole("heading", { name: "Nearby Essentials" })).toBeInTheDocument();
+    const hospital = screen.getByText("Hospital (ER)").closest("li");
+    expect(hospital).toHaveTextContent("For emergencies, call 911.");
+    expect(hospital?.querySelector("a")).toHaveAttribute("href", expect.stringContaining("hospital%20near%20Winooski"));
+    expect(screen.getByText("Grocery store").closest("li")).not.toHaveTextContent("911");
+    unmount();
+
+    const contact = previewGuideSection("raddish-roost", "contact");
+    render(<SectionView section={contact!} />);
+    expect(screen.getByRole("link", { name: "Nearby essentials" })).toHaveAttribute(
+      "href",
+      "/raddish-roost/guide/getting-here#nearby-essentials",
+    );
+    expect(screen.queryByRole("heading", { name: "Nearby Essentials" })).not.toBeInTheDocument();
+  });
+
+  it("uses a saved map link when one is present", () => {
+    render(
+      <NearbyEssentials
+        items={nearbyForTown("Waterbury, VT").map((item) =>
+          item.kind === "grocery" ? { ...item, href: "https://maps.example/grocery", placeName: "Corner Store" } : item,
+        )}
+      />,
+    );
+    expect(screen.getByText("Corner Store")).toBeInTheDocument();
+    expect(screen.getAllByRole("link", { name: "Find nearest" })[0]).toHaveAttribute(
+      "href",
+      "https://maps.example/grocery",
+    );
+  });
+});
+
+describe("Vermont 101 page", () => {
+  it("links from Things to Do and stays a short page", () => {
+    const section = previewGuideSection("onion-ranch", "things-to-do");
+    expect(section).not.toBeNull();
+    const { unmount } = render(<SectionView section={section!} />);
+    expect(screen.getByRole("link", { name: "New to Vermont? Read Vermont 101." })).toHaveAttribute(
+      "href",
+      "/onion-ranch/guide/vermont-101",
+    );
+    unmount();
+
+    render(<Vermont101 propertySlug="onion-ranch" propertyName="The Onion Ranch" />);
+    expect(screen.getByRole("heading", { name: "Vermont 101" })).toBeInTheDocument();
+    expect(screen.getByRole("heading", { name: "Creemees" })).toBeInTheDocument();
+    expect(screen.getByRole("link", { name: "newengland511.org" })).toHaveAttribute(
+      "href",
+      "https://newengland511.org",
+    );
+    expect(screen.getByRole("link", { name: "Back to The Onion Ranch" })).toHaveAttribute("href", "/onion-ranch");
   });
 });
 

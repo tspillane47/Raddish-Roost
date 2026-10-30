@@ -2,7 +2,7 @@ import { readFileSync } from "node:fs";
 import path from "node:path";
 import { describe, expect, it } from "vitest";
 import { SAMPLE_PROPERTIES } from "@/lib/content/sample-catalog";
-import { ARRIVAL_STEPS, GUIDE_SECTIONS, SAMPLE_SECTION_SUMMARY } from "@/lib/content/sections";
+import { ARRIVAL_STEPS, GUIDE_SECTIONS, isExtraGuidePage, SAMPLE_SECTION_SUMMARY } from "@/lib/content/sections";
 
 const root = path.resolve(__dirname, "../../..");
 const schema = readFileSync(
@@ -67,6 +67,18 @@ const guestNotes = readFileSync(
 );
 const perfectDays = readFileSync(
   path.join(root, "supabase/migrations/20261030130000_perfect_days.sql"),
+  "utf8",
+);
+const weatherNearby = readFileSync(
+  path.join(root, "supabase/migrations/20261030160000_weather_and_nearby.sql"),
+  "utf8",
+);
+const thingTags = readFileSync(
+  path.join(root, "supabase/migrations/20261030170000_thing_tags.sql"),
+  "utf8",
+);
+const thingTagFixes = readFileSync(
+  path.join(root, "supabase/migrations/20261030180000_thing_tag_fixes.sql"),
   "utf8",
 );
 
@@ -452,6 +464,8 @@ describe("check-in times migration", () => {
 describe("guidebook sections migration", () => {
   it("merges to eight sections and keeps the hidden rows", () => {
     expect(GUIDE_SECTIONS).toHaveLength(8);
+    expect(isExtraGuidePage("vermont-101")).toBe(true);
+    expect(isExtraGuidePage("things-to-do")).toBe(false);
     for (const section of GUIDE_SECTIONS) {
       expect(guidebookSections).toContain(section.slug);
       expect(guidebookSections).toContain(section.title);
@@ -539,6 +553,80 @@ describe("perfect days migration", () => {
     expect(perfectDays).not.toMatch(/discount|perk|reward|coupon/i);
     expect(perfectDays).not.toContain("—");
     expect(perfectDays).not.toContain("Radish");
+  });
+});
+
+describe("weather and nearby essentials migration", () => {
+  it("stores town coordinates and a search row for each stay", () => {
+    expect(weatherNearby).toContain("weather_latitude = 44.3378");
+    expect(weatherNearby).toContain("weather_longitude = -72.7562");
+    expect(weatherNearby).toContain("weather_latitude = 44.4914");
+    expect(weatherNearby).toContain("weather_longitude = -73.1854");
+    expect(weatherNearby).toContain("slug = 'raddish-roost'");
+    expect(weatherNearby).toContain("slug in ('shallot-chalet', 'onion-ranch')");
+    expect(weatherNearby).toContain("('raddish-roost', 'Waterbury, VT')");
+    expect(weatherNearby).toContain("('shallot-chalet', 'Winooski, VT')");
+    expect(weatherNearby).toContain("('onion-ranch', 'Winooski, VT')");
+    expect(weatherNearby).toContain("'grocery store near'");
+    expect(weatherNearby).toContain("'hospital near'");
+    expect(weatherNearby).toContain("For emergencies, call 911.");
+    expect(weatherNearby).toContain("grant select (weather_latitude, weather_longitude)");
+    expect(weatherNearby).toContain("nearby_essentials_public_read");
+    expect(weatherNearby).toContain("where not exists");
+    expect(weatherNearby).not.toContain("—");
+    expect(weatherNearby).not.toContain("Radish");
+  });
+});
+
+describe("thing tags migration", () => {
+  it("keeps rainy, kid, and dog lists and leaves Walkable for a later manual list", () => {
+    expect(thingTags).toContain("guest_tags");
+    expect(thingTags).toContain("Walkable is a manual tag");
+    expect(thingTags).not.toContain("when 'raddish-roost' then 'Waterbury'");
+    expect(thingTags).toContain("place.name <> 'Spot on the Dock'");
+    expect(thingTags).toContain("name = 'Scout Coffee'");
+    expect(thingTags).toContain("town = 'Winooski'");
+    expect(thingTags).toContain("subcategory = 'coffee'");
+    expect(thingTags).toContain("Cold Hollow Cider Mill is in Waterbury Center");
+    expect(thingTags).toContain("Church Street is partly outdoors");
+    expect(thingTags).toContain("Shelburne Farms does not welcome dogs");
+    expect(thingTags).toContain("'Four Quarters Brewing'");
+    expect(thingTags).toContain("'Mount Philo'");
+    expect(thingTags).toContain("'Indian Brook Reservoir'");
+    expect(thingTags).toContain("where tag is not null");
+    expect(thingTags).not.toContain("—");
+    expect(thingTags).not.toContain("Radish");
+    expect(thingTags).not.toMatch(/delete from public\.guidebook/i);
+  });
+});
+
+describe("thing tag fixes migration", () => {
+  it("corrects the far Waterbury spots, the dock, and the three blank rows", () => {
+    expect(thingTagFixes).toContain("Run 20261030170000_thing_tags.sql before this file.");
+    expect(thingTagFixes).toContain("Little River State Park and Ben & Jerry''s Factory are too far to walk");
+    expect(thingTagFixes).toContain("array_remove(pr.guest_tags, 'walkable')");
+    expect(thingTagFixes).toContain("array_remove(pr.guest_tags, 'rainy_day')");
+    expect(thingTagFixes).toContain("place.name = 'Spot on the Dock'");
+    expect(thingTagFixes).toContain("town = 'Winooski', subcategory = 'eat'");
+    expect(thingTagFixes).toContain("town = 'Winooski', subcategory = 'drink'");
+    expect(thingTagFixes).toContain("town = 'Waterbury', subcategory = 'eat'");
+    expect(thingTagFixes).toContain("where name = 'Our House'");
+    expect(thingTagFixes).toContain("where name = 'Mule Bar'");
+    expect(thingTagFixes).toContain("where name = 'Hen of the Wood'");
+    expect(thingTagFixes).toContain("'shallot-chalet', $n$Our House$n$");
+    expect(thingTagFixes).toContain("'onion-ranch', $n$Mule Bar$n$");
+    expect(thingTagFixes).toContain("'raddish-roost', $n$Hen of the Wood$n$");
+    expect(thingTagFixes).toContain("'raddish-roost', $n$Black Cap Coffee & Bakery$n$");
+    expect(thingTagFixes).not.toContain("'raddish-roost', $n$Little River State Park$n$");
+    expect(thingTagFixes).not.toContain("'raddish-roost', $n$Ben & Jerry's Factory$n$");
+    expect(thingTagFixes).toContain("Hen of the Wood (Burlington)");
+    expect(thingTagFixes).not.toContain(
+      "from public.properties stay\n  join public.recommendations place on place.id = pr.recommendation_id",
+    );
+    expect(thingTagFixes).toContain("and pr.recommendation_id = place.id");
+    expect(thingTagFixes).not.toContain("—");
+    expect(thingTagFixes).not.toContain("Radish");
+    expect(thingTagFixes).not.toMatch(/delete from public\.guidebook/i);
   });
 });
 

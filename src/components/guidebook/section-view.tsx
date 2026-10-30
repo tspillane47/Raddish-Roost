@@ -2,6 +2,7 @@ import Link from "next/link";
 import { SectionBlocks } from "@/components/guidebook/section-blocks";
 import { CheckoutList } from "@/components/guidebook/checkout-list";
 import { GuestNote } from "@/components/guidebook/guest-note";
+import { NearbyEssentials } from "@/components/guidebook/nearby-essentials";
 import { ThingsToDo } from "@/components/explore/things-to-do";
 import { BookingChoices } from "@/components/property/book-now";
 import { LateCheckout } from "@/components/property/late-checkout";
@@ -77,7 +78,12 @@ export function SectionView({
         </div>
       ) : null}
       <div className="mt-10 grid gap-10">
-        {section.slug === "contact" ? <GuestNoteCard section={section} /> : null}
+        {section.slug === "contact" ? (
+          <>
+            <GuestNoteCard section={section} />
+            <NearbyLink section={section} />
+          </>
+        ) : null}
         {arrival ? (
           <ArrivalBody section={section} />
         ) : section.slug === "the-house" ? (
@@ -87,7 +93,12 @@ export function SectionView({
         ) : (
           <>
             <SectionBlocks blocks={section.blocks} empty={section.slug === "contact" ? "hide" : "message"} />
-            {section.slug === "getting-here" ? <ParkingNote summary={section.parkingSummary} /> : null}
+            {section.slug === "getting-here" ? (
+              <>
+                <ParkingNote summary={section.parkingSummary} />
+                <NearbyEssentials items={section.nearbyEssentials} />
+              </>
+            ) : null}
             {section.slug === "checkout" ? (
               <>
                 <CheckoutList items={section.checkoutItems} />
@@ -187,6 +198,20 @@ function AmenityList({ amenities }: { amenities: HouseAmenity[] }) {
   );
 }
 
+function NearbyLink({ section }: { section: GuideSectionDetail }) {
+  if (section.nearbyEssentials.length === 0) return null;
+  return (
+    <p>
+      <Link
+        href={`/${section.propertySlug}/guide/getting-here#nearby-essentials`}
+        className="inline-flex min-h-11 items-center text-base text-forest underline-offset-4 hover:underline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-forest"
+      >
+        Nearby essentials
+      </Link>
+    </p>
+  );
+}
+
 function ThingsBody({
   section,
   places,
@@ -201,6 +226,14 @@ function ThingsBody({
   return (
     <>
       <SectionBlocks blocks={section.blocks} empty="hide" />
+      <p>
+        <Link
+          href={`/${section.propertySlug}/guide/vermont-101`}
+          className="inline-flex min-h-11 items-center text-base text-forest underline-offset-4 hover:underline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-forest"
+        >
+          New to Vermont? Read Vermont 101.
+        </Link>
+      </p>
       <ThingsToDo places={places} itineraries={itineraries} accent={accent} />
     </>
   );

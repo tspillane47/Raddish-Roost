@@ -6,10 +6,13 @@ import { SectionIcon } from "@/components/explore/section-icon";
 import {
   currentItinerarySeason,
   directionsUrl,
+  placesMatchingFilters,
   seasonLabel,
+  THING_FILTERS,
   THING_SECTIONS,
   type PerfectDay,
   type PerfectDaySeason,
+  type ThingFilterId,
   type ThingToDo,
 } from "@/lib/content/things-to-do";
 
@@ -30,8 +33,11 @@ export function ThingsToDo({
     ...THING_SECTIONS.filter((section) => places.some((place) => place.section === section.id)),
   ];
   const [active, setActive] = useState(sections[0]?.id ?? "eat");
+  const [filters, setFilters] = useState<ThingFilterId[]>([]);
   const current = sections.some((section) => section.id === active) ? active : sections[0]?.id;
-  const shown = places.filter((place) => place.section === current);
+  const inSection = places.filter((place) => place.section === current);
+  const shown = placesMatchingFilters(inSection, filters);
+  const filtersAvailable = places.some((place) => (place.tags?.length ?? 0) > 0);
 
   if (sections.length === 0 || !current) {
     return (
@@ -74,19 +80,89 @@ export function ThingsToDo({
       {current === "perfect_day" ? (
         <PerfectDayPanel days={days} accent={accent} today={today} />
       ) : (
-        <ul
-          id={`things-panel-${current}`}
-          role="tabpanel"
-          aria-labelledby={`things-tab-${current}`}
-          className="mt-4 grid list-none gap-4 p-0"
-        >
-          {shown.map((place) => (
-            <li key={place.id}>
-              <ThingCard place={place} accent={accent} />
-            </li>
-          ))}
-        </ul>
+        <div id={`things-panel-${current}`} role="tabpanel" aria-labelledby={`things-tab-${current}`}>
+          {filtersAvailable || filters.length > 0 ? (
+            <PlaceFilters
+              filters={filters}
+              count={shown.length}
+              onToggle={(id) =>
+                setFilters((currentFilters) =>
+                  currentFilters.includes(id)
+                    ? currentFilters.filter((filter) => filter !== id)
+                    : [...currentFilters, id],
+                )
+              }
+              onClear={() => setFilters([])}
+            />
+          ) : null}
+          {filters.length > 0 && shown.length === 0 ? (
+            <p role="status" className="mt-4 text-base leading-7">
+              No places match these filters.
+            </p>
+          ) : (
+            <ul className="mt-4 grid list-none gap-4 p-0">
+              {shown.map((place) => (
+                <li key={place.id}>
+                  <ThingCard place={place} accent={accent} />
+                </li>
+              ))}
+            </ul>
+          )}
+        </div>
       )}
+    </div>
+  );
+}
+
+function PlaceFilters({
+  filters,
+  count,
+  onToggle,
+  onClear,
+}: {
+  filters: ThingFilterId[];
+  count: number;
+  onToggle: (id: ThingFilterId) => void;
+  onClear: () => void;
+}) {
+  return (
+    <div className="mt-4 min-w-0">
+      <div className="flex min-w-0 items-center gap-2">
+        <div
+          role="group"
+          aria-label="Filters"
+          className="flex min-w-0 flex-1 gap-2 overflow-x-auto overscroll-x-contain pb-1 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden"
+        >
+          {THING_FILTERS.map((filter) => {
+            const selected = filters.includes(filter.id);
+            return (
+              <button
+                key={filter.id}
+                type="button"
+                aria-pressed={selected}
+                onClick={() => onToggle(filter.id)}
+                className={`inline-flex min-h-11 shrink-0 items-center rounded-full px-4 text-base whitespace-nowrap focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-forest ${
+                  selected ? "bg-forest text-cream" : "bg-beige/80 text-charcoal"
+                }`}
+              >
+                {filter.label}
+              </button>
+            );
+          })}
+        </div>
+        {filters.length > 0 ? (
+          <button
+            type="button"
+            onClick={onClear}
+            className="inline-flex min-h-11 shrink-0 items-center px-2 text-base text-forest underline-offset-4 hover:underline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-forest"
+          >
+            Clear
+          </button>
+        ) : null}
+      </div>
+      <p className="mt-2 text-base leading-7 text-muted-foreground">
+        {count === 1 ? "1 place" : `${count} places`}
+      </p>
     </div>
   );
 }

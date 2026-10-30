@@ -1,7 +1,7 @@
 import { NextResponse } from "next/server";
 import type { NextRequest } from "next/server";
 import { DEFAULT_BRAND_NAME } from "@/lib/brand";
-import { GUIDE_SECTIONS } from "@/lib/content/sections";
+import { GUIDE_SECTIONS, isExtraGuidePage } from "@/lib/content/sections";
 import { SAMPLE_PROPERTIES } from "@/lib/content/sample-catalog";
 import { guideSectionFromPath, slugToReject } from "@/lib/routing/property-path";
 import { guideRedirectRequest } from "@/lib/routing/section-redirect";
@@ -72,6 +72,7 @@ function notFoundResponse() {
 async function guideSectionMissing(pathname: string): Promise<boolean> {
   const target = guideSectionFromPath(pathname);
   if (!target) return false;
+  if (isExtraGuidePage(target.section)) return false;
   if (!propertySlugSchema.safeParse(target.section).success) return true;
 
   const env = getSupabaseEnv();

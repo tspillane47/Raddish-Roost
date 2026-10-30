@@ -3,6 +3,7 @@ import type { ReactNode } from "react";
 import { describe, expect, it, vi } from "vitest";
 import { PropertyDock } from "@/components/property/property-dock";
 import { PropertyHome } from "@/components/property/property-home";
+import { WeatherCard } from "@/components/property/weather-card";
 import { photoFrame } from "@/components/property/property-look";
 import { PropertyTools } from "@/components/property/property-tools";
 import { previewProperty } from "@/lib/data/map-content";
@@ -46,6 +47,11 @@ describe("PropertyHome", () => {
       "/raddish-roost/guide/things-to-do",
     );
     expect(screen.getByRole("link", { name: /Stay With Us Again/ })).toBeInTheDocument();
+    expect(screen.getByRole("link", { name: /Vermont 101/ })).toHaveAttribute(
+      "href",
+      "/raddish-roost/guide/vermont-101",
+    );
+    expect(screen.queryByRole("region", { name: "Weather" })).not.toBeInTheDocument();
 
     fireEvent.click(screen.getByRole("button", { name: "See all 27 photos" }));
     const dialog = screen.getByRole("dialog");
@@ -85,6 +91,34 @@ describe("PropertyHome", () => {
     expect(screen.getAllByRole("heading", { name: "Extra Cabin" })).toHaveLength(1);
     expect(screen.queryByRole("heading", { name: "A Look Around" })).not.toBeInTheDocument();
     expect(screen.queryByRole("button", { name: /See all/ })).not.toBeInTheDocument();
+  });
+});
+
+describe("weather card", () => {
+  it("shows the temperature, today's range, and a seasonal line", () => {
+    render(
+      <WeatherCard
+        weather={{
+          temp: 48,
+          code: 61,
+          high: 55,
+          low: 39,
+          line: "Rainy day? Check the Rainy Day picks in Things to Do.",
+          days: [
+            { label: "Today", code: 61, high: 55, low: 39 },
+            { label: "Sat", code: 2, high: 52, low: 34 },
+            { label: "Sun", code: 0, high: 50, low: 32 },
+          ],
+        }}
+      />,
+    );
+
+    const card = screen.getByRole("region", { name: "Weather" });
+    expect(card).toHaveTextContent("48°");
+    expect(card).toHaveTextContent("High 55°");
+    expect(card).toHaveTextContent("Low 39°");
+    expect(card).toHaveTextContent("Rainy day? Check the Rainy Day picks in Things to Do.");
+    expect(card).toHaveTextContent("Sat");
   });
 });
 

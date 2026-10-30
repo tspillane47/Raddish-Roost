@@ -4,6 +4,7 @@ import { connection } from "next/server";
 import { cache } from "react";
 import { toBookingLinks, type BookingRow } from "@/lib/content/booking-links";
 import { guestPortalUrl } from "@/lib/content/guest-portal";
+import { nearbyHref, type NearbyEssential, isNearbyKind } from "@/lib/content/nearby";
 import { toContactHref } from "@/lib/validation/contact";
 import { brandNameFromValue, DEFAULT_BRAND_NAME } from "@/lib/brand";
 import {
@@ -29,6 +30,7 @@ import type { ContentResult, PropertyResult, PropertySummary, SectionResult } fr
 const PROPERTY_COLUMNS =
   "id, slug, name, tagline, description, welcome_title, welcome_message, check_in_time, check_out_time, parking_summary, hero_image_path, sort_order";
 const PROPERTY_COLUMNS_WITH_PORTAL = `${PROPERTY_COLUMNS}, guest_portal_url`;
+const PROPERTY_COLUMNS_WITH_WEATHER = `${PROPERTY_COLUMNS_WITH_PORTAL}, weather_latitude, weather_longitude`;
 
 function logSupabaseError(scope: string, message: string) {
   console.error(`[guidebook] ${scope}: ${message}`);
@@ -118,13 +120,23 @@ export const getPropertyGuide = cache(async (slug: string): Promise<PropertyResu
   const env = getSupabaseEnv();
   const full = await supabase
     .from("properties")
-    .select(PROPERTY_COLUMNS_WITH_PORTAL)
+    .select(PROPERTY_COLUMNS_WITH_WEATHER)
     .eq("slug", slug)
     .eq("status", "published")
     .maybeSingle();
 
   let data = full.data;
   let error = full.error;
+  if (error && /weather_latitude|weather_longitude/.test(error.message)) {
+    const portal = await supabase
+      .from("properties")
+      .select(PROPERTY_COLUMNS_WITH_PORTAL)
+      .eq("slug", slug)
+      .eq("status", "published")
+      .maybeSingle();
+    data = portal.data ? { ...portal.data, weather_latitude: null, weather_longitude: null } : null;
+    error = portal.error;
+  }
   if (error && /guest_portal_url/.test(error.message)) {
     const basic = await supabase
       .from("properties")
@@ -132,7 +144,9 @@ export const getPropertyGuide = cache(async (slug: string): Promise<PropertyResu
       .eq("slug", slug)
       .eq("status", "published")
       .maybeSingle();
-    data = basic.data ? { ...basic.data, guest_portal_url: null } : null;
+    data = basic.data
+      ? { ...basic.data, guest_portal_url: null, weather_latitude: null, weather_longitude: null }
+      : null;
     error = basic.error;
   }
 
@@ -362,6 +376,8 @@ export const getGuideSection = cache(
       airbnbHref = value ? toContactHref("airbnb", value) : null;
     }
 
+    const nearbyEssentials = await loadNearbyEssentials(supabase, stay.id, section.slug);
+
     return {
       ok: true,
       source: "database",
@@ -380,7 +396,57 @@ export const getGuideSection = cache(
         checkoutItems,
         amenities,
         airbnbHref,
+        nearbyEssentials,
       },
     };
   },
 );
+
+async function loadNearbyEssentials(
+  supabase: NonNullable<ReturnType<typeof getSupabase>>,
+  propertyId: string,
+  sectionSlug: string,
+): Promise<NearbyEssential[]> {
+  if (sectionSlug !== "getting-here" && sectionSlug !== "contact") return [];
+  const { data, error } = await supabase
+    .from("nearby_essentials")
+    .select("id, kind, label, search_query, place_name, maps_url, note, sort_order")
+    .eq("property_id", propertyId)
+    .not("published_at", "is", null)
+    .order("sort_order", { ascending: true });
+
+  if (error) {
+    rethrowPrerenderAbort(error);
+    if (!/nearby_essentials|schema cache/i.test(error.message)) {
+      logSupabaseError("nearby", error.message);
+    }
+    return [];
+  }
+
+  return ((data ?? []) as NearbyRow[]).flatMap((row) => {
+    if (!isNearbyKind(row.kind)) return [];
+    const href = nearbyHref(row.maps_url, row.search_query ?? "");
+    const label = row.label?.trim() ?? "";
+    if (!href || !label) return [];
+    return [
+      {
+        id: row.id,
+        kind: row.kind,
+        label,
+        href,
+        placeName: row.place_name?.trim() || null,
+        note: row.note?.trim() || null,
+      },
+    ];
+  });
+}
+
+type NearbyRow = {
+  id: string;
+  kind: string;
+  label: string | null;
+  search_query: string | null;
+  place_name: string | null;
+  maps_url: string | null;
+  note: string | null;
+};
