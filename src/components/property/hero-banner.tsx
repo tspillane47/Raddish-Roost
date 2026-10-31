@@ -2,11 +2,21 @@
 
 import Image from "next/image";
 import { useEffect, useRef, useState } from "react";
+import { HeroWeather } from "@/components/property/hero-weather";
 import { PhotoViewer } from "@/components/property/property-gallery";
 import { photoObjectPosition } from "@/lib/content/photo-focus";
 import type { PropertyPhoto } from "@/lib/content/property-photos";
+import type { WeatherSnapshot } from "@/lib/content/weather";
 
-export function HeroBanner({ photos, gallery }: { photos: PropertyPhoto[]; gallery: PropertyPhoto[] }) {
+export function HeroBanner({
+  photos,
+  gallery,
+  weather = null,
+}: {
+  photos: PropertyPhoto[];
+  gallery: PropertyPhoto[];
+  weather?: WeatherSnapshot | null;
+}) {
   const scrollerRef = useRef<HTMLDivElement>(null);
   const frame = useRef(0);
   const [active, setActive] = useState(0);
@@ -83,6 +93,7 @@ export function HeroBanner({ photos, gallery }: { photos: PropertyPhoto[]; galle
             ),
           )}
         </div>
+        <HeroWeather weather={weather} />
         {photos.length > 1 ? (
           <div className="absolute inset-x-0 bottom-16 z-10 flex justify-center md:hidden">
             {photos.map((photo, index) => (

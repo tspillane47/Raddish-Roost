@@ -1,7 +1,17 @@
+import { readFileSync } from "node:fs";
+import path from "node:path";
 import { describe, expect, it } from "vitest";
 import { mapsSearchUrl, nearbyForTown, nearbyHref } from "@/lib/content/nearby";
 import { VERMONT_101 } from "@/lib/content/vermont-101";
-import { parseForecast, weatherLine } from "@/lib/content/weather";
+import {
+  parseForecast,
+  heroWeatherCount,
+  heroWeatherKind,
+  previewWeather,
+  weatherLine,
+  weatherPreviewScene,
+  weatherView,
+} from "@/lib/content/weather";
 
 describe("weather lines", () => {
   it("uses a short seasonal line and stays quiet otherwise", () => {
@@ -24,6 +34,8 @@ describe("weather lines", () => {
           weather_code: [2, 61, 0],
           temperature_2m_max: [55.2, 49, 52],
           temperature_2m_min: [38.6, 40, 33],
+          sunrise: ["2026-10-30T07:20"],
+          sunset: ["2026-10-30T17:45"],
         },
       },
       new Date(2026, 9, 30),
@@ -35,6 +47,64 @@ describe("weather lines", () => {
     expect(snapshot?.days).toHaveLength(3);
     expect(snapshot?.line).toBe("Peak foliage season. Perfect day for a scenic drive.");
     expect(parseForecast({ current: { temperature_2m: 40 } })).toBeNull();
+    expect(snapshot?.sunrise).toBe("2026-10-30T07:20");
+    expect(snapshot?.sunset).toBe("2026-10-30T17:45");
+  });
+
+  it("picks the sky from the code and the hour around sunrise and sunset", () => {
+    const sunrise = "2026-10-30T07:20";
+    const sunset = "2026-10-30T17:45";
+    const at = (clock: string) => new Date(`2026-10-30T${clock}:00-04:00`);
+    const view = (code: number, clock: string) => weatherView({ code, sunrise, sunset }, at(clock));
+
+    expect(view(0, "15:00").scene).toBe("clear-day");
+    expect(view(0, "18:20").scene).toBe("golden");
+    expect(view(0, "22:00").scene).toBe("clear-night");
+    expect(view(3, "15:00")).toMatchObject({ scene: "cloudy", clouds: 4, sun: false });
+    expect(view(2, "15:00")).toMatchObject({ scene: "cloudy", partly: true, clouds: 2, sun: true });
+    expect(view(61, "18:20").scene).toBe("rain");
+    expect(view(65, "12:00").raindrops).toBe(36);
+    expect(view(51, "12:00").raindrops).toBe(18);
+    expect(view(73, "12:00")).toMatchObject({ scene: "snow", snowflakes: 32 });
+    expect(view(45, "12:00").scene).toBe("fog");
+    expect(view(95, "12:00")).toMatchObject({ scene: "storm", lightning: true, raindrops: 34 });
+    expect(view(0, "22:00").stars).toBeLessThanOrEqual(40);
+    expect(view(73, "12:00").snowflakes).toBeLessThanOrEqual(40);
+    expect(view(65, "12:00").raindrops).toBeLessThanOrEqual(40);
+  });
+
+  it("keeps the weather preview in development", () => {
+    expect(weatherPreviewScene("clear-night", "development")).toBe("clear-night");
+    expect(weatherPreviewScene("golden", "development")).toBe("golden");
+    expect(weatherPreviewScene("hail", "development")).toBeNull();
+    expect(weatherPreviewScene("snow", "production")).toBeNull();
+    expect(weatherPreviewScene("snow", "test")).toBeNull();
+    expect(previewWeather("snow")).toMatchObject({ scene: "snow", temp: 28, code: 73 });
+    expect(previewWeather("clear-day").line).not.toContain("—");
+  });
+
+  it("puts weather on the hero for snow, rain, storm, fog, and sun", () => {
+    expect(heroWeatherKind(weatherView(previewWeather("clear-night")))).toBeNull();
+    expect(heroWeatherKind(weatherView(previewWeather("cloudy")))).toBeNull();
+    expect(heroWeatherKind(weatherView(previewWeather("clear-day")))).toBe("sun");
+    expect(heroWeatherKind(weatherView(previewWeather("golden")))).toBe("sun");
+    expect(heroWeatherKind(weatherView(previewWeather("snow")))).toBe("snow");
+    expect(heroWeatherKind(weatherView(previewWeather("rain")))).toBe("rain");
+    expect(heroWeatherKind(weatherView(previewWeather("storm")))).toBe("storm");
+    expect(heroWeatherKind(weatherView(previewWeather("fog")))).toBe("fog");
+    expect(heroWeatherCount("snow")).toBeLessThan(20);
+    expect(heroWeatherCount("storm")).toBeGreaterThan(heroWeatherCount("rain"));
+    expect(heroWeatherCount("storm")).toBeLessThanOrEqual(20);
+    expect(heroWeatherCount("sun")).toBeLessThanOrEqual(6);
+    const css = readFileSync(
+      path.resolve(__dirname, "../../components/property/hero-weather.css"),
+      "utf8",
+    );
+    expect(css).toContain("pointer-events: none");
+    expect(css).toContain("prefers-reduced-motion");
+    expect(css).toContain("display: none !important");
+    expect(css).not.toContain("weather-flash");
+    expect(css).not.toContain("hero-gust");
   });
 });
 

@@ -24,7 +24,7 @@ export function PropertyHome({
 
   return (
     <article className="pb-16">
-      <PropertyHero property={property} heroPhotos={gallery.heroPhotos} photos={gallery.photos} />
+      <PropertyHero property={property} heroPhotos={gallery.heroPhotos} photos={gallery.photos} weather={weather} />
       <div className="mx-auto w-full max-w-6xl px-5">
         {property.welcomeMessage ? (
           <section className="mt-12" aria-label="Welcome">
@@ -32,7 +32,7 @@ export function PropertyHome({
           </section>
         ) : null}
         {weather ? (
-          <div className="mt-8 max-w-md">
+          <div className="mt-8 w-full max-w-[640px]">
             <WeatherCard weather={weather} />
           </div>
         ) : null}

@@ -4,6 +4,7 @@ import { BookNow } from "@/components/property/book-now";
 import { HeroBanner } from "@/components/property/hero-banner";
 import { brandLogo } from "@/lib/content/brand-art";
 import type { PropertyPhoto } from "@/lib/content/property-photos";
+import type { WeatherSnapshot } from "@/lib/content/weather";
 import { isMarkedSample } from "@/lib/data/map-content";
 import type { PropertyGuide } from "@/types/content";
 
@@ -13,10 +14,12 @@ export function PropertyHero({
   property,
   heroPhotos,
   photos,
+  weather = null,
 }: {
   property: PropertyGuide;
   heroPhotos: PropertyPhoto[];
   photos: PropertyPhoto[];
+  weather?: WeatherSnapshot | null;
 }) {
   const logo = brandLogo(property.slug);
   const accent = logo?.accent ?? FOREST;
@@ -33,7 +36,7 @@ export function PropertyHero({
     <header>
       <div className="relative">
         {heroPhotos.length > 0 ? (
-          <HeroBanner photos={heroPhotos} gallery={photos} />
+          <HeroBanner photos={heroPhotos} gallery={photos} weather={weather} />
         ) : remote ? (
           <div className="relative h-[45svh] max-h-[480px] min-h-40 overflow-hidden">
             <Image

@@ -15,7 +15,7 @@ export async function getStayWeather(latitude: number, longitude: number): Promi
     url.searchParams.set("latitude", latitude.toFixed(4));
     url.searchParams.set("longitude", longitude.toFixed(4));
     url.searchParams.set("current", "temperature_2m,weather_code");
-    url.searchParams.set("daily", "weather_code,temperature_2m_max,temperature_2m_min");
+    url.searchParams.set("daily", "weather_code,temperature_2m_max,temperature_2m_min,sunrise,sunset");
     url.searchParams.set("temperature_unit", "fahrenheit");
     url.searchParams.set("timezone", "America/New_York");
     url.searchParams.set("forecast_days", "3");

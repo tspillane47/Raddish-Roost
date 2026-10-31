@@ -4,11 +4,14 @@ import { notFound } from "next/navigation";
 import { PreviewBanner } from "@/components/layout/preview-banner";
 import { PropertyHome, PropertyHomeFallback } from "@/components/property/property-home";
 import type { PropertyGuide } from "@/types/content";
-import type { WeatherSnapshot } from "@/lib/content/weather";
+import { weatherPreviewScene, withWeatherPreview, type WeatherSnapshot } from "@/lib/content/weather";
 import { getPropertyGuide } from "@/lib/data/properties";
 import { getStayWeather } from "@/lib/weather/forecast";
 
-type PropertyParams = { params: Promise<{ propertySlug: string }> };
+type PropertyParams = {
+  params: Promise<{ propertySlug: string }>;
+  searchParams: Promise<{ weather?: string | string[] }>;
+};
 
 export async function generateMetadata({ params }: PropertyParams): Promise<Metadata> {
   const { propertySlug } = await params;
@@ -19,16 +22,21 @@ export async function generateMetadata({ params }: PropertyParams): Promise<Meta
   };
 }
 
-export default function PropertyPage({ params }: PropertyParams) {
+export default function PropertyPage({ params, searchParams }: PropertyParams) {
   return (
     <Suspense fallback={<PropertyHomeFallback />}>
-      <PropertyContent params={params} />
+      <PropertyContent params={params} searchParams={searchParams} />
     </Suspense>
   );
 }
 
-async function PropertyContent({ params }: { params: Promise<{ propertySlug: string }> }) {
+async function PropertyContent({
+  params,
+  searchParams,
+}: PropertyParams) {
   const { propertySlug } = await params;
+  const preview =
+    process.env.NODE_ENV === "development" ? weatherPreviewScene((await searchParams).weather) : null;
   const result = await getPropertyGuide(propertySlug);
 
   if (!result.ok) {
@@ -43,7 +51,7 @@ async function PropertyContent({ params }: { params: Promise<{ propertySlug: str
     );
   }
 
-  const weather = await loadWeather(result.property);
+  const weather = withWeatherPreview(await loadWeather(result.property), preview);
 
   return (
     <>

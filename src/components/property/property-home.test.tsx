@@ -6,6 +6,7 @@ import { PropertyHome } from "@/components/property/property-home";
 import { WeatherCard } from "@/components/property/weather-card";
 import { photoFrame } from "@/components/property/property-look";
 import { PropertyTools } from "@/components/property/property-tools";
+import { previewWeather } from "@/lib/content/weather";
 import { previewProperty } from "@/lib/data/map-content";
 
 vi.mock("next/link", () => ({
@@ -94,6 +95,24 @@ describe("PropertyHome", () => {
   });
 });
 
+describe("hero weather", () => {
+  it("lays snow over the photos and leaves clear photos alone", () => {
+    const property = previewProperty("raddish-roost");
+    const { unmount } = render(<PropertyHome property={property!} weather={previewWeather("snow")} />);
+    const snow = document.querySelector("[data-hero-weather='snow']");
+    expect(snow).not.toBeNull();
+    expect(snow?.className).toContain("pointer-events-none");
+    expect(snow?.getAttribute("aria-hidden")).toBe("true");
+    expect(snow?.querySelectorAll(".hero-speck").length).toBeLessThan(20);
+    expect(screen.getByRole("button", { name: /dark-shingled farmhouse/ })).toBeInTheDocument();
+    unmount();
+
+    render(<PropertyHome property={property!} weather={previewWeather("clear-day")} />);
+    expect(document.querySelector("[data-hero-weather='sun']")).not.toBeNull();
+    expect(document.querySelector("[data-hero-weather='sun']")?.querySelectorAll(".hero-ray").length).toBeLessThanOrEqual(6);
+  });
+});
+
 describe("weather card", () => {
   it("shows the temperature, today's range, and a seasonal line", () => {
     render(
@@ -119,6 +138,35 @@ describe("weather card", () => {
     expect(card).toHaveTextContent("Low 39°");
     expect(card).toHaveTextContent("Rainy day? Check the Rainy Day picks in Things to Do.");
     expect(card).toHaveTextContent("Sat");
+    expect(card).toHaveAttribute("data-scene", "rain");
+    expect(card.className).toContain("h-[210px]");
+    expect(card.querySelector(".weather-sky")).toHaveAttribute("aria-hidden", "true");
+    expect(card.querySelectorAll(".weather-drop").length).toBeGreaterThan(0);
+    expect(card.querySelectorAll(".weather-drop").length).toBeLessThanOrEqual(40);
+  });
+
+  it("uses a still snow scene with a frost edge when it is below freezing", () => {
+    render(
+      <WeatherCard
+        weather={{
+          temp: 28,
+          code: 73,
+          high: 31,
+          low: 22,
+          line: "Fresh snow! Great day for the mountain.",
+          scene: "snow",
+          days: [
+            { label: "Today", code: 73, high: 31, low: 22 },
+            { label: "Sat", code: 71, high: 30, low: 20 },
+            { label: "Sun", code: 3, high: 34, low: 24 },
+          ],
+        }}
+      />,
+    );
+    const card = screen.getByRole("region", { name: "Weather" });
+    expect(card).toHaveAttribute("data-scene", "snow");
+    expect(card).toHaveAttribute("data-cold", "true");
+    expect(card.querySelectorAll(".weather-flake").length).toBeLessThanOrEqual(40);
   });
 });
 
