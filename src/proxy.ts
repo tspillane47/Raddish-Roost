@@ -1,6 +1,8 @@
 import { NextResponse } from "next/server";
 import type { NextRequest } from "next/server";
 import { DEFAULT_BRAND_NAME } from "@/lib/brand";
+import { LOCALE_COOKIE, LOCALE_HEADER, requestLocale, type Locale } from "@/lib/i18n/locale";
+import { t } from "@/lib/i18n/translate";
 import { GUIDE_SECTIONS, isExtraGuidePage } from "@/lib/content/sections";
 import { SAMPLE_PROPERTIES } from "@/lib/content/sample-catalog";
 import { guideSectionFromPath, slugToReject } from "@/lib/routing/property-path";
@@ -41,21 +43,42 @@ async function publishedSlugs(): Promise<Set<string>> {
   }
 }
 
-function notFoundResponse() {
+function localeFor(request: NextRequest): Locale {
+  return requestLocale(request.cookies.get(LOCALE_COOKIE)?.value, request.headers.get("accept-language"));
+}
+
+function rememberLocale(request: NextRequest, response: NextResponse, locale: Locale): NextResponse {
+  if (request.cookies.get(LOCALE_COOKIE)?.value !== locale) {
+    response.cookies.set(LOCALE_COOKIE, locale, {
+      path: "/",
+      maxAge: 60 * 60 * 24 * 365,
+      sameSite: "lax",
+    });
+  }
+  return response;
+}
+
+function continueWithLocale(request: NextRequest, locale: Locale): NextResponse {
+  const headers = new Headers(request.headers);
+  headers.set(LOCALE_HEADER, locale);
+  return rememberLocale(request, NextResponse.next({ request: { headers } }), locale);
+}
+
+function notFoundResponse(locale: Locale) {
   const html = `<!doctype html>
-<html lang="en">
+<html lang="${locale}">
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
   <meta name="theme-color" content="#263F35" />
   <meta name="robots" content="noindex, nofollow" />
-  <title>Page not found · ${DEFAULT_BRAND_NAME}</title>
+  <title>${t(locale, "pageMissingTitle")} · ${DEFAULT_BRAND_NAME}</title>
 </head>
 <body style="margin:0;background:#F7F4ED;color:#262626;font-family:Georgia,serif">
   <main style="max-width:36rem;margin:0 auto;padding:6rem 1.25rem">
-    <h1 style="margin:0;font-weight:400;font-size:2.5rem;color:#263F35">We couldn't find that page</h1>
-    <p style="font-family:Inter,sans-serif;font-size:1.125rem;line-height:1.6">The stay or page you asked for is not on this site.</p>
-    <p><a href="/" style="color:#263F35;font-family:Inter,sans-serif">Back to all stays</a></p>
+    <h1 style="margin:0;font-weight:400;font-size:2.5rem;color:#263F35">${t(locale, "pageMissingTitle")}</h1>
+    <p style="font-family:Inter,sans-serif;font-size:1.125rem;line-height:1.6">${t(locale, "pageMissingBody")}</p>
+    <p><a href="/" style="color:#263F35;font-family:Inter,sans-serif">${t(locale, "backToStays")}</a></p>
   </main>
 </body>
 </html>`;
@@ -103,9 +126,10 @@ async function guideSectionMissing(pathname: string): Promise<boolean> {
 }
 
 export async function proxy(request: NextRequest) {
+  const locale = localeFor(request);
   const pathname = request.nextUrl.pathname;
   const rejected = slugToReject(pathname, await publishedSlugs());
-  if (rejected) return notFoundResponse();
+  if (rejected) return rememberLocale(request, notFoundResponse(locale), locale);
 
   const forward = guideRedirectRequest(pathname);
   if (forward) {
@@ -113,12 +137,12 @@ export async function proxy(request: NextRequest) {
     if (destination !== pathname && !(await guideSectionMissing(destination))) {
       const url = request.nextUrl.clone();
       url.pathname = destination;
-      return NextResponse.redirect(url, 308);
+      return rememberLocale(request, NextResponse.redirect(url, 308), locale);
     }
   }
 
-  if (await guideSectionMissing(pathname)) return notFoundResponse();
-  return NextResponse.next();
+  if (await guideSectionMissing(pathname)) return rememberLocale(request, notFoundResponse(locale), locale);
+  return continueWithLocale(request, locale);
 }
 
 export const config = {

@@ -1,3 +1,5 @@
+"use client";
+
 import Image from "next/image";
 import Link from "next/link";
 import { BookNow } from "@/components/property/book-now";
@@ -5,6 +7,7 @@ import { HeroBanner } from "@/components/property/hero-banner";
 import { brandLogo } from "@/lib/content/brand-art";
 import type { PropertyPhoto } from "@/lib/content/property-photos";
 import type { WeatherSnapshot } from "@/lib/content/weather";
+import { useTranslate } from "@/lib/i18n/locale-context";
 import { isMarkedSample } from "@/lib/data/map-content";
 import type { PropertyGuide } from "@/types/content";
 
@@ -21,6 +24,7 @@ export function PropertyHero({
   photos: PropertyPhoto[];
   weather?: WeatherSnapshot | null;
 }) {
+  const { t, tf } = useTranslate();
   const logo = brandLogo(property.slug);
   const accent = logo?.accent ?? FOREST;
   const sample =
@@ -60,7 +64,7 @@ export function PropertyHero({
           href="/"
           className="absolute top-4 left-4 z-10 inline-flex min-h-11 items-center rounded-full bg-cream/95 px-4 text-base text-forest shadow-sm focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-forest"
         >
-          All stays
+          {t("allStays")}
         </Link>
       </div>
       <div className="mx-auto w-full max-w-6xl px-5">
@@ -74,7 +78,7 @@ export function PropertyHero({
             >
               <Image
                 src={logo.src}
-                alt={logo.alt}
+                alt={tf("logoFor", { name: property.name })}
                 fill
                 sizes="9rem"
                 className="object-cover"
@@ -89,7 +93,7 @@ export function PropertyHero({
           {sample ? (
             <p className="mb-3">
               <span className="rounded-full bg-beige px-2 py-0.5 text-xs font-medium tracking-wide text-forest">
-                Sample
+                {t("sample")}
               </span>
             </p>
           ) : null}

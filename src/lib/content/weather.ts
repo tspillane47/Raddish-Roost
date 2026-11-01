@@ -7,6 +7,7 @@ export const TOWN_COORDINATES: Record<string, { latitude: number; longitude: num
 
 export type WeatherDay = {
   label: string;
+  date?: string;
   code: number;
   high: number;
   low: number;
@@ -305,6 +306,7 @@ export function parseForecast(payload: unknown, today = new Date()): WeatherSnap
     if (high === null || low === null || dayCode === null || typeof time !== "string") return null;
     days.push({
       label: index === 0 ? "Today" : weekdayLabel(time),
+      date: time,
       code: dayCode,
       high,
       low,

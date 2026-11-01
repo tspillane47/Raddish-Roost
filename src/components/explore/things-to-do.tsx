@@ -7,14 +7,16 @@ import {
   currentItinerarySeason,
   directionsUrl,
   placesMatchingFilters,
-  seasonLabel,
   THING_FILTERS,
   THING_SECTIONS,
   type PerfectDay,
   type PerfectDaySeason,
   type ThingFilterId,
+  type ThingSectionId,
   type ThingToDo,
 } from "@/lib/content/things-to-do";
+import { useTranslate } from "@/lib/i18n/locale-context";
+import type { MessageKey } from "@/lib/i18n/messages";
 
 export function ThingsToDo({
   places,
@@ -27,10 +29,14 @@ export function ThingsToDo({
   accent?: string;
   today?: Date;
 }) {
+  const { t, tf } = useTranslate();
   const days = itineraries.filter((day) => day.stops.length > 0);
   const sections = [
-    ...(days.length > 0 ? [{ id: "perfect_day" as const, label: "Perfect Day" }] : []),
-    ...THING_SECTIONS.filter((section) => places.some((place) => place.section === section.id)),
+    ...(days.length > 0 ? [{ id: "perfect_day" as const, label: t("perfectDay") }] : []),
+    ...THING_SECTIONS.filter((section) => places.some((place) => place.section === section.id)).map((section) => ({
+      ...section,
+      label: t(SECTION_KEYS[section.id]),
+    })),
   ];
   const [active, setActive] = useState(sections[0]?.id ?? "eat");
   const [filters, setFilters] = useState<ThingFilterId[]>([]);
@@ -42,7 +48,7 @@ export function ThingsToDo({
   if (sections.length === 0 || !current) {
     return (
       <p role="status" className="mt-6 text-lg leading-8">
-        Things to do have not been added yet.
+        {t("thingsEmpty")}
       </p>
     );
   }
@@ -52,7 +58,7 @@ export function ThingsToDo({
       <div className="sticky top-[var(--site-header)] z-30 -mx-5 max-w-full border-b border-beige bg-cream/95 px-5 backdrop-blur-sm">
         <div
           role="tablist"
-          aria-label="Things to do"
+          aria-label={t("thingsTabs")}
           className="flex w-full min-w-0 gap-2 overflow-x-auto overscroll-x-contain py-3 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden"
         >
           {sections.map((section) => {
@@ -97,7 +103,7 @@ export function ThingsToDo({
           ) : null}
           {filters.length > 0 && shown.length === 0 ? (
             <p role="status" className="mt-4 text-base leading-7">
-              No places match these filters.
+              {t("noFilterMatch")}
             </p>
           ) : (
             <ul className="mt-4 grid list-none gap-4 p-0">
@@ -125,12 +131,13 @@ function PlaceFilters({
   onToggle: (id: ThingFilterId) => void;
   onClear: () => void;
 }) {
+  const { t, tf } = useTranslate();
   return (
     <div className="mt-4 min-w-0">
       <div className="flex min-w-0 items-center gap-2">
         <div
           role="group"
-          aria-label="Filters"
+          aria-label={t("filters")}
           className="flex min-w-0 flex-1 gap-2 overflow-x-auto overscroll-x-contain pb-1 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden"
         >
           {THING_FILTERS.map((filter) => {
@@ -145,7 +152,7 @@ function PlaceFilters({
                   selected ? "bg-forest text-cream" : "bg-beige/80 text-charcoal"
                 }`}
               >
-                {filter.label}
+                {t(FILTER_KEYS[filter.id])}
               </button>
             );
           })}
@@ -156,18 +163,19 @@ function PlaceFilters({
             onClick={onClear}
             className="inline-flex min-h-11 shrink-0 items-center px-2 text-base text-forest underline-offset-4 hover:underline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-forest"
           >
-            Clear
+            {t("clearFilters")}
           </button>
         ) : null}
       </div>
       <p className="mt-2 text-base leading-7 text-muted-foreground">
-        {count === 1 ? "1 place" : `${count} places`}
+        {count === 1 ? t("placeCountOne") : tf("placeCount", { count })}
       </p>
     </div>
   );
 }
 
 function PerfectDayPanel({ days, accent, today }: { days: PerfectDay[]; accent: string; today: Date }) {
+  const { t } = useTranslate();
   const preferred = currentItinerarySeason(today);
   const initial = days.some((day) => day.season === preferred) ? preferred : (days[0]?.season ?? preferred);
   const [season, setSeason] = useState<PerfectDaySeason>(initial);
@@ -180,7 +188,7 @@ function PerfectDayPanel({ days, accent, today }: { days: PerfectDay[]; accent: 
       aria-labelledby="things-tab-perfect_day"
       className="mt-4 min-w-0"
     >
-      <div role="group" aria-label="Season" className="flex gap-2">
+      <div role="group" aria-label={t("season")} className="flex gap-2">
         {(["fall", "winter"] as const).map((choice) => (
           <button
             key={choice}
@@ -191,7 +199,7 @@ function PerfectDayPanel({ days, accent, today }: { days: PerfectDay[]; accent: 
               season === choice ? "bg-forest text-cream" : "bg-beige/80 text-charcoal"
             }`}
           >
-            {choice === "fall" ? "Fall" : "Winter"}
+            {choice === "fall" ? t("fall") : t("winter")}
           </button>
         ))}
       </div>
@@ -207,7 +215,7 @@ function PerfectDayPanel({ days, accent, today }: { days: PerfectDay[]; accent: 
                 {stop.place ? (
                   <details className="min-w-0">
                     <summary className="inline-flex min-h-11 cursor-pointer list-none items-center rounded-full border border-forest px-4 text-base text-forest focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-forest [&::-webkit-details-marker]:hidden">
-                      See this place
+                      {t("seeThisPlace")}
                     </summary>
                     <div className="mt-3">
                       <ThingCard place={stop.place} accent={accent} />
@@ -220,7 +228,7 @@ function PerfectDayPanel({ days, accent, today }: { days: PerfectDay[]; accent: 
                   rel="noopener noreferrer"
                   className="inline-flex min-h-11 items-center rounded-full bg-forest px-4 text-base text-cream focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-forest"
                 >
-                  Get Directions
+                  {t("directions")}
                 </a>
               </div>
             </li>
@@ -228,15 +236,42 @@ function PerfectDayPanel({ days, accent, today }: { days: PerfectDay[]; accent: 
         </ol>
       ) : (
         <p role="status" className="mt-6 text-base leading-7">
-          A perfect day for this season has not been added yet.
+          {t("perfectDayEmpty")}
         </p>
       )}
     </div>
   );
 }
 
+const SECTION_KEYS: Record<ThingSectionId, MessageKey> = {
+  eat: "eat",
+  drink: "drink",
+  coffee: "coffee",
+  ski_ride: "skiRide",
+  see: "see",
+  hike: "hike",
+  bike: "bike",
+  winter_fun: "winterFun",
+  sweet_treats: "sweetTreats",
+};
+
+const FILTER_KEYS: Record<ThingFilterId, MessageKey> = {
+  walkable: "walkable",
+  rainy_day: "rainyDay",
+  kid_friendly: "kidFriendly",
+  dog_friendly: "dogFriendly",
+};
+
+const SEASON_KEYS: Record<string, MessageKey> = {
+  spring: "spring",
+  summer: "summer",
+  fall: "fall",
+  winter: "winter",
+};
+
 function ThingCard({ place, accent }: { place: ThingToDo; accent: string }) {
-  const season = seasonLabel(place.season);
+  const { t } = useTranslate();
+  const season = place.season ? t(SEASON_KEYS[place.season] ?? "fall") : null;
   return (
     <article className="flex gap-4 rounded-2xl bg-beige/50 p-4">
       <div className="relative flex size-16 shrink-0 items-center justify-center overflow-hidden rounded-2xl bg-sage/40 text-forest">
@@ -259,7 +294,7 @@ function ThingCard({ place, accent }: { place: ThingToDo; accent: string }) {
               boxShadow: `inset 3px 0 0 ${accent}`,
             }}
           >
-            <span className="font-semibold">Host tip: </span>
+            <span className="font-semibold">{t("hostTip")} </span>
             {place.tip}
           </p>
         ) : null}
@@ -271,7 +306,7 @@ function ThingCard({ place, accent }: { place: ThingToDo; accent: string }) {
               rel="noopener noreferrer"
               className="underline-offset-2 hover:underline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-forest"
             >
-              Photo: {place.photo.credit.author}, {place.photo.credit.license}
+              {t("creditPhoto")}: {place.photo.credit.author}, {place.photo.credit.license}
             </a>
           </p>
         ) : null}
@@ -289,7 +324,7 @@ function ThingCard({ place, accent }: { place: ThingToDo; accent: string }) {
             rel="noopener noreferrer"
             className="inline-flex min-h-11 items-center rounded-full bg-forest px-4 text-base text-cream focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-forest"
           >
-            Get Directions
+            {t("directions")}
           </a>
         </p>
       </div>

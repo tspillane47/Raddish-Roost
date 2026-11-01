@@ -1,3 +1,4 @@
+import { Tx } from "@/lib/i18n/locale-context";
 import { cn } from "@/lib/utils";
 import type { PlaceholderTone } from "@/lib/content/sections";
 
@@ -19,7 +20,9 @@ export function PhotoPlaceholder({
   return (
     <div className={cn("flex aspect-[4/3] flex-col justify-between p-6", tones[tone], className)}>
       <p className="font-heading text-3xl leading-tight">{name}</p>
-      <p className="text-sm">Photograph coming soon</p>
+      <p className="text-sm">
+        <Tx k="photoSoon" />
+      </p>
     </div>
   );
 }

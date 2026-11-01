@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { SectionBlocks } from "@/components/guidebook/section-blocks";
+import { StayTimes } from "@/components/guidebook/stay-times";
 import { CheckoutList } from "@/components/guidebook/checkout-list";
 import { GuestNote } from "@/components/guidebook/guest-note";
 import { NearbyEssentials } from "@/components/guidebook/nearby-essentials";
@@ -11,6 +12,7 @@ import { MERGED_BLOCK_SORT } from "@/lib/content/sections";
 import { photosForSection } from "@/lib/content/property-photos";
 import type { PerfectDay, ThingToDo } from "@/lib/content/things-to-do";
 import { isMarkedSample } from "@/lib/data/map-content";
+import { Tx } from "@/lib/i18n/locale-context";
 import type { GuideSectionDetail, HouseAmenity } from "@/types/content";
 
 export function SectionView({
@@ -30,13 +32,9 @@ export function SectionView({
     section.checkoutItems.some((item) => isMarkedSample(item.label) || isMarkedSample(item.detail)) ||
     section.amenities.some((item) => isMarkedSample(item.name) || isMarkedSample(item.description));
   const photos = photosForSection(section.propertySlug, section.slug);
-  const checkInLine = section.checkInTime ? `Check-in is at ${section.checkInTime}` : null;
-  const checkoutLine = section.checkOutTime ? `Checkout is at ${section.checkOutTime}` : null;
   const arrival = section.slug === "check-in-checkout";
-  const showCheckIn = Boolean(checkInLine) && (arrival || section.slug === "check-in");
-  const showCheckOut = Boolean(checkoutLine) && (arrival || section.slug === "checkout");
-  const summary = section.summary?.trim() || null;
-  const showSummary = Boolean(summary) && !summaryRepeatsTimes(summary, checkInLine, checkoutLine);
+  const showCheckIn = Boolean(section.checkInTime) && (arrival || section.slug === "check-in");
+  const showCheckOut = Boolean(section.checkOutTime) && (arrival || section.slug === "checkout");
 
   return (
     <article className="mx-auto w-full min-w-0 max-w-3xl px-5 pt-10 pb-16">
@@ -45,7 +43,7 @@ export function SectionView({
           href={`/${section.propertySlug}`}
           className="inline-flex min-h-11 items-center text-base text-forest underline-offset-4 hover:underline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-forest"
         >
-          Back to {section.propertyName}
+          <Tx k="backToName" values={{ name: section.propertyName }} />
         </Link>
       </p>
       <header id={section.slug === "contact" ? "emergency" : undefined} className="mt-4 scroll-mt-[var(--site-header)]">
@@ -53,20 +51,26 @@ export function SectionView({
           <h1 className="font-heading text-4xl leading-tight text-charcoal md:text-5xl">{section.title}</h1>
           {sample ? (
             <span className="mt-2 shrink-0 rounded-full border border-forest px-2 py-0.5 text-xs font-medium tracking-wide text-forest">
-              Sample
+              <Tx k="sample" />
             </span>
           ) : null}
         </div>
-        {showCheckIn ? <p className="mt-4 font-heading text-3xl text-charcoal">{checkInLine}</p> : null}
-        {showCheckOut ? <p className="mt-2 font-heading text-3xl text-charcoal">{checkoutLine}</p> : null}
-        {showSummary ? <p className="mt-4 text-lg leading-8">{summary}</p> : null}
+        <StayTimes
+          checkInTime={section.checkInTime}
+          checkOutTime={section.checkOutTime}
+          summary={section.summary}
+          showCheckIn={showCheckIn}
+          showCheckOut={showCheckOut}
+        />
         {section.slug === "checkout" ? (
           <LateCheckout propertySlug={section.propertySlug} portalUrl={section.guestPortalUrl} />
         ) : null}
       </header>
       {section.slug === "stay-again" && section.bookings.length > 0 ? (
         <div className="mt-8">
-          <h2 className="font-heading text-3xl text-charcoal">Book Your Stay</h2>
+          <h2 className="font-heading text-3xl text-charcoal">
+            <Tx k="bookYourStay" />
+          </h2>
           <div className="mt-4">
             <BookingChoices propertySlug={section.propertySlug} bookings={section.bookings} />
           </div>
@@ -121,7 +125,7 @@ function ArrivalBody({ section }: { section: GuideSectionDetail }) {
     <>
       {empty ? (
         <p role="status" className="text-lg leading-8">
-          This section has not been written yet.
+          <Tx k="sectionEmpty" />
         </p>
       ) : (
         <SectionBlocks blocks={access} empty="hide" />
@@ -154,7 +158,7 @@ function HouseBody({ section }: { section: GuideSectionDetail }) {
   if (!showHere && !showHow) {
     return (
       <p role="status" className="text-lg leading-8">
-        This section has not been written yet.
+        <Tx k="sectionEmpty" />
       </p>
     );
   }
@@ -164,7 +168,7 @@ function HouseBody({ section }: { section: GuideSectionDetail }) {
       {showHere ? (
         <section aria-labelledby="whats-here-heading">
           <h2 id="whats-here-heading" className="font-heading text-3xl text-charcoal">
-            What&apos;s here
+            <Tx k="whatsHere" />
           </h2>
           <div className="mt-4">
             {here.length > 0 ? <SectionBlocks blocks={here} /> : <AmenityList amenities={section.amenities} />}
@@ -174,7 +178,7 @@ function HouseBody({ section }: { section: GuideSectionDetail }) {
       {showHow ? (
         <section aria-labelledby="how-things-work-heading">
           <h2 id="how-things-work-heading" className="font-heading text-3xl text-charcoal">
-            How things work
+            <Tx k="howThingsWork" />
           </h2>
           <div className="mt-4">
             <SectionBlocks blocks={how} accordion />
@@ -206,7 +210,7 @@ function NearbyLink({ section }: { section: GuideSectionDetail }) {
         href={`/${section.propertySlug}/guide/getting-here#nearby-essentials`}
         className="inline-flex min-h-11 items-center text-base text-forest underline-offset-4 hover:underline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-forest"
       >
-        Nearby essentials
+        <Tx k="nearbyLink" />
       </Link>
     </p>
   );
@@ -231,7 +235,7 @@ function ThingsBody({
           href={`/${section.propertySlug}/guide/vermont-101`}
           className="inline-flex min-h-11 items-center text-base text-forest underline-offset-4 hover:underline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-forest"
         >
-          New to Vermont? Read Vermont 101.
+          <Tx k="newToVermont" />
         </Link>
       </p>
       <ThingsToDo places={places} itineraries={itineraries} accent={accent} />
@@ -245,18 +249,11 @@ function ParkingNote({ summary }: { summary: string | null }) {
   return (
     <section id="parking" aria-labelledby="parking-heading" className="scroll-mt-[var(--site-header)]">
       <h2 id="parking-heading" className="font-heading text-2xl text-charcoal">
-        Parking
+        <Tx k="parking" />
       </h2>
       <p className="mt-3 text-lg leading-8">{parking}</p>
     </section>
   );
-}
-
-function summaryRepeatsTimes(summary: string | null, checkInLine: string | null, checkoutLine: string | null) {
-  if (!summary) return false;
-  const trimmed = summary.trim().replace(/\.$/, "");
-  const both = checkInLine && checkoutLine ? `${checkInLine}. ${checkoutLine}` : null;
-  return trimmed === checkInLine || trimmed === checkoutLine || trimmed === both;
 }
 
 function blockHasSample(block: GuideSectionDetail["blocks"][number]) {
@@ -272,7 +269,9 @@ function blockHasSample(block: GuideSectionDetail["blocks"][number]) {
 export function SectionFallback() {
   return (
     <div aria-busy="true" aria-live="polite" className="mx-auto w-full max-w-3xl px-5 py-10">
-      <p className="sr-only">Loading this section</p>
+      <p className="sr-only">
+        <Tx k="loadingSection" />
+      </p>
       <div className="h-8 w-40 rounded bg-beige" />
       <div className="mt-6 h-12 w-2/3 rounded bg-beige" />
       <div className="mt-8 h-40 rounded-xl bg-beige/80" />

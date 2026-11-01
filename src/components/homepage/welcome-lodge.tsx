@@ -1,5 +1,8 @@
+"use client";
+
 import type { ReactNode } from "react";
 import { Fraunces, Lilita_One } from "next/font/google";
+import { useTranslate } from "@/lib/i18n/locale-context";
 
 const lodgeDisplay = Lilita_One({
   subsets: ["latin"],
@@ -21,6 +24,7 @@ const lodgeItalic = Fraunces({
 const ink = "#F8F6F0";
 
 export function WelcomeLodge() {
+  const { t } = useTranslate();
   return (
     <section
       className="px-4 py-10 text-center md:px-6 md:py-16"
@@ -29,29 +33,29 @@ export function WelcomeLodge() {
       <div className="mx-auto flex max-w-5xl flex-col items-center">
         <ul className="mb-5 flex items-end justify-center gap-3 md:mb-6 md:gap-5" aria-hidden="true">
           <li>
-            <SeasonIcon label="Spring">
+            <SeasonIcon label={t("spring")}>
               <Flower />
             </SeasonIcon>
           </li>
           <li>
-            <SeasonIcon label="Summer">
+            <SeasonIcon label={t("summer")}>
               <Sun />
             </SeasonIcon>
           </li>
           <li>
-            <SeasonIcon label="Autumn">
+            <SeasonIcon label={t("autumn")}>
               <MapleLeaf />
             </SeasonIcon>
           </li>
           <li>
-            <SeasonIcon label="Winter">
+            <SeasonIcon label={t("winter")}>
               <Snowflake />
             </SeasonIcon>
           </li>
         </ul>
         <h1 className="w-full max-w-full [container-type:inline-size]">
           <span className="block font-sans text-xs font-semibold uppercase tracking-[0.28em] min-[380px]:text-[0.72rem] min-[380px]:tracking-[0.34em] md:text-sm md:tracking-[0.52em]">
-            Welcome to
+            {t("welcomeBand")}
           </span>
           <span
             className={`${lodgeDisplay.className} mt-1 block whitespace-nowrap text-center uppercase leading-[0.8] [font-size:clamp(1.9rem,10.6cqi,8.75rem)]`}
@@ -60,10 +64,10 @@ export function WelcomeLodge() {
           </span>
         </h1>
         <p className={`${lodgeItalic.className} mt-4 text-[1.65rem] leading-none md:mt-5 md:text-5xl`}>
-          Make yourself at home.
+          {t("makeYourself")}
         </p>
         <p className="mt-3 max-w-xl font-sans text-base leading-7 md:mt-4 md:text-lg md:leading-8">
-          Everything you need for a wonderful stay, all in one place.
+          {t("everythingYouNeed")}
         </p>
       </div>
     </section>

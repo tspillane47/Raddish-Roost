@@ -1,6 +1,7 @@
 "use client";
 
 import Image from "next/image";
+import { useTranslate } from "@/lib/i18n/locale-context";
 import { useEffect, useId, useRef, useState } from "react";
 
 export type GalleryPhoto = {
@@ -12,6 +13,7 @@ export type GalleryPhoto = {
 
 export function PropertyGallery({ photos, heading = "Photos" }: { photos: GalleryPhoto[]; heading?: string }) {
   const [index, setIndex] = useState<number | null>(null);
+  const { t } = useTranslate();
   const headingId = useId();
 
   if (photos.length === 0) return null;
@@ -19,7 +21,7 @@ export function PropertyGallery({ photos, heading = "Photos" }: { photos: Galler
   return (
     <section aria-labelledby={headingId}>
       <h2 id={headingId} className="font-heading text-3xl text-forest">
-        {heading}
+        {heading === "Photos" ? t("photosHeading") : heading}
       </h2>
       <ul className="mt-4 grid list-none grid-cols-2 gap-3 p-0 sm:grid-cols-3">
         {photos.map((item, itemIndex) => (
@@ -58,6 +60,7 @@ export function PhotoViewer({
   const closeRef = useRef<HTMLButtonElement>(null);
   const touchStart = useRef<{ x: number; y: number } | null>(null);
   const titleId = useId();
+  const { t, tf } = useTranslate();
   const open = index !== null;
   const photo = index === null ? null : photos[index];
 
@@ -123,7 +126,7 @@ export function PhotoViewer({
     >
       <div className="flex items-center justify-between gap-3 pr-[max(1rem,env(safe-area-inset-right))] pl-[max(1rem,env(safe-area-inset-left))] pt-[max(0.75rem,env(safe-area-inset-top))] pb-3">
         <p aria-live="polite" className="text-base text-cream">
-          {index + 1} of {photos.length}
+          {tf("photoCount", { current: index + 1, total: photos.length })}
         </p>
         <button
           ref={closeRef}
@@ -131,7 +134,7 @@ export function PhotoViewer({
           className="inline-flex min-h-12 items-center rounded-full bg-cream px-5 text-base font-medium text-charcoal focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-cream"
           onClick={() => onIndexChange(null)}
         >
-          Close
+          {t("close")}
         </button>
       </div>
       <h2 id={titleId} className="sr-only">
@@ -147,14 +150,14 @@ export function PhotoViewer({
             className="inline-flex min-h-12 flex-1 items-center justify-center rounded-full border border-cream text-base font-medium text-cream focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-cream"
             onClick={() => step(-1)}
           >
-            Previous
+            {t("previous")}
           </button>
           <button
             type="button"
             className="inline-flex min-h-12 flex-1 items-center justify-center rounded-full border border-cream text-base font-medium text-cream focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-cream"
             onClick={() => step(1)}
           >
-            Next
+            {t("next")}
           </button>
         </div>
       ) : null}

@@ -1,13 +1,18 @@
 "use client";
 
+import { useMemo } from "react";
+import { LOCALE_COOKIE, parseLocale, type Locale } from "@/lib/i18n/locale";
+import { t } from "@/lib/i18n/translate";
+
 export default function GlobalError({
   reset,
 }: {
   error: Error & { digest?: string };
   reset: () => void;
 }) {
+  const locale = useMemo(() => readCookieLocale(), []);
   return (
-    <html lang="en">
+    <html lang={locale}>
       <body
         style={{
           margin: 0,
@@ -18,11 +23,9 @@ export default function GlobalError({
         }}
       >
         <main style={{ maxWidth: "36rem", margin: "0 auto", padding: "6rem 1.25rem" }}>
-          <h1 style={{ fontSize: "2.5rem", fontWeight: 400, color: "#263F35" }}>
-            Something went wrong
-          </h1>
+          <h1 style={{ fontSize: "2.5rem", fontWeight: 400, color: "#263F35" }}>{t(locale, "somethingWrong")}</h1>
           <p style={{ fontFamily: "Inter, sans-serif", fontSize: "1.125rem", lineHeight: 1.6 }}>
-            The page couldn&apos;t be loaded. Please try again.
+            {t(locale, "couldntLoad")}
           </p>
           <button
             type="button"
@@ -39,10 +42,16 @@ export default function GlobalError({
               fontSize: "1rem",
             }}
           >
-            Try again
+            {t(locale, "tryAgain")}
           </button>
         </main>
       </body>
     </html>
   );
+}
+
+function readCookieLocale(): Locale {
+  if (typeof document === "undefined") return "en";
+  const match = document.cookie.split("; ").find((part) => part.startsWith(`${LOCALE_COOKIE}=`));
+  return parseLocale(match?.split("=")[1]);
 }

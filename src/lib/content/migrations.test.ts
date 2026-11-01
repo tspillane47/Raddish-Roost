@@ -643,3 +643,42 @@ describe("vrbo booking links migration", () => {
     expect(vrboLinks).not.toContain("—");
   });
 });
+
+describe("language migrations", () => {
+  const michaels = readFileSync(
+    path.join(root, "supabase/migrations/20261031180000_michaels_inactive.sql"),
+    "utf8",
+  );
+  const translations = readFileSync(
+    path.join(root, "supabase/migrations/20261031190000_content_translations.sql"),
+    "utf8",
+  );
+
+  it("hides Michael's on the Hill without deleting the row", () => {
+    expect(michaels).toContain("is_active = false");
+    expect(michaels).toContain("Michael's on the Hill");
+    expect(michaels).toContain("notify pgrst, 'reload schema'");
+    expect(michaels).not.toMatch(/delete from/i);
+    expect(michaels).not.toContain("—");
+  });
+
+  it("stores Spanish and French copy with an English fallback path", () => {
+    expect(translations).toContain("create table if not exists public.content_translations");
+    expect(translations).toContain("language in ('es', 'fr')");
+    expect(translations).toContain("grant select (source_table, source_id, field, language, text) on public.content_translations to anon");
+    expect(translations).toContain("content_translations_public_read");
+    expect(translations).toContain("public.is_staff()");
+    expect(translations).toContain("on conflict (source_table, source_id, field, language) do update");
+    expect(translations).toContain("helado suave");
+    expect(translations).toContain("glace molle");
+    expect(translations).toContain("4:00 PM");
+    expect(translations).toContain("10:00 AM");
+    expect(translations).toContain("notify pgrst, 'reload schema'");
+    expect(translations).not.toContain("where r.name = $tr$Michael's on the Hill$tr$");
+    expect(translations).not.toContain("A long-standing fine dining");
+    expect(translations).not.toMatch(/join public\.recommendations place on place\.id = pr/i);
+    expect(translations).not.toContain("—");
+    expect(translations).not.toContain("–");
+    expect(translations).not.toContain("Radish");
+  });
+});

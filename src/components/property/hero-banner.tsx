@@ -2,6 +2,7 @@
 
 import Image from "next/image";
 import { useEffect, useRef, useState } from "react";
+import { useTranslate } from "@/lib/i18n/locale-context";
 import { HeroWeather } from "@/components/property/hero-weather";
 import { PhotoViewer } from "@/components/property/property-gallery";
 import { photoObjectPosition } from "@/lib/content/photo-focus";
@@ -20,6 +21,7 @@ export function HeroBanner({
   const scrollerRef = useRef<HTMLDivElement>(null);
   const frame = useRef(0);
   const [active, setActive] = useState(0);
+  const { t, tf } = useTranslate();
   const [viewer, setViewer] = useState<number | null>(null);
   const [slidesReady, setSlidesReady] = useState(false);
   const columns = photos.length >= 3 ? "md:grid-cols-3" : photos.length === 2 ? "md:grid-cols-2" : "md:grid-cols-1";
@@ -62,7 +64,7 @@ export function HeroBanner({
       <div className="relative h-[45svh] max-h-[480px] min-h-40">
         <div
           ref={scrollerRef}
-          aria-label="Stay photos"
+          aria-label={t("stayPhotos")}
           className={`flex h-full w-full min-w-0 snap-x snap-mandatory overflow-x-auto overscroll-x-contain [scrollbar-width:none] md:grid md:snap-none md:gap-[5px] md:overflow-hidden [&::-webkit-scrollbar]:hidden ${columns}`}
           onScroll={onScroll}
         >
@@ -100,7 +102,7 @@ export function HeroBanner({
               <button
                 key={photo.file}
                 type="button"
-                aria-label={`Show photo ${index + 1} of ${photos.length}`}
+                aria-label={tf("showPhoto", { current: index + 1, total: photos.length })}
                 aria-current={index === active ? "true" : undefined}
                 className="inline-flex size-11 items-center justify-center"
                 onClick={() => showSlide(index)}

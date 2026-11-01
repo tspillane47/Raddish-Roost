@@ -14,6 +14,10 @@ import {
   type PerfectDaySeason,
   type ThingToDo,
 } from "@/lib/content/things-to-do";
+import { copyText } from "@/lib/i18n/copy";
+import { getLocale } from "@/lib/i18n/get-locale";
+import { loadCopy } from "@/lib/i18n/load-copy";
+import { t } from "@/lib/i18n/translate";
 import { getSupabase } from "@/lib/supabase/server";
 import { propertySlugSchema } from "@/lib/validation/slug";
 
@@ -120,6 +124,7 @@ export const getThingsToDo = cache(async (slug: string): Promise<ThingsResult> =
     })),
   );
 
+  const copy = await loadCopy();
   const places = joined.flatMap((item): ThingToDo[] => {
     const recommendation = item.recommendation;
     const section = sectionForPlace(
@@ -134,8 +139,8 @@ export const getThingsToDo = cache(async (slug: string): Promise<ThingsResult> =
         id: recommendation.id,
         name,
         town,
-        description: thingTip(recommendation.description),
-        tip: thingTip(recommendation.host_note),
+        description: thingTip(copyText(copy, "recommendations", recommendation.id, "description", recommendation.description)),
+        tip: thingTip(copyText(copy, "recommendations", recommendation.id, "host_note", recommendation.host_note)),
         section,
         season: thingSeason(recommendation.season),
         tags: item.tags,
@@ -158,6 +163,7 @@ type StopJoin = {
 };
 
 type DayJoin = {
+  id: string;
   season: string;
   title: string | null;
   itinerary_stops: StopJoin[] | null;
@@ -183,10 +189,12 @@ export const getPerfectDays = cache(async (slug: string): Promise<PerfectDay[]> 
   }
   if (!property) return [];
 
+  const copy = await loadCopy();
+  const locale = await getLocale();
   const { data, error } = await supabase
     .from("itineraries")
     .select(
-      "season, title, itinerary_stops(id, time_label, name, detail, sort_order, recommendations(id, category, subcategory, season, name, description, host_note, town, is_active, published_at))",
+      "id, season, title, itinerary_stops(id, time_label, name, detail, sort_order, recommendations(id, category, subcategory, season, name, description, host_note, town, is_active, published_at))",
     )
     .eq("property_id", property.id)
     .eq("is_visible", true)
@@ -213,19 +221,28 @@ export const getPerfectDays = cache(async (slug: string): Promise<PerfectDay[]> 
         return [
           {
             id: stop.id,
-            timeLabel: stop.time_label,
+            timeLabel: copyText(copy, "itinerary_stops", stop.id, "time_label", stop.time_label) ?? stop.time_label,
             name,
-            detail,
-            place: toPlace(recommendation),
+            detail: copyText(copy, "itinerary_stops", stop.id, "detail", detail) ?? detail,
+            place: toPlace(recommendation, copy),
           },
         ];
       });
     if (stops.length === 0) return [];
-    return [{ season: day.season as PerfectDaySeason, title: day.title?.trim() || "Our perfect day", stops }];
+    return [
+      {
+        season: day.season as PerfectDaySeason,
+        title: copyText(copy, "itineraries", day.id, "title", day.title)?.trim() || t(locale, "perfectDay"),
+        stops,
+      },
+    ];
   });
 });
 
-function toPlace(recommendation: RecommendationJoin | null | undefined): ThingToDo | null {
+function toPlace(
+  recommendation: RecommendationJoin | null | undefined,
+  copy: Awaited<ReturnType<typeof loadCopy>>,
+): ThingToDo | null {
   if (!recommendation?.is_active || !recommendation.published_at || !recommendation.name?.trim()) return null;
   const section = sectionForPlace(
     { subcategory: recommendation.subcategory ?? null, category: recommendation.category },
@@ -237,8 +254,8 @@ function toPlace(recommendation: RecommendationJoin | null | undefined): ThingTo
     id: recommendation.id,
     name,
     town,
-    description: thingTip(recommendation.description),
-    tip: thingTip(recommendation.host_note),
+    description: thingTip(copyText(copy, "recommendations", recommendation.id, "description", recommendation.description)),
+    tip: thingTip(copyText(copy, "recommendations", recommendation.id, "host_note", recommendation.host_note)),
     section: section ?? "see",
     season: thingSeason(recommendation.season),
     directionsUrl: directionsUrl(name, town),

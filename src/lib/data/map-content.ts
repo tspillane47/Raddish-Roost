@@ -1,4 +1,6 @@
 import { toBookingLinks, type BookingRow } from "@/lib/content/booking-links";
+import type { Locale } from "@/lib/i18n/locale";
+import { t, tf } from "@/lib/i18n/translate";
 import { GUEST_PORTAL_URLS, guestPortalUrl } from "@/lib/content/guest-portal";
 import { AIRBNB_MESSAGE_URLS } from "@/lib/content/airbnb-messages";
 import { nearbyForTown, PROPERTY_TOWNS } from "@/lib/content/nearby";
@@ -70,21 +72,25 @@ export function isMarkedSample(value: string | null | undefined): boolean {
   return typeof value === "string" && value.includes("[Sample]");
 }
 
-export function toPropertySummary(row: PropertyRow, supabaseUrl: string | null): PropertySummary {
+export function toPropertySummary(
+  row: PropertyRow,
+  supabaseUrl: string | null,
+  locale: Locale = "en",
+): PropertySummary {
   return {
     slug: row.slug,
     name: row.name,
     tagline: row.tagline,
     description: row.description,
     heroImageUrl: supabaseUrl ? guidebookImageUrl(supabaseUrl, row.hero_image_path) : null,
-    heroImageAlt: `Photograph of ${row.name}`,
+    heroImageAlt: tf(locale, "photoOf", { name: row.name }),
   };
 }
 
-export function toGuideSection(row: SectionRow): GuideSection {
+export function toGuideSection(row: SectionRow, locale: Locale = "en"): GuideSection {
   return {
     slug: row.slug,
-    title: row.title?.trim() || "Guide section",
+    title: row.title?.trim() || t(locale, "guideSection"),
     summary: row.summary,
     sectionType: row.section_type,
   };
@@ -120,11 +126,12 @@ export function toPropertyGuide(
   contacts: ContactRow[],
   bookings: BookingRow[],
   supabaseUrl: string | null,
+  locale: Locale = "en",
 ): PropertyGuide {
   return {
-    ...toPropertySummary(row, supabaseUrl),
-    welcomeTitle: row.welcome_title?.trim() || `Welcome to ${row.name}`,
-    welcomeMessage: row.welcome_message?.trim() || "Your host has not added a welcome message yet.",
+    ...toPropertySummary(row, supabaseUrl, locale),
+    welcomeTitle: row.welcome_title?.trim() || tf(locale, "welcomeNamed", { name: row.name }),
+    welcomeMessage: row.welcome_message?.trim() || t(locale, "welcomeMissing"),
     checkInTime: row.check_in_time?.trim() || null,
     checkOutTime: row.check_out_time?.trim() || null,
     guestPortalUrl: guestPortalUrl(row.guest_portal_url),
@@ -138,7 +145,7 @@ export function toPropertyGuide(
     sections: sections
       .slice()
       .sort((a, b) => a.sort_order - b.sort_order)
-      .map(toGuideSection),
+      .map((section) => toGuideSection(section, locale)),
     weatherLatitude: coordinate(row.weather_latitude),
     weatherLongitude: coordinate(row.weather_longitude),
   };

@@ -1,8 +1,13 @@
 import type { Metadata, Viewport } from "next";
 import { DM_Serif_Display, Inter } from "next/font/google";
 import { SiteChrome } from "@/components/layout/site-chrome";
+import { LocaleProvider } from "@/lib/i18n/locale-context";
+import { getLocale } from "@/lib/i18n/get-locale";
+import { t } from "@/lib/i18n/translate";
 import { BRAND_COLORS, DEFAULT_BRAND_NAME } from "@/lib/brand";
 import "./globals.css";
+
+export const instant = false;
 
 const inter = Inter({
   subsets: ["latin"],
@@ -21,13 +26,15 @@ const display = DM_Serif_Display({
   preload: false,
 });
 
-export const metadata: Metadata = {
-  title: {
-    default: DEFAULT_BRAND_NAME,
-    template: `%s · ${DEFAULT_BRAND_NAME}`,
-  },
-  description: "Everything you need for a wonderful stay, all in one place.",
-  applicationName: "Vermont Roost",
+export async function generateMetadata(): Promise<Metadata> {
+  const locale = await getLocale();
+  return {
+    title: {
+      default: DEFAULT_BRAND_NAME,
+      template: `%s · ${DEFAULT_BRAND_NAME}`,
+    },
+    description: t(locale, "everythingYouNeed"),
+    applicationName: "Vermont Roost",
   robots: {
     index: false,
     follow: false,
@@ -37,7 +44,8 @@ export const metadata: Metadata = {
     title: "Vermont Roost",
     statusBarStyle: "default",
   },
-};
+  };
+}
 
 export const viewport: Viewport = {
   width: "device-width",
@@ -46,11 +54,14 @@ export const viewport: Viewport = {
   themeColor: BRAND_COLORS.forest,
 };
 
-export default function RootLayout({ children }: LayoutProps<"/">) {
+export default async function RootLayout({ children }: LayoutProps<"/">) {
+  const locale = await getLocale();
   return (
-    <html lang="en" className={`${inter.variable} ${display.variable} antialiased`}>
+    <html lang={locale} className={`${inter.variable} ${display.variable} antialiased`}>
       <body className="flex min-h-dvh flex-col">
-        <SiteChrome>{children}</SiteChrome>
+        <LocaleProvider locale={locale}>
+          <SiteChrome>{children}</SiteChrome>
+        </LocaleProvider>
       </body>
     </html>
   );

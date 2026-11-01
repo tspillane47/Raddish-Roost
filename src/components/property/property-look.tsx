@@ -3,6 +3,8 @@
 import Image from "next/image";
 import { useState } from "react";
 import { PhotoViewer, type GalleryPhoto } from "@/components/property/property-gallery";
+import { useTranslate } from "@/lib/i18n/locale-context";
+import type { MessageKey } from "@/lib/i18n/messages";
 
 export type LookSet = {
   id: string;
@@ -30,6 +32,7 @@ export function PropertyLookAround({
   accent: string;
 }) {
   const [index, setIndex] = useState<number | null>(null);
+  const { t, tf } = useTranslate();
   if (photos.length === 0) return null;
 
   const shown = sets.reduce((count, set) => count + set.photos.length, 0);
@@ -43,14 +46,14 @@ export function PropertyLookAround({
   return (
     <section aria-labelledby="look-around-heading" className="mt-16">
       <h2 id="look-around-heading" className="font-heading text-3xl text-forest">
-        A Look Around
+        {t("lookAround")}
       </h2>
       <div className="mt-8 grid gap-12">
         {frames.map((set) => (
           <div key={set.id}>
             {set.label ? (
               <h3 className="text-xs font-medium tracking-[0.16em] uppercase" style={{ color: accent }}>
-                {set.label}
+                {setTitle(set.id, set.label, t)}
               </h3>
             ) : null}
             <ul className={`${set.label ? "mt-4" : ""} grid list-none grid-cols-2 gap-3 p-0 md:gap-4`}>
@@ -91,10 +94,23 @@ export function PropertyLookAround({
           className="mt-10 inline-flex min-h-12 w-full items-center justify-center rounded-full bg-forest px-6 text-base font-medium text-cream focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-forest md:w-auto"
           onClick={() => setIndex(0)}
         >
-          See all {photos.length} {photos.length === 1 ? "photo" : "photos"}
+          {photos.length === 1 ? tf("seeAllPhoto", { count: photos.length }) : tf("seeAllPhotos", { count: photos.length })}
         </button>
       ) : null}
       <PhotoViewer photos={photos} index={index} onIndexChange={setIndex} />
     </section>
   );
+}
+
+const SET_KEYS: Record<string, MessageKey> = {
+  living: "livingSpaces",
+  "kitchen-dining": "kitchenDining",
+  bedrooms: "bedrooms",
+  "bath-laundry": "bathLaundry",
+  outside: "outsideTown",
+};
+
+function setTitle(id: string, label: string, translate: (key: MessageKey) => string) {
+  const key = SET_KEYS[id];
+  return key ? translate(key) : label;
 }

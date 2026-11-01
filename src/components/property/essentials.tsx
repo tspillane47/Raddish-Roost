@@ -1,53 +1,56 @@
+"use client";
+
 import { Car, KeyRound, LogOut, MessageCircle, Phone, Wifi } from "lucide-react";
 import Link from "next/link";
 import { CopyPassword } from "@/components/property/copy-password";
 import { LateCheckout } from "@/components/property/late-checkout";
-import { EMERGENCY_COPY } from "@/lib/content/guest-note";
+import { useTranslate } from "@/lib/i18n/locale-context";
 import type { PropertyGuide } from "@/types/content";
 
 export function Essentials({ property }: { property: PropertyGuide }) {
+  const { t, tf } = useTranslate();
   const contact = property.contacts[0];
 
   return (
     <section aria-labelledby="essentials-heading">
       <h2 id="essentials-heading" className="font-heading text-3xl text-forest">
-        Essentials
+        {t("essentials")}
       </h2>
       <dl className="mt-6 grid gap-3 sm:grid-cols-2">
-        <Item icon={Wifi} label="Wi-Fi">
+        <Item icon={Wifi} label={t("wifi")}>
           {property.wifi ? (
             <span className="grid gap-1">
-              {property.wifi.networkName ? <span>Network: {property.wifi.networkName}</span> : null}
+              {property.wifi.networkName ? <span>{tf("network", { name: property.wifi.networkName })}</span> : null}
               {property.wifi.password ? <CopyPassword password={property.wifi.password} /> : (
-                <span>Password has not been added.</span>
+                <span>{t("passwordMissing")}</span>
               )}
               {property.wifi.routerNote ? <span>{property.wifi.routerNote}</span> : null}
             </span>
           ) : (
-            "Wi-Fi details are in your reservation message."
+            t("wifiInReservation")
           )}
         </Item>
-        <Item icon={KeyRound} label="Check-in">
+        <Item icon={KeyRound} label={t("checkIn")}>
           {property.checkInTime ? (
             <span className="font-heading text-3xl leading-tight text-charcoal">{property.checkInTime}</span>
           ) : (
-            "Not added yet"
+            t("notAddedYet")
           )}
         </Item>
-        <Item icon={LogOut} label="Checkout">
+        <Item icon={LogOut} label={t("checkout")}>
           <div className="grid gap-1">
             {property.checkOutTime ? (
               <span className="font-heading text-3xl leading-tight text-charcoal">{property.checkOutTime}</span>
             ) : (
-              "Not added yet"
+              t("notAddedYet")
             )}
             <LateCheckout propertySlug={property.slug} portalUrl={property.guestPortalUrl} />
           </div>
         </Item>
-        <Item id="parking" icon={Car} label="Parking">
-          {property.parkingSummary ?? "Not added yet"}
+        <Item id="parking" icon={Car} label={t("parking")}>
+          {property.parkingSummary ?? t("notAddedYet")}
         </Item>
-        <Item icon={MessageCircle} label="Contact">
+        <Item icon={MessageCircle} label={t("contact")}>
           {contact ? (
             contact.href ? (
               <a
@@ -64,12 +67,12 @@ export function Essentials({ property }: { property: PropertyGuide }) {
               href="/contact"
               className="underline-offset-4 hover:underline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-forest"
             >
-              Host contact details have not been added yet.
+              {t("hostContactMissing")}
             </Link>
           )}
         </Item>
-        <Item id="emergency" icon={Phone} label="Emergency">
-          {EMERGENCY_COPY}
+        <Item id="emergency" icon={Phone} label={t("emergency")}>
+          {t("emergencyCopy")}
         </Item>
       </dl>
     </section>

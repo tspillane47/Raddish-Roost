@@ -1,8 +1,10 @@
 "use client";
 
 import { useState } from "react";
+import { useTranslate } from "@/lib/i18n/locale-context";
 
 export function CopyPassword({ password }: { password: string }) {
+  const { t, tf } = useTranslate();
   const [copied, setCopied] = useState(false);
 
   async function copy() {
@@ -17,14 +19,14 @@ export function CopyPassword({ password }: { password: string }) {
 
   return (
     <span className="flex flex-wrap items-center gap-x-3 gap-y-2">
-      <span className="font-mono text-base break-all">Password: {password}</span>
+      <span className="font-mono text-base break-all">{tf("password", { password })}</span>
       <button
         type="button"
         aria-live="polite"
         className="inline-flex min-h-11 items-center rounded-full bg-forest px-4 text-base text-cream focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-forest"
         onClick={() => void copy()}
       >
-        {copied ? "Copied" : "Copy"}
+        {copied ? t("copied") : t("copy")}
       </button>
     </span>
   );

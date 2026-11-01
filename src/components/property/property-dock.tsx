@@ -3,15 +3,17 @@
 import { BookOpen, Compass, House, MessageCircle } from "lucide-react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
+import { useTranslate } from "@/lib/i18n/locale-context";
 
 export function PropertyDock({ slug }: { slug: string }) {
   const pathname = usePathname();
+  const { t } = useTranslate();
   const home = `/${slug}`;
   const items = [
-    { href: home, label: "Home", icon: House, current: pathname === home },
+    { href: home, label: t("home"), icon: House, current: pathname === home },
     {
       href: `${home}#guidebook`,
-      label: "Guide",
+      label: t("guide"),
       icon: BookOpen,
       current:
         pathname.startsWith(`${home}/guide`) &&
@@ -20,13 +22,13 @@ export function PropertyDock({ slug }: { slug: string }) {
     },
     {
       href: `${home}/guide/things-to-do`,
-      label: "Explore",
+      label: t("explore"),
       icon: Compass,
       current: pathname === `${home}/guide/things-to-do` || pathname.startsWith(`${home}/explore`),
     },
     {
       href: `${home}/guide/contact`,
-      label: "Contact",
+      label: t("contact"),
       icon: MessageCircle,
       current: pathname === `${home}/guide/contact`,
     },
@@ -34,7 +36,7 @@ export function PropertyDock({ slug }: { slug: string }) {
 
   return (
     <nav
-      aria-label="Stay"
+      aria-label={t("stayNav")}
       data-property-dock=""
       className="fixed inset-x-0 bottom-0 z-40 border-t border-beige bg-cream/95 pr-[env(safe-area-inset-right)] pb-[env(safe-area-inset-bottom)] pl-[env(safe-area-inset-left)] backdrop-blur-sm md:hidden"
     >

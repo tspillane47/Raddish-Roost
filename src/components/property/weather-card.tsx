@@ -1,11 +1,15 @@
 "use client";
 
 import { useEffect, useState, type CSSProperties } from "react";
-import { weatherCondition, weatherView, type WeatherSnapshot } from "@/lib/content/weather";
+import { weatherCondition, weatherView, type WeatherDay, type WeatherSnapshot } from "@/lib/content/weather";
+import { intlLocale } from "@/lib/i18n/locale";
+import { useTranslate } from "@/lib/i18n/locale-context";
+import { messages, type MessageKey } from "@/lib/i18n/messages";
 import "./weather-card.css";
 
 export function WeatherCard({ weather }: { weather: WeatherSnapshot }) {
   const view = weatherView(weather);
+  const { locale, t, tf } = useTranslate();
   const [node, setNode] = useState<HTMLElement | null>(null);
   const [paused, setPaused] = useState(false);
   const condition = weatherCondition(weather.code);
@@ -33,7 +37,7 @@ export function WeatherCard({ weather }: { weather: WeatherSnapshot }) {
   return (
     <section
       ref={setNode}
-      aria-label="Weather"
+      aria-label={t("weather")}
       data-scene={view.scene}
       data-tone={view.tone}
       data-night={view.night ? "true" : "false"}
@@ -50,19 +54,19 @@ export function WeatherCard({ weather }: { weather: WeatherSnapshot }) {
         <div className="flex items-start justify-between gap-3">
           <div className="min-w-0">
             <p className="font-sans text-[3.25rem] leading-none font-light tracking-tight">
-              {weather.temp}°<span className="sr-only"> Fahrenheit</span>
+              {weather.temp}°<span className="sr-only"> {t("fahrenheit")}</span>
             </p>
-            <p className="mt-1 text-sm leading-5 font-medium">{condition}</p>
+            <p className="mt-1 text-sm leading-5 font-medium">{conditionLabel(condition, t)}</p>
           </div>
           <p className="pt-1 text-right text-sm leading-5">
-            <span className="block">High {weather.high}°</span>
-            <span className="block">Low {weather.low}°</span>
+            <span className="block">{tf("weatherHigh", { temp: weather.high })}</span>
+            <span className="block">{tf("weatherLow", { temp: weather.low })}</span>
           </p>
         </div>
         <ol className="grid list-none grid-cols-3 gap-2 p-0">
           {weather.days.map((day) => (
             <li key={day.label} className="weather-pill flex min-w-0 items-center justify-center gap-1.5 rounded-full px-2 py-1.5">
-              <span className="truncate text-[11px]">{day.label}</span>
+              <span className="truncate text-[11px]">{dayName(day, locale, t)}</span>
               <DayIcon code={day.code} />
               <span className="text-[11px] whitespace-nowrap tabular-nums">
                 {day.high}° {day.low}°
@@ -70,9 +74,45 @@ export function WeatherCard({ weather }: { weather: WeatherSnapshot }) {
             </li>
           ))}
         </ol>
-        {weather.line ? <p className="line-clamp-2 text-xs leading-4">{weather.line}</p> : <span className="h-4" />}
+        {localizedLine(weather.line, t) ? (
+          <p className="line-clamp-2 text-xs leading-4">{localizedLine(weather.line, t)}</p>
+        ) : (
+          <span className="h-4" />
+        )}
       </div>
     </section>
+  );
+}
+
+const CONDITION_KEYS: Record<string, MessageKey> = {
+  Clear: "weatherClear",
+  "Mainly clear": "weatherMainly",
+  "Partly cloudy": "weatherPartly",
+  Cloudy: "weatherCloudy",
+  Fog: "weatherFog",
+  Drizzle: "weatherDrizzle",
+  Rain: "weatherRain",
+  Snow: "weatherSnow",
+  Thunderstorm: "weatherStorm",
+};
+
+function conditionLabel(condition: string, translate: (key: MessageKey) => string) {
+  const key = CONDITION_KEYS[condition];
+  return key ? translate(key) : condition;
+}
+
+function localizedLine(line: string | null, translate: (key: MessageKey) => string) {
+  if (line === messages.en.weatherSnowLine) return translate("weatherSnowLine");
+  if (line === messages.en.weatherRainLine) return translate("weatherRainLine");
+  if (line === messages.en.weatherFallLine) return translate("weatherFallLine");
+  return line;
+}
+
+function dayName(day: WeatherDay, locale: ReturnType<typeof useTranslate>["locale"], translate: (key: MessageKey) => string) {
+  if (day.label === "Today") return translate("today");
+  if (!day.date) return day.label;
+  return new Intl.DateTimeFormat(intlLocale(locale), { weekday: "short", timeZone: "America/New_York" }).format(
+    new Date(`${day.date}T12:00:00`),
   );
 }
 

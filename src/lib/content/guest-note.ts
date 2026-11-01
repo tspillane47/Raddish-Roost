@@ -1,15 +1,14 @@
-export const GUEST_NOTE_TITLE = "Something not right?";
+import { messages } from "@/lib/i18n/messages";
 
-export const GUEST_NOTE_TEXT =
-  "Let us know right away and we'll do our best to fix it. You'll usually hear back within an hour.";
+export const GUEST_NOTE_TITLE = messages.en.guestNoteTitle;
 
-export const GUEST_NOTE_SENT = "Thanks. We got your note and we'll get back to you.";
+export const GUEST_NOTE_TEXT = messages.en.guestNoteText;
 
-export const EMERGENCY_COPY =
-  "For immediate danger, call 911. Property emergency contacts have not been added.";
+export const GUEST_NOTE_SENT = messages.en.guestNoteSent;
 
-export const REVIEW_NOTE =
-  "Thanks for staying with us! If you enjoyed your stay, we'd be so grateful for a review. You'll get a review request from Airbnb or VRBO after checkout.";
+export const EMERGENCY_COPY = messages.en.emergencyCopy;
+
+export const REVIEW_NOTE = messages.en.reviewNote;
 
 const WINDOW_MS = 60 * 60 * 1000;
 const LIMIT = 5;
@@ -54,10 +53,10 @@ export function validateGuestNote(input: GuestNoteInput): GuestNoteCheck {
   const message = input.message.trim();
   const propertySlug = input.propertySlug.trim().toLowerCase();
 
-  if (!SLUG.test(propertySlug)) return { ok: false, error: "Choose a stay." };
-  if (name.length > 120) return { ok: false, error: "Name is too long." };
-  if (message.length === 0) return { ok: false, error: "Tell us what's going on." };
-  if (message.length > 5000) return { ok: false, error: "That note is too long." };
+  if (!SLUG.test(propertySlug)) return { ok: false, error: messages.en.chooseStay };
+  if (name.length > 120) return { ok: false, error: messages.en.nameTooLong };
+  if (message.length === 0) return { ok: false, error: messages.en.noteEmpty };
+  if (message.length > 5000) return { ok: false, error: messages.en.noteTooLong };
 
   return { ok: true, ignore: false, name: name.length > 0 ? name : null, message, propertySlug };
 }

@@ -5,6 +5,7 @@ import { buttonVariants } from "@/components/ui/button";
 import { brandLogo } from "@/lib/content/brand-art";
 import { placeholderTone } from "@/lib/content/sections";
 import { isMarkedSample } from "@/lib/data/map-content";
+import { Tx } from "@/lib/i18n/locale-context";
 import { cn } from "@/lib/utils";
 import type { PropertySummary } from "@/types/content";
 
@@ -49,13 +50,13 @@ export function PropertyCard({ property }: { property: PropertySummary }) {
           <h3 className="font-heading text-3xl leading-tight text-forest">{property.name}</h3>
           {sample ? (
             <span className="mt-1 shrink-0 rounded-full border border-forest px-2 py-0.5 text-xs font-medium tracking-wide text-forest">
-              Sample
+              <Tx k="sample" />
             </span>
           ) : null}
         </div>
         {property.tagline ? <p className="text-base leading-7">{property.tagline}</p> : null}
         <Link href={href} className={cn(buttonVariants({ size: "guest" }), "mt-auto w-full")}>
-          Explore Your Stay
+          <Tx k="exploreStay" />
         </Link>
       </div>
     </article>
@@ -85,7 +86,9 @@ export function PropertyCardGrid({ properties }: { properties: PropertySummary[]
 export function PropertyCardFallback() {
   return (
     <div aria-busy="true" aria-live="polite">
-      <p className="sr-only">Loading properties</p>
+      <p className="sr-only">
+        <Tx k="loadingProperties" />
+      </p>
       <div className="grid gap-10 md:grid-cols-3">
         {["one", "two", "three"].map((key) => (
           <div key={key} className="h-[28rem] rounded-xl bg-beige/80" />

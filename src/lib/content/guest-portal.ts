@@ -1,3 +1,5 @@
+import { messages } from "@/lib/i18n/messages";
+
 export const GUEST_PORTAL_URLS: Record<string, string> = {
   "raddish-roost":
     "https://stay.hospitable.com/7f2dc4a2-c49d-4fba-af96-4d92d9870635/login?returnUrl=%2F7f2dc4a2-c49d-4fba-af96-4d92d9870635%2Fupgrade%3F_t%3Dsc_su",
@@ -6,10 +8,9 @@ export const GUEST_PORTAL_URLS: Record<string, string> = {
     "https://stay.hospitable.com/72b4adbe-4aa2-4d62-a077-55829eeba0d1/login?returnUrl=%2F72b4adbe-4aa2-4d62-a077-55829eeba0d1%2Fupgrade%3F_t%3Dsc_su",
 };
 
-export const LATE_CHECKOUT_TITLE = "Want to stay a little longer?";
+export const LATE_CHECKOUT_TITLE = messages.en.lateCheckoutTitle;
 
-export const LATE_CHECKOUT_TEXT =
-  "You can request a late checkout through your guest portal. Requests depend on availability. To log in, enter the booker's last name or phone number.";
+export const LATE_CHECKOUT_TEXT = messages.en.lateCheckoutText;
 
 export function guestPortalUrl(value: string | null | undefined): string | null {
   const url = value?.trim() ?? "";

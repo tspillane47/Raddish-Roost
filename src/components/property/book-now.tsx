@@ -2,7 +2,9 @@
 
 import { useRef } from "react";
 import { trackBookingClick } from "@/lib/analytics/booking-click";
-import type { BookingLink } from "@/lib/content/booking-links";
+import type { BookingChannel, BookingLink } from "@/lib/content/booking-links";
+import { useTranslate } from "@/lib/i18n/locale-context";
+import type { MessageKey } from "@/lib/i18n/messages";
 
 const CREAM = "#F7F4ED";
 
@@ -16,6 +18,7 @@ export function BookNow({
   accent: string;
 }) {
   const dialogRef = useRef<HTMLDialogElement>(null);
+  const { t } = useTranslate();
   if (bookings.length === 0) return null;
 
   return (
@@ -27,7 +30,7 @@ export function BookNow({
         aria-haspopup="dialog"
         onClick={() => openDialog(dialogRef.current)}
       >
-        Book Now
+        {t("bookNow")}
       </button>
       <dialog
         ref={dialogRef}
@@ -45,14 +48,14 @@ export function BookNow({
           <div className="relative max-h-[85dvh] w-full overflow-y-auto rounded-t-3xl bg-cream pr-[max(1.25rem,env(safe-area-inset-right))] pl-[max(1.25rem,env(safe-area-inset-left))] pt-6 text-left shadow-xl md:max-w-md md:rounded-3xl md:p-6">
             <div className="flex items-start justify-between gap-4">
               <h2 id="book-your-stay" className="font-heading text-3xl text-charcoal">
-                Book Your Stay
+                {t("bookYourStay")}
               </h2>
               <button
                 type="button"
                 className="inline-flex min-h-11 shrink-0 items-center rounded-full px-4 text-base text-forest focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-forest"
                 onClick={() => dialogRef.current?.close()}
               >
-                Close
+                {t("close")}
               </button>
             </div>
             <div className="mt-5 pb-[max(1.5rem,env(safe-area-inset-bottom))] md:pb-0">
@@ -72,6 +75,7 @@ export function BookingChoices({
   propertySlug: string;
   bookings: BookingLink[];
 }) {
+  const { t } = useTranslate();
   if (bookings.length === 0) return null;
 
   return (
@@ -85,13 +89,25 @@ export function BookingChoices({
             className="flex min-h-16 flex-col justify-center rounded-2xl border border-beige bg-cream px-5 py-4 focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-forest hover:bg-beige/60"
             onClick={() => trackBookingClick(propertySlug, booking.channel)}
           >
-            <span className="font-heading text-2xl text-charcoal">{booking.name}</span>
-            <span className="mt-1 text-base leading-7 text-muted-foreground">{booking.detail}</span>
+            <span className="font-heading text-2xl text-charcoal">{bookingLabel(booking.channel, booking.name, t)}</span>
+            <span className="mt-1 text-base leading-7 text-muted-foreground">{bookingDetail(booking.channel, booking.detail, t)}</span>
           </a>
         </li>
       ))}
     </ul>
   );
+}
+
+function bookingLabel(channel: BookingChannel, fallback: string, translate: (key: MessageKey) => string) {
+  if (channel === "direct") return translate("bookDirect");
+  return fallback;
+}
+
+function bookingDetail(channel: BookingChannel, fallback: string, translate: (key: MessageKey) => string) {
+  if (channel === "direct") return translate("bookDirectDetail");
+  if (channel === "airbnb") return translate("bookAirbnbDetail");
+  if (channel === "vrbo") return translate("bookVrboDetail");
+  return fallback;
 }
 
 function openDialog(dialog: HTMLDialogElement | null) {

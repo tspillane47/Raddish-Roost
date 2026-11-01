@@ -3,6 +3,8 @@ import { connection } from "next/server";
 import { SiteFooter } from "@/components/layout/site-footer";
 import { SiteHeader } from "@/components/layout/site-header";
 import { DEFAULT_BRAND_NAME } from "@/lib/brand";
+import { t } from "@/lib/i18n/translate";
+import { getLocale } from "@/lib/i18n/get-locale";
 import { getBrandName, getPublishedProperties } from "@/lib/data/properties";
 
 export function SiteChrome({ children }: { children: React.ReactNode }) {
@@ -12,7 +14,7 @@ export function SiteChrome({ children }: { children: React.ReactNode }) {
         href="#main"
         className="sr-only focus:not-sr-only focus:absolute focus:left-4 focus:top-4 focus:z-50 focus:bg-forest focus:px-4 focus:py-3 focus:text-cream"
       >
-        Skip to content
+        <SkipLink />
       </a>
       <Suspense fallback={<SiteHeader brandName={DEFAULT_BRAND_NAME} />}>
         <HeaderSlot />
@@ -21,12 +23,17 @@ export function SiteChrome({ children }: { children: React.ReactNode }) {
         {children}
       </main>
       <Suspense
-        fallback={<SiteFooter brandName={DEFAULT_BRAND_NAME} properties={[]} year={2026} />}
+        fallback={<SiteFooter brandName={DEFAULT_BRAND_NAME} properties={[]} year={2026} locale="en" />}
       >
         <FooterSlot />
       </Suspense>
     </>
   );
+}
+
+async function SkipLink() {
+  const locale = await getLocale();
+  return t(locale, "skipToContent");
 }
 
 async function HeaderSlot() {
@@ -36,12 +43,14 @@ async function HeaderSlot() {
 
 async function FooterSlot() {
   await connection();
+  const locale = await getLocale();
   const [brandName, properties] = await Promise.all([getBrandName(), getPublishedProperties()]);
   return (
     <SiteFooter
       brandName={brandName}
       properties={properties.ok ? properties.data.map(({ slug, name }) => ({ slug, name })) : []}
       year={new Date().getUTCFullYear()}
+      locale={locale}
     />
   );
 }

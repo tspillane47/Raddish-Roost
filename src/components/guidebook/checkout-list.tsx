@@ -1,10 +1,11 @@
 "use client";
 
 import { useState } from "react";
-import { REVIEW_NOTE } from "@/lib/content/guest-note";
+import { useTranslate } from "@/lib/i18n/locale-context";
 import type { CheckoutTask } from "@/types/content";
 
 export function CheckoutList({ items }: { items: CheckoutTask[] }) {
+  const { t } = useTranslate();
   const [done, setDone] = useState<Record<string, boolean>>({});
   if (items.length === 0) return null;
   const finished = items.every((item) => done[item.id] === true);
@@ -12,7 +13,7 @@ export function CheckoutList({ items }: { items: CheckoutTask[] }) {
   return (
     <section id="checkout-list" aria-labelledby="checkout-list-heading" className="scroll-mt-[var(--site-header)]">
       <h2 id="checkout-list-heading" className="font-heading text-2xl text-charcoal">
-        Checkout checklist
+        {t("checkoutChecklist")}
       </h2>
       <ul className="mt-4 grid list-none gap-3 p-0">
         {items.map((item) => {
@@ -36,7 +37,7 @@ export function CheckoutList({ items }: { items: CheckoutTask[] }) {
         })}
       </ul>
       <p role={finished ? "status" : undefined} className="mt-4 text-base leading-7">
-        {REVIEW_NOTE}
+        {t("reviewNote")}
       </p>
     </section>
   );

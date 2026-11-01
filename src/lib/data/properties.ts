@@ -7,6 +7,10 @@ import { guestPortalUrl } from "@/lib/content/guest-portal";
 import { nearbyHref, type NearbyEssential, isNearbyKind } from "@/lib/content/nearby";
 import { toContactHref } from "@/lib/validation/contact";
 import { brandNameFromValue, DEFAULT_BRAND_NAME } from "@/lib/brand";
+import { copyText, localizeBlockBody, type CopyMap } from "@/lib/i18n/copy";
+import { getLocale } from "@/lib/i18n/get-locale";
+import { loadCopy } from "@/lib/i18n/load-copy";
+import { t } from "@/lib/i18n/translate";
 import {
   previewGuideSection,
   previewProperties,
@@ -97,10 +101,12 @@ export const getPublishedProperties = cache(async (): Promise<ContentResult<Prop
   }
 
   const rows = (data ?? []) as PropertyRow[];
+  const locale = await getLocale();
+  const copy = await loadCopy(locale);
   return {
     ok: true,
     source: "database",
-    data: rows.map((row) => toPropertySummary(row, env?.url ?? null)),
+    data: rows.map((row) => toPropertySummary(localizeProperty(row, copy), env?.url ?? null, locale)),
   };
 });
 
@@ -157,11 +163,13 @@ export const getPropertyGuide = cache(async (slug: string): Promise<PropertyResu
   }
   if (!data) return { ok: false, error: "not_found" };
 
-  const property = data as PropertyRow;
+  const locale = await getLocale();
+  const copy = await loadCopy(locale);
+  const property = localizeProperty(data as PropertyRow, copy);
   const [sectionsResult, wifiResult, contactsResult, bookingsResult] = await Promise.all([
     supabase
       .from("guidebook_sections")
-      .select("slug, title, summary, section_type, sort_order")
+      .select("id, slug, title, summary, section_type, sort_order")
       .eq("property_id", property.id)
       .eq("is_visible", true)
       .order("sort_order", { ascending: true }),
@@ -173,7 +181,7 @@ export const getPropertyGuide = cache(async (slug: string): Promise<PropertyResu
       .maybeSingle(),
     supabase
       .from("contact_channels")
-      .select("channel, label, value")
+      .select("id, channel, label, value")
       .eq("property_id", property.id)
       .eq("is_public", true)
       .order("sort_order", { ascending: true }),
@@ -210,11 +218,19 @@ export const getPropertyGuide = cache(async (slug: string): Promise<PropertyResu
     source: "database",
     property: toPropertyGuide(
       property,
-      (sectionsResult.data ?? []) as SectionRow[],
-      (wifiResult.data as WifiRow | null) ?? null,
-      (contactsResult.data ?? []) as ContactRow[],
+      ((sectionsResult.data ?? []) as (SectionRow & { id: string })[]).map((row) => ({
+        ...row,
+        title: copyText(copy, "guidebook_sections", row.id, "title", row.title),
+        summary: copyText(copy, "guidebook_sections", row.id, "summary", row.summary),
+      })),
+      localizeWifi((wifiResult.data as WifiRow | null) ?? null, copy, property.id),
+      ((contactsResult.data ?? []) as (ContactRow & { id?: string })[]).map((row) => ({
+        ...row,
+        label: copyText(copy, "contact_channels", row.id, "label", row.label) ?? row.label,
+      })),
       (bookingsResult.data ?? []) as BookingRow[],
       env?.url ?? null,
+      locale,
     ),
   };
 });
@@ -264,6 +280,8 @@ export const getGuideSection = cache(
     }
     if (!property) return { ok: false, error: "not_found" };
 
+    const locale = await getLocale();
+    const copy = await loadCopy(locale);
     const stay = property as {
       id: string;
       slug: string;
@@ -334,7 +352,13 @@ export const getGuideSection = cache(
         logSupabaseError("checkout-items", checkoutError.message);
         return { ok: false, error: "unavailable" };
       }
-      checkoutItems = toCheckoutTasks(checkoutRows ?? []);
+      checkoutItems = toCheckoutTasks(
+        ((checkoutRows ?? []) as { id: string; label: string | null; details: string | null }[]).map((row) => ({
+          ...row,
+          label: copyText(copy, "checkout_items", row.id, "label", row.label),
+          details: copyText(copy, "checkout_items", row.id, "details", row.details),
+        })),
+      );
     }
 
     let amenities: ReturnType<typeof toHouseAmenities> = [];
@@ -352,7 +376,13 @@ export const getGuideSection = cache(
         logSupabaseError("amenities", amenityError.message);
         return { ok: false, error: "unavailable" };
       }
-      amenities = toHouseAmenities(amenityRows ?? []);
+      amenities = toHouseAmenities(
+        ((amenityRows ?? []) as { id: string; name: string | null; description: string | null }[]).map((row) => ({
+          ...row,
+          name: copyText(copy, "amenities", row.id, "name", row.name),
+          description: copyText(copy, "amenities", row.id, "description", row.description),
+        })),
+      );
     }
 
     let airbnbHref: string | null = null;
@@ -376,23 +406,24 @@ export const getGuideSection = cache(
       airbnbHref = value ? toContactHref("airbnb", value) : null;
     }
 
-    const nearbyEssentials = await loadNearbyEssentials(supabase, stay.id, section.slug);
+    const nearbyEssentials = await loadNearbyEssentials(supabase, stay.id, section.slug, copy);
 
+    const sectionRow = section as { id: string; slug: string; title: string | null; summary: string | null };
     return {
       ok: true,
       source: "database",
       section: {
         propertySlug: stay.slug,
         propertyName: stay.name,
-        slug: section.slug,
-        title: section.title?.trim() || "Guide section",
-        summary: section.summary,
-        blocks: toGuideBlocks((blocks ?? []) as BlockRow[], env?.url ?? null),
+        slug: sectionRow.slug,
+        title: copyText(copy, "guidebook_sections", sectionRow.id, "title", sectionRow.title)?.trim() || t(locale, "guideSection"),
+        summary: copyText(copy, "guidebook_sections", sectionRow.id, "summary", sectionRow.summary),
+        blocks: toGuideBlocks(localizeBlocks((blocks ?? []) as BlockRow[], copy), env?.url ?? null),
         bookings: toBookingLinks(bookings),
         checkInTime: stay.check_in_time?.trim() || null,
         checkOutTime: stay.check_out_time?.trim() || null,
         guestPortalUrl: guestPortalUrl(stay.guest_portal_url),
-        parkingSummary: stay.parking_summary?.trim() || null,
+        parkingSummary: copyText(copy, "properties", stay.id, "parking_summary", stay.parking_summary)?.trim() || null,
         checkoutItems,
         amenities,
         airbnbHref,
@@ -402,10 +433,41 @@ export const getGuideSection = cache(
   },
 );
 
+function localizeProperty(row: PropertyRow, copy: CopyMap): PropertyRow {
+  return {
+    ...row,
+    tagline: copyText(copy, "properties", row.id, "tagline", row.tagline),
+    description: copyText(copy, "properties", row.id, "description", row.description),
+    welcome_title: copyText(copy, "properties", row.id, "welcome_title", row.welcome_title),
+    welcome_message: copyText(copy, "properties", row.id, "welcome_message", row.welcome_message),
+    parking_summary: copyText(copy, "properties", row.id, "parking_summary", row.parking_summary),
+  };
+}
+
+function localizeWifi(row: WifiRow | null, copy: CopyMap, propertyId: string): WifiRow | null {
+  if (!row) return null;
+  return {
+    ...row,
+    router_note: copyText(copy, "property_wifi", propertyId, "router_note", row.router_note),
+  };
+}
+
+function localizeBlocks(rows: BlockRow[], copy: CopyMap): BlockRow[] {
+  return rows.map((row) => ({
+    ...row,
+    title: copyText(copy, "guidebook_blocks", row.id, "title", row.title),
+    body: localizeBlockBody(row.body, {
+      markdown: copy.get(`guidebook_blocks:${row.id}:markdown`) ?? null,
+      steps: copy.get(`guidebook_blocks:${row.id}:steps`) ?? null,
+    }),
+  }));
+}
+
 async function loadNearbyEssentials(
   supabase: NonNullable<ReturnType<typeof getSupabase>>,
   propertyId: string,
   sectionSlug: string,
+  copy: CopyMap,
 ): Promise<NearbyEssential[]> {
   if (sectionSlug !== "getting-here" && sectionSlug !== "contact") return [];
   const { data, error } = await supabase
@@ -432,10 +494,10 @@ async function loadNearbyEssentials(
       {
         id: row.id,
         kind: row.kind,
-        label,
+        label: copyText(copy, "nearby_essentials", row.id, "label", label) ?? label,
+        note: copyText(copy, "nearby_essentials", row.id, "note", row.note?.trim() || null),
         href,
         placeName: row.place_name?.trim() || null,
-        note: row.note?.trim() || null,
       },
     ];
   });

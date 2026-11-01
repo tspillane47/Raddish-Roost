@@ -1,5 +1,6 @@
 import Image from "next/image";
 import { GuidebookMarkdown } from "@/lib/content/markdown";
+import { Tx } from "@/lib/i18n/locale-context";
 import type { GuideBlockView } from "@/types/content";
 
 export function SectionBlocks({
@@ -15,7 +16,7 @@ export function SectionBlocks({
     if (empty === "hide") return null;
     return (
       <p role="status" className="text-lg leading-8">
-        This section has not been written yet.
+        <Tx k="sectionEmpty" />
       </p>
     );
   }
@@ -26,7 +27,7 @@ export function SectionBlocks({
         {blocks.map((block) => (
           <details key={block.id} className="rounded-xl bg-beige/70 px-4">
             <summary className="flex min-h-11 cursor-pointer list-none items-center text-base font-medium text-charcoal focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-forest [&::-webkit-details-marker]:hidden">
-              {block.title ?? "Details"}
+              {block.title ?? <Tx k="details" />}
             </summary>
             <div className="pb-4">
               <BlockBody block={block} />

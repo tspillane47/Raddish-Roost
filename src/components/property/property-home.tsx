@@ -6,6 +6,7 @@ import { PropertyLookAround } from "@/components/property/property-look";
 import { WeatherCard } from "@/components/property/weather-card";
 import { brandLogo } from "@/lib/content/brand-art";
 import { getPropertyPhotos, photosForSection, photoSets } from "@/lib/content/property-photos";
+import { Tx } from "@/lib/i18n/locale-context";
 import type { WeatherSnapshot } from "@/lib/content/weather";
 import type { PropertyGuide } from "@/types/content";
 
@@ -27,7 +28,10 @@ export function PropertyHome({
       <PropertyHero property={property} heroPhotos={gallery.heroPhotos} photos={gallery.photos} weather={weather} />
       <div className="mx-auto w-full max-w-6xl px-5">
         {property.welcomeMessage ? (
-          <section className="mt-12" aria-label="Welcome">
+          <section className="mt-12" aria-labelledby="welcome-note">
+            <h2 id="welcome-note" className="sr-only">
+              <Tx k="welcomeLabel" />
+            </h2>
             <p className="max-w-2xl text-lg leading-8">{property.welcomeMessage}</p>
           </section>
         ) : null}
@@ -41,12 +45,12 @@ export function PropertyHome({
         </div>
         <section id="guidebook" aria-labelledby="guidebook-heading" className="mt-16 scroll-mt-[var(--site-header)]">
           <h2 id="guidebook-heading" className="font-heading text-3xl text-forest">
-            Guidebook
+            <Tx k="guidebook" />
           </h2>
           <div className="mt-4 h-px w-16" style={{ backgroundColor: accent }} aria-hidden="true" />
           {property.sections.length === 0 ? (
             <p role="status" className="mt-6 text-base leading-7">
-              Guidebook sections have not been added yet.
+              <Tx k="guidebookEmpty" />
             </p>
           ) : (
             <ul className="mt-6 grid list-none gap-4 p-0 sm:grid-cols-2">
@@ -82,9 +86,11 @@ export function PropertyHome({
             className="mt-4 flex min-h-24 items-center rounded-2xl border border-beige px-4 py-4 focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-forest"
           >
             <span>
-              <h3 className="font-heading text-2xl text-charcoal">Vermont 101</h3>
+              <h3 className="font-heading text-2xl text-charcoal">
+                <Tx k="vermont101" />
+              </h3>
               <p className="mt-2 text-base leading-7 text-muted-foreground">
-                Creemees, maple, mud season, foliage, and a few other local habits.
+                <Tx k="vermont101Blurb" />
               </p>
             </span>
           </Link>
@@ -98,7 +104,9 @@ export function PropertyHome({
 export function PropertyHomeFallback() {
   return (
     <div aria-busy="true" aria-live="polite">
-      <p className="sr-only">Loading this stay</p>
+      <p className="sr-only">
+        <Tx k="loadingStay" />
+      </p>
       <div className="h-[45svh] max-h-[480px] min-h-40 bg-beige/80" />
       <div className="mx-auto w-full max-w-6xl px-5">
         <div className="-mt-14 size-28 rounded-full bg-beige" />

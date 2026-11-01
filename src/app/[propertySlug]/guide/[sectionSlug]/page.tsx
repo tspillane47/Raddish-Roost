@@ -2,6 +2,7 @@ import { Suspense } from "react";
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { PreviewBanner } from "@/components/layout/preview-banner";
+import { Tx } from "@/lib/i18n/locale-context";
 import { SectionFallback, SectionView } from "@/components/guidebook/section-view";
 import { Vermont101 } from "@/components/guidebook/vermont-101";
 import { brandLogo } from "@/lib/content/brand-art";
@@ -43,9 +44,11 @@ async function SectionContent({ params }: SectionParams) {
       if (stay.error === "not_found") notFound();
       return (
         <div className="mx-auto w-full max-w-3xl px-5 py-20">
-          <h1 className="font-heading text-4xl text-forest">This section couldn&apos;t be loaded</h1>
+          <h1 className="font-heading text-4xl text-forest">
+            <Tx k="sectionMissing" />
+          </h1>
           <p role="alert" className="mt-4 text-lg leading-8">
-            Please try again in a moment.
+            <Tx k="tryAgainMoment" />
           </p>
         </div>
       );
@@ -68,9 +71,11 @@ async function SectionContent({ params }: SectionParams) {
     if (result.error === "not_found") notFound();
     return (
       <div className="mx-auto w-full max-w-3xl px-5 py-20">
-        <h1 className="font-heading text-4xl text-forest">This section couldn&apos;t be loaded</h1>
+        <h1 className="font-heading text-4xl text-forest">
+          <Tx k="sectionMissing" />
+        </h1>
         <p role="alert" className="mt-4 text-lg leading-8">
-          Please try again in a moment.
+          <Tx k="tryAgainMoment" />
         </p>
       </div>
     );
