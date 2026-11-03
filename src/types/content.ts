@@ -76,6 +76,7 @@ export type GuideSectionDetail = {
   amenities: HouseAmenity[];
   airbnbHref: string | null;
   nearbyEssentials: NearbyEssential[];
+  guestArea?: GuestArea | null;
 };
 
 export type PublicWifi = {
@@ -91,6 +92,8 @@ export type PublicContact = {
   href: string | null;
 };
 
+export type GuestArea = "vermont" | "florida";
+
 export type PropertySummary = {
   slug: string;
   name: string;
@@ -98,6 +101,8 @@ export type PropertySummary = {
   description: string | null;
   heroImageUrl: string | null;
   heroImageAlt: string;
+  locality?: string | null;
+  guestArea?: GuestArea | null;
 };
 
 export type PropertyGuide = PropertySummary & {

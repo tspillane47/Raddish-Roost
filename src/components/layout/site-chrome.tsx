@@ -1,5 +1,6 @@
 import { Suspense } from "react";
 import { connection } from "next/server";
+import { DadHeader } from "@/components/dad/dad-header";
 import { SiteFooter } from "@/components/layout/site-footer";
 import { SiteHeader } from "@/components/layout/site-header";
 import { t } from "@/lib/i18n/translate";
@@ -9,6 +10,13 @@ import { getSiteConfig } from "@/sites";
 
 export function SiteChrome({ children }: { children: React.ReactNode }) {
   const site = getSiteConfig();
+  const headerFallback =
+    site.key === "dad" && site.nav && site.bookCta ? (
+      <DadHeader brandName={site.name} nav={site.nav} bookCta={site.bookCta} />
+    ) : (
+      <SiteHeader brandName={site.name} />
+    );
+
   return (
     <>
       <a
@@ -17,7 +25,7 @@ export function SiteChrome({ children }: { children: React.ReactNode }) {
       >
         <SkipLink />
       </a>
-      <Suspense fallback={<SiteHeader brandName={site.name} />}>
+      <Suspense fallback={headerFallback}>
         <HeaderSlot />
       </Suspense>
       <main id="main" className="w-full min-w-0 flex-1">
@@ -46,7 +54,11 @@ async function SkipLink() {
 }
 
 async function HeaderSlot() {
+  const site = getSiteConfig();
   const brandName = await getBrandName();
+  if (site.key === "dad" && site.nav && site.bookCta) {
+    return <DadHeader brandName={brandName} nav={site.nav} bookCta={site.bookCta} />;
+  }
   return <SiteHeader brandName={brandName} />;
 }
 

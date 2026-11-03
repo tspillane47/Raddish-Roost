@@ -53,6 +53,7 @@ async function SectionContent({ params }: SectionParams) {
         </div>
       );
     }
+    if (stay.property.guestArea === "florida") notFound();
     return (
       <>
         {stay.source === "preview" ? <PreviewBanner /> : null}

@@ -5,6 +5,7 @@ export const roostSite: SiteConfig = {
   key: "roost",
   name: "The Vermont Roost Collection",
   shortName: "Vermont Roost",
+  tagline: "Everything you need for a wonderful stay, all in one place.",
   domain: "raddishroost1.vercel.app",
   seoDescription: "Everything you need for a wonderful stay, all in one place.",
   footerBlurb: "A small collection of Vermont stays, each with its own guidebook.",

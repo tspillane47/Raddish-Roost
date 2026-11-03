@@ -81,19 +81,21 @@ export function PropertyHome({
               })}
             </ul>
           )}
-          <Link
-            href={`/${property.slug}/guide/vermont-101`}
-            className="mt-4 flex min-h-24 items-center rounded-2xl border border-beige px-4 py-4 focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-forest"
-          >
-            <span>
-              <h3 className="font-heading text-2xl text-charcoal">
-                <Tx k="vermont101" />
-              </h3>
-              <p className="mt-2 text-base leading-7 text-muted-foreground">
-                <Tx k="vermont101Blurb" />
-              </p>
-            </span>
-          </Link>
+          {property.guestArea === "florida" ? null : (
+            <Link
+              href={`/${property.slug}/guide/vermont-101`}
+              className="mt-4 flex min-h-24 items-center rounded-2xl border border-beige px-4 py-4 focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-forest"
+            >
+              <span>
+                <h3 className="font-heading text-2xl text-charcoal">
+                  <Tx k="vermont101" />
+                </h3>
+                <p className="mt-2 text-base leading-7 text-muted-foreground">
+                  <Tx k="vermont101Blurb" />
+                </p>
+              </span>
+            </Link>
+          )}
         </section>
         <PropertyLookAround photos={gallery.photos} sets={photoSets(property.slug)} accent={accent} />
       </div>

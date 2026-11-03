@@ -34,7 +34,7 @@ import { propertySlugSchema } from "@/lib/validation/slug";
 import type { ContentResult, PropertyResult, PropertySummary, SectionResult } from "@/types/content";
 
 const PROPERTY_COLUMNS =
-  "id, site_id, slug, name, tagline, description, welcome_title, welcome_message, check_in_time, check_out_time, parking_summary, hero_image_path, sort_order";
+  "id, site_id, slug, name, tagline, description, welcome_title, welcome_message, check_in_time, check_out_time, parking_summary, hero_image_path, sort_order, locality, guest_area";
 const PROPERTY_COLUMNS_WITH_PORTAL = `${PROPERTY_COLUMNS}, guest_portal_url`;
 const PROPERTY_COLUMNS_WITH_WEATHER = `${PROPERTY_COLUMNS_WITH_PORTAL}, weather_latitude, weather_longitude`;
 const PROPERTY_COLUMNS_LEGACY =
@@ -117,6 +117,18 @@ export const getPublishedProperties = cache(async (): Promise<ContentResult<Prop
 
   let data = scoped.data;
   let error = scoped.error;
+  if (error && /guest_area|locality/.test(error.message)) {
+    const withoutArea = await supabase
+      .from("properties")
+      .select(
+        "id, site_id, slug, name, tagline, description, welcome_title, welcome_message, check_in_time, check_out_time, parking_summary, hero_image_path, sort_order",
+      )
+      .eq("status", "published")
+      .eq("site_id", activeSiteId())
+      .order("sort_order", { ascending: true });
+    data = withoutArea.data as typeof data;
+    error = withoutArea.error;
+  }
   if (error && /site_id/.test(error.message)) {
     if (siteKey !== "roost") {
       rethrowPrerenderAbort(error);
@@ -321,7 +333,7 @@ export const getGuideSection = cache(
     const siteKey = getSiteKey();
     const fullProperty = await supabase
       .from("properties")
-      .select("id, site_id, slug, name, check_in_time, check_out_time, guest_portal_url, parking_summary")
+      .select("id, site_id, slug, name, check_in_time, check_out_time, guest_portal_url, parking_summary, guest_area")
       .eq("slug", propertySlug)
       .eq("status", "published")
       .eq("site_id", activeSiteId())
@@ -332,17 +344,28 @@ export const getGuideSection = cache(
     if (propertyError && /site_id/.test(propertyError.message) && siteKey === "roost") {
       const unscoped = await supabase
         .from("properties")
-        .select("id, slug, name, check_in_time, check_out_time, guest_portal_url, parking_summary")
+        .select("id, slug, name, check_in_time, check_out_time, guest_portal_url, parking_summary, guest_area")
         .eq("slug", propertySlug)
         .eq("status", "published")
         .maybeSingle();
       property = unscoped.data as typeof property;
       propertyError = unscoped.error;
     }
+    if (propertyError && /guest_area/.test(propertyError.message)) {
+      const withoutArea = await supabase
+        .from("properties")
+        .select("id, site_id, slug, name, check_in_time, check_out_time, guest_portal_url, parking_summary")
+        .eq("slug", propertySlug)
+        .eq("status", "published")
+        .eq("site_id", activeSiteId())
+        .maybeSingle();
+      property = withoutArea.data ? { ...withoutArea.data, guest_area: null } : null;
+      propertyError = withoutArea.error;
+    }
     if (propertyError && /guest_portal_url/.test(propertyError.message)) {
       const basicProperty = await supabase
         .from("properties")
-        .select("id, site_id, slug, name, check_in_time, check_out_time, parking_summary")
+        .select("id, site_id, slug, name, check_in_time, check_out_time, parking_summary, guest_area")
         .eq("slug", propertySlug)
         .eq("status", "published")
         .eq("site_id", activeSiteId())
@@ -375,6 +398,7 @@ export const getGuideSection = cache(
       check_out_time?: string | null;
       guest_portal_url?: string | null;
       parking_summary?: string | null;
+      guest_area?: string | null;
     };
 
     const { data: section, error: sectionError } = await supabase
@@ -513,6 +537,7 @@ export const getGuideSection = cache(
         amenities,
         airbnbHref,
         nearbyEssentials,
+        guestArea: stay.guest_area === "florida" || stay.guest_area === "vermont" ? stay.guest_area : null,
       },
     };
   },

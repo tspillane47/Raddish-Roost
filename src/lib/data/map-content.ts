@@ -37,6 +37,8 @@ export type PropertyRow = {
   weather_longitude?: number | string | null;
   parking_summary: string | null;
   hero_image_path: string | null;
+  locality?: string | null;
+  guest_area?: string | null;
 };
 
 export type SectionRow = {
@@ -72,6 +74,11 @@ export function isMarkedSample(value: string | null | undefined): boolean {
   return typeof value === "string" && value.includes("[Sample]");
 }
 
+function toGuestArea(value: string | null | undefined): PropertySummary["guestArea"] {
+  if (value === "vermont" || value === "florida") return value;
+  return null;
+}
+
 export function toPropertySummary(
   row: PropertyRow,
   supabaseUrl: string | null,
@@ -84,6 +91,8 @@ export function toPropertySummary(
     description: row.description,
     heroImageUrl: supabaseUrl ? guidebookImageUrl(supabaseUrl, row.hero_image_path) : null,
     heroImageAlt: tf(locale, "photoOf", { name: row.name }),
+    locality: row.locality ?? null,
+    guestArea: toGuestArea(row.guest_area),
   };
 }
 

@@ -1,9 +1,13 @@
 import "server-only";
 
 import { cacheLife } from "next/cache";
-import { parseForecast, type WeatherSnapshot } from "@/lib/content/weather";
+import { parseForecast, type WeatherClimate, type WeatherSnapshot } from "@/lib/content/weather";
 
-export async function getStayWeather(latitude: number, longitude: number): Promise<WeatherSnapshot | null> {
+export async function getStayWeather(
+  latitude: number,
+  longitude: number,
+  climate: WeatherClimate = "vermont",
+): Promise<WeatherSnapshot | null> {
   "use cache";
   cacheLife({ stale: 60 * 30, revalidate: 60 * 30, expire: 60 * 60 });
 
@@ -21,7 +25,7 @@ export async function getStayWeather(latitude: number, longitude: number): Promi
     url.searchParams.set("forecast_days", "3");
     const response = await fetch(url, { cache: "no-store" });
     if (!response.ok) return null;
-    return parseForecast(await response.json());
+    return parseForecast(await response.json(), new Date(), climate);
   } catch (error) {
     console.error("[guidebook] weather:", error instanceof Error ? error.message : "unavailable");
     return null;

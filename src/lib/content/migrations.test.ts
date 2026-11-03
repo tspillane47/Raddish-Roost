@@ -644,6 +644,60 @@ describe("vrbo booking links migration", () => {
   });
 });
 
+describe("dad content migrations", () => {
+  const guestArea = readFileSync(
+    path.join(root, "supabase/migrations/20261103140000_dad_guest_area.sql"),
+    "utf8",
+  );
+  const dadProperties = readFileSync(
+    path.join(root, "supabase/migrations/20261103140100_dad_properties.sql"),
+    "utf8",
+  );
+  const dadThings = readFileSync(
+    path.join(root, "supabase/migrations/20261103140200_dad_things_to_do.sql"),
+    "utf8",
+  );
+
+  it("adds guest_area without rewriting roost content", () => {
+    expect(guestArea).toContain("guest_area");
+    expect(guestArea).toContain("'vermont'");
+    expect(guestArea).toContain("'florida'");
+    expect(guestArea).toContain("c1000000-0000-4000-8000-000000000001");
+    expect(guestArea).not.toContain("—");
+  });
+
+  it("scopes dad properties to the dad site only", () => {
+    expect(dadProperties).toContain("sites where key = 'dad'");
+    expect(dadProperties).toContain("cider-loft");
+    expect(dadProperties).toContain("switchback-suite");
+    expect(dadProperties).toContain("hinesburg-hideaway-3");
+    expect(dadProperties).toContain("hinesburg-hideaway-4");
+    expect(dadProperties).toContain("backyard-bungalow");
+    expect(dadProperties).toContain("landing-pad");
+    expect(dadProperties).toContain("tennisplace-a35");
+    expect(dadProperties).toContain("sanibel-sunsets");
+    expect(dadProperties).toContain("The Far & Familiar Collection");
+    expect(dadProperties).toContain("Details coming soon");
+    expect(dadProperties).toContain("seed_guidebook_sections");
+    expect(dadProperties).not.toContain("raddish-roost");
+    expect(dadProperties).not.toContain("—");
+  });
+
+  it("links shared places to dad stays without copying host tips", () => {
+    expect(dadThings).toContain("host_note stays null");
+    expect(dadThings).toContain("Cold Hollow Cider Mill");
+    expect(dadThings).toContain("Ranch Camp");
+    expect(dadThings).toContain("Frost Beer Works");
+    expect(dadThings).toContain("walkable");
+    expect(dadThings).toContain("cider-loft");
+    expect(dadThings).toContain("switchback-suite");
+    expect(dadThings).toContain("and pr.recommendation_id = place.id");
+    expect(dadThings).not.toContain("join public.recommendations place on place.id = pr.recommendation_id");
+    expect(dadThings).not.toContain("set host_note =");
+    expect(dadThings).not.toContain("—");
+  });
+});
+
 describe("multi-site migrations", () => {
   const sites = readFileSync(
     path.join(root, "supabase/migrations/20261103120000_sites.sql"),

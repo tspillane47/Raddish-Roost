@@ -68,8 +68,9 @@ async function loadWeather(property: PropertyGuide): Promise<WeatherSnapshot | n
   const latitude = property.weatherLatitude;
   const longitude = property.weatherLongitude;
   if (latitude === null || longitude === null) return null;
+  const climate = property.guestArea === "florida" ? "florida" : "vermont";
   try {
-    return await getStayWeather(latitude, longitude);
+    return await getStayWeather(latitude, longitude, climate);
   } catch (error) {
     console.error("[guidebook] weather:", error instanceof Error ? error.message : "unavailable");
     return null;

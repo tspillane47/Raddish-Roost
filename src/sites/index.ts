@@ -37,6 +37,7 @@ export function sitePaletteStyle(colors: SitePalette): Record<string, string> {
     "--charcoal": colors.charcoal,
     "--beige": colors.beige,
     "--terracotta": colors.terracotta,
+    "--mustard": colors.mustard ?? colors.terracotta,
     "--sidebar": colors.cream,
     "--sidebar-foreground": colors.charcoal,
     "--sidebar-primary": colors.forest,

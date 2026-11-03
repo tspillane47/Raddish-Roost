@@ -60,6 +60,9 @@ const GOLDEN_MINUTES = 60;
 const SNOW_LINE = "Fresh snow! Great day for the mountain.";
 const RAIN_LINE = "Rainy day? Check the Rainy Day picks in Things to Do.";
 const FALL_LINE = "Peak foliage season. Perfect day for a scenic drive.";
+const BEACH_WARM_LINE = "Beautiful beach day. Perfect for a walk to the water.";
+const BEACH_RAIN_LINE = "Rainy day on the island. A good time for a slow morning indoors.";
+const BEACH_STORM_LINE = "Stormy skies. Keep plans flexible and check local alerts.";
 
 export function weatherCondition(code: number): string {
   if (code === 0) return "Clear";
@@ -252,8 +255,20 @@ export function heroWeatherCount(kind: HeroWeatherKind): number {
   return 0;
 }
 
-/** Snow, then rain, then foliage in September, October, and November. */
-export function weatherLine(code: number, month: number): string | null {
+export type WeatherClimate = "vermont" | "florida";
+
+/** Vermont: snow, rain, then foliage. Florida: beach tips, never snow messaging. */
+export function weatherLine(
+  code: number,
+  month: number,
+  climate: WeatherClimate = "vermont",
+): string | null {
+  if (climate === "florida") {
+    if (code >= 95) return BEACH_STORM_LINE;
+    if (isRain(code)) return BEACH_RAIN_LINE;
+    if (code <= 1 && month >= 4 && month <= 9) return BEACH_WARM_LINE;
+    return null;
+  }
   if (isSnow(code)) return SNOW_LINE;
   if (isRain(code)) return RAIN_LINE;
   if (month >= 8 && month <= 10) return FALL_LINE;
@@ -289,7 +304,11 @@ function codeAt(value: unknown, index?: number): number | null {
   return Number.isInteger(parsed) ? parsed : null;
 }
 
-export function parseForecast(payload: unknown, today = new Date()): WeatherSnapshot | null {
+export function parseForecast(
+  payload: unknown,
+  today = new Date(),
+  climate: WeatherClimate = "vermont",
+): WeatherSnapshot | null {
   if (!payload || typeof payload !== "object") return null;
   const body = payload as ForecastJson;
   const temp = numberAt(body.current?.temperature_2m);
@@ -321,7 +340,7 @@ export function parseForecast(payload: unknown, today = new Date()): WeatherSnap
     high: todayForecast.high,
     low: todayForecast.low,
     days,
-    line: weatherLine(code, today.getMonth()),
+    line: weatherLine(code, today.getMonth(), climate),
     sunrise: stringAt(body.daily?.sunrise, 0),
     sunset: stringAt(body.daily?.sunset, 0),
   };

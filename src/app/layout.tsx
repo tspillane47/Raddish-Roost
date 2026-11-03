@@ -1,6 +1,6 @@
 import type { CSSProperties } from "react";
 import type { Metadata, Viewport } from "next";
-import { DM_Serif_Display, Inter } from "next/font/google";
+import { DM_Serif_Display, Fraunces, Inter, Ultra, Work_Sans } from "next/font/google";
 import { SiteChrome } from "@/components/layout/site-chrome";
 import { LocaleProvider } from "@/lib/i18n/locale-context";
 import { getLocale } from "@/lib/i18n/get-locale";
@@ -21,6 +21,34 @@ const display = DM_Serif_Display({
   subsets: ["latin"],
   weight: "400",
   variable: "--font-display",
+  display: "swap",
+  adjustFontFallback: true,
+  preload: false,
+});
+
+const dadDisplay = Ultra({
+  subsets: ["latin"],
+  weight: "400",
+  variable: "--font-dad-display",
+  display: "swap",
+  adjustFontFallback: true,
+  preload: false,
+});
+
+const dadItalic = Fraunces({
+  subsets: ["latin"],
+  weight: ["500", "600"],
+  style: ["normal", "italic"],
+  variable: "--font-dad-italic",
+  display: "swap",
+  adjustFontFallback: true,
+  preload: false,
+});
+
+const dadSans = Work_Sans({
+  subsets: ["latin"],
+  weight: ["500", "600", "700"],
+  variable: "--font-dad-sans",
   display: "swap",
   adjustFontFallback: true,
   preload: false,
@@ -68,12 +96,13 @@ export function generateViewport(): Viewport {
 export default async function RootLayout({ children }: LayoutProps<"/">) {
   const locale = await getLocale();
   const site = getSiteConfig();
+  const fontVars =
+    site.key === "dad"
+      ? `${inter.variable} ${display.variable} ${dadDisplay.variable} ${dadItalic.variable} ${dadSans.variable}`
+      : `${inter.variable} ${display.variable}`;
+
   return (
-    <html
-      lang={locale}
-      className={`${inter.variable} ${display.variable} antialiased`}
-      style={sitePaletteStyle(site.colors) as CSSProperties}
-    >
+    <html lang={locale} className={`${fontVars} antialiased`} style={sitePaletteStyle(site.colors) as CSSProperties}>
       <body className="flex min-h-dvh flex-col">
         <LocaleProvider locale={locale}>
           <SiteChrome>{children}</SiteChrome>

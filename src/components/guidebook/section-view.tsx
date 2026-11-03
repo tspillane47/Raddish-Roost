@@ -230,15 +230,26 @@ function ThingsBody({
   return (
     <>
       <SectionBlocks blocks={section.blocks} empty="hide" />
-      <p>
-        <Link
-          href={`/${section.propertySlug}/guide/vermont-101`}
-          className="inline-flex min-h-11 items-center text-base text-forest underline-offset-4 hover:underline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-forest"
-        >
-          <Tx k="newToVermont" />
-        </Link>
-      </p>
-      <ThingsToDo places={places} itineraries={itineraries} accent={accent} />
+      {section.guestArea === "florida" ? null : (
+        <p>
+          <Link
+            href={`/${section.propertySlug}/guide/vermont-101`}
+            className="inline-flex min-h-11 items-center text-base text-forest underline-offset-4 hover:underline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-forest"
+          >
+            <Tx k="newToVermont" />
+          </Link>
+        </p>
+      )}
+      <ThingsToDo
+        places={places}
+        itineraries={itineraries}
+        accent={accent}
+        emptyMessage={
+          section.guestArea === "florida"
+            ? "Sanibel favorites are coming soon. Check back before your trip."
+            : undefined
+        }
+      />
     </>
   );
 }

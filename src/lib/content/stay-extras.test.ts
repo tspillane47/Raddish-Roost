@@ -21,6 +21,11 @@ describe("weather lines", () => {
       "Rainy day? Check the Rainy Day picks in Things to Do.",
     );
     expect(weatherLine(73, october.getMonth())).toBe("Fresh snow! Great day for the mountain.");
+    expect(weatherLine(73, 0, "florida")).toBeNull();
+    expect(weatherLine(61, 0, "florida")).toBe(
+      "Rainy day on the island. A good time for a slow morning indoors.",
+    );
+    expect(weatherLine(0, 6, "florida")).toBe("Beautiful beach day. Perfect for a walk to the water.");
     expect(weatherLine(0, 6)).toBeNull();
     expect(weatherLine(0, 9)).not.toContain("—");
   });

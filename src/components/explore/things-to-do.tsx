@@ -23,11 +23,13 @@ export function ThingsToDo({
   itineraries = [],
   accent = "#263F35",
   today = new Date(),
+  emptyMessage,
 }: {
   places: ThingToDo[];
   itineraries?: PerfectDay[];
   accent?: string;
   today?: Date;
+  emptyMessage?: string;
 }) {
   const { t, tf } = useTranslate();
   const days = itineraries.filter((day) => day.stops.length > 0);
@@ -48,7 +50,7 @@ export function ThingsToDo({
   if (sections.length === 0 || !current) {
     return (
       <p role="status" className="mt-6 text-lg leading-8">
-        {t("thingsEmpty")}
+        {emptyMessage ?? t("thingsEmpty")}
       </p>
     );
   }

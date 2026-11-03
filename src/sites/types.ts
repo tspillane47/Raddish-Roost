@@ -8,6 +8,8 @@ export type SitePalette = {
   beige: string;
   terracotta: string;
   muted: string;
+  /** Optional accent; dad uses mustard yellow from the concept art. */
+  mustard?: string;
 };
 
 export type SiteHero = {
@@ -44,10 +46,16 @@ export type SiteWelcome = {
   useLodgeFonts: boolean;
 };
 
+export type SiteNavItem = {
+  label: string;
+  href: string;
+};
+
 export type SiteConfig = {
   key: SiteKey;
   name: string;
   shortName: string;
+  tagline?: string;
   domain: string | null;
   seoDescription: string;
   footerBlurb: string;
@@ -61,4 +69,6 @@ export type SiteConfig = {
   artworkOrder: string[];
   colors: SitePalette;
   icons: SiteIcons;
+  nav?: SiteNavItem[];
+  bookCta?: { label: string; href: string };
 };
