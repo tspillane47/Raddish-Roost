@@ -8,9 +8,13 @@ Indexing is off. Search engines are asked not to crawl the site (`src/app/robots
 
 ```bash
 npm run dev
+npm run dev:roost
+npm run dev:dad
 npm test
 npm run build
 ```
+
+`npm run dev` and `npm run dev:roost` serve the Vermont Roost Collection (default `SITE_KEY=roost`). `npm run dev:dad` serves Dad's placeholder site from the same codebase.
 
 ## Environment
 
@@ -22,7 +26,7 @@ cp .env.example .env.local
 
 `NEXT_PUBLIC_SUPABASE_URL` and `NEXT_PUBLIC_SUPABASE_ANON_KEY` come from Supabase → Project Settings → API. Use the anon public key. Do not put the service role key in this app.
 
-`SITE_KEY` chooses which branded site this process serves. Use `roost` (the default when unset) or `dad`. Both sites share one Supabase project; each deployment only shows that site's properties.
+`SITE_KEY` chooses which branded site this process serves. Use `roost` (the default when unset) or `dad`. Both sites share one Supabase project; each deployment only shows that site's properties. Per-site names, hero art, welcome band, logos, colors, icons, and SEO copy live in `src/sites/roost.ts` and `src/sites/dad.ts`.
 
 Until those values are set, the roost site shows a labeled preview of the three properties. After they are set, pages read published rows from Supabase. Restart the dev server after changing `.env.local`.
 

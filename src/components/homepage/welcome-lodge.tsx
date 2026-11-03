@@ -21,51 +21,61 @@ const lodgeItalic = Fraunces({
   preload: false,
 });
 
-const ink = "#F8F6F0";
-
-export function WelcomeLodge() {
+export function WelcomeLodge({
+  placeName,
+  background,
+  ink,
+  showSeasonIcons,
+  useLodgeFonts,
+}: {
+  placeName: string;
+  background: string;
+  ink: string;
+  showSeasonIcons: boolean;
+  useLodgeFonts: boolean;
+}) {
   const { t } = useTranslate();
+  const placeClass = useLodgeFonts
+    ? `${lodgeDisplay.className} mt-1 block whitespace-nowrap text-center uppercase leading-[0.8] [font-size:clamp(1.9rem,10.6cqi,8.75rem)]`
+    : "mt-2 block text-center font-heading text-5xl leading-none md:text-7xl";
+  const taglineClass = useLodgeFonts
+    ? `${lodgeItalic.className} mt-4 text-[1.65rem] leading-none md:mt-5 md:text-5xl`
+    : "mt-4 font-heading text-2xl leading-snug md:mt-5 md:text-4xl";
+
   return (
-    <section
-      className="px-4 py-10 text-center md:px-6 md:py-16"
-      style={{ backgroundColor: "#243D33", color: ink }}
-    >
+    <section className="px-4 py-10 text-center md:px-6 md:py-16" style={{ backgroundColor: background, color: ink }}>
       <div className="mx-auto flex max-w-5xl flex-col items-center">
-        <ul className="mb-5 flex items-end justify-center gap-3 md:mb-6 md:gap-5" aria-hidden="true">
-          <li>
-            <SeasonIcon label={t("spring")}>
-              <Flower />
-            </SeasonIcon>
-          </li>
-          <li>
-            <SeasonIcon label={t("summer")}>
-              <Sun />
-            </SeasonIcon>
-          </li>
-          <li>
-            <SeasonIcon label={t("autumn")}>
-              <MapleLeaf />
-            </SeasonIcon>
-          </li>
-          <li>
-            <SeasonIcon label={t("winter")}>
-              <Snowflake />
-            </SeasonIcon>
-          </li>
-        </ul>
+        {showSeasonIcons ? (
+          <ul className="mb-5 flex items-end justify-center gap-3 md:mb-6 md:gap-5" aria-hidden="true">
+            <li>
+              <SeasonIcon label={t("spring")}>
+                <Flower />
+              </SeasonIcon>
+            </li>
+            <li>
+              <SeasonIcon label={t("summer")}>
+                <Sun />
+              </SeasonIcon>
+            </li>
+            <li>
+              <SeasonIcon label={t("autumn")}>
+                <MapleLeaf />
+              </SeasonIcon>
+            </li>
+            <li>
+              <SeasonIcon label={t("winter")}>
+                <Snowflake />
+              </SeasonIcon>
+            </li>
+          </ul>
+        ) : null}
         <h1 className="w-full max-w-full [container-type:inline-size]">
           <span className="block font-sans text-xs font-semibold uppercase tracking-[0.28em] min-[380px]:text-[0.72rem] min-[380px]:tracking-[0.34em] md:text-sm md:tracking-[0.52em]">
             {t("welcomeBand")}
           </span>
-          <span
-            className={`${lodgeDisplay.className} mt-1 block whitespace-nowrap text-center uppercase leading-[0.8] [font-size:clamp(1.9rem,10.6cqi,8.75rem)]`}
-          >
-            Vermont.
-          </span>
+          <span className={placeClass}>{placeName}</span>
         </h1>
-        <p className={`${lodgeItalic.className} mt-4 text-[1.65rem] leading-none md:mt-5 md:text-5xl`}>
-          {t("makeYourself")}
-        </p>
+        <p className={taglineClass}>{t("makeYourself")}</p>
         <p className="mt-3 max-w-xl font-sans text-base leading-7 md:mt-4 md:text-lg md:leading-8">
           {t("everythingYouNeed")}
         </p>

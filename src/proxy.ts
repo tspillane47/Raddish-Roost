@@ -1,6 +1,5 @@
 import { NextResponse } from "next/server";
 import type { NextRequest } from "next/server";
-import { DEFAULT_BRAND_NAME } from "@/lib/brand";
 import { LOCALE_COOKIE, LOCALE_HEADER, requestLocale, type Locale } from "@/lib/i18n/locale";
 import { t } from "@/lib/i18n/translate";
 import { GUIDE_SECTIONS, isExtraGuidePage } from "@/lib/content/sections";
@@ -10,6 +9,7 @@ import { guideRedirectRequest } from "@/lib/routing/section-redirect";
 import { getSiteKey, guideSectionRequest, publishedSlugsRequest } from "@/lib/site";
 import { getSupabaseEnv } from "@/lib/supabase/env";
 import { propertySlugSchema } from "@/lib/validation/slug";
+import { getSiteConfig } from "@/sites";
 
 const sampleSlugs = () =>
   getSiteKey() === "roost" ? new Set(SAMPLE_PROPERTIES.map((property) => property.slug)) : new Set<string>();
@@ -64,20 +64,21 @@ function continueWithLocale(request: NextRequest, locale: Locale): NextResponse 
 }
 
 function notFoundResponse(locale: Locale) {
+  const site = getSiteConfig();
   const html = `<!doctype html>
 <html lang="${locale}">
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
-  <meta name="theme-color" content="#263F35" />
+  <meta name="theme-color" content="${site.colors.forest}" />
   <meta name="robots" content="noindex, nofollow" />
-  <title>${t(locale, "pageMissingTitle")} · ${DEFAULT_BRAND_NAME}</title>
+  <title>${t(locale, "pageMissingTitle")} · ${site.name}</title>
 </head>
-<body style="margin:0;background:#F7F4ED;color:#262626;font-family:Georgia,serif">
+<body style="margin:0;background:${site.colors.cream};color:${site.colors.charcoal};font-family:Georgia,serif">
   <main style="max-width:36rem;margin:0 auto;padding:6rem 1.25rem">
-    <h1 style="margin:0;font-weight:400;font-size:2.5rem;color:#263F35">${t(locale, "pageMissingTitle")}</h1>
+    <h1 style="margin:0;font-weight:400;font-size:2.5rem;color:${site.colors.forest}">${t(locale, "pageMissingTitle")}</h1>
     <p style="font-family:Inter,sans-serif;font-size:1.125rem;line-height:1.6">${t(locale, "pageMissingBody")}</p>
-    <p><a href="/" style="color:#263F35;font-family:Inter,sans-serif">${t(locale, "backToStays")}</a></p>
+    <p><a href="/" style="color:${site.colors.forest};font-family:Inter,sans-serif">${t(locale, "backToStays")}</a></p>
   </main>
 </body>
 </html>`;

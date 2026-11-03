@@ -6,7 +6,8 @@ import { toBookingLinks, type BookingRow } from "@/lib/content/booking-links";
 import { guestPortalUrl } from "@/lib/content/guest-portal";
 import { nearbyHref, type NearbyEssential, isNearbyKind } from "@/lib/content/nearby";
 import { toContactHref } from "@/lib/validation/contact";
-import { brandNameFromValue, DEFAULT_BRAND_NAME } from "@/lib/brand";
+import { brandNameFromValue } from "@/lib/brand";
+import { getSiteConfig } from "@/sites";
 import { copyText, localizeBlockBody, type CopyMap } from "@/lib/i18n/copy";
 import { getLocale } from "@/lib/i18n/get-locale";
 import { loadCopy } from "@/lib/i18n/load-copy";
@@ -68,8 +69,9 @@ async function whenServingRequest() {
 }
 
 export const getBrandName = cache(async (): Promise<string> => {
+  const fallback = getSiteConfig().name;
   const supabase = getSupabase();
-  if (!supabase) return DEFAULT_BRAND_NAME;
+  if (!supabase) return fallback;
   await whenServingRequest();
 
   const scoped = await supabase
@@ -90,10 +92,10 @@ export const getBrandName = cache(async (): Promise<string> => {
   if (error) {
     rethrowPrerenderAbort(error);
     logSupabaseError("brand", error.message);
-    return DEFAULT_BRAND_NAME;
+    return fallback;
   }
 
-  return brandNameFromValue(data?.value);
+  return brandNameFromValue(data?.value, fallback);
 });
 
 export const getPublishedProperties = cache(async (): Promise<ContentResult<PropertySummary[]>> => {

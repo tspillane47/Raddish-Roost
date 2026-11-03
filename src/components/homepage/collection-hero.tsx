@@ -1,14 +1,14 @@
 import Image from "next/image";
-import { COLLECTION_HERO } from "@/lib/content/brand-art";
+import type { SiteHero } from "@/sites";
 
-export function CollectionHero() {
+export function CollectionHero({ hero }: { hero: SiteHero }) {
   return (
     <div className="bg-charcoal">
       <Image
-        src={COLLECTION_HERO.src}
-        alt={COLLECTION_HERO.alt}
-        width={COLLECTION_HERO.width}
-        height={COLLECTION_HERO.height}
+        src={hero.src}
+        alt={hero.alt}
+        width={hero.width}
+        height={hero.height}
         preload
         fetchPriority="high"
         decoding="sync"

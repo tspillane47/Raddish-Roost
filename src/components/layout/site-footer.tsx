@@ -4,11 +4,13 @@ import { t } from "@/lib/i18n/translate";
 
 export function SiteFooter({
   brandName,
+  footerBlurb,
   properties,
   year,
   locale = "en",
 }: {
   brandName: string;
+  footerBlurb?: string;
   properties: { slug: string; name: string }[];
   year: number;
   locale?: Locale;
@@ -19,7 +21,7 @@ export function SiteFooter({
         <div>
           <p className="font-heading text-2xl text-forest">{brandName}</p>
           <p className="mt-3 max-w-sm text-base leading-7 text-muted-foreground">
-            {t(locale, "footerBlurb")}
+            {footerBlurb ?? t(locale, "footerBlurb")}
           </p>
         </div>
         <nav aria-label={t(locale, "footerNav")} className="grid gap-2 sm:justify-items-end">
