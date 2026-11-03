@@ -16,29 +16,31 @@ export function DadHome({
 }) {
   const vermont = properties.filter((property) => property.guestArea !== "florida");
   const sanibel = properties.filter((property) => property.guestArea === "florida");
-  const badge = `${properties.length} Vacation Homes · ${vermont.length} in Vermont · ${sanibel.length} on Sanibel Island`;
+  const badge = `${properties.length} Vacation Homes · ${vermont.length} Vermont · ${sanibel.length} Sanibel`;
 
   return (
     <>
-      <section className="bg-forest px-5 pb-10 pt-12 text-center text-cream md:pb-14 md:pt-16">
-        <p className="font-[family-name:var(--font-dad-italic)] text-xl italic md:text-2xl">The</p>
-        <h1 className="mt-1 font-[family-name:var(--font-dad-display)] text-[clamp(2.4rem,8vw,5.5rem)] leading-[0.92] tracking-tight">
-          Far <span className="text-terracotta">&amp;</span> Familiar
-        </h1>
-        <p className="mt-3 text-[0.78rem] font-semibold uppercase tracking-[0.42em] text-cream/90">
-          Collection
-        </p>
-        <p className="mx-auto mt-5 max-w-xl font-[family-name:var(--font-dad-italic)] text-xl italic text-cream/95 md:text-2xl">
-          {site.tagline}
-        </p>
-        <div className="mt-6 flex items-center justify-center gap-4 text-cream/90">
-          <PineIcon className="size-5" />
-          <span className="h-5 w-px bg-cream/40" aria-hidden="true" />
-          <ShellIcon className="size-5 text-terracotta" />
+      <section className="relative z-10 bg-forest px-5 pb-10 pt-10 text-center text-cream md:pb-12 md:pt-14">
+        <div className="mx-auto w-full max-w-3xl">
+          <p className="font-[family-name:var(--font-dad-italic)] text-xl italic md:text-2xl">The</p>
+          <h1 className="mt-1 font-[family-name:var(--font-dad-display)] text-[clamp(2.25rem,7vw,4.75rem)] leading-[1.05] tracking-tight">
+            Far <span className="text-terracotta">&amp;</span> Familiar
+          </h1>
+          <p className="mt-3 text-[0.78rem] font-semibold uppercase tracking-[0.42em] text-cream/90">
+            Collection
+          </p>
+          <p className="mx-auto mt-5 max-w-xl font-[family-name:var(--font-dad-italic)] text-xl italic text-cream/95 md:text-2xl">
+            {site.tagline}
+          </p>
+          <div className="mt-6 flex items-center justify-center gap-4 text-cream/90">
+            <PineIcon className="size-5 shrink-0" />
+            <span className="h-5 w-px bg-cream/40" aria-hidden="true" />
+            <ShellIcon className="size-5 shrink-0 text-terracotta" />
+          </div>
         </div>
       </section>
 
-      <div className="bg-charcoal">
+      <div className="relative z-0 bg-charcoal">
         <Image
           src={site.hero.src}
           alt={site.hero.alt}
@@ -47,34 +49,34 @@ export function DadHome({
           preload
           fetchPriority="high"
           sizes="100vw"
-          className="h-auto w-full"
+          className="block h-auto w-full"
         />
       </div>
 
-      <div className="mx-auto -mt-5 w-fit max-w-[calc(100%-2.5rem)] rounded-full border border-beige bg-cream px-5 py-2.5 text-center shadow-sm">
-        <p className="text-[0.7rem] font-semibold uppercase tracking-[0.14em] text-forest md:text-xs">
+      <div className="mx-auto w-full max-w-6xl px-5 pt-6 md:pt-8">
+        <p className="mx-auto w-fit max-w-full rounded-full border border-beige bg-cream px-4 py-2.5 text-center text-[0.65rem] font-semibold uppercase leading-snug tracking-[0.1em] text-forest shadow-sm whitespace-normal sm:px-5 sm:text-[0.7rem] sm:tracking-[0.12em] md:text-xs">
           {badge}
         </p>
       </div>
 
-      <div id="our-stays" className="mx-auto w-full max-w-6xl scroll-mt-24 px-5 pb-20 pt-12 md:pt-16">
-        <h2 className="font-[family-name:var(--font-dad-display)] text-4xl text-forest md:text-5xl">
+      <div id="our-stays" className="mx-auto w-full max-w-6xl scroll-mt-24 px-5 pb-20 pt-10 md:pt-14">
+        <h2 className="font-[family-name:var(--font-dad-display)] text-3xl text-forest sm:text-4xl md:text-5xl">
           {site.collectionHeading}
         </h2>
-        <p className="mt-3 max-w-2xl font-[family-name:var(--font-dad-italic)] text-lg italic text-muted-foreground">
+        <p className="mt-3 max-w-2xl font-[family-name:var(--font-dad-italic)] text-base italic leading-7 text-muted-foreground sm:text-lg">
           {site.collectionBody}
         </p>
 
         <StayGroup
           id="vermont"
           title="Vermont"
-          icon={<PineIcon className="size-5 text-forest" />}
+          icon={<PineIcon className="size-5 shrink-0 text-forest" />}
           properties={vermont}
         />
         <StayGroup
           id="sanibel"
           title="Sanibel Island"
-          icon={<ShellIcon className="size-5 text-terracotta" />}
+          icon={<ShellIcon className="size-5 shrink-0 text-terracotta" />}
           properties={sanibel}
         />
       </div>
@@ -104,9 +106,9 @@ function StayGroup({
       {properties.length === 0 ? (
         <p className="rounded-xl bg-beige/60 px-5 py-8 text-base leading-7">Homes coming soon.</p>
       ) : (
-        <ul className="grid list-none gap-8 p-0 sm:grid-cols-2 lg:grid-cols-3">
+        <ul className="grid list-none gap-6 p-0 sm:grid-cols-2 sm:gap-8 lg:grid-cols-3 xl:grid-cols-4">
           {properties.map((property) => (
-            <li key={property.slug}>
+            <li key={property.slug} className="min-w-0">
               <DadStayCard property={property} />
             </li>
           ))}
@@ -128,7 +130,7 @@ function DadStayCard({ property }: { property: PropertySummary }) {
       : null;
 
   return (
-    <article className="group flex h-full flex-col overflow-hidden rounded-xl border border-beige bg-card">
+    <article className="group flex h-full min-w-0 flex-col overflow-hidden rounded-xl border border-beige bg-card">
       <Link
         href={`/${property.slug}`}
         className="block overflow-hidden bg-beige focus-visible:outline-2 focus-visible:outline-offset-[-2px] focus-visible:outline-forest"
@@ -141,21 +143,24 @@ function DadStayCard({ property }: { property: PropertySummary }) {
             height={cardImage.height}
             className="aspect-[4/3] w-full object-cover motion-safe:transition-transform motion-safe:duration-300 motion-safe:group-hover:scale-[1.03]"
             style={{ objectPosition: photoObjectPosition(cardImage.focus) }}
-            sizes="(max-width: 768px) calc(100vw - 2.5rem), 22rem"
+            sizes="(max-width: 640px) calc(100vw - 2.5rem), (max-width: 1280px) 45vw, 22rem"
           />
         ) : (
           <PhotoPlaceholder name={property.name} tone="forest" />
         )}
       </Link>
-      <div className="flex flex-1 flex-col gap-3 p-5">
-        <h4 className="font-[family-name:var(--font-dad-display)] text-2xl leading-tight text-forest">
-          <Link href={`/${property.slug}`} className="focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-forest">
+      <div className="flex min-w-0 flex-1 flex-col gap-3 p-5">
+        <h4 className="font-[family-name:var(--font-dad-display)] text-xl leading-snug break-words text-forest sm:text-2xl">
+          <Link
+            href={`/${property.slug}`}
+            className="focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-forest"
+          >
             {property.name}
           </Link>
         </h4>
-        <p className="flex items-center gap-2 font-[family-name:var(--font-dad-italic)] text-base italic text-muted-foreground">
-          {florida ? <ShellIcon className="size-4 text-terracotta" /> : <PineIcon className="size-4 text-forest" />}
-          <span>{town}</span>
+        <p className="flex min-w-0 items-center gap-2 font-[family-name:var(--font-dad-italic)] text-base italic text-muted-foreground">
+          {florida ? <ShellIcon className="size-4 shrink-0 text-terracotta" /> : <PineIcon className="size-4 shrink-0 text-forest" />}
+          <span className="min-w-0 break-words">{town}</span>
         </p>
         <Link
           href={`/${property.slug}`}

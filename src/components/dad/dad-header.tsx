@@ -7,10 +7,12 @@ import type { SiteNavItem } from "@/sites/types";
 
 export function DadHeader({
   brandName,
+  shortName,
   nav,
   bookCta,
 }: {
   brandName: string;
+  shortName: string;
   nav: SiteNavItem[];
   bookCta: { label: string; href: string };
 }) {
@@ -21,33 +23,36 @@ export function DadHeader({
       <div className="mx-auto flex h-16 w-full max-w-6xl items-center justify-between gap-3 px-5">
         <Link
           href="/"
-          className="font-[family-name:var(--font-dad-display)] text-[clamp(0.95rem,2.4vw,1.35rem)] leading-none text-forest focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-forest"
+          className="min-w-0 shrink font-[family-name:var(--font-dad-display)] text-[clamp(1rem,2.2vw,1.35rem)] leading-none text-forest focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-forest"
         >
-          {brandName}
+          <span className="sr-only">{brandName}</span>
+          <span aria-hidden="true" className="block truncate">
+            {shortName}
+          </span>
         </Link>
 
-        <nav className="hidden items-center gap-1 lg:flex" aria-label="Primary">
+        <nav className="hidden items-center gap-0.5 lg:flex" aria-label="Primary">
           {nav.map((item) => (
             <Link
               key={item.href}
               href={item.href}
-              className="inline-flex min-h-11 items-center px-3 text-[0.72rem] font-semibold uppercase tracking-[0.18em] text-forest/85 hover:text-forest focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-forest"
+              className="inline-flex min-h-11 shrink-0 items-center px-2.5 text-[0.7rem] font-semibold uppercase tracking-[0.16em] text-forest/85 hover:text-forest focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-forest xl:px-3 xl:tracking-[0.18em]"
             >
               {item.label}
             </Link>
           ))}
           <Link
             href={bookCta.href}
-            className="ml-2 inline-flex min-h-11 items-center rounded-md bg-terracotta px-4 text-[0.72rem] font-semibold uppercase tracking-[0.16em] text-cream focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-forest"
+            className="ml-1 inline-flex min-h-11 shrink-0 items-center rounded-md bg-terracotta px-3.5 text-[0.7rem] font-semibold uppercase tracking-[0.14em] text-cream focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-forest xl:ml-2 xl:px-4"
           >
             {bookCta.label}
           </Link>
-          <div className="ml-2">
+          <div className="ml-1 xl:ml-2">
             <LanguageToggle />
           </div>
         </nav>
 
-        <div className="flex items-center gap-2 lg:hidden">
+        <div className="flex shrink-0 items-center gap-2 lg:hidden">
           <LanguageToggle />
           <button
             type="button"

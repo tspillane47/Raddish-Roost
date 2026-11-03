@@ -1,15 +1,22 @@
 import type { Metadata } from "next";
 import Link from "next/link";
+import { notFound } from "next/navigation";
 import { Tx } from "@/lib/i18n/locale-context";
 import { getLocale } from "@/lib/i18n/get-locale";
 import { t } from "@/lib/i18n/translate";
+import { getSiteConfig } from "@/sites";
 
 export async function generateMetadata(): Promise<Metadata> {
+  const site = getSiteConfig();
+  if (site.key === "dad") return { title: "Not Found" };
   const locale = await getLocale();
   return { title: t(locale, "contact") };
 }
 
 export default function ContactPage() {
+  const site = getSiteConfig();
+  if (site.key === "dad") notFound();
+
   return (
     <div className="mx-auto w-full max-w-xl px-5 py-16">
       <p className="text-xs font-medium tracking-[0.14em] text-forest uppercase">

@@ -12,7 +12,7 @@ export function SiteChrome({ children }: { children: React.ReactNode }) {
   const site = getSiteConfig();
   const headerFallback =
     site.key === "dad" && site.nav && site.bookCta ? (
-      <DadHeader brandName={site.name} nav={site.nav} bookCta={site.bookCta} />
+      <DadHeader brandName={site.name} shortName={site.shortName} nav={site.nav} bookCta={site.bookCta} />
     ) : (
       <SiteHeader brandName={site.name} />
     );
@@ -39,6 +39,7 @@ export function SiteChrome({ children }: { children: React.ReactNode }) {
             properties={[]}
             year={2026}
             locale="en"
+            showContactLink={site.key !== "dad"}
           />
         }
       >
@@ -57,7 +58,9 @@ async function HeaderSlot() {
   const site = getSiteConfig();
   const brandName = await getBrandName();
   if (site.key === "dad" && site.nav && site.bookCta) {
-    return <DadHeader brandName={brandName} nav={site.nav} bookCta={site.bookCta} />;
+    return (
+      <DadHeader brandName={brandName} shortName={site.shortName} nav={site.nav} bookCta={site.bookCta} />
+    );
   }
   return <SiteHeader brandName={brandName} />;
 }
@@ -74,6 +77,7 @@ async function FooterSlot() {
       properties={properties.ok ? properties.data.map(({ slug, name }) => ({ slug, name })) : []}
       year={new Date().getUTCFullYear()}
       locale={locale}
+      showContactLink={site.key !== "dad"}
     />
   );
 }

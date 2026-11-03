@@ -61,8 +61,6 @@ export const dadSite: SiteConfig = {
     { label: "Our Stays", href: "/#our-stays" },
     { label: "Vermont", href: "/#vermont" },
     { label: "Sanibel", href: "/#sanibel" },
-    { label: "About", href: "/about" },
-    { label: "Contact", href: "/contact" },
   ],
   bookCta: { label: "Book a Stay", href: "/#our-stays" },
 };

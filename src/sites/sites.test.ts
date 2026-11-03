@@ -34,9 +34,8 @@ describe("site configs", () => {
       "Our Stays",
       "Vermont",
       "Sanibel",
-      "About",
-      "Contact",
     ]);
+    expect(dadSite.nav?.map((item) => item.href).join(" ")).not.toMatch(/\/about|\/contact/);
     expect(dadSite.bookCta?.label).toBe("Book a Stay");
     expect(dadSite.artworkOrder).toHaveLength(8);
     expect(JSON.stringify(dadSite)).not.toContain("—");
