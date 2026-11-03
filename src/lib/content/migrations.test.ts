@@ -657,6 +657,10 @@ describe("dad content migrations", () => {
     path.join(root, "supabase/migrations/20261103140200_dad_things_to_do.sql"),
     "utf8",
   );
+  const dadVrbo = readFileSync(
+    path.join(root, "supabase/migrations/20261103150000_dad_vrbo_booking_links.sql"),
+    "utf8",
+  );
 
   it("adds guest_area without rewriting roost content", () => {
     expect(guestArea).toContain("guest_area");
@@ -695,6 +699,27 @@ describe("dad content migrations", () => {
     expect(dadThings).not.toContain("join public.recommendations place on place.id = pr.recommendation_id");
     expect(dadThings).not.toContain("set host_note =");
     expect(dadThings).not.toContain("—");
+  });
+
+  it("adds dad VRBO booking links for the five listed stays only", () => {
+    expect(dadVrbo).toContain("s.key = 'dad'");
+    expect(dadVrbo).toContain("https://www.vrbo.com/4222612");
+    expect(dadVrbo).toContain("https://www.vrbo.com/4469922");
+    expect(dadVrbo).toContain("https://www.vrbo.com/4663810");
+    expect(dadVrbo).toContain("https://www.vrbo.com/5287610");
+    expect(dadVrbo).toContain("https://www.vrbo.com/4469930");
+    expect(dadVrbo).toContain("hinesburg-hideaway-3");
+    expect(dadVrbo).toContain("hinesburg-hideaway-4");
+    expect(dadVrbo).toContain("bl.channel = 'vrbo'");
+    expect(dadVrbo).toContain("not exists");
+    expect(dadVrbo).not.toContain("switchback-suite");
+    expect(dadVrbo).not.toContain("tennisplace-a35");
+    expect(dadVrbo).not.toContain("sanibel-sunsets");
+    expect(dadVrbo).not.toContain("raddish-roost");
+    expect(dadVrbo).not.toContain("channel = 'direct'");
+    expect(dadVrbo).not.toContain("channel = 'airbnb'");
+    expect(dadVrbo).not.toMatch(/http:\/\//);
+    expect(dadVrbo).not.toContain("—");
   });
 });
 
