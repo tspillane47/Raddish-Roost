@@ -1,0 +1,346 @@
+{
+  "hero": "canal-sunset-palm-frond.webp",
+  "heroPhotos": [
+    "canal-sunset-palm-frond.webp",
+    "living-room-balcony.webp",
+    "living-room-seating.webp"
+  ],
+  "groups": [
+    {
+      "id": "living",
+      "label": "Living Spaces",
+      "preview": [
+        "living-room-balcony.webp",
+        "living-room-seating.webp",
+        "living-room-desk-nook.webp"
+      ]
+    },
+    {
+      "id": "kitchen-dining",
+      "label": "Kitchen and Dining",
+      "preview": [
+        "kitchen-dining-mirrored-wall.webp",
+        "kitchen-dining-sunlit.webp",
+        "dining-table-rattan-chairs.webp"
+      ]
+    },
+    {
+      "id": "bedrooms",
+      "label": "Bedrooms",
+      "preview": [
+        "bedroom-green-patchwork-quilt.webp",
+        "closet-hangers-laundry-hamper.webp",
+        "bedroom-lighthouse-lamps.webp"
+      ]
+    },
+    {
+      "id": "bath-laundry",
+      "label": "Bath and Laundry",
+      "preview": [
+        "bathroom-vanity-toilet.webp",
+        "bathroom-ensuite-view.webp",
+        "linen-closet-towels.webp"
+      ]
+    },
+    {
+      "id": "outside",
+      "label": "Outside and Around Town",
+      "preview": [
+        "canal-dock-and-lawn.webp",
+        "aerial-tennis-courts.webp",
+        "unit-c34-entry-balcony.webp"
+      ]
+    }
+  ],
+  "photos": [
+    {
+      "file": "bathroom-vanity-toilet.webp",
+      "width": 1440,
+      "height": 1920,
+      "alt": "Clean bathroom with a white vanity, oval sink, open mirrored cabinet, and a one-piece toilet.",
+      "sections": [
+        "the-house"
+      ],
+      "group": "bath-laundry"
+    },
+    {
+      "file": "canal-dock-and-lawn.webp",
+      "width": 1440,
+      "height": 920,
+      "alt": "Wooden dock with gray pilings along a calm canal beside a grassy lawn and beige condo building.",
+      "sections": [
+        "the-house",
+        "amenities"
+      ],
+      "group": "outside"
+    },
+    {
+      "file": "living-room-balcony.webp",
+      "width": 1440,
+      "height": 1920,
+      "alt": "Bright living room with cream leather sofa and armchairs, a bamboo glass coffee table, and sliding doors to a balcony.",
+      "sections": [
+        "the-house"
+      ],
+      "group": "living"
+    },
+    {
+      "file": "bathroom-ensuite-view.webp",
+      "width": 1440,
+      "height": 1918,
+      "alt": "Bathroom with a white vanity and toilet looking through an open doorway into a second bathroom with green checkered towels.",
+      "sections": [
+        "the-house"
+      ],
+      "group": "bath-laundry"
+    },
+    {
+      "file": "bedroom-green-patchwork-quilt.webp",
+      "width": 1440,
+      "height": 973,
+      "alt": "Bedroom with a green and white patchwork quilt, white wrought iron headboard, teal lamps, and a window of tropical greenery.",
+      "sections": [
+        "the-house"
+      ],
+      "group": "bedrooms"
+    },
+    {
+      "file": "kitchen-dining-mirrored-wall.webp",
+      "width": 1440,
+      "height": 917,
+      "alt": "Kitchen with white cabinets and appliances beside a glass dining table with rattan chairs and a large mirrored wall.",
+      "sections": [
+        "the-house",
+        "amenities"
+      ],
+      "group": "kitchen-dining"
+    },
+    {
+      "file": "aerial-tennis-courts.webp",
+      "width": 1440,
+      "height": 872,
+      "alt": "Aerial view of two green tennis courts among tropical trees near a coastal road and the Sanibel causeway.",
+      "sections": [
+        "amenities",
+        "getting-here"
+      ],
+      "group": "outside"
+    },
+    {
+      "file": "living-room-seating.webp",
+      "width": 1440,
+      "height": 1920,
+      "alt": "Living room seating with white leather sofas, a bamboo glass coffee table, and light blue walls.",
+      "sections": [
+        "the-house"
+      ],
+      "group": "living"
+    },
+    {
+      "file": "kitchen-dining-sunlit.webp",
+      "width": 1440,
+      "height": 1920,
+      "alt": "Sunlit kitchen with white cabinets, a teal coffee maker, and a rattan dining table against light blue walls.",
+      "sections": [
+        "the-house",
+        "amenities"
+      ],
+      "group": "kitchen-dining"
+    },
+    {
+      "file": "closet-hangers-laundry-hamper.webp",
+      "width": 1440,
+      "height": 1920,
+      "alt": "White closet with hanging hangers, a grey mesh laundry hamper, and a small yellow dresser.",
+      "sections": [
+        "the-house",
+        "amenities",
+        "house-guide"
+      ],
+      "group": "bedrooms"
+    },
+    {
+      "file": "unit-c34-entry-balcony.webp",
+      "width": 1440,
+      "height": 1920,
+      "alt": "Unit C34 entry with a light blue door and tan wicker chairs on a speckled balcony in afternoon sun.",
+      "sections": [
+        "the-house",
+        "check-in-checkout"
+      ],
+      "group": "outside"
+    },
+    {
+      "file": "balcony-wicker-chairs.webp",
+      "width": 1440,
+      "height": 1920,
+      "alt": "Two tan wicker armchairs and a matching side table on a speckled gray balcony beside a light blue door.",
+      "sections": [
+        "the-house",
+        "amenities"
+      ],
+      "group": "outside"
+    },
+    {
+      "file": "canal-sunset-bougainvillea.webp",
+      "width": 1440,
+      "height": 1920,
+      "alt": "Sunset over a calm canal with magenta bougainvillea in the foreground and palm trees reflecting in the water.",
+      "sections": [
+        "the-house",
+        "amenities"
+      ],
+      "group": "outside"
+    },
+    {
+      "file": "living-room-desk-nook.webp",
+      "width": 1440,
+      "height": 1920,
+      "alt": "Home office nook with a cream desk, lighthouse lamp, and rattan chair beside a sliding glass door.",
+      "sections": [
+        "the-house",
+        "wifi"
+      ],
+      "group": "living"
+    },
+    {
+      "file": "aerial-canal-property-location.webp",
+      "width": 1440,
+      "height": 957,
+      "alt": "Aerial view of canal-side condo buildings with a red arrow marking the unit, tennis courts, and a bridge beyond.",
+      "sections": [
+        "getting-here",
+        "amenities",
+        "the-house"
+      ],
+      "group": "outside"
+    },
+    {
+      "file": "dining-table-rattan-chairs.webp",
+      "width": 1440,
+      "height": 1920,
+      "alt": "Round glass dining table with four rattan chairs in a light blue room beside a floor-to-ceiling mirrored wall.",
+      "sections": [
+        "the-house"
+      ],
+      "group": "kitchen-dining"
+    },
+    {
+      "file": "canal-boat-dock-view.webp",
+      "width": 1440,
+      "height": 1920,
+      "alt": "View from above a lawn toward a canal dock with two white motorboats and tropical homes across the water.",
+      "sections": [
+        "the-house",
+        "amenities"
+      ],
+      "group": "outside"
+    },
+    {
+      "file": "bedroom-lighthouse-lamps.webp",
+      "width": 1440,
+      "height": 1920,
+      "alt": "Bedroom bed with a green and blue patchwork quilt, wrought iron headboard, and teal lighthouse bedside lamps.",
+      "sections": [
+        "the-house"
+      ],
+      "group": "bedrooms"
+    },
+    {
+      "file": "kitchen-beach-cruiser.webp",
+      "width": 1440,
+      "height": 1920,
+      "alt": "Compact white kitchen with a teal beach cruiser bicycle parked in front of the counter and appliances.",
+      "sections": [
+        "the-house",
+        "amenities"
+      ],
+      "group": "kitchen-dining"
+    },
+    {
+      "file": "canal-sunset-palm-frond.webp",
+      "width": 1440,
+      "height": 1920,
+      "alt": "Orange and blue sunset over a calm canal with docked boats, palm reflections, and a palm frond framing the view.",
+      "sections": [
+        "the-house",
+        "amenities"
+      ],
+      "group": "outside"
+    },
+    {
+      "file": "linen-closet-towels.webp",
+      "width": 1440,
+      "height": 1920,
+      "alt": "Organized linen closet with stacked green windowpane towels, a bathroom scale, and a folded beach towel.",
+      "sections": [
+        "amenities",
+        "house-guide"
+      ],
+      "group": "bath-laundry"
+    },
+    {
+      "file": "twin-bedroom-seashell.webp",
+      "width": 1440,
+      "height": 1117,
+      "alt": "Twin bedroom with matching green seashell quilts, a white dresser, and a Sanibel letter collage on the wall.",
+      "sections": [
+        "the-house"
+      ],
+      "group": "bedrooms"
+    },
+    {
+      "file": "balcony-stairs-canal.webp",
+      "width": 1440,
+      "height": 1920,
+      "alt": "Elevated balcony with black railings and stairs overlooking a quiet canal lined with white boat pilings.",
+      "sections": [
+        "the-house"
+      ],
+      "group": "outside"
+    },
+    {
+      "file": "screened-balcony-canal-view.webp",
+      "width": 1440,
+      "height": 844,
+      "alt": "View from a screened balcony overlooking a calm canal with palm trees and waterfront homes under a blue sky.",
+      "sections": [
+        "the-house",
+        "amenities"
+      ],
+      "group": "outside"
+    },
+    {
+      "file": "bedroom-dresser-ensuite.webp",
+      "width": 1440,
+      "height": 911,
+      "alt": "Bedroom with a teal patchwork quilt, a large white dresser with an arched mirror, and a view into an ensuite bath.",
+      "sections": [
+        "the-house"
+      ],
+      "group": "bedrooms"
+    },
+    {
+      "file": "kitchen-white-appliances.webp",
+      "width": 1440,
+      "height": 906,
+      "alt": "White kitchen with a Whirlpool refrigerator, range, dishwasher, teal Keurig, and colorful dishes in glass cabinets.",
+      "sections": [
+        "the-house",
+        "amenities"
+      ],
+      "group": "kitchen-dining"
+    },
+    {
+      "file": "covered-walkway-unit-214.webp",
+      "width": 1440,
+      "height": 812,
+      "alt": "Covered exterior walkway with tan wicker chairs and tables outside unit 214 under a tan soffit.",
+      "sections": [
+        "the-house",
+        "check-in-checkout"
+      ],
+      "group": "outside"
+    }
+  ]
+}

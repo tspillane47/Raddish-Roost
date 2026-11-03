@@ -1,0 +1,502 @@
+{
+  "hero": "unit-3-exterior.webp",
+  "heroPhotos": [
+    "unit-3-exterior.webp",
+    "living-room-tv.webp",
+    "bedroom-queen.webp"
+  ],
+  "groups": [
+    {
+      "id": "living",
+      "label": "Living Spaces",
+      "preview": [
+        "living-room-deck-access.webp",
+        "living-room-sectional.webp",
+        "carpeted-stairwell.webp"
+      ]
+    },
+    {
+      "id": "kitchen-dining",
+      "label": "Kitchen and Dining",
+      "preview": [
+        "kitchen-dishes-cabinet.webp",
+        "dining-table-half-wall.webp",
+        "ninja-coffee-maker.webp"
+      ]
+    },
+    {
+      "id": "bedrooms",
+      "label": "Bedrooms",
+      "preview": [
+        "bedroom-queen.webp",
+        "bedroom-pillows-detail.webp",
+        "walk-in-closet-luggage-racks.webp"
+      ]
+    },
+    {
+      "id": "bath-laundry",
+      "label": "Bath and Laundry",
+      "preview": [
+        "bathroom-tub-vanity.webp",
+        "bathroom-vanity-closet.webp"
+      ]
+    },
+    {
+      "id": "outside",
+      "label": "Outside and Around Town",
+      "preview": [
+        "aerial-building-gravel-drive.webp",
+        "private-patio-bistro-set.webp",
+        "trillium-hill-farm-sign.webp"
+      ]
+    }
+  ],
+  "photos": [
+    {
+      "file": "aerial-building-gravel-drive.webp",
+      "width": 1440,
+      "height": 1079,
+      "alt": "Aerial view of a white multi-unit building with a gravel parking area nestled against a wooded hillside.",
+      "sections": [
+        "the-house",
+        "parking",
+        "getting-here"
+      ],
+      "group": "outside"
+    },
+    {
+      "file": "kitchen-dishes-cabinet.webp",
+      "width": 1440,
+      "height": 958,
+      "alt": "Open white kitchen cabinet with stacked white bowls, plates, and mugs on light wood shelves.",
+      "sections": [
+        "the-house",
+        "amenities",
+        "house-guide"
+      ],
+      "group": "kitchen-dining"
+    },
+    {
+      "file": "private-patio-bistro-set.webp",
+      "width": 1440,
+      "height": 966,
+      "alt": "Ground-level wooden patio with a black bistro table and two chairs beside a horizontal slat privacy fence.",
+      "sections": [
+        "the-house",
+        "amenities"
+      ],
+      "group": "outside"
+    },
+    {
+      "file": "dining-table-half-wall.webp",
+      "width": 1440,
+      "height": 961,
+      "alt": "Small round marble dining table with two black lattice chairs between white louvered closets overlooking the living area.",
+      "sections": [
+        "the-house"
+      ],
+      "group": "kitchen-dining"
+    },
+    {
+      "file": "trillium-hill-farm-sign.webp",
+      "width": 1440,
+      "height": 962,
+      "alt": "Wooden Trillium Hill Farm roadside sign with a white church steeple and green-roofed house beyond.",
+      "sections": [
+        "getting-here"
+      ],
+      "group": "outside"
+    },
+    {
+      "file": "unit-3-exterior.webp",
+      "width": 1440,
+      "height": 1079,
+      "alt": "Light gray two-story building showing the white front door marked 3 with yellow daffodils and a gravel parking area.",
+      "sections": [
+        "the-house",
+        "getting-here",
+        "parking",
+        "check-in-checkout"
+      ],
+      "group": "outside"
+    },
+    {
+      "file": "bedroom-queen.webp",
+      "width": 1440,
+      "height": 960,
+      "alt": "Bright bedroom with a queen bed in white linens, a mustard throw, matching bedside lamps, and a patterned rug.",
+      "sections": [
+        "the-house"
+      ],
+      "group": "bedrooms"
+    },
+    {
+      "file": "unit-3-front-door.webp",
+      "width": 1440,
+      "height": 960,
+      "alt": "Close view of the white Unit 3 front door with a black numeral, lantern light, and yellow daffodils in the garden bed.",
+      "sections": [
+        "the-house",
+        "check-in-checkout",
+        "getting-here"
+      ],
+      "group": "outside"
+    },
+    {
+      "file": "aerial-building-road-view.webp",
+      "width": 1440,
+      "height": 1079,
+      "alt": "High aerial view of the white rental building and gravel lot beside a paved road and wooded hillside.",
+      "sections": [
+        "the-house",
+        "parking",
+        "getting-here"
+      ],
+      "group": "outside"
+    },
+    {
+      "file": "bathroom-tub-vanity.webp",
+      "width": 1440,
+      "height": 956,
+      "alt": "Full bathroom with a tub shower behind sliding glass doors, white vanity, toilet, and a window with blinds.",
+      "sections": [
+        "the-house",
+        "amenities"
+      ],
+      "group": "bath-laundry"
+    },
+    {
+      "file": "bedroom-pillows-detail.webp",
+      "width": 1440,
+      "height": 962,
+      "alt": "Close-up of a made bed with white linens, dark gray velvet pillows, a floral accent pillow, and a lit bedside lamp.",
+      "sections": [
+        "the-house"
+      ],
+      "group": "bedrooms"
+    },
+    {
+      "file": "walk-in-closet-luggage-racks.webp",
+      "width": 1440,
+      "height": 962,
+      "alt": "Walk-in closet with white wire shelving, black hangers, and two folding luggage racks on gray carpet.",
+      "sections": [
+        "the-house",
+        "amenities"
+      ],
+      "group": "bedrooms"
+    },
+    {
+      "file": "mountain-ski-trails-view.webp",
+      "width": 1440,
+      "height": 809,
+      "alt": "Panoramic view of snow-dusted mountains and evergreen forests under a clear blue sky.",
+      "sections": [
+        "getting-here"
+      ],
+      "group": "outside"
+    },
+    {
+      "file": "living-room-deck-access.webp",
+      "width": 1440,
+      "height": 966,
+      "alt": "Living room with a light gray sectional, botanical wall art, and glass doors opening to a private wooden deck.",
+      "sections": [
+        "the-house",
+        "amenities"
+      ],
+      "group": "living"
+    },
+    {
+      "file": "unit-3-entrance-daffodils.webp",
+      "width": 1440,
+      "height": 1079,
+      "alt": "Exterior entrance to Unit 3 with a white door, black lantern, and a timber-edged bed of yellow daffodils.",
+      "sections": [
+        "the-house",
+        "check-in-checkout",
+        "getting-here"
+      ],
+      "group": "outside"
+    },
+    {
+      "file": "ninja-coffee-maker.webp",
+      "width": 1440,
+      "height": 970,
+      "alt": "Black Ninja coffee maker on a marble countertop against a white subway tile backsplash.",
+      "sections": [
+        "amenities",
+        "house-guide"
+      ],
+      "group": "kitchen-dining"
+    },
+    {
+      "file": "frost-beer-works.webp",
+      "width": 1440,
+      "height": 962,
+      "alt": "Frost Beer Works exterior with red Adirondack chairs, string lights, and an Order Beer Here window sign.",
+      "sections": [
+        "getting-here"
+      ],
+      "group": "outside"
+    },
+    {
+      "file": "aerial-building-hillside.webp",
+      "width": 1440,
+      "height": 1079,
+      "alt": "Aerial view of the white multi-unit Hideaway building tucked between a gravel drive and a steep wooded hill.",
+      "sections": [
+        "the-house",
+        "parking",
+        "getting-here"
+      ],
+      "group": "outside"
+    },
+    {
+      "file": "aerial-building-hillside-2.webp",
+      "width": 1440,
+      "height": 1079,
+      "alt": "Aerial view of the white multi-unit building and gravel drive against a wooded hillside.",
+      "sections": [
+        "getting-here",
+        "parking"
+      ],
+      "group": "outside"
+    },
+    {
+      "file": "lantmans-market-sign.webp",
+      "width": 1440,
+      "height": 962,
+      "alt": "Lantman's Market freestanding sign reading Locally Owned Quality Since 1925 with a fruit basket illustration.",
+      "sections": [
+        "getting-here"
+      ],
+      "group": "outside"
+    },
+    {
+      "file": "aerial-hinesburg-village.webp",
+      "width": 1440,
+      "height": 959,
+      "alt": "Aerial view of a Hinesburg village intersection with a white church steeple, homes, and rolling green hills.",
+      "sections": [
+        "getting-here"
+      ],
+      "group": "outside"
+    },
+    {
+      "file": "bedroom-bench-closet.webp",
+      "width": 1440,
+      "height": 961,
+      "alt": "Bedroom corner with a wooden bench, potted tree, mustard throw at the foot of the bed, and an open walk-in closet.",
+      "sections": [
+        "the-house",
+        "amenities"
+      ],
+      "group": "bedrooms"
+    },
+    {
+      "file": "hinesburg-public-house.webp",
+      "width": 1440,
+      "height": 962,
+      "alt": "Hinesburg Public House restaurant with olive corrugated siding, a dark awning, and a wooden accessibility ramp.",
+      "sections": [
+        "getting-here"
+      ],
+      "group": "outside"
+    },
+    {
+      "file": "kitchen-dining.webp",
+      "width": 1440,
+      "height": 962,
+      "alt": "Bright kitchen with white cabinets and appliances beside a small round marble dining table with black chairs.",
+      "sections": [
+        "the-house",
+        "amenities"
+      ],
+      "group": "kitchen-dining"
+    },
+    {
+      "file": "private-deck-wooded-hill.webp",
+      "width": 1440,
+      "height": 967,
+      "alt": "Private wooden deck with a square bistro set and lighted privacy fence beside a steep wooded hillside.",
+      "sections": [
+        "the-house",
+        "amenities"
+      ],
+      "group": "outside"
+    },
+    {
+      "file": "aerial-building-highway.webp",
+      "width": 1440,
+      "height": 1079,
+      "alt": "Wide aerial of the white Hideaway building at the base of a wooded hill beside a rural highway and distant mountains.",
+      "sections": [
+        "the-house",
+        "parking",
+        "getting-here"
+      ],
+      "group": "outside"
+    },
+    {
+      "file": "unit-3-building-front.webp",
+      "width": 1440,
+      "height": 1146,
+      "alt": "Front facade of the light gray building with Unit 3's white door, dark-trimmed windows, and gravel parking in front.",
+      "sections": [
+        "the-house",
+        "getting-here",
+        "parking"
+      ],
+      "group": "outside"
+    },
+    {
+      "file": "aerial-village-red-barn.webp",
+      "width": 1440,
+      "height": 1079,
+      "alt": "Aerial view of Hinesburg with a red barn, winding road, clustered homes, and mountains on the horizon.",
+      "sections": [
+        "getting-here"
+      ],
+      "group": "outside"
+    },
+    {
+      "file": "kitchen-dining-nook.webp",
+      "width": 1440,
+      "height": 959,
+      "alt": "Kitchen with white cabinets and subway tile beside a dining nook with a round table, black chairs, and botanical prints.",
+      "sections": [
+        "the-house",
+        "amenities"
+      ],
+      "group": "kitchen-dining"
+    },
+    {
+      "file": "dining-table-pears.webp",
+      "width": 1440,
+      "height": 960,
+      "alt": "Round marble dining table with two black chairs and a bowl of pears beside a half wall overlooking the living room.",
+      "sections": [
+        "the-house"
+      ],
+      "group": "kitchen-dining"
+    },
+    {
+      "file": "living-room-sectional.webp",
+      "width": 1440,
+      "height": 961,
+      "alt": "Living room with a light gray L-shaped sectional, concrete-style coffee table, and six botanical prints above the sofa.",
+      "sections": [
+        "the-house"
+      ],
+      "group": "living"
+    },
+    {
+      "file": "bedroom-windows-bench.webp",
+      "width": 1440,
+      "height": 963,
+      "alt": "Bedroom with a mustard throw on the bed, Roman shades, a wooden bench, and a potted tree between two windows.",
+      "sections": [
+        "the-house"
+      ],
+      "group": "bedrooms"
+    },
+    {
+      "file": "good-times-cafe-sign.webp",
+      "width": 1440,
+      "height": 962,
+      "alt": "White arched Good Times Cafe sign with a sunflower logo and wooden picnic tables on the lawn.",
+      "sections": [
+        "getting-here"
+      ],
+      "group": "outside"
+    },
+    {
+      "file": "carpeted-stairwell.webp",
+      "width": 1440,
+      "height": 960,
+      "alt": "Looking down a narrow gray carpeted staircase with light walls, a wooden handrail, and a small round mirror.",
+      "sections": [
+        "the-house",
+        "getting-here"
+      ],
+      "group": "living",
+      "focus": "bottom"
+    },
+    {
+      "file": "shelburne-sugarworks-sign.webp",
+      "width": 1440,
+      "height": 919,
+      "alt": "Timber A-frame sign for Shelburne Sugarworks and Four Season Outdoor Center beside rustic wooden buildings.",
+      "sections": [
+        "getting-here"
+      ],
+      "group": "outside"
+    },
+    {
+      "file": "bathroom-vanity-closet.webp",
+      "width": 1440,
+      "height": 965,
+      "alt": "Bathroom vanity with an oval sink and triple glass light next to a closet with white wire shelving.",
+      "sections": [
+        "the-house",
+        "amenities"
+      ],
+      "group": "bath-laundry"
+    },
+    {
+      "file": "aerial-building-hillside-3.webp",
+      "width": 1440,
+      "height": 1079,
+      "alt": "Closer aerial of the white townhome row with gravel parking at the base of a forested hill.",
+      "sections": [
+        "getting-here",
+        "parking"
+      ],
+      "group": "outside"
+    },
+    {
+      "file": "parkside-cafe-exterior.webp",
+      "width": 1440,
+      "height": 962,
+      "alt": "Parkside Cafe on the corner of Farmall Drive with sage siding, turquoise Adirondack chairs, and a Coffee flag.",
+      "sections": [
+        "getting-here"
+      ],
+      "group": "outside"
+    },
+    {
+      "file": "cheese-plant-sign.webp",
+      "width": 1440,
+      "height": 962,
+      "alt": "Monument sign for The Cheese Plant listing Public House, Vermont Smoke and Cure, Foam Brewers, and Senix.",
+      "sections": [
+        "getting-here"
+      ],
+      "group": "outside"
+    },
+    {
+      "file": "living-room-tv.webp",
+      "width": 1440,
+      "height": 961,
+      "alt": "Living room with a light gray sectional, concrete coffee table, wall-mounted TV, and a floating wood media shelf.",
+      "sections": [
+        "the-house",
+        "amenities"
+      ],
+      "group": "living"
+    },
+    {
+      "file": "entryway-stairs.webp",
+      "width": 1440,
+      "height": 951,
+      "alt": "Interior entry with a white front door, round black-framed mirror, and gray carpeted stairs with a wood handrail.",
+      "sections": [
+        "check-in-checkout",
+        "getting-here",
+        "the-house"
+      ],
+      "group": "outside"
+    }
+  ]
+}

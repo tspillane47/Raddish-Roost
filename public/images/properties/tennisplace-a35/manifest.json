@@ -1,0 +1,322 @@
+{
+  "hero": "canal-condo-exterior-wide.webp",
+  "heroPhotos": [
+    "canal-condo-exterior-wide.webp",
+    "living-room-starfish-sofa.webp",
+    "dining-kitchen.webp"
+  ],
+  "groups": [
+    {
+      "id": "living",
+      "label": "Living Spaces",
+      "preview": [
+        "living-room-tv-console.webp",
+        "living-room-sofa-tv.webp",
+        "living-room-starfish-sofa.webp"
+      ]
+    },
+    {
+      "id": "kitchen-dining",
+      "label": "Kitchen and Dining",
+      "preview": [
+        "dining-kitchen.webp",
+        "dining-rattan-chairs.webp"
+      ]
+    },
+    {
+      "id": "bedrooms",
+      "label": "Bedrooms",
+      "preview": [
+        "bedroom-queen-navy-pillows.webp",
+        "bedroom-anchor-bedding.webp",
+        "bedroom-anchor-bedding-2.webp"
+      ]
+    },
+    {
+      "id": "bath-laundry",
+      "label": "Bath and Laundry",
+      "preview": [
+        "bathroom-vanity-medicine-cabinet.webp",
+        "bathroom-vanity-shell-sink.webp",
+        "bathroom-tub-shower.webp"
+      ]
+    },
+    {
+      "id": "outside",
+      "label": "Outside and Around Town",
+      "preview": [
+        "swimming-pool.webp",
+        "canal-dock-boats.webp",
+        "canal-sunset-bougainvillea.webp"
+      ]
+    }
+  ],
+  "photos": [
+    {
+      "file": "bathroom-vanity-medicine-cabinet.webp",
+      "width": 1440,
+      "height": 1920,
+      "alt": "Bathroom vanity with a seashell shaped sink, teal soap dispenser, and a mirrored medicine cabinet lit by round vanity bulbs.",
+      "sections": [
+        "the-house"
+      ],
+      "group": "bath-laundry"
+    },
+    {
+      "file": "swimming-pool.webp",
+      "width": 1440,
+      "height": 1080,
+      "alt": "A large turquoise swimming pool with entry rails and lounge chairs under green umbrellas beside the condo complex.",
+      "sections": [
+        "amenities"
+      ],
+      "group": "outside"
+    },
+    {
+      "file": "bedroom-queen-navy-pillows.webp",
+      "width": 1440,
+      "height": 1920,
+      "alt": "Guest bedroom with a queen bed in white linens and navy pillows, vintage nightstands, and plantation shutters.",
+      "sections": [
+        "the-house"
+      ],
+      "group": "bedrooms"
+    },
+    {
+      "file": "canal-dock-boats.webp",
+      "width": 1440,
+      "height": 1920,
+      "alt": "Two motorboats docked at a wooden pier in front of the three story Tennisplace condominium along a Sanibel canal.",
+      "sections": [
+        "the-house",
+        "amenities"
+      ],
+      "group": "outside"
+    },
+    {
+      "file": "canal-sunset-bougainvillea.webp",
+      "width": 1440,
+      "height": 1920,
+      "alt": "Orange sunset over a calm canal lined with palm trees and docked boats, with purple bougainvillea in the foreground.",
+      "sections": [
+        "amenities"
+      ],
+      "group": "outside"
+    },
+    {
+      "file": "beach-access-sign.webp",
+      "width": 1440,
+      "height": 1080,
+      "alt": "Wooden private beach access pathway sign listing Tennis Place and neighboring communities for residents and guests.",
+      "sections": [
+        "amenities",
+        "getting-here"
+      ],
+      "group": "outside"
+    },
+    {
+      "file": "living-room-tv-console.webp",
+      "width": 1440,
+      "height": 1920,
+      "alt": "Flat screen television on a white woven media console with heron artwork and a recessed beach themed shelf above.",
+      "sections": [
+        "the-house"
+      ],
+      "group": "living"
+    },
+    {
+      "file": "patio-grill-dining.webp",
+      "width": 1440,
+      "height": 1080,
+      "alt": "Stone paved outdoor patio with a wooden dining table, green umbrella, park benches, and a stainless steel gas grill.",
+      "sections": [
+        "amenities"
+      ],
+      "group": "outside"
+    },
+    {
+      "file": "bikes-on-canal-dock.webp",
+      "width": 1440,
+      "height": 1920,
+      "alt": "Two bicycles parked on a wooden canal dock beside green lawn and tropical trees behind the condo.",
+      "sections": [
+        "amenities"
+      ],
+      "group": "outside"
+    },
+    {
+      "file": "canal-sunset-boats.webp",
+      "width": 1440,
+      "height": 1920,
+      "alt": "Golden sunset reflecting across a quiet canal where white boats are docked among palm trees.",
+      "sections": [
+        "amenities"
+      ],
+      "group": "outside"
+    },
+    {
+      "file": "canal-condo-exterior.webp",
+      "width": 1200,
+      "height": 800,
+      "alt": "Canal view of the beige Tennisplace condominium with pink bougainvillea, a palm tree, and two boats at the dock.",
+      "sections": [
+        "the-house",
+        "amenities"
+      ],
+      "group": "outside"
+    },
+    {
+      "file": "canal-condo-exterior-wide.webp",
+      "width": 1440,
+      "height": 1080,
+      "alt": "Wide view from the water of Tennisplace condominium buildings, docks, and boats along a Sanibel canal.",
+      "sections": [
+        "the-house",
+        "amenities"
+      ],
+      "group": "outside"
+    },
+    {
+      "file": "living-room-sofa-tv.webp",
+      "width": 1440,
+      "height": 1920,
+      "alt": "Living room with a starfish patterned sectional, glass coffee table, white TV console, and a ceiling fan.",
+      "sections": [
+        "the-house"
+      ],
+      "group": "living"
+    },
+    {
+      "file": "dining-kitchen.webp",
+      "width": 1440,
+      "height": 1920,
+      "alt": "Round wooden dining table with teal rattan chairs opening to a kitchen with white cabinets and stainless appliances.",
+      "sections": [
+        "the-house"
+      ],
+      "group": "kitchen-dining"
+    },
+    {
+      "file": "bathroom-vanity-shell-sink.webp",
+      "width": 1440,
+      "height": 1920,
+      "alt": "Bathroom vanity with a cream shell shaped sink, white cabinet doors, and a large mirror under vanity lights.",
+      "sections": [
+        "the-house"
+      ],
+      "group": "bath-laundry"
+    },
+    {
+      "file": "kayaks-on-canal-dock.webp",
+      "width": 1440,
+      "height": 1870,
+      "alt": "Turquoise and grey sit on top kayaks resting on a wooden dock overlooking a palm lined canal.",
+      "sections": [
+        "amenities"
+      ],
+      "group": "outside"
+    },
+    {
+      "file": "bedroom-anchor-bedding.webp",
+      "width": 1440,
+      "height": 1080,
+      "alt": "Bedroom with nautical anchor patterned bedding, a white headboard, and a tropical beach painting above the bed.",
+      "sections": [
+        "the-house"
+      ],
+      "group": "bedrooms"
+    },
+    {
+      "file": "bedroom-anchor-bedding-2.webp",
+      "width": 1440,
+      "height": 1080,
+      "alt": "Nautical bedroom corner with anchor bedding, built in white storage, and a seashell filled lamp on the nightstand.",
+      "sections": [
+        "the-house"
+      ],
+      "group": "bedrooms"
+    },
+    {
+      "file": "bathroom-tub-shower.webp",
+      "width": 1440,
+      "height": 1920,
+      "alt": "Bathroom tub and shower combo with sliding frosted glass doors seen through an open doorway.",
+      "sections": [
+        "the-house"
+      ],
+      "group": "bath-laundry"
+    },
+    {
+      "file": "bedroom-blue-striped.webp",
+      "width": 1440,
+      "height": 1920,
+      "alt": "Bedroom with blue and white striped bedding surrounded by white built in cabinets and a lit geometric nightstand.",
+      "sections": [
+        "the-house"
+      ],
+      "group": "bedrooms"
+    },
+    {
+      "file": "living-room-starfish-sofa.webp",
+      "width": 1440,
+      "height": 1920,
+      "alt": "Coastal living room with a tan starfish patterned sofa, teal and white pillows, and a large beach painting above.",
+      "sections": [
+        "the-house"
+      ],
+      "group": "living"
+    },
+    {
+      "file": "dining-rattan-chairs.webp",
+      "width": 1440,
+      "height": 1920,
+      "alt": "Round wood dining table with teal cushioned rattan chairs under a woven pendant light beside a mirrored buffet wall.",
+      "sections": [
+        "the-house"
+      ],
+      "group": "kitchen-dining"
+    },
+    {
+      "file": "living-room-recliner.webp",
+      "width": 1440,
+      "height": 1920,
+      "alt": "Brown leather recliner and matching ottoman beside a glass end table with a lit lamp near white vertical blinds.",
+      "sections": [
+        "the-house"
+      ],
+      "group": "living"
+    },
+    {
+      "file": "outdoor-gas-grill.webp",
+      "width": 1440,
+      "height": 1080,
+      "alt": "Black Weber gas grill with stainless side shelves on a stone patio next to a wooden prep table.",
+      "sections": [
+        "amenities",
+        "house-guide"
+      ],
+      "group": "outside"
+    },
+    {
+      "file": "tennis-courts.webp",
+      "width": 1440,
+      "height": 1080,
+      "alt": "Two green hard surface tennis courts behind a chain link fence with tropical trees under a clear blue sky.",
+      "sections": [
+        "amenities"
+      ],
+      "group": "outside"
+    },
+    {
+      "file": "canal-lawn-bougainvillea.webp",
+      "width": 1440,
+      "height": 1080,
+      "alt": "Green lawn and purple bougainvillea leading to a canal dock with docked boats and a palm tree.",
+      "sections": [
+        "the-house",
+        "amenities"
+      ],
+      "group": "outside"
+    }
+  ]
+}

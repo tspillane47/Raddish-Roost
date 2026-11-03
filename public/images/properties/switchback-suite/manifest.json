@@ -1,0 +1,850 @@
+{
+  "hero": "teal-house-exterior-deck-entry.webp",
+  "heroPhotos": [
+    "teal-house-exterior-deck-entry.webp",
+    "living-room-sofa-kitchen-view.webp",
+    "kitchen-live-edge-breakfast-bar.webp"
+  ],
+  "groups": [
+    {
+      "id": "living",
+      "label": "Living Spaces",
+      "preview": [
+        "entryway-ski-storage-rack.webp",
+        "wicker-basket-throw-blankets.webp",
+        "entryway-stairs-front-door.webp"
+      ]
+    },
+    {
+      "id": "kitchen-dining",
+      "label": "Kitchen and Dining",
+      "preview": [
+        "kitchen-live-edge-breakfast-bar.webp",
+        "switchback-brewing-pint-glasses.webp",
+        "kitchenette-stainless-appliances.webp"
+      ]
+    },
+    {
+      "id": "bedrooms",
+      "label": "Bedrooms",
+      "preview": [
+        "bedroom-closet-luggage-racks.webp",
+        "bedroom-queen-mountain-bike-art.webp",
+        "bedroom-queen-mountain-bike-art-2.webp"
+      ]
+    },
+    {
+      "id": "bath-laundry",
+      "label": "Bath and Laundry",
+      "preview": [
+        "marble-hexagon-tile-shower.webp",
+        "bathroom-vanity-vessel-sink.webp",
+        "bathroom-hexagon-tile-shower-wide.webp"
+      ]
+    },
+    {
+      "id": "outside",
+      "label": "Outside and Around Town",
+      "preview": [
+        "stowe-cinema-3-plex-exterior.webp",
+        "deck-adirondack-chairs-blue-umbrella.webp",
+        "rimrocks-tavern-exterior.webp"
+      ]
+    }
+  ],
+  "photos": [
+    {
+      "file": "marble-hexagon-tile-shower.webp",
+      "width": 1440,
+      "height": 958,
+      "alt": "Walk in shower with white and gray marble hexagon tiles and a chrome shower head and control.",
+      "sections": [
+        "the-house",
+        "amenities"
+      ],
+      "group": "bath-laundry"
+    },
+    {
+      "file": "stowe-cinema-3-plex-exterior.webp",
+      "width": 1440,
+      "height": 960,
+      "alt": "Exterior of Stowe Cinema 3 Plex with a pink facade, covered walkway, and movie marquee.",
+      "sections": [
+        "getting-here",
+        "amenities"
+      ],
+      "group": "outside"
+    },
+    {
+      "file": "kitchen-live-edge-breakfast-bar.webp",
+      "width": 1440,
+      "height": 964,
+      "alt": "Kitchen with natural wood cabinets, stainless stove, black sink faucet, and a live edge breakfast bar with black stools.",
+      "sections": [
+        "the-house",
+        "amenities"
+      ],
+      "group": "kitchen-dining"
+    },
+    {
+      "file": "switchback-brewing-pint-glasses.webp",
+      "width": 1440,
+      "height": 962,
+      "alt": "Row of clear Switchback Brewing Co pint glasses lined up inside a light wood kitchen cabinet.",
+      "sections": [
+        "amenities",
+        "house-guide"
+      ],
+      "group": "kitchen-dining"
+    },
+    {
+      "file": "bathroom-vanity-vessel-sink.webp",
+      "width": 1440,
+      "height": 967,
+      "alt": "White vessel sink with a chrome faucet, round mirror, and a small plant on the vanity.",
+      "sections": [
+        "the-house",
+        "amenities"
+      ],
+      "group": "bath-laundry"
+    },
+    {
+      "file": "bathroom-hexagon-tile-shower-wide.webp",
+      "width": 1440,
+      "height": 962,
+      "alt": "Bright bathroom with a glass walk in shower of marble hexagon tile beside a white toilet and window.",
+      "sections": [
+        "the-house",
+        "amenities"
+      ],
+      "group": "bath-laundry"
+    },
+    {
+      "file": "deck-adirondack-chairs-blue-umbrella.webp",
+      "width": 1440,
+      "height": 963,
+      "alt": "Two white Adirondack chairs on a wood deck under a blue Switchback Brewing patio umbrella facing the parking lot.",
+      "sections": [
+        "the-house",
+        "amenities",
+        "parking"
+      ],
+      "group": "outside"
+    },
+    {
+      "file": "entryway-ski-storage-rack.webp",
+      "width": 1440,
+      "height": 958,
+      "alt": "Two pairs of skis mounted on a natural wood wall rack in a bright entryway near a window and stairs.",
+      "sections": [
+        "the-house",
+        "amenities"
+      ],
+      "group": "living"
+    },
+    {
+      "file": "rimrocks-tavern-exterior.webp",
+      "width": 1440,
+      "height": 960,
+      "alt": "Brick walkway leading to Rimrock's Tavern entrance with a yellow building, patio fence, and flower beds.",
+      "sections": [
+        "getting-here",
+        "amenities"
+      ],
+      "group": "outside"
+    },
+    {
+      "file": "wicker-basket-throw-blankets.webp",
+      "width": 1440,
+      "height": 962,
+      "alt": "Round woven basket filled with soft white faux fur and quilted green throw blankets.",
+      "sections": [
+        "the-house",
+        "amenities"
+      ],
+      "group": "living"
+    },
+    {
+      "file": "entryway-stairs-front-door.webp",
+      "width": 1440,
+      "height": 962,
+      "alt": "Short wood stairs leading up to a white entry door with a smart lock and a window looking onto trees.",
+      "sections": [
+        "the-house",
+        "check-in-checkout"
+      ],
+      "group": "living",
+      "focus": "top"
+    },
+    {
+      "file": "aerial-stowe-village-mountains.webp",
+      "width": 1440,
+      "height": 960,
+      "alt": "Aerial view of Stowe village nestled among green forests with blue mountains on the horizon.",
+      "sections": [
+        "getting-here"
+      ],
+      "group": "outside"
+    },
+    {
+      "file": "kitchenette-stainless-appliances.webp",
+      "width": 1440,
+      "height": 962,
+      "alt": "Compact kitchenette with light wood cabinets, stainless refrigerator and stove, black sink, and built in microwave.",
+      "sections": [
+        "the-house",
+        "amenities"
+      ],
+      "group": "kitchen-dining"
+    },
+    {
+      "file": "woodland-baking-coffee-exterior.webp",
+      "width": 1440,
+      "height": 960,
+      "alt": "Yellow storefront with red trim housing Edward Jones and Woodland Baking and Coffee with an American flag out front.",
+      "sections": [
+        "getting-here",
+        "amenities"
+      ],
+      "group": "outside"
+    },
+    {
+      "file": "bedroom-closet-luggage-racks.webp",
+      "width": 1440,
+      "height": 961,
+      "alt": "Walk in closet with a sloped beadboard ceiling, black hangers on a rod, built in shelves, and a folding luggage rack.",
+      "sections": [
+        "the-house",
+        "amenities",
+        "house-guide"
+      ],
+      "group": "bedrooms"
+    },
+    {
+      "file": "aerial-stowe-mountain-road.webp",
+      "width": 1440,
+      "height": 960,
+      "alt": "Aerial view of Mountain Road winding past buildings and parking lots beside a lush green forested hillside.",
+      "sections": [
+        "getting-here",
+        "parking"
+      ],
+      "group": "outside"
+    },
+    {
+      "file": "living-room-sofa-throw-detail.webp",
+      "width": 1440,
+      "height": 954,
+      "alt": "Close up of a light gray sectional sofa with a cream textured throw and charcoal and taupe pillows.",
+      "sections": [
+        "the-house"
+      ],
+      "group": "living"
+    },
+    {
+      "file": "aerial-stowe-village-river.webp",
+      "width": 1440,
+      "height": 960,
+      "alt": "Aerial view of a winding river and green meadows leading to a village with a white church steeple and mountains beyond.",
+      "sections": [
+        "getting-here"
+      ],
+      "group": "outside"
+    },
+    {
+      "file": "kitchenette-wood-cabinets-range.webp",
+      "width": 1440,
+      "height": 962,
+      "alt": "Kitchenette framed by wood paneling with light wood cabinets, white counters, and a stainless electric range.",
+      "sections": [
+        "the-house",
+        "amenities"
+      ],
+      "group": "kitchen-dining"
+    },
+    {
+      "file": "living-room-tv-entry-door.webp",
+      "width": 1440,
+      "height": 960,
+      "alt": "Living area with a wall mounted TV above a dark wood console and a white entry door with a smart lock.",
+      "sections": [
+        "the-house",
+        "amenities",
+        "check-in-checkout"
+      ],
+      "group": "living"
+    },
+    {
+      "file": "bedroom-queen-mountain-bike-art.webp",
+      "width": 1440,
+      "height": 965,
+      "alt": "Queen bedroom with gray linens, a woven wood bench, nightstands with lamps, and mountain bike metal wall art above the headboard.",
+      "sections": [
+        "the-house"
+      ],
+      "group": "bedrooms"
+    },
+    {
+      "file": "bedroom-queen-mountain-bike-art-2.webp",
+      "width": 1440,
+      "height": 961,
+      "alt": "Straight on view of the queen bed with gray bedding, sage lumbar pillow, woven bench, and mountain bike wall art.",
+      "sections": [
+        "the-house"
+      ],
+      "group": "bedrooms"
+    },
+    {
+      "file": "breakfast-bar-hallway-view.webp",
+      "width": 1440,
+      "height": 964,
+      "alt": "Live edge wood breakfast bar with two black stools beside a wood paneled door and a glimpse of the bedroom beyond.",
+      "sections": [
+        "the-house"
+      ],
+      "group": "kitchen-dining"
+    },
+    {
+      "file": "kitchen-stove-wood-cabinets.webp",
+      "width": 1440,
+      "height": 960,
+      "alt": "Stainless electric stove and oven with checkered towels, framed by light wood cabinets and a black spring faucet.",
+      "sections": [
+        "the-house",
+        "amenities"
+      ],
+      "group": "kitchen-dining"
+    },
+    {
+      "file": "bedroom-tv-dresser-mirror.webp",
+      "width": 1440,
+      "height": 958,
+      "alt": "Bedroom view toward a dark dresser under a wall mounted TV, an oval black framed mirror, and a tall potted plant.",
+      "sections": [
+        "the-house",
+        "amenities"
+      ],
+      "group": "bedrooms"
+    },
+    {
+      "file": "aerial-stowe-village-panorama.webp",
+      "width": 1440,
+      "height": 960,
+      "alt": "Wide aerial panorama of Stowe village center with a white steeple, green valley, and surrounding mountains.",
+      "sections": [
+        "getting-here"
+      ],
+      "group": "outside"
+    },
+    {
+      "file": "wooded-hiking-trail.webp",
+      "width": 1440,
+      "height": 960,
+      "alt": "Narrow dirt hiking trail winding into a dense green forest of ferns and trees.",
+      "sections": [
+        "amenities",
+        "the-house"
+      ],
+      "group": "outside"
+    },
+    {
+      "file": "backyard-restaurant-sign.webp",
+      "width": 1440,
+      "height": 962,
+      "alt": "Backyard restaurant exterior with a red metal roof and a polar bear logo sign reading Wicked Food Fast Friends.",
+      "sections": [
+        "getting-here",
+        "amenities"
+      ],
+      "group": "outside"
+    },
+    {
+      "file": "kitchen-stove-microwave.webp",
+      "width": 1440,
+      "height": 957,
+      "alt": "Kitchen corner with a stainless stove, black built in microwave, white counters, and natural wood cabinets with twig pulls.",
+      "sections": [
+        "the-house",
+        "amenities"
+      ],
+      "group": "kitchen-dining"
+    },
+    {
+      "file": "teal-house-exterior-deck-entry.webp",
+      "width": 1440,
+      "height": 964,
+      "alt": "Teal blue vacation rental exterior with a wood deck, white Adirondack chairs, blue umbrella, and stone walkway across a green lawn.",
+      "sections": [
+        "the-house",
+        "parking",
+        "check-in-checkout"
+      ],
+      "group": "outside"
+    },
+    {
+      "file": "rustic-twig-drawer-pull.webp",
+      "width": 1440,
+      "height": 962,
+      "alt": "Close up of a dark metal twig shaped drawer pull on light natural wood kitchen cabinetry.",
+      "sections": [
+        "the-house"
+      ],
+      "group": "kitchen-dining"
+    },
+    {
+      "file": "teal-house-front-deck-umbrella.webp",
+      "width": 1440,
+      "height": 960,
+      "alt": "Front view of the teal blue house with a white entry door, wood deck, Adirondack chairs, and open blue patio umbrella.",
+      "sections": [
+        "the-house",
+        "check-in-checkout",
+        "parking"
+      ],
+      "group": "outside"
+    },
+    {
+      "file": "barbarian-restaurant-patio.webp",
+      "width": 1440,
+      "height": 960,
+      "alt": "Outdoor dining patio with colorful cafe tables under a gray awning beneath a Barbarian restaurant sign.",
+      "sections": [
+        "getting-here",
+        "amenities"
+      ],
+      "group": "outside"
+    },
+    {
+      "file": "breakfast-bar-diagonal-wood.webp",
+      "width": 1440,
+      "height": 959,
+      "alt": "Wooden breakfast bar with two black cushioned stools against diagonal wood paneling and a hallway beyond.",
+      "sections": [
+        "the-house",
+        "amenities",
+        "wifi"
+      ],
+      "group": "kitchen-dining"
+    },
+    {
+      "file": "bedroom-tv-dresser-window.webp",
+      "width": 1440,
+      "height": 959,
+      "alt": "Bedroom looking past gray bedding toward a dresser under a TV, a tall plant, a window, and a natural wood door.",
+      "sections": [
+        "the-house",
+        "amenities"
+      ],
+      "group": "bedrooms"
+    },
+    {
+      "file": "indoor-ski-rack-storage.webp",
+      "width": 1440,
+      "height": 957,
+      "alt": "Indoor ski rack holding two pairs of skis on a wood accent panel beside a white door and boot tray.",
+      "sections": [
+        "the-house",
+        "amenities"
+      ],
+      "group": "living"
+    },
+    {
+      "file": "bedroom-pillows-detail.webp",
+      "width": 1440,
+      "height": 944,
+      "alt": "Close up of layered pillows on the bed including grid patterned shams and an olive green lumbar pillow.",
+      "sections": [
+        "the-house"
+      ],
+      "group": "bedrooms"
+    },
+    {
+      "file": "alfies-karaoke-entrance.webp",
+      "width": 1440,
+      "height": 962,
+      "alt": "Alfie's entrance with red velvet rope stanchions, a tinsel curtain doorway, and a karaoke tonight sidewalk sign.",
+      "sections": [
+        "getting-here",
+        "amenities"
+      ],
+      "group": "outside"
+    },
+    {
+      "file": "stairs-down-to-front-door.webp",
+      "width": 1440,
+      "height": 960,
+      "alt": "View looking down wood stairs with diagonal wood paneling toward a white front door and smart lock.",
+      "sections": [
+        "the-house",
+        "check-in-checkout"
+      ],
+      "group": "living",
+      "focus": "bottom"
+    },
+    {
+      "file": "aerial-stowe-valley-overview.webp",
+      "width": 1440,
+      "height": 960,
+      "alt": "High aerial overview of Stowe buildings and parking lots in a green valley with mountains in the distance.",
+      "sections": [
+        "getting-here",
+        "parking"
+      ],
+      "group": "outside"
+    },
+    {
+      "file": "field-guide-lodge-sign.webp",
+      "width": 1440,
+      "height": 960,
+      "alt": "Field Guide Lodge road sign in Stowe Vermont with a no vacancy placard and the property entrance beyond.",
+      "sections": [
+        "getting-here",
+        "parking"
+      ],
+      "group": "outside"
+    },
+    {
+      "file": "entryway-gear-storage-clips.webp",
+      "width": 1440,
+      "height": 940,
+      "alt": "Light wood entry accent wall with four black and blue gear storage clips next to a white interior door.",
+      "sections": [
+        "the-house",
+        "amenities"
+      ],
+      "group": "living"
+    },
+    {
+      "file": "ranch-camp-vintage-bicycle-porch.webp",
+      "width": 1440,
+      "height": 962,
+      "alt": "Vintage cream cruiser bicycle hanging from a porch ceiling among strings of outdoor cafe lights.",
+      "sections": [
+        "amenities",
+        "getting-here"
+      ],
+      "group": "outside"
+    },
+    {
+      "file": "kitchen-cabinet-stoneware-dishes.webp",
+      "width": 1440,
+      "height": 962,
+      "alt": "Open light wood cabinet stocked with blue gray stoneware bowls, plates, and dark ceramic mugs.",
+      "sections": [
+        "amenities",
+        "house-guide"
+      ],
+      "group": "kitchen-dining"
+    },
+    {
+      "file": "aerial-red-roof-building-parking.webp",
+      "width": 1440,
+      "height": 960,
+      "alt": "Aerial view of a long red roofed building beside a gravel parking lot and a steep wooded hillside.",
+      "sections": [
+        "the-house",
+        "parking",
+        "getting-here"
+      ],
+      "group": "outside"
+    },
+    {
+      "file": "living-room-tv-sectional.webp",
+      "width": 1440,
+      "height": 962,
+      "alt": "Living room with a wall mounted TV, dark wood console, round black coffee table, sectional sofa, and open bedroom doorway.",
+      "sections": [
+        "the-house",
+        "amenities"
+      ],
+      "group": "living"
+    },
+    {
+      "file": "aerial-village-road-complex.webp",
+      "width": 1440,
+      "height": 960,
+      "alt": "Aerial view of a mountain village road beside a multi story rental complex with mountains in the distance.",
+      "sections": [
+        "getting-here",
+        "parking",
+        "the-house"
+      ],
+      "group": "outside"
+    },
+    {
+      "file": "wooded-walking-trail-2.webp",
+      "width": 1440,
+      "height": 960,
+      "alt": "Packed dirt walking path curving through tall grass and leafy green forest.",
+      "sections": [
+        "amenities",
+        "the-house"
+      ],
+      "group": "outside"
+    },
+    {
+      "file": "shower-head-hexagon-tile.webp",
+      "width": 1440,
+      "height": 955,
+      "alt": "Close up of a chrome shower head against gray and white marble hexagon tile walls.",
+      "sections": [
+        "the-house",
+        "amenities"
+      ],
+      "group": "bath-laundry",
+      "focus": "top"
+    },
+    {
+      "file": "living-room-sectional-entry.webp",
+      "width": 1440,
+      "height": 965,
+      "alt": "Bright living room with a light sectional sofa, black oval coffee table, round mirror, and white entry door with a smart lock.",
+      "sections": [
+        "the-house",
+        "check-in-checkout"
+      ],
+      "group": "living"
+    },
+    {
+      "file": "mountain-bike-key-rack.webp",
+      "width": 1440,
+      "height": 962,
+      "alt": "Black metal mountain biker silhouette key rack mounted on a white wall.",
+      "sections": [
+        "the-house",
+        "amenities"
+      ],
+      "group": "living"
+    },
+    {
+      "file": "aerial-downtown-stowe.webp",
+      "width": 1440,
+      "height": 960,
+      "alt": "Aerial view of downtown Stowe featuring the white church steeple surrounded by forests and mountains under a blue sky.",
+      "sections": [
+        "getting-here"
+      ],
+      "group": "outside"
+    },
+    {
+      "file": "breakfast-bar-kitchenette-view.webp",
+      "width": 1440,
+      "height": 963,
+      "alt": "Live edge breakfast bar with two black stools and a place setting looking toward the wood cabinet kitchenette.",
+      "sections": [
+        "the-house",
+        "amenities"
+      ],
+      "group": "kitchen-dining"
+    },
+    {
+      "file": "ranch-camp-stowe-exterior.webp",
+      "width": 1440,
+      "height": 960,
+      "alt": "Ranch Camp restaurant and bike shop exterior with a red Trailside Stowe sign and cars parked in the gravel lot.",
+      "sections": [
+        "getting-here",
+        "amenities",
+        "parking"
+      ],
+      "group": "outside"
+    },
+    {
+      "file": "aerial-river-recreation-path.webp",
+      "width": 1440,
+      "height": 960,
+      "alt": "Aerial view of a paved recreation path beside a river with a footbridge and distant mountain views.",
+      "sections": [
+        "amenities",
+        "getting-here"
+      ],
+      "group": "outside"
+    },
+    {
+      "file": "bathroom-vanity-round-mirror.webp",
+      "width": 1440,
+      "height": 963,
+      "alt": "White bathroom vanity with a vessel sink, round mirror, bar light, and a window looking out to trees and a red roof.",
+      "sections": [
+        "the-house",
+        "amenities"
+      ],
+      "group": "bath-laundry"
+    },
+    {
+      "file": "private-deck-adirondack-umbrella.webp",
+      "width": 1440,
+      "height": 955,
+      "alt": "Private wood deck with white Adirondack chairs under a blue Switchback umbrella beside the teal suite entrance.",
+      "sections": [
+        "the-house",
+        "amenities",
+        "parking",
+        "check-in-checkout"
+      ],
+      "group": "outside"
+    },
+    {
+      "file": "wooded-trail-junction.webp",
+      "width": 1440,
+      "height": 960,
+      "alt": "Dirt hiking and biking trail junction in a lush green forest with trail markers on a tree.",
+      "sections": [
+        "amenities",
+        "getting-here"
+      ],
+      "group": "outside"
+    },
+    {
+      "file": "backyard-bear-mural-exterior.webp",
+      "width": 1440,
+      "height": 960,
+      "alt": "The Backyard building with a bright red roof, bear mural on a silo, bike rack, and nearby parking.",
+      "sections": [
+        "getting-here",
+        "parking",
+        "amenities"
+      ],
+      "group": "outside"
+    },
+    {
+      "file": "exterior-door-smart-lock.webp",
+      "width": 1440,
+      "height": 962,
+      "alt": "Close up of a white exterior door with a black smart lock and modern lever handle.",
+      "sections": [
+        "check-in-checkout"
+      ],
+      "group": "outside"
+    },
+    {
+      "file": "alfies-wild-ride-karaoke-sign.webp",
+      "width": 1440,
+      "height": 962,
+      "alt": "Alfie's Wild Ride storefront with a sidewalk sign advertising karaoke tonight at 8 PM.",
+      "sections": [
+        "getting-here",
+        "amenities"
+      ],
+      "group": "outside"
+    },
+    {
+      "file": "living-room-sofa-kitchen-view.webp",
+      "width": 1440,
+      "height": 954,
+      "alt": "Bright living room with a gray sectional sofa, round black coffee table, and a view into the wood paneled kitchen.",
+      "sections": [
+        "the-house",
+        "amenities"
+      ],
+      "group": "living"
+    },
+    {
+      "file": "under-stairs-storage-nook.webp",
+      "width": 1440,
+      "height": 954,
+      "alt": "Empty white storage nook under a slanted staircase with wood look flooring.",
+      "sections": [
+        "house-guide",
+        "the-house"
+      ],
+      "group": "living"
+    },
+    {
+      "file": "deck-adirondack-chairs-outlook.webp",
+      "width": 1440,
+      "height": 961,
+      "alt": "Wood deck with two white Adirondack chairs, built in bench, and blue Switchback umbrella overlooking trees and nearby buildings.",
+      "sections": [
+        "the-house",
+        "amenities"
+      ],
+      "group": "outside"
+    },
+    {
+      "file": "the-bench-restaurant-sign.webp",
+      "width": 1440,
+      "height": 960,
+      "alt": "The Bench wood fired food restaurant sign with flower beds beside a road and parking lot in Stowe.",
+      "sections": [
+        "getting-here",
+        "amenities"
+      ],
+      "group": "outside"
+    },
+    {
+      "file": "breakfast-bar-wood-door.webp",
+      "width": 1440,
+      "height": 958,
+      "alt": "Breakfast bar with two black stools next to a light wood door and diagonal wood paneling.",
+      "sections": [
+        "the-house"
+      ],
+      "group": "kitchen-dining"
+    },
+    {
+      "file": "aerial-stowe-mountains-town.webp",
+      "width": 1440,
+      "height": 960,
+      "alt": "Aerial drone view of Stowe showing green forests, buildings along the road, and distant blue mountains.",
+      "sections": [
+        "getting-here"
+      ],
+      "group": "outside"
+    },
+    {
+      "file": "teal-house-exterior-deck-2.webp",
+      "width": 1440,
+      "height": 951,
+      "alt": "Side angle of the teal blue house with a light wood deck, Adirondack chairs, blue umbrella, and green lawn.",
+      "sections": [
+        "the-house",
+        "amenities"
+      ],
+      "group": "outside"
+    },
+    {
+      "file": "kitchenette-fridge-range-paneling.webp",
+      "width": 1440,
+      "height": 962,
+      "alt": "Kitchenette with stainless refrigerator and range, light wood cabinets, black faucet, and diagonal wood wall paneling.",
+      "sections": [
+        "the-house",
+        "amenities"
+      ],
+      "group": "kitchen-dining"
+    },
+    {
+      "file": "matte-black-silverware-drawer.webp",
+      "width": 1440,
+      "height": 962,
+      "alt": "Open kitchen drawer with a bamboo organizer filled with matte black forks, spoons, and knives.",
+      "sections": [
+        "amenities",
+        "house-guide"
+      ],
+      "group": "kitchen-dining"
+    },
+    {
+      "file": "trailhead-information-kiosk.webp",
+      "width": 1440,
+      "height": 960,
+      "alt": "Wooden trailhead kiosk with a trail map beside a dirt path into the forest and a purple birdhouse post.",
+      "sections": [
+        "amenities",
+        "getting-here"
+      ],
+      "group": "outside"
+    },
+    {
+      "file": "art-in-residence-book-decor.webp",
+      "width": 1440,
+      "height": 963,
+      "alt": "Dark green Art in Residence book with a stone chain link sculpture resting on a wood sideboard.",
+      "sections": [
+        "the-house"
+      ],
+      "group": "living"
+    }
+  ]
+}

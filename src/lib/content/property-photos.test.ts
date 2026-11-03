@@ -154,6 +154,48 @@ describe("property photos", () => {
     }
   });
 
+  it("loads Far & Familiar property galleries from their folders", () => {
+    const dadSlugs = [
+      "cider-loft",
+      "switchback-suite",
+      "hinesburg-hideaway-3",
+      "hinesburg-hideaway-4",
+      "backyard-bungalow",
+      "landing-pad",
+      "tennisplace-a35",
+      "sanibel-sunsets",
+    ] as const;
+
+    for (const slug of dadSlugs) {
+      const { hero, heroPhotos, photos, groups } = getPropertyPhotos(slug);
+      const directory = path.join(process.cwd(), "public/images/properties", slug);
+      const files = readdirSync(directory)
+        .filter((file) => file.endsWith(".webp"))
+        .sort();
+
+      expect(hero).not.toBeNull();
+      expect(heroPhotos).toHaveLength(3);
+      expect(heroPhotos[0]?.file).toBe(hero?.file);
+      expect(photos.map((photo) => photo.file).sort()).toEqual(files);
+      expect(groups.map((group) => group.label)).toEqual(
+        expect.arrayContaining([
+          "Living Spaces",
+          "Kitchen and Dining",
+          "Bedrooms",
+          "Bath and Laundry",
+          "Outside and Around Town",
+        ]),
+      );
+
+      for (const photo of photos) {
+        expect(photo.alt.length).toBeGreaterThan(20);
+        expect(photo.alt).not.toMatch(/—|–/);
+        expect(photo.width).toBeLessThanOrEqual(1600);
+        expect(photo.alt.toLowerCase()).not.toMatch(/keypad|lockbox|door code/);
+      }
+    }
+  });
+
   it("returns nothing for a slug with no photo folder", () => {
     expect(getPropertyPhotos("../secrets")).toEqual({ hero: null, heroPhotos: [], photos: [], groups: [] });
     expect(photosForSection("extra-cabin", "house-guide")).toEqual([]);

@@ -1,0 +1,245 @@
+{
+  "hero": "exterior.webp",
+  "heroPhotos": [
+    "exterior.webp",
+    "living-room.webp",
+    "kitchen.webp"
+  ],
+  "groups": [
+    {
+      "id": "living",
+      "label": "Living Spaces",
+      "preview": [
+        "living-room-bar.webp",
+        "living-room.webp",
+        "entry-bench.webp"
+      ]
+    },
+    {
+      "id": "kitchen-dining",
+      "label": "Kitchen and Dining",
+      "preview": [
+        "kitchen.webp",
+        "kitchen-stove.webp",
+        "welcome-cider.webp"
+      ]
+    },
+    {
+      "id": "bedrooms",
+      "label": "Bedrooms",
+      "preview": [
+        "bedroom-closet.webp",
+        "bedroom.webp",
+        "bedroom-wide.webp"
+      ]
+    },
+    {
+      "id": "bath-laundry",
+      "label": "Bath and Laundry",
+      "preview": [
+        "bathroom.webp"
+      ]
+    },
+    {
+      "id": "outside",
+      "label": "Outside and Around Town",
+      "preview": [
+        "entry-door.webp",
+        "cold-hollow-cider-mill.webp",
+        "mountain-moonrise.webp"
+      ]
+    }
+  ],
+  "photos": [
+    {
+      "file": "kitchen.webp",
+      "width": 1440,
+      "height": 1080,
+      "alt": "Compact kitchenette with white cabinets, a granite counter, stainless sink, and a full-size refrigerator beside a warm wood door.",
+      "sections": [
+        "the-house",
+        "house-guide"
+      ],
+      "group": "kitchen-dining"
+    },
+    {
+      "file": "entry-door.webp",
+      "width": 1440,
+      "height": 1080,
+      "alt": "Black paneled entry door with a brass number 3 set in an exposed red brick wall.",
+      "sections": [
+        "getting-here",
+        "check-in-checkout"
+      ],
+      "group": "outside"
+    },
+    {
+      "file": "cold-hollow-cider-mill.webp",
+      "width": 1440,
+      "height": 1080,
+      "alt": "Cold Hollow Cider Mill sign at dusk with string lights, apple artwork, and pink winter sky.",
+      "sections": [],
+      "group": "outside"
+    },
+    {
+      "file": "mountain-moonrise.webp",
+      "width": 1440,
+      "height": 960,
+      "alt": "Forested Vermont ridge glowing with alpenglow under a pale sky and bright full moon.",
+      "sections": [],
+      "group": "outside"
+    },
+    {
+      "file": "bedroom-closet.webp",
+      "width": 1440,
+      "height": 1080,
+      "alt": "Bedroom corner with a charcoal dresser, rustic barn door, walk-in closet, and arched floor mirror against faux brick.",
+      "sections": [
+        "the-house"
+      ],
+      "group": "bedrooms"
+    },
+    {
+      "file": "stairs-to-door.webp",
+      "width": 1440,
+      "height": 1080,
+      "alt": "Carpeted stairwell with brick-look walls leading up to a black apartment door under a bright ceiling light.",
+      "sections": [
+        "getting-here",
+        "check-in-checkout"
+      ],
+      "group": "outside",
+      "focus": "top"
+    },
+    {
+      "file": "living-room-bar.webp",
+      "width": 1440,
+      "height": 1080,
+      "alt": "Loft living area with a wood futon, black coffee table, breakfast bar with black stools, and a skylight in the sloped ceiling.",
+      "sections": [],
+      "group": "living"
+    },
+    {
+      "file": "village-sunset.webp",
+      "width": 1440,
+      "height": 959,
+      "alt": "Aerial view of a red village building and white church steeple against Vermont mountains at sunset.",
+      "sections": [
+        "getting-here"
+      ],
+      "group": "outside"
+    },
+    {
+      "file": "exterior.webp",
+      "width": 1440,
+      "height": 1080,
+      "alt": "Red clapboard building with white trim at golden hour, wooden front steps, and a dark door marked with a brass number 3.",
+      "sections": [
+        "getting-here",
+        "check-in-checkout",
+        "parking"
+      ],
+      "group": "outside"
+    },
+    {
+      "file": "entry-stairs.webp",
+      "width": 1440,
+      "height": 1080,
+      "alt": "Looking up a narrow carpeted stairwell with grey brick-look wallpaper and a wooden handrail toward bright light above.",
+      "sections": [
+        "getting-here"
+      ],
+      "group": "outside",
+      "focus": "top"
+    },
+    {
+      "file": "neighborhood-aerial.webp",
+      "width": 1440,
+      "height": 959,
+      "alt": "Drone view of a grey building with a red metal roof, parking lot, and white church steeple in a Vermont valley.",
+      "sections": [
+        "getting-here",
+        "parking"
+      ],
+      "group": "outside"
+    },
+    {
+      "file": "kitchen-stove.webp",
+      "width": 1440,
+      "height": 1080,
+      "alt": "Kitchen counter view toward a black electric range, toaster, microwave, and coffee maker under the loft ceiling.",
+      "sections": [
+        "the-house",
+        "house-guide"
+      ],
+      "group": "kitchen-dining"
+    },
+    {
+      "file": "living-room.webp",
+      "width": 1440,
+      "height": 1080,
+      "alt": "Open loft living room with a wood-framed futon, coffee table, and four black barstools at a granite breakfast bar.",
+      "sections": [],
+      "group": "living"
+    },
+    {
+      "file": "bedroom.webp",
+      "width": 1440,
+      "height": 955,
+      "alt": "Bedroom with a made bed, mountain-print pillows, barn-style wood door, and arched mirror on white brick wallpaper.",
+      "sections": [
+        "the-house"
+      ],
+      "group": "bedrooms"
+    },
+    {
+      "file": "bathroom.webp",
+      "width": 1440,
+      "height": 1080,
+      "alt": "Bright bathroom with a marble-look tiled shower, black hex floor tile, pedestal sink, and rustic wood door.",
+      "sections": [
+        "the-house",
+        "house-guide"
+      ],
+      "group": "bath-laundry"
+    },
+    {
+      "file": "entry-bench.webp",
+      "width": 1440,
+      "height": 1080,
+      "alt": "Entry nook with a white bench, boots on a tray, and black-and-white landscape wallpaper under a slanted ceiling.",
+      "sections": [
+        "check-in-checkout"
+      ],
+      "group": "living"
+    },
+    {
+      "file": "welcome-cider.webp",
+      "width": 1440,
+      "height": 1080,
+      "alt": "Welcome tray of Cold Hollow cider jugs and a cider donut bag on the granite kitchen counter.",
+      "sections": [
+        "amenities"
+      ],
+      "group": "kitchen-dining"
+    },
+    {
+      "file": "living-room-tv.webp",
+      "width": 1440,
+      "height": 962,
+      "alt": "Living area with a sofa edge, coffee table, wall-mounted television, skylight, and barstools along the counter.",
+      "sections": [
+        "wifi"
+      ],
+      "group": "living"
+    },
+    {
+      "file": "bedroom-wide.webp",
+      "width": 1440,
+      "height": 962,
+      "alt": "Wide view of the loft bedroom with the bed under the sloped ceiling, nightstand lamp, barn door, and arched mirror.",
+      "sections": [],
+      "group": "bedrooms"
+    }
+  ]
+}

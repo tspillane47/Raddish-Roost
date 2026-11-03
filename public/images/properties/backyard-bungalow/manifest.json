@@ -1,0 +1,582 @@
+{
+  "hero": "front-porch-exterior.webp",
+  "heroPhotos": [
+    "front-porch-exterior.webp",
+    "living-room-sofa-and-entryway.webp",
+    "kitchen-checkered-floor.webp"
+  ],
+  "groups": [
+    {
+      "id": "living",
+      "label": "Living Spaces",
+      "preview": [
+        "entryway-console-and-arched-door.webp",
+        "living-room-sofa-and-entryway.webp",
+        "living-room-tv-and-front-door.webp"
+      ]
+    },
+    {
+      "id": "kitchen-dining",
+      "label": "Kitchen and Dining",
+      "preview": [
+        "kitchen-fridge-stove-dining-view.webp",
+        "kitchen-checkered-floor.webp",
+        "entry-door-and-dining-glimpse.webp"
+      ]
+    },
+    {
+      "id": "bedrooms",
+      "label": "Bedrooms",
+      "preview": [
+        "hallway-view-into-bedroom.webp",
+        "bedroom-framed-by-doorway.webp",
+        "closet-velvet-hangers.webp"
+      ]
+    },
+    {
+      "id": "bath-laundry",
+      "label": "Bath and Laundry",
+      "preview": [
+        "bathroom-shower-toilet-vanity.webp",
+        "subway-tile-walk-in-shower.webp",
+        "bathroom-sink-chrome-faucet.webp"
+      ]
+    },
+    {
+      "id": "outside",
+      "label": "Outside and Around Town",
+      "preview": [
+        "backyard-lawn-adirondack-chairs.webp",
+        "porch-mesh-chairs-and-table.webp",
+        "front-porch-gabled-entrance.webp"
+      ]
+    }
+  ],
+  "photos": [
+    {
+      "file": "entryway-console-and-arched-door.webp",
+      "width": 1440,
+      "height": 953,
+      "alt": "Modern entryway with a black console table, arched mirror, and view through an arch to a dark front door.",
+      "sections": [
+        "the-house",
+        "check-in-checkout"
+      ],
+      "group": "living"
+    },
+    {
+      "file": "hallway-view-into-bedroom.webp",
+      "width": 1440,
+      "height": 964,
+      "alt": "View from a hallway through a dark doorway into a bright bedroom with white bedding and decorative pillows.",
+      "sections": [
+        "the-house"
+      ],
+      "group": "bedrooms"
+    },
+    {
+      "file": "bedroom-framed-by-doorway.webp",
+      "width": 1440,
+      "height": 962,
+      "alt": "Bright bedroom with a white upholstered headboard and layered pillows framed by a dark doorway.",
+      "sections": [
+        "the-house"
+      ],
+      "group": "bedrooms"
+    },
+    {
+      "file": "backyard-lawn-adirondack-chairs.webp",
+      "width": 1440,
+      "height": 962,
+      "alt": "Rear lawn with Adirondack chairs and a stone path leading to the grey bungalow back door.",
+      "sections": [
+        "the-house",
+        "amenities"
+      ],
+      "group": "outside"
+    },
+    {
+      "file": "bathroom-shower-toilet-vanity.webp",
+      "width": 1440,
+      "height": 961,
+      "alt": "Modern bathroom with a glass walk-in shower, white toilet, and white vanity with black accents.",
+      "sections": [
+        "the-house"
+      ],
+      "group": "bath-laundry"
+    },
+    {
+      "file": "kitchen-fridge-stove-dining-view.webp",
+      "width": 1440,
+      "height": 960,
+      "alt": "Kitchen corner with white fridge and stove, checkered tile floor, and a view into the dining room.",
+      "sections": [
+        "the-house",
+        "amenities"
+      ],
+      "group": "kitchen-dining"
+    },
+    {
+      "file": "kitchen-checkered-floor.webp",
+      "width": 1440,
+      "height": 959,
+      "alt": "Bright kitchen with white cabinets, black counters, white appliances, and a black and white checkered floor.",
+      "sections": [
+        "the-house",
+        "amenities"
+      ],
+      "group": "kitchen-dining"
+    },
+    {
+      "file": "closet-velvet-hangers.webp",
+      "width": 1440,
+      "height": 962,
+      "alt": "Close up of black velvet hangers on a rod inside a bright white closet.",
+      "sections": [
+        "amenities",
+        "house-guide"
+      ],
+      "group": "bedrooms"
+    },
+    {
+      "file": "bedroom-black-trim-windows.webp",
+      "width": 1440,
+      "height": 958,
+      "alt": "Bedroom with white bedding, black window trim, a grey throw, and two windows with cellular shades.",
+      "sections": [
+        "the-house"
+      ],
+      "group": "bedrooms"
+    },
+    {
+      "file": "bedroom-arched-mirror.webp",
+      "width": 1440,
+      "height": 961,
+      "alt": "Bright bedroom with a white headboard, chevron throw, and tall arched black floor mirror.",
+      "sections": [
+        "the-house"
+      ],
+      "group": "bedrooms"
+    },
+    {
+      "file": "subway-tile-walk-in-shower.webp",
+      "width": 1440,
+      "height": 962,
+      "alt": "White subway tile walk-in shower with chrome fixtures and a corner glass shelf.",
+      "sections": [
+        "the-house",
+        "amenities"
+      ],
+      "group": "bath-laundry"
+    },
+    {
+      "file": "porch-mesh-chairs-and-table.webp",
+      "width": 1440,
+      "height": 966,
+      "alt": "Two black mesh chairs and a small side table on a grey wood porch with white railings.",
+      "sections": [
+        "the-house",
+        "amenities"
+      ],
+      "group": "outside"
+    },
+    {
+      "file": "front-porch-gabled-entrance.webp",
+      "width": 1440,
+      "height": 962,
+      "alt": "White covered porch with gabled roof, railings, and a dark front door on a light grey sided house.",
+      "sections": [
+        "the-house",
+        "check-in-checkout",
+        "getting-here"
+      ],
+      "group": "outside"
+    },
+    {
+      "file": "entry-door-and-dining-glimpse.webp",
+      "width": 1440,
+      "height": 960,
+      "alt": "Black front door with window panes beside a glimpse of a round black dining table and chairs.",
+      "sections": [
+        "the-house",
+        "check-in-checkout"
+      ],
+      "group": "kitchen-dining"
+    },
+    {
+      "file": "front-porch-steps-and-door.webp",
+      "width": 1440,
+      "height": 1079,
+      "alt": "Light grey bungalow exterior with a white porch, dark steps, and a dark front door.",
+      "sections": [
+        "the-house",
+        "check-in-checkout"
+      ],
+      "group": "outside"
+    },
+    {
+      "file": "bedroom-nightstand-and-black-doors.webp",
+      "width": 1440,
+      "height": 959,
+      "alt": "Bedroom with a white upholstered bed, black nightstand with lamp, and black interior doors.",
+      "sections": [
+        "the-house"
+      ],
+      "group": "bedrooms"
+    },
+    {
+      "file": "living-room-sofa-and-entryway.webp",
+      "width": 1440,
+      "height": 960,
+      "alt": "Living room with a light grey sofa, black coffee table, and arched entryway toward a black front door.",
+      "sections": [
+        "the-house"
+      ],
+      "group": "living"
+    },
+    {
+      "file": "side-porch-entry-under-pines.webp",
+      "width": 1440,
+      "height": 962,
+      "alt": "Small porch with white railings and black steps leading to a charcoal door beside tall pine trees.",
+      "sections": [
+        "the-house",
+        "check-in-checkout",
+        "getting-here"
+      ],
+      "group": "outside"
+    },
+    {
+      "file": "bathroom-sink-chrome-faucet.webp",
+      "width": 1440,
+      "height": 962,
+      "alt": "Close up of a white bathroom sink with a chrome faucet and textured black soap dispenser.",
+      "sections": [
+        "the-house",
+        "amenities"
+      ],
+      "group": "bath-laundry"
+    },
+    {
+      "file": "porch-seating-neighborhood-view.webp",
+      "width": 1440,
+      "height": 962,
+      "alt": "Front porch seating with two black mesh chairs overlooking a green lawn and neighborhood street.",
+      "sections": [
+        "the-house",
+        "amenities"
+      ],
+      "group": "outside"
+    },
+    {
+      "file": "dining-room-kitchen-and-living-view.webp",
+      "width": 1440,
+      "height": 967,
+      "alt": "Dining room with a black oval table and bubble chandelier looking into the kitchen and living area.",
+      "sections": [
+        "the-house"
+      ],
+      "group": "kitchen-dining"
+    },
+    {
+      "file": "living-room-tv-and-front-door.webp",
+      "width": 1440,
+      "height": 953,
+      "alt": "Living room with a light sofa, black coffee table, flat screen TV, and black front door with black trim.",
+      "sections": [
+        "the-house",
+        "amenities"
+      ],
+      "group": "living"
+    },
+    {
+      "file": "bungalow-exterior-front-entry.webp",
+      "width": 1440,
+      "height": 962,
+      "alt": "Front exterior of a light grey bungalow with a black door, white porch railings, and tall evergreen trees.",
+      "sections": [
+        "the-house",
+        "check-in-checkout",
+        "getting-here"
+      ],
+      "group": "outside"
+    },
+    {
+      "file": "bedroom-window-ac-and-heater.webp",
+      "width": 1440,
+      "height": 961,
+      "alt": "Minimalist bedroom with white linens, black trim, a window air conditioner, and a wall heater.",
+      "sections": [
+        "the-house",
+        "amenities"
+      ],
+      "group": "bedrooms"
+    },
+    {
+      "file": "front-porch-with-outdoor-chairs.webp",
+      "width": 1440,
+      "height": 962,
+      "alt": "Elevated front porch with white railings, black mesh chairs, and a dark front door on grey siding.",
+      "sections": [
+        "the-house",
+        "check-in-checkout",
+        "amenities"
+      ],
+      "group": "outside"
+    },
+    {
+      "file": "elevated-porch-black-door.webp",
+      "width": 1440,
+      "height": 1079,
+      "alt": "Elevated wooden porch with white railings and dark steps leading to a black door with glass panes.",
+      "sections": [
+        "the-house",
+        "check-in-checkout"
+      ],
+      "group": "outside"
+    },
+    {
+      "file": "dining-room-oval-table-chandelier.webp",
+      "width": 1440,
+      "height": 960,
+      "alt": "Dining room with a black oval table, matching chairs, and a glass bubble chandelier facing a double window.",
+      "sections": [
+        "the-house"
+      ],
+      "group": "kitchen-dining"
+    },
+    {
+      "file": "bathroom-vanity-view-to-living.webp",
+      "width": 1440,
+      "height": 959,
+      "alt": "White bathroom vanity with chrome faucet and black framed mirror looking through a doorway to the living room.",
+      "sections": [
+        "the-house"
+      ],
+      "group": "bath-laundry"
+    },
+    {
+      "file": "dining-room-window-and-chandelier.webp",
+      "width": 1440,
+      "height": 948,
+      "alt": "Modern dining room with a black oval table, bubble glass chandelier, and bright windows to the yard.",
+      "sections": [
+        "the-house",
+        "amenities"
+      ],
+      "group": "kitchen-dining"
+    },
+    {
+      "file": "living-room-tv-console-and-sofa.webp",
+      "width": 1440,
+      "height": 962,
+      "alt": "Living room with a flat screen on a white console, black coffee table, and light grey sofa with pillows.",
+      "sections": [
+        "the-house",
+        "amenities"
+      ],
+      "group": "living"
+    },
+    {
+      "file": "closet-hangers-and-luggage-rack.webp",
+      "width": 1440,
+      "height": 960,
+      "alt": "White closet nook with black hangers and a folding black luggage rack on the floor.",
+      "sections": [
+        "amenities",
+        "house-guide"
+      ],
+      "group": "bedrooms"
+    },
+    {
+      "file": "bedroom-pillow-detail.webp",
+      "width": 1440,
+      "height": 962,
+      "alt": "Close up of a bed with black and white decorative pillows against a cream wingback headboard.",
+      "sections": [
+        "the-house"
+      ],
+      "group": "bedrooms"
+    },
+    {
+      "file": "living-room-sofa-window-view.webp",
+      "width": 1440,
+      "height": 962,
+      "alt": "Living room with a light grey sofa, black coffee table, and a large window overlooking the neighborhood.",
+      "sections": [
+        "the-house"
+      ],
+      "group": "living"
+    },
+    {
+      "file": "sofa-pillows-and-window.webp",
+      "width": 1440,
+      "height": 962,
+      "alt": "Light sofa with black and patterned pillows in front of a bright window framed by white curtains.",
+      "sections": [
+        "the-house"
+      ],
+      "group": "living"
+    },
+    {
+      "file": "bedroom-art-and-window-ac.webp",
+      "width": 1440,
+      "height": 961,
+      "alt": "Bedroom with white bedding, black accent pillows, minimalist wall art, and a window air conditioner.",
+      "sections": [
+        "the-house"
+      ],
+      "group": "bedrooms"
+    },
+    {
+      "file": "kitchen-stove-and-coffee-maker.webp",
+      "width": 1440,
+      "height": 962,
+      "alt": "White electric stove and black drip coffee maker on black countertops in a bright kitchen.",
+      "sections": [
+        "the-house",
+        "amenities",
+        "house-guide"
+      ],
+      "group": "kitchen-dining"
+    },
+    {
+      "file": "front-porch-daylilies.webp",
+      "width": 1440,
+      "height": 962,
+      "alt": "Front porch of a grey sided bungalow with white railings, black chairs, and orange daylilies in front.",
+      "sections": [
+        "the-house",
+        "check-in-checkout"
+      ],
+      "group": "outside"
+    },
+    {
+      "file": "console-table-dried-flowers.webp",
+      "width": 1440,
+      "height": 962,
+      "alt": "Black console table styled with a white vase of dried flowers, stacked books, lamp, and candle holder.",
+      "sections": [
+        "the-house"
+      ],
+      "group": "living"
+    },
+    {
+      "file": "bungalow-exterior-side-lawn.webp",
+      "width": 1440,
+      "height": 1079,
+      "alt": "Side exterior of the grey bungalow with a white railed porch, green lawn, and leafy trees.",
+      "sections": [
+        "the-house",
+        "getting-here"
+      ],
+      "group": "outside"
+    },
+    {
+      "file": "console-books-and-bowl.webp",
+      "width": 1440,
+      "height": 962,
+      "alt": "White scalloped bowl on coffee table books beside a black candle holder on a console table.",
+      "sections": [
+        "the-house"
+      ],
+      "group": "living"
+    },
+    {
+      "file": "front-porch-exterior.webp",
+      "width": 1440,
+      "height": 962,
+      "alt": "Grey siding bungalow with a white railed front porch, dark door, green lawn, and blue sky.",
+      "sections": [
+        "the-house",
+        "check-in-checkout",
+        "getting-here"
+      ],
+      "group": "outside"
+    },
+    {
+      "file": "bedroom-view-into-hallway.webp",
+      "width": 1440,
+      "height": 962,
+      "alt": "Bedroom with a white upholstered bed and black and white pillows looking through a doorway into the hallway.",
+      "sections": [
+        "the-house"
+      ],
+      "group": "bedrooms"
+    },
+    {
+      "file": "black-wall-hooks-and-shelf.webp",
+      "width": 1440,
+      "height": 965,
+      "alt": "Minimalist matte black wall hooks and a thin wire shelf on a bright white wall.",
+      "sections": [
+        "amenities",
+        "house-guide"
+      ],
+      "group": "bath-laundry"
+    },
+    {
+      "file": "living-room-media-console.webp",
+      "width": 1440,
+      "height": 956,
+      "alt": "Living room with a tan sofa, black coffee table, and large television on a white fluted media console.",
+      "sections": [
+        "the-house",
+        "amenities"
+      ],
+      "group": "living"
+    },
+    {
+      "file": "bubble-glass-chandelier.webp",
+      "width": 1440,
+      "height": 962,
+      "alt": "Close up of a modern bubble glass chandelier with brass hardware and warm glowing bulbs.",
+      "sections": [
+        "the-house",
+        "amenities"
+      ],
+      "group": "kitchen-dining"
+    },
+    {
+      "file": "backyard-chairs-facing-house.webp",
+      "width": 1440,
+      "height": 966,
+      "alt": "Backyard lawn with Adirondack chairs facing the grey bungalow and its black metal back stairs.",
+      "sections": [
+        "the-house",
+        "amenities"
+      ],
+      "group": "outside"
+    },
+    {
+      "file": "living-room-sofa-striped-rug.webp",
+      "width": 1440,
+      "height": 972,
+      "alt": "Bright living room with a light sofa, black coffee table, striped rug, and black front door.",
+      "sections": [
+        "the-house"
+      ],
+      "group": "living"
+    },
+    {
+      "file": "living-room-sofa-near-entry.webp",
+      "width": 1440,
+      "height": 959,
+      "alt": "Living room seating with a light grey sofa, black coffee table, woven basket, and dark front door.",
+      "sections": [
+        "the-house"
+      ],
+      "group": "living"
+    },
+    {
+      "file": "second-bedroom-arched-mirror.webp",
+      "width": 1440,
+      "height": 965,
+      "alt": "Second bedroom with neutral bedding, black window trim, abstract art, and a tall arched floor mirror.",
+      "sections": [
+        "the-house"
+      ],
+      "group": "bedrooms"
+    }
+  ]
+}

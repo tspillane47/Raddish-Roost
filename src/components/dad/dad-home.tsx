@@ -3,6 +3,7 @@ import Link from "next/link";
 import type { ReactNode } from "react";
 import { PineIcon, ShellIcon } from "@/components/dad/region-icons";
 import { PhotoPlaceholder } from "@/components/property/photo-placeholder";
+import { getPropertyPhotos, photoObjectPosition } from "@/lib/content/property-photos";
 import type { PropertySummary } from "@/types/content";
 import type { SiteConfig } from "@/sites/types";
 
@@ -118,6 +119,12 @@ function StayGroup({
 function DadStayCard({ property }: { property: PropertySummary }) {
   const florida = property.guestArea === "florida";
   const town = property.locality?.trim() || (florida ? "Sanibel Island" : "Vermont");
+  const localHero = getPropertyPhotos(property.slug).heroPhotos[0] ?? null;
+  const cardImage = localHero
+    ? { src: localHero.src, alt: localHero.alt, width: localHero.width, height: localHero.height, focus: localHero.focus }
+    : property.heroImageUrl
+      ? { src: property.heroImageUrl, alt: property.heroImageAlt, width: 1200, height: 900, focus: "center" as const }
+      : null;
 
   return (
     <article className="group flex h-full flex-col overflow-hidden rounded-xl border border-beige bg-card">
@@ -125,13 +132,14 @@ function DadStayCard({ property }: { property: PropertySummary }) {
         href={`/${property.slug}`}
         className="block overflow-hidden bg-beige focus-visible:outline-2 focus-visible:outline-offset-[-2px] focus-visible:outline-forest"
       >
-        {property.heroImageUrl ? (
+        {cardImage ? (
           <Image
-            src={property.heroImageUrl}
-            alt={property.heroImageAlt}
-            width={1200}
-            height={900}
+            src={cardImage.src}
+            alt={cardImage.alt}
+            width={cardImage.width}
+            height={cardImage.height}
             className="aspect-[4/3] w-full object-cover motion-safe:transition-transform motion-safe:duration-300 motion-safe:group-hover:scale-[1.03]"
+            style={{ objectPosition: photoObjectPosition(cardImage.focus) }}
             sizes="(max-width: 768px) calc(100vw - 2.5rem), 22rem"
           />
         ) : (

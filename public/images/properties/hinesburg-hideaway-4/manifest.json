@@ -1,0 +1,420 @@
+{
+  "hero": "unit-exterior-entrance.webp",
+  "heroPhotos": [
+    "unit-exterior-entrance.webp",
+    "living-room-tv-sectional.webp",
+    "primary-bedroom.webp"
+  ],
+  "groups": [
+    {
+      "id": "living",
+      "label": "Living Spaces",
+      "preview": [
+        "living-room-sectional.webp",
+        "living-room-lamp-detail.webp",
+        "living-room-tv-sectional.webp"
+      ]
+    },
+    {
+      "id": "kitchen-dining",
+      "label": "Kitchen and Dining",
+      "preview": [
+        "dining-table-netflix-tv.webp",
+        "dining-nook-living-view.webp",
+        "kitchen-and-entry.webp"
+      ]
+    },
+    {
+      "id": "bedrooms",
+      "label": "Bedrooms",
+      "preview": [
+        "primary-bedroom.webp",
+        "bedroom-bed-pillows.webp",
+        "walk-in-closet.webp"
+      ]
+    },
+    {
+      "id": "bath-laundry",
+      "label": "Bath and Laundry",
+      "preview": [
+        "bathroom-vanity-storage.webp",
+        "bathroom-vanity-sink.webp",
+        "bathroom-full.webp"
+      ]
+    },
+    {
+      "id": "outside",
+      "label": "Outside and Around Town",
+      "preview": [
+        "hinesburg-public-house.webp",
+        "trillium-hill-farm-sign.webp",
+        "exterior-entrance-parking.webp"
+      ]
+    }
+  ],
+  "photos": [
+    {
+      "file": "dining-table-netflix-tv.webp",
+      "width": 1440,
+      "height": 962,
+      "alt": "Small dining table for two with woven placemats beside a half wall and a wall mounted TV showing Netflix.",
+      "sections": [
+        "the-house",
+        "amenities",
+        "wifi"
+      ],
+      "group": "kitchen-dining"
+    },
+    {
+      "file": "bathroom-vanity-storage.webp",
+      "width": 1440,
+      "height": 962,
+      "alt": "Bathroom vanity with speckled countertop, chrome faucet, black medicine cabinet, and wire storage shelves.",
+      "sections": [
+        "the-house",
+        "amenities"
+      ],
+      "group": "bath-laundry"
+    },
+    {
+      "file": "dining-nook-living-view.webp",
+      "width": 1440,
+      "height": 996,
+      "alt": "Dining nook with a small wood table and two chairs overlooking the living area and botanical wall art.",
+      "sections": [
+        "the-house"
+      ],
+      "group": "kitchen-dining"
+    },
+    {
+      "file": "hinesburg-public-house.webp",
+      "width": 1440,
+      "height": 962,
+      "alt": "Exterior of Hinesburg Public House with green metal siding, wood fence ramp, and a blue sky.",
+      "sections": [
+        "getting-here",
+        "amenities"
+      ],
+      "group": "outside"
+    },
+    {
+      "file": "trillium-hill-farm-sign.webp",
+      "width": 1440,
+      "height": 962,
+      "alt": "Roadside wooden sign for Trillium Hill Farm with a church steeple and house visible behind bare trees.",
+      "sections": [
+        "getting-here",
+        "amenities"
+      ],
+      "group": "outside"
+    },
+    {
+      "file": "living-room-sectional.webp",
+      "width": 1440,
+      "height": 962,
+      "alt": "Light gray sectional sofa with throw pillows, dark wood coffee table, and three botanical prints on the wall.",
+      "sections": [
+        "the-house"
+      ],
+      "group": "living"
+    },
+    {
+      "file": "living-room-lamp-detail.webp",
+      "width": 1440,
+      "height": 962,
+      "alt": "Ceramic table lamp on a dark wood end table beside a gray sofa with patterned throw pillows.",
+      "sections": [
+        "the-house"
+      ],
+      "group": "living"
+    },
+    {
+      "file": "exterior-entrance-parking.webp",
+      "width": 1440,
+      "height": 962,
+      "alt": "Two story beige townhome entrance with a white front door, gravel parking area, and a parked car at dusk.",
+      "sections": [
+        "the-house",
+        "getting-here",
+        "parking",
+        "check-in-checkout"
+      ],
+      "group": "outside"
+    },
+    {
+      "file": "primary-bedroom.webp",
+      "width": 1440,
+      "height": 962,
+      "alt": "Spacious bedroom with a made bed, landscape art, arched mirror, wooden bench, and an olive tree plant.",
+      "sections": [
+        "the-house"
+      ],
+      "group": "bedrooms"
+    },
+    {
+      "file": "living-room-tv-sectional.webp",
+      "width": 1440,
+      "height": 962,
+      "alt": "Living room with a light sectional, patterned rug, wall mounted TV, and steps up to the kitchen and entry.",
+      "sections": [
+        "the-house",
+        "amenities",
+        "wifi"
+      ],
+      "group": "living"
+    },
+    {
+      "file": "kitchen-and-entry.webp",
+      "width": 1440,
+      "height": 962,
+      "alt": "Compact kitchen with white cabinets, marble counters, white fridge, and a view of the front door and stairs.",
+      "sections": [
+        "the-house",
+        "amenities",
+        "check-in-checkout"
+      ],
+      "group": "kitchen-dining"
+    },
+    {
+      "file": "shelburne-sugarworks.webp",
+      "width": 1440,
+      "height": 919,
+      "alt": "Shelburne Sugarworks and Four Season Outdoor Center wooden building and red sign beside a gravel lot.",
+      "sections": [
+        "getting-here",
+        "amenities"
+      ],
+      "group": "outside"
+    },
+    {
+      "file": "lantmans-market-sign.webp",
+      "width": 1440,
+      "height": 962,
+      "alt": "Lantman's Market sign reading locally owned since 1925 beside a gray building with a blue metal roof.",
+      "sections": [
+        "getting-here",
+        "amenities"
+      ],
+      "group": "outside"
+    },
+    {
+      "file": "cheese-plant-directory-sign.webp",
+      "width": 1440,
+      "height": 962,
+      "alt": "The Cheese Plant directory sign listing Public House, Vermont Smoke and Cure, and Foam Brewers.",
+      "sections": [
+        "getting-here",
+        "amenities",
+        "parking"
+      ],
+      "group": "outside"
+    },
+    {
+      "file": "bathroom-vanity-sink.webp",
+      "width": 1440,
+      "height": 962,
+      "alt": "Close up of a bathroom vanity with chrome faucet, speckled countertop, black towel ring, and soap dispenser.",
+      "sections": [
+        "the-house",
+        "amenities"
+      ],
+      "group": "bath-laundry"
+    },
+    {
+      "file": "bathroom-full.webp",
+      "width": 1440,
+      "height": 962,
+      "alt": "Full bathroom with wood vanity, white toilet, and a tub shower with sliding glass doors.",
+      "sections": [
+        "the-house",
+        "amenities"
+      ],
+      "group": "bath-laundry"
+    },
+    {
+      "file": "private-deck-from-inside.webp",
+      "width": 1440,
+      "height": 962,
+      "alt": "Private wooden deck with a small table and two chairs seen through an open sliding glass door.",
+      "sections": [
+        "the-house",
+        "amenities"
+      ],
+      "group": "outside"
+    },
+    {
+      "file": "stairs-to-entry.webp",
+      "width": 1440,
+      "height": 962,
+      "alt": "View looking down gray carpeted stairs with a wood handrail toward a white front door and arched mirror.",
+      "sections": [
+        "the-house",
+        "house-guide",
+        "check-in-checkout"
+      ],
+      "group": "living",
+      "focus": "bottom"
+    },
+    {
+      "file": "frost-beer-works.webp",
+      "width": 1440,
+      "height": 962,
+      "alt": "Frost Beer Works exterior with red Adirondack chairs, string lights, and a hop cone logo above the door.",
+      "sections": [
+        "getting-here",
+        "amenities"
+      ],
+      "group": "outside"
+    },
+    {
+      "file": "dining-nook-closet.webp",
+      "width": 1440,
+      "height": 962,
+      "alt": "Small wooden dining table for two next to a white louvered closet overlooking the living area.",
+      "sections": [
+        "the-house"
+      ],
+      "group": "kitchen-dining"
+    },
+    {
+      "file": "kitchen-dining-layout.webp",
+      "width": 1440,
+      "height": 962,
+      "alt": "L-shaped kitchen with white appliances and cabinets beside a dining table and louvered closet doors.",
+      "sections": [
+        "the-house",
+        "amenities"
+      ],
+      "group": "kitchen-dining"
+    },
+    {
+      "file": "bedroom-bed-pillows.webp",
+      "width": 1440,
+      "height": 962,
+      "alt": "Cozy bed with layered neutral pillows, lit bedside lamp, and a framed landscape painting above the headboard.",
+      "sections": [
+        "the-house"
+      ],
+      "group": "bedrooms"
+    },
+    {
+      "file": "walk-in-closet.webp",
+      "width": 1440,
+      "height": 962,
+      "alt": "Walk-in closet with white wire shelves, black hangers, storage bins, extra pillows, and a luggage rack.",
+      "sections": [
+        "the-house",
+        "amenities"
+      ],
+      "group": "bedrooms"
+    },
+    {
+      "file": "artichoke-bowl-decor.webp",
+      "width": 1440,
+      "height": 962,
+      "alt": "Close up of green decorative artichokes in a wooden bowl against a white subway tile backsplash.",
+      "sections": [
+        "the-house"
+      ],
+      "group": "kitchen-dining"
+    },
+    {
+      "file": "unit-exterior-entrance.webp",
+      "width": 1440,
+      "height": 962,
+      "alt": "Unit exterior entrance with light siding, dark trim, white front door, and outdoor lantern at dusk.",
+      "sections": [
+        "the-house",
+        "getting-here",
+        "check-in-checkout"
+      ],
+      "group": "outside"
+    },
+    {
+      "file": "private-deck-seating.webp",
+      "width": 1440,
+      "height": 962,
+      "alt": "Wooden private deck with a bistro table and two chairs against a wooded hillside in golden sunlight.",
+      "sections": [
+        "the-house",
+        "amenities"
+      ],
+      "group": "outside"
+    },
+    {
+      "file": "living-room-entry-view.webp",
+      "width": 1440,
+      "height": 962,
+      "alt": "Living room sectional and coffee table with botanical art, looking toward the front door and kitchen steps.",
+      "sections": [
+        "the-house",
+        "check-in-checkout"
+      ],
+      "group": "living"
+    },
+    {
+      "file": "living-room-sliding-doors.webp",
+      "width": 1440,
+      "height": 962,
+      "alt": "Bright living room with a gray sectional, botanical prints, patterned rug, and sliding doors to the deck.",
+      "sections": [
+        "the-house",
+        "amenities"
+      ],
+      "group": "living"
+    },
+    {
+      "file": "bedroom-bench-closet.webp",
+      "width": 1440,
+      "height": 962,
+      "alt": "Bedroom corner with white bedding, wooden bench, olive tree plant, and an open walk-in closet.",
+      "sections": [
+        "the-house",
+        "amenities"
+      ],
+      "group": "bedrooms"
+    },
+    {
+      "file": "mountain-ski-trail-view.webp",
+      "width": 1440,
+      "height": 809,
+      "alt": "Snow capped mountains with visible ski trails rising above a forest under a clear blue sky.",
+      "sections": [
+        "getting-here",
+        "amenities"
+      ],
+      "group": "outside"
+    },
+    {
+      "file": "bedroom-bench-mirror.webp",
+      "width": 1440,
+      "height": 962,
+      "alt": "Bedroom with a made bed, arched floor mirror, Roman shades, wooden bench, and corner plant.",
+      "sections": [
+        "the-house"
+      ],
+      "group": "bedrooms"
+    },
+    {
+      "file": "aerial-hinesburg-town.webp",
+      "width": 1440,
+      "height": 959,
+      "alt": "Aerial view of a small town intersection with green fields, houses, and distant mountains.",
+      "sections": [
+        "getting-here"
+      ],
+      "group": "outside"
+    },
+    {
+      "file": "kitchen-appliances.webp",
+      "width": 1440,
+      "height": 962,
+      "alt": "White kitchen with electric stove, over range microwave, kettle, Keurig coffee maker, and sink under a window.",
+      "sections": [
+        "the-house",
+        "amenities"
+      ],
+      "group": "kitchen-dining"
+    }
+  ]
+}

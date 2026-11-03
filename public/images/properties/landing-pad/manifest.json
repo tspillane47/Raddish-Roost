@@ -1,0 +1,409 @@
+{
+  "hero": "exterior.webp",
+  "heroPhotos": [
+    "exterior.webp",
+    "living-room.webp",
+    "kitchen.webp"
+  ],
+  "groups": [
+    {
+      "id": "living",
+      "label": "Living Spaces",
+      "preview": [
+        "living-room.webp",
+        "living-room-tv.webp",
+        "hallway.webp"
+      ]
+    },
+    {
+      "id": "kitchen-dining",
+      "label": "Kitchen and Dining",
+      "preview": [
+        "kitchen-detail.webp",
+        "dining-kitchen.webp",
+        "kitchen-dining-wide.webp"
+      ]
+    },
+    {
+      "id": "bedrooms",
+      "label": "Bedrooms",
+      "preview": [
+        "bedroom-primary-pillows.webp",
+        "bedroom-primary.webp",
+        "bedroom-primary-bench.webp"
+      ]
+    },
+    {
+      "id": "bath-laundry",
+      "label": "Bath and Laundry",
+      "preview": [
+        "bathroom.webp",
+        "closet-hangers.webp",
+        "bathroom-vanity.webp"
+      ]
+    },
+    {
+      "id": "outside",
+      "label": "Outside and Around Town",
+      "preview": [
+        "entry-door.webp",
+        "exterior-side.webp",
+        "barnyard-pizza-sign.webp"
+      ]
+    }
+  ],
+  "photos": [
+    {
+      "file": "bedroom-primary-pillows.webp",
+      "width": 1440,
+      "height": 962,
+      "alt": "Close-up of navy bedding and pillows on a bed with a light upholstered headboard.",
+      "sections": [],
+      "group": "bedrooms"
+    },
+    {
+      "file": "bedroom-primary.webp",
+      "width": 1440,
+      "height": 962,
+      "alt": "Primary bedroom with a navy duvet, twin windows with white blinds, bedside lamps, and abstract art above the headboard.",
+      "sections": [
+        "the-house"
+      ],
+      "group": "bedrooms"
+    },
+    {
+      "file": "living-room.webp",
+      "width": 1440,
+      "height": 962,
+      "alt": "Bright living room with a grey L-shaped sectional, wood coffee table, patterned rug, and large windows.",
+      "sections": [],
+      "group": "living"
+    },
+    {
+      "file": "bedroom-primary-bench.webp",
+      "width": 1440,
+      "height": 962,
+      "alt": "Bedroom with navy bedding, a wood bench at the foot of the bed, and botanical prints on the wall.",
+      "sections": [],
+      "group": "bedrooms"
+    },
+    {
+      "file": "bathroom.webp",
+      "width": 1440,
+      "height": 962,
+      "alt": "White bathroom with a vanity, toilet, shower curtain, and dark towels on wall hooks.",
+      "sections": [
+        "the-house",
+        "house-guide"
+      ],
+      "group": "bath-laundry"
+    },
+    {
+      "file": "entry-door.webp",
+      "width": 1440,
+      "height": 962,
+      "alt": "Interior view of the white front door with an upper window pane, black doormat, and wall-mounted coat hooks.",
+      "sections": [
+        "check-in-checkout",
+        "getting-here"
+      ],
+      "group": "outside"
+    },
+    {
+      "file": "exterior-side.webp",
+      "width": 1440,
+      "height": 962,
+      "alt": "Side of the house with light grey siding, white-trimmed windows, and a manicured green hedge.",
+      "sections": [
+        "getting-here"
+      ],
+      "group": "outside"
+    },
+    {
+      "file": "kitchen-detail.webp",
+      "width": 1440,
+      "height": 962,
+      "alt": "Kitchen detail with a stainless kettle on the stovetop, wooden knife block, and olive oil on the counter.",
+      "sections": [
+        "the-house",
+        "house-guide"
+      ],
+      "group": "kitchen-dining"
+    },
+    {
+      "file": "bedroom-second.webp",
+      "width": 1440,
+      "height": 962,
+      "alt": "Second bedroom with a made bed, ceiling fan, twin windows, and a patterned rug on wood floors.",
+      "sections": [
+        "the-house"
+      ],
+      "group": "bedrooms"
+    },
+    {
+      "file": "bedroom-primary-lamp.webp",
+      "width": 1440,
+      "height": 962,
+      "alt": "Close view of navy pillows and a warm bedside lamp in the primary bedroom.",
+      "sections": [],
+      "group": "bedrooms"
+    },
+    {
+      "file": "bedroom-primary-wide.webp",
+      "width": 1440,
+      "height": 962,
+      "alt": "Wide view of the primary bedroom with navy bedding, botanical prints, nightstand lamp, and a bench at the foot of the bed.",
+      "sections": [],
+      "group": "bedrooms"
+    },
+    {
+      "file": "dining-kitchen.webp",
+      "width": 1440,
+      "height": 962,
+      "alt": "Dining table with black chairs and a bench opening to a kitchen with light wood cabinets and stainless appliances.",
+      "sections": [
+        "the-house"
+      ],
+      "group": "kitchen-dining"
+    },
+    {
+      "file": "barnyard-pizza-sign.webp",
+      "width": 1440,
+      "height": 962,
+      "alt": "Rustic Barnyard Wood Crafted Pizza sign on a red brick wall under string lights.",
+      "sections": [],
+      "group": "outside"
+    },
+    {
+      "file": "bedroom-twins-bedding.webp",
+      "width": 1440,
+      "height": 962,
+      "alt": "Close-up of blue and white patterned bedding with light blue accent pillows.",
+      "sections": [],
+      "group": "bedrooms"
+    },
+    {
+      "file": "bedroom-twins.webp",
+      "width": 1440,
+      "height": 962,
+      "alt": "Twin bedroom with matching blue and white bedding, a shared nightstand lamp, and a window with white blinds.",
+      "sections": [
+        "the-house"
+      ],
+      "group": "bedrooms"
+    },
+    {
+      "file": "kitchen-dining-wide.webp",
+      "width": 1440,
+      "height": 962,
+      "alt": "Open kitchen and dining area with a dark wood table, light cabinets, and a door to the outside.",
+      "sections": [],
+      "group": "kitchen-dining"
+    },
+    {
+      "file": "closet.webp",
+      "width": 1440,
+      "height": 962,
+      "alt": "Walk-in closet with a hanging rod, storage bins, wicker basket, and a folding luggage rack.",
+      "sections": [
+        "amenities"
+      ],
+      "group": "bedrooms"
+    },
+    {
+      "file": "living-room-tv.webp",
+      "width": 1440,
+      "height": 962,
+      "alt": "Living room with a grey sectional, wood coffee table, patterned rug, and a television on a wood media console.",
+      "sections": [
+        "wifi"
+      ],
+      "group": "living"
+    },
+    {
+      "file": "bedroom-primary-mirror.webp",
+      "width": 1440,
+      "height": 962,
+      "alt": "Bedroom corner with navy bedding, a full-length mirror, white door, and ceiling fan.",
+      "sections": [],
+      "group": "bedrooms"
+    },
+    {
+      "file": "bedroom-twins-2.webp",
+      "width": 1440,
+      "height": 962,
+      "alt": "Two twin beds with patterned bedding and a lamp between them under a window.",
+      "sections": [],
+      "group": "bedrooms"
+    },
+    {
+      "file": "bedroom-primary-door.webp",
+      "width": 1440,
+      "height": 962,
+      "alt": "View from the foot of the primary bed toward a white door and a small decorative mirror.",
+      "sections": [],
+      "group": "bedrooms"
+    },
+    {
+      "file": "bedroom-twins-wide.webp",
+      "width": 1440,
+      "height": 962,
+      "alt": "Wide twin bedroom with matching beds, a ceiling fan, and a dark privacy curtain at the window.",
+      "sections": [],
+      "group": "bedrooms"
+    },
+    {
+      "file": "bedroom-primary-headboard.webp",
+      "width": 1440,
+      "height": 962,
+      "alt": "Centered view of the primary bed with navy duvet, blue accent pillows, matching nightstands, and art above the headboard.",
+      "sections": [],
+      "group": "bedrooms"
+    },
+    {
+      "file": "closet-hangers.webp",
+      "width": 1440,
+      "height": 962,
+      "alt": "Open closet with black hangers on a wood-framed rod and a woven laundry basket on the floor.",
+      "sections": [
+        "amenities"
+      ],
+      "group": "bath-laundry"
+    },
+    {
+      "file": "dining-table.webp",
+      "width": 1440,
+      "height": 962,
+      "alt": "Black dining table with a bench and chairs, a white flower vase, and a landscape painting on the wall.",
+      "sections": [],
+      "group": "kitchen-dining"
+    },
+    {
+      "file": "kitchen.webp",
+      "width": 1440,
+      "height": 962,
+      "alt": "L-shaped kitchen with light wood cabinets, stainless appliances, and a window above the sink.",
+      "sections": [
+        "the-house",
+        "house-guide"
+      ],
+      "group": "kitchen-dining"
+    },
+    {
+      "file": "bedroom-primary-fan.webp",
+      "width": 1440,
+      "height": 962,
+      "alt": "Wide primary bedroom showing the bed, nightstands, and ceiling fan with light.",
+      "sections": [],
+      "group": "bedrooms"
+    },
+    {
+      "file": "exterior.webp",
+      "width": 1440,
+      "height": 962,
+      "alt": "Front of the white ranch house at dusk with a grey roof, garage door, and paved driveway.",
+      "sections": [
+        "getting-here",
+        "parking",
+        "check-in-checkout"
+      ],
+      "group": "outside"
+    },
+    {
+      "file": "hallway.webp",
+      "width": 1440,
+      "height": 962,
+      "alt": "Interior hallway with hardwood floors, a geometric runner rug, and white doors on both sides.",
+      "sections": [],
+      "group": "living"
+    },
+    {
+      "file": "living-room-media.webp",
+      "width": 1440,
+      "height": 962,
+      "alt": "Living area with a wall-mounted television above a rustic wood media console and a basket of blankets.",
+      "sections": [
+        "wifi"
+      ],
+      "group": "living"
+    },
+    {
+      "file": "backyard.webp",
+      "width": 1440,
+      "height": 962,
+      "alt": "Fenced grassy backyard with wooden privacy fencing and tall trees beyond.",
+      "sections": [
+        "amenities"
+      ],
+      "group": "outside"
+    },
+    {
+      "file": "guild-tavern-sign.webp",
+      "width": 1440,
+      "height": 962,
+      "alt": "Guild Tavern Wood Fired Grill sign silhouetted against an orange and purple sunset sky.",
+      "sections": [],
+      "group": "outside"
+    },
+    {
+      "file": "kitchen-dining-flowers.webp",
+      "width": 1440,
+      "height": 962,
+      "alt": "Kitchen with stainless appliances and a dining table set with a white vase of baby's breath near an exterior door.",
+      "sections": [],
+      "group": "kitchen-dining"
+    },
+    {
+      "file": "bedroom-primary-curtains.webp",
+      "width": 1440,
+      "height": 962,
+      "alt": "Bright bedroom with a dark blue comforter, white curtains, and an arched full-length mirror.",
+      "sections": [],
+      "group": "bedrooms"
+    },
+    {
+      "file": "mirabelles-sign.webp",
+      "width": 1440,
+      "height": 899,
+      "alt": "Outdoor Mirabelles Coffee Pastries sign mounted on light horizontal siding.",
+      "sections": [],
+      "group": "outside"
+    },
+    {
+      "file": "living-room-sofa.webp",
+      "width": 1440,
+      "height": 962,
+      "alt": "Cozy living room with a grey sectional, patterned pillows, rustic coffee table, and large windows.",
+      "sections": [],
+      "group": "living"
+    },
+    {
+      "file": "btv-airport.webp",
+      "width": 1440,
+      "height": 962,
+      "alt": "Burlington International Airport exterior at dusk with the BTV Burlington sign and a jet bridge.",
+      "sections": [
+        "getting-here"
+      ],
+      "group": "outside"
+    },
+    {
+      "file": "beta-technologies.webp",
+      "width": 1440,
+      "height": 962,
+      "alt": "BETA Technologies sign in front of a modern hangar near the South Burlington airfield.",
+      "sections": [],
+      "group": "outside"
+    },
+    {
+      "file": "bathroom-vanity.webp",
+      "width": 1440,
+      "height": 962,
+      "alt": "Bathroom vanity with an integrated sink, chrome faucet, soap dispenser, and dark towels on hooks.",
+      "sections": [
+        "the-house"
+      ],
+      "group": "bath-laundry"
+    }
+  ]
+}
