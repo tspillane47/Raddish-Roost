@@ -7,27 +7,26 @@ import { GUIDE_SECTIONS, isExtraGuidePage } from "@/lib/content/sections";
 import { SAMPLE_PROPERTIES } from "@/lib/content/sample-catalog";
 import { guideSectionFromPath, slugToReject } from "@/lib/routing/property-path";
 import { guideRedirectRequest } from "@/lib/routing/section-redirect";
+import { getSiteKey, guideSectionRequest, publishedSlugsRequest } from "@/lib/site";
 import { getSupabaseEnv } from "@/lib/supabase/env";
 import { propertySlugSchema } from "@/lib/validation/slug";
 
-const sampleSlugs = () => new Set(SAMPLE_PROPERTIES.map((property) => property.slug));
+const sampleSlugs = () =>
+  getSiteKey() === "roost" ? new Set(SAMPLE_PROPERTIES.map((property) => property.slug)) : new Set<string>();
 
 async function publishedSlugs(): Promise<Set<string>> {
   const env = getSupabaseEnv();
   if (!env) return sampleSlugs();
 
   try {
-    const response = await fetch(
-      `${env.url}/rest/v1/properties?select=slug&status=eq.published`,
-      {
-        headers: {
-          apikey: env.key,
-          Authorization: `Bearer ${env.key}`,
-          Accept: "application/json",
-        },
-        cache: "no-store",
+    const response = await fetch(publishedSlugsRequest(env.url, getSiteKey()), {
+      headers: {
+        apikey: env.key,
+        Authorization: `Bearer ${env.key}`,
+        Accept: "application/json",
       },
-    );
+      cache: "no-store",
+    });
     if (!response.ok) return sampleSlugs();
     const rows: unknown = await response.json();
     if (!Array.isArray(rows)) return sampleSlugs();
@@ -102,21 +101,17 @@ async function guideSectionMissing(pathname: string): Promise<boolean> {
   if (!env) return !GUIDE_SECTIONS.some((section) => section.slug === target.section);
 
   try {
-    const url = new URL(`${env.url}/rest/v1/guidebook_sections`);
-    url.searchParams.set("select", "slug,properties!inner(slug)");
-    url.searchParams.set("slug", `eq.${target.section}`);
-    url.searchParams.set("is_visible", "eq.true");
-    url.searchParams.set("published_at", "not.is.null");
-    url.searchParams.set("properties.slug", `eq.${target.property}`);
-    url.searchParams.set("properties.status", "eq.published");
-    const response = await fetch(url, {
-      headers: {
-        apikey: env.key,
-        Authorization: `Bearer ${env.key}`,
-        Accept: "application/json",
+    const response = await fetch(
+      guideSectionRequest(env.url, getSiteKey(), target.property, target.section),
+      {
+        headers: {
+          apikey: env.key,
+          Authorization: `Bearer ${env.key}`,
+          Accept: "application/json",
+        },
+        cache: "no-store",
       },
-      cache: "no-store",
-    });
+    );
     if (!response.ok) return false;
     const rows: unknown = await response.json();
     return Array.isArray(rows) && rows.length === 0;

@@ -644,6 +644,49 @@ describe("vrbo booking links migration", () => {
   });
 });
 
+describe("multi-site migrations", () => {
+  const sites = readFileSync(
+    path.join(root, "supabase/migrations/20261103120000_sites.sql"),
+    "utf8",
+  );
+  const voice = readFileSync(
+    path.join(root, "supabase/migrations/20261103120100_property_recommendation_voice.sql"),
+    "utf8",
+  );
+
+  it("adds sites, scopes properties and settings to roost, and keeps slug uniqueness global", () => {
+    expect(sites).toContain("create table if not exists public.sites");
+    expect(sites).toContain("'roost'");
+    expect(sites).toContain("'dad'");
+    expect(sites).toContain("c1000000-0000-4000-8000-000000000001");
+    expect(sites).toContain("c1000000-0000-4000-8000-000000000002");
+    expect(sites).toContain("add column if not exists site_id");
+    expect(sites).toContain("alter column site_id set not null");
+    expect(sites).toContain("primary key (site_id, key)");
+    expect(sites).toContain("raddish-roost");
+    expect(sites).toContain("shallot-chalet");
+    expect(sites).toContain("onion-ranch");
+    expect(sites).toContain("grant select (id, key, name, domain) on public.sites to anon");
+    expect(sites).toContain("notify pgrst, 'reload schema'");
+    expect(sites).not.toMatch(/drop table/i);
+    expect(sites).not.toContain("properties_slug_unique");
+    expect(sites).not.toContain("—");
+  });
+
+  it("copies host tips onto property links and preserves tip translations", () => {
+    expect(voice).toContain("add column if not exists host_note");
+    expect(voice).toContain("property_recommendations_id_unique");
+    expect(voice).toContain("set host_note = rec.host_note");
+    expect(voice).toContain("'property_recommendations'");
+    expect(voice).toContain("tip.field = 'host_note'");
+    expect(voice).toContain("on conflict (source_table, source_id, field, language) do nothing");
+    expect(voice).toContain("grant select (id, host_note) on public.property_recommendations to anon");
+    expect(voice).toContain("notify pgrst, 'reload schema'");
+    expect(voice).not.toMatch(/delete from public\.recommendations/i);
+    expect(voice).not.toContain("—");
+  });
+});
+
 describe("language migrations", () => {
   const michaels = readFileSync(
     path.join(root, "supabase/migrations/20261031180000_michaels_inactive.sql"),

@@ -2,6 +2,7 @@ import "server-only";
 
 import { connection } from "next/server";
 import { cache } from "react";
+import { linkDescription, linkHostTip } from "@/lib/content/link-voice";
 import { recommendationPhoto } from "@/lib/content/recommendation-photos";
 import {
   directionsUrl,
@@ -18,6 +19,7 @@ import { copyText } from "@/lib/i18n/copy";
 import { getLocale } from "@/lib/i18n/get-locale";
 import { loadCopy } from "@/lib/i18n/load-copy";
 import { t } from "@/lib/i18n/translate";
+import { getSiteKey, propertyBelongsToSite, siteIdForKey } from "@/lib/site";
 import { getSupabase } from "@/lib/supabase/server";
 import { propertySlugSchema } from "@/lib/validation/slug";
 
@@ -35,17 +37,26 @@ type RecommendationJoin = {
 };
 
 type LinkRow = {
+  id?: string | null;
   sort_order: number;
+  host_note?: string | null;
+  custom_description?: string | null;
   guest_tags?: string[] | null;
   recommendations: RecommendationJoin | RecommendationJoin[] | null;
 };
 
+const VOICE_COLUMNS =
+  "id, sort_order, host_note, custom_description, guest_tags, recommendations(id, category, subcategory, season, name, description, host_note, town, is_active, published_at)";
 const TAGGED_COLUMNS =
   "sort_order, guest_tags, recommendations(id, category, subcategory, season, name, description, host_note, town, is_active, published_at)";
 const FULL_COLUMNS =
   "sort_order, recommendations(id, category, subcategory, season, name, description, host_note, town, is_active, published_at)";
 const BASIC_COLUMNS =
   "sort_order, recommendations(id, category, season, name, description, host_note, is_active, published_at)";
+
+function activeSiteId() {
+  return siteIdForKey(getSiteKey());
+}
 
 export type ThingsResult =
   | { ok: true; propertySlug: string; propertyName: string; places: ThingToDo[] }
@@ -58,12 +69,27 @@ export const getThingsToDo = cache(async (slug: string): Promise<ThingsResult> =
   if (!supabase) return { ok: true, propertySlug: slug, propertyName: "This stay", places: [] };
 
   await connection();
-  const { data: property, error: propertyError } = await supabase
+  const siteKey = getSiteKey();
+  const scopedProperty = await supabase
     .from("properties")
-    .select("id, slug, name")
+    .select("id, site_id, slug, name")
     .eq("slug", slug)
     .eq("status", "published")
+    .eq("site_id", activeSiteId())
     .maybeSingle();
+
+  let property = scopedProperty.data;
+  let propertyError = scopedProperty.error;
+  if (propertyError && /site_id/.test(propertyError.message) && siteKey === "roost") {
+    const legacy = await supabase
+      .from("properties")
+      .select("id, slug, name")
+      .eq("slug", slug)
+      .eq("status", "published")
+      .maybeSingle();
+    property = legacy.data as typeof property;
+    propertyError = legacy.error;
+  }
 
   if (propertyError) {
     rethrowPrerenderAbort(propertyError);
@@ -71,16 +97,33 @@ export const getThingsToDo = cache(async (slug: string): Promise<ThingsResult> =
     return { ok: false, error: "unavailable" };
   }
   if (!property) return { ok: false, error: "not_found" };
+  if (
+    "site_id" in property &&
+    property.site_id &&
+    !propertyBelongsToSite({ site_id: property.site_id as string }, siteKey)
+  ) {
+    return { ok: false, error: "not_found" };
+  }
 
-  const tagged = await supabase
+  const voice = await supabase
     .from("property_recommendations")
-    .select(TAGGED_COLUMNS)
+    .select(VOICE_COLUMNS)
     .eq("property_id", property.id)
     .not("published_at", "is", null)
     .order("sort_order", { ascending: true });
 
-  let rows = (tagged.data ?? []) as unknown as LinkRow[];
-  let listError = tagged.error;
+  let rows = (voice.data ?? []) as unknown as LinkRow[];
+  let listError = voice.error;
+  if (listError && /host_note|custom_description|Could not find the 'id' column/i.test(listError.message)) {
+    const tagged = await supabase
+      .from("property_recommendations")
+      .select(TAGGED_COLUMNS)
+      .eq("property_id", property.id)
+      .not("published_at", "is", null)
+      .order("sort_order", { ascending: true });
+    rows = (tagged.data ?? []) as unknown as LinkRow[];
+    listError = tagged.error;
+  }
   if (listError && /guest_tags/.test(listError.message)) {
     const full = await supabase
       .from("property_recommendations")
@@ -115,7 +158,16 @@ export const getThingsToDo = cache(async (slug: string): Promise<ThingsResult> =
   const joined = rows.flatMap((row) => {
     const recommendation = Array.isArray(row.recommendations) ? row.recommendations[0] : row.recommendations;
     if (!recommendation?.is_active || !recommendation.published_at || !recommendation.name?.trim()) return [];
-    return [{ sort: row.sort_order, recommendation, tags: guestTags(row.guest_tags) }];
+    return [
+      {
+        sort: row.sort_order,
+        linkId: row.id ?? null,
+        linkHostNote: row.host_note ?? null,
+        linkDescription: row.custom_description ?? null,
+        recommendation,
+        tags: guestTags(row.guest_tags),
+      },
+    ];
   });
   const hasSections = stayHasThingSections(
     joined.map((item) => ({
@@ -134,13 +186,25 @@ export const getThingsToDo = cache(async (slug: string): Promise<ThingsResult> =
     if (!section) return [];
     const name = recommendation.name!.trim();
     const town = recommendation.town?.trim() || null;
+    const englishDescription = linkDescription({
+      customDescription: item.linkDescription,
+      recommendationDescription: recommendation.description,
+    });
+    const tip = linkHostTip({
+      linkId: item.linkId,
+      linkHostNote: item.linkHostNote,
+      recommendationId: recommendation.id,
+      recommendationHostNote: recommendation.host_note,
+    });
     return [
       {
         id: recommendation.id,
         name,
         town,
-        description: thingTip(copyText(copy, "recommendations", recommendation.id, "description", recommendation.description)),
-        tip: thingTip(copyText(copy, "recommendations", recommendation.id, "host_note", recommendation.host_note)),
+        description: thingTip(
+          copyText(copy, "recommendations", recommendation.id, "description", englishDescription),
+        ),
+        tip: thingTip(copyText(copy, tip.table, tip.id, "host_note", tip.english)),
         section,
         season: thingSeason(recommendation.season),
         tags: item.tags,
@@ -175,12 +239,27 @@ export const getPerfectDays = cache(async (slug: string): Promise<PerfectDay[]> 
   if (!supabase) return [];
 
   await connection();
-  const { data: property, error: propertyError } = await supabase
+  const siteKey = getSiteKey();
+  const scopedProperty = await supabase
     .from("properties")
-    .select("id")
+    .select("id, site_id")
     .eq("slug", slug)
     .eq("status", "published")
+    .eq("site_id", activeSiteId())
     .maybeSingle();
+
+  let property = scopedProperty.data;
+  let propertyError = scopedProperty.error;
+  if (propertyError && /site_id/.test(propertyError.message) && siteKey === "roost") {
+    const legacy = await supabase
+      .from("properties")
+      .select("id")
+      .eq("slug", slug)
+      .eq("status", "published")
+      .maybeSingle();
+    property = legacy.data as typeof property;
+    propertyError = legacy.error;
+  }
 
   if (propertyError) {
     rethrowPrerenderAbort(propertyError);
@@ -188,6 +267,13 @@ export const getPerfectDays = cache(async (slug: string): Promise<PerfectDay[]> 
     return [];
   }
   if (!property) return [];
+  if (
+    "site_id" in property &&
+    property.site_id &&
+    !propertyBelongsToSite({ site_id: property.site_id as string }, siteKey)
+  ) {
+    return [];
+  }
 
   const copy = await loadCopy();
   const locale = await getLocale();

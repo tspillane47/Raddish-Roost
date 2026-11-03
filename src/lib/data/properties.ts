@@ -28,13 +28,20 @@ import {
 } from "@/lib/data/map-content";
 import { getSupabase } from "@/lib/supabase/server";
 import { getSupabaseEnv } from "@/lib/supabase/env";
+import { getSiteKey, propertyBelongsToSite, siteIdForKey } from "@/lib/site";
 import { propertySlugSchema } from "@/lib/validation/slug";
 import type { ContentResult, PropertyResult, PropertySummary, SectionResult } from "@/types/content";
 
 const PROPERTY_COLUMNS =
-  "id, slug, name, tagline, description, welcome_title, welcome_message, check_in_time, check_out_time, parking_summary, hero_image_path, sort_order";
+  "id, site_id, slug, name, tagline, description, welcome_title, welcome_message, check_in_time, check_out_time, parking_summary, hero_image_path, sort_order";
 const PROPERTY_COLUMNS_WITH_PORTAL = `${PROPERTY_COLUMNS}, guest_portal_url`;
 const PROPERTY_COLUMNS_WITH_WEATHER = `${PROPERTY_COLUMNS_WITH_PORTAL}, weather_latitude, weather_longitude`;
+const PROPERTY_COLUMNS_LEGACY =
+  "id, slug, name, tagline, description, welcome_title, welcome_message, check_in_time, check_out_time, parking_summary, hero_image_path, sort_order";
+
+function activeSiteId() {
+  return siteIdForKey(getSiteKey());
+}
 
 function logSupabaseError(scope: string, message: string) {
   console.error(`[guidebook] ${scope}: ${message}`);
@@ -65,11 +72,20 @@ export const getBrandName = cache(async (): Promise<string> => {
   if (!supabase) return DEFAULT_BRAND_NAME;
   await whenServingRequest();
 
-  const { data, error } = await supabase
+  const scoped = await supabase
     .from("site_settings")
     .select("value")
     .eq("key", "brand_name")
+    .eq("site_id", activeSiteId())
     .maybeSingle();
+
+  let data = scoped.data;
+  let error = scoped.error;
+  if (error && /site_id/.test(error.message)) {
+    const legacy = await supabase.from("site_settings").select("value").eq("key", "brand_name").maybeSingle();
+    data = legacy.data;
+    error = legacy.error;
+  }
 
   if (error) {
     rethrowPrerenderAbort(error);
@@ -83,16 +99,36 @@ export const getBrandName = cache(async (): Promise<string> => {
 export const getPublishedProperties = cache(async (): Promise<ContentResult<PropertySummary[]>> => {
   const supabase = getSupabase();
   if (!supabase) {
+    if (getSiteKey() !== "roost") return { ok: true, source: "preview", data: [] };
     return { ok: true, source: "preview", data: previewProperties() };
   }
 
   await whenServingRequest();
   const env = getSupabaseEnv();
-  const { data, error } = await supabase
+  const siteKey = getSiteKey();
+  const scoped = await supabase
     .from("properties")
     .select(PROPERTY_COLUMNS)
     .eq("status", "published")
+    .eq("site_id", activeSiteId())
     .order("sort_order", { ascending: true });
+
+  let data = scoped.data;
+  let error = scoped.error;
+  if (error && /site_id/.test(error.message)) {
+    if (siteKey !== "roost") {
+      rethrowPrerenderAbort(error);
+      logSupabaseError("properties", error.message);
+      return { ok: false, error: "unavailable" };
+    }
+    const legacy = await supabase
+      .from("properties")
+      .select(PROPERTY_COLUMNS_LEGACY)
+      .eq("status", "published")
+      .order("sort_order", { ascending: true });
+    data = legacy.data as typeof data;
+    error = legacy.error;
+  }
 
   if (error) {
     rethrowPrerenderAbort(error);
@@ -100,7 +136,9 @@ export const getPublishedProperties = cache(async (): Promise<ContentResult<Prop
     return { ok: false, error: "unavailable" };
   }
 
-  const rows = (data ?? []) as PropertyRow[];
+  const rows = ((data ?? []) as (PropertyRow & { site_id?: string | null })[]).filter((row) =>
+    row.site_id ? propertyBelongsToSite(row, siteKey) : siteKey === "roost",
+  );
   const locale = await getLocale();
   const copy = await loadCopy(locale);
   return {
@@ -117,6 +155,7 @@ export const getPropertyGuide = cache(async (slug: string): Promise<PropertyResu
 
   const supabase = getSupabase();
   if (!supabase) {
+    if (getSiteKey() !== "roost") return { ok: false, error: "not_found" };
     const property = previewProperty(slug);
     if (!property) return { ok: false, error: "not_found" };
     return { ok: true, source: "preview", property };
@@ -124,21 +163,36 @@ export const getPropertyGuide = cache(async (slug: string): Promise<PropertyResu
 
   await whenServingRequest();
   const env = getSupabaseEnv();
+  const siteKey = getSiteKey();
   const full = await supabase
     .from("properties")
     .select(PROPERTY_COLUMNS_WITH_WEATHER)
     .eq("slug", slug)
     .eq("status", "published")
+    .eq("site_id", activeSiteId())
     .maybeSingle();
 
   let data = full.data;
   let error = full.error;
+  if (error && /site_id/.test(error.message) && siteKey === "roost") {
+    const unscoped = await supabase
+      .from("properties")
+      .select(
+        "id, slug, name, tagline, description, welcome_title, welcome_message, check_in_time, check_out_time, parking_summary, hero_image_path, sort_order, guest_portal_url, weather_latitude, weather_longitude",
+      )
+      .eq("slug", slug)
+      .eq("status", "published")
+      .maybeSingle();
+    data = unscoped.data as typeof data;
+    error = unscoped.error;
+  }
   if (error && /weather_latitude|weather_longitude/.test(error.message)) {
     const portal = await supabase
       .from("properties")
       .select(PROPERTY_COLUMNS_WITH_PORTAL)
       .eq("slug", slug)
       .eq("status", "published")
+      .eq("site_id", activeSiteId())
       .maybeSingle();
     data = portal.data ? { ...portal.data, weather_latitude: null, weather_longitude: null } : null;
     error = portal.error;
@@ -149,6 +203,7 @@ export const getPropertyGuide = cache(async (slug: string): Promise<PropertyResu
       .select(PROPERTY_COLUMNS)
       .eq("slug", slug)
       .eq("status", "published")
+      .eq("site_id", activeSiteId())
       .maybeSingle();
     data = basic.data
       ? { ...basic.data, guest_portal_url: null, weather_latitude: null, weather_longitude: null }
@@ -162,6 +217,13 @@ export const getPropertyGuide = cache(async (slug: string): Promise<PropertyResu
     return { ok: false, error: "unavailable" };
   }
   if (!data) return { ok: false, error: "not_found" };
+  if (
+    "site_id" in data &&
+    data.site_id &&
+    !propertyBelongsToSite({ site_id: data.site_id as string }, siteKey)
+  ) {
+    return { ok: false, error: "not_found" };
+  }
 
   const locale = await getLocale();
   const copy = await loadCopy(locale);
@@ -246,6 +308,7 @@ export const getGuideSection = cache(
 
     const supabase = getSupabase();
     if (!supabase) {
+      if (getSiteKey() !== "roost") return { ok: false, error: "not_found" };
       const section = previewGuideSection(propertySlug, sectionSlug);
       if (!section) return { ok: false, error: "not_found" };
       return { ok: true, source: "preview", section };
@@ -253,21 +316,34 @@ export const getGuideSection = cache(
 
     await whenServingRequest();
     const env = getSupabaseEnv();
+    const siteKey = getSiteKey();
     const fullProperty = await supabase
       .from("properties")
-      .select("id, slug, name, check_in_time, check_out_time, guest_portal_url, parking_summary")
+      .select("id, site_id, slug, name, check_in_time, check_out_time, guest_portal_url, parking_summary")
       .eq("slug", propertySlug)
       .eq("status", "published")
+      .eq("site_id", activeSiteId())
       .maybeSingle();
 
     let property = fullProperty.data;
     let propertyError = fullProperty.error;
+    if (propertyError && /site_id/.test(propertyError.message) && siteKey === "roost") {
+      const unscoped = await supabase
+        .from("properties")
+        .select("id, slug, name, check_in_time, check_out_time, guest_portal_url, parking_summary")
+        .eq("slug", propertySlug)
+        .eq("status", "published")
+        .maybeSingle();
+      property = unscoped.data as typeof property;
+      propertyError = unscoped.error;
+    }
     if (propertyError && /guest_portal_url/.test(propertyError.message)) {
       const basicProperty = await supabase
         .from("properties")
-        .select("id, slug, name, check_in_time, check_out_time, parking_summary")
+        .select("id, site_id, slug, name, check_in_time, check_out_time, parking_summary")
         .eq("slug", propertySlug)
         .eq("status", "published")
+        .eq("site_id", activeSiteId())
         .maybeSingle();
       property = basicProperty.data ? { ...basicProperty.data, guest_portal_url: null } : null;
       propertyError = basicProperty.error;
@@ -279,6 +355,13 @@ export const getGuideSection = cache(
       return { ok: false, error: "unavailable" };
     }
     if (!property) return { ok: false, error: "not_found" };
+    if (
+      "site_id" in property &&
+      property.site_id &&
+      !propertyBelongsToSite({ site_id: property.site_id as string }, siteKey)
+    ) {
+      return { ok: false, error: "not_found" };
+    }
 
     const locale = await getLocale();
     const copy = await loadCopy(locale);

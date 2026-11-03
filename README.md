@@ -22,19 +22,29 @@ cp .env.example .env.local
 
 `NEXT_PUBLIC_SUPABASE_URL` and `NEXT_PUBLIC_SUPABASE_ANON_KEY` come from Supabase → Project Settings → API. Use the anon public key. Do not put the service role key in this app.
 
-Until those values are set, the site shows a labeled preview of the three properties. After they are set, pages read published rows from Supabase. Restart the dev server after changing `.env.local`.
+`SITE_KEY` chooses which branded site this process serves. Use `roost` (the default when unset) or `dad`. Both sites share one Supabase project; each deployment only shows that site's properties.
 
-Set the same two variables in Vercel before you deploy, then redeploy if you change them. `NEXT_PUBLIC_SITE_URL` is reserved for printable QR codes in a later phase.
+Until those values are set, the roost site shows a labeled preview of the three properties. After they are set, pages read published rows from Supabase. Restart the dev server after changing `.env.local`.
+
+Set the same Supabase variables in Vercel before you deploy, then redeploy if you change them. Set `SITE_KEY` on each Vercel project. `NEXT_PUBLIC_SITE_URL` is reserved for printable QR codes in a later phase.
 
 ## Database
 
-Run these once, in order, in the Supabase SQL Editor (Dashboard → SQL → New query). Paste the whole file, then Run. Wait for success before the next file. Do not run a file twice on the same project.
+Run new migration files once, in order, in the Supabase SQL Editor (Dashboard → SQL → New query). Paste the whole file, then Run. Wait for success before the next file. Do not re-run old migrations that already succeeded on this project.
+
+The original bootstrap files (already applied on the live project) were:
 
 1. `supabase/migrations/20261028120000_schema.sql`
 2. `supabase/migrations/20261028120100_storage.sql`
 3. `supabase/migrations/20261028120200_seed.sql`
 
-The seed is sample structure. Copy is marked `[Sample]`. It does not include addresses, Wi-Fi passwords, phone numbers, or businesses.
+### Multi-site rule for future content SQL
+
+This repo serves more than one branded site from one Supabase project (`sites.key` values such as `roost` and `dad`). Future content migrations must be scoped by site:
+
+- Prefer `where site_id = (select id from public.sites where key = 'roost')` (or `dad`) when updating properties or site settings.
+- Recommendations are a shared place pool. Put host tips and custom descriptions on `property_recommendations`, not by rewriting shared `recommendations` rows by bare `name` when voice should differ per site.
+- Property slugs stay unique across every site.
 
 Door codes are not stored. Wi-Fi is hidden unless a property’s `property_wifi.is_public` value is true.
 
