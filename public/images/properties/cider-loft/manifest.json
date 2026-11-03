@@ -5,6 +5,7 @@
     "living-room.webp",
     "kitchen.webp"
   ],
+  "cardPhoto": "living-room.webp",
   "groups": [
     {
       "id": "living",

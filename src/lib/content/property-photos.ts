@@ -48,6 +48,7 @@ type ManifestGroup = {
 type Manifest = {
   hero?: unknown;
   heroPhotos?: unknown;
+  cardPhoto?: unknown;
   photos?: unknown;
   groups?: unknown;
 };
@@ -63,6 +64,7 @@ const DEFAULT_GROUPS: PhotoGroup[] = [
 const EMPTY = {
   hero: null,
   heroPhotos: [] as PropertyPhoto[],
+  cardPhoto: null as PropertyPhoto | null,
   photos: [] as PropertyPhoto[],
   groups: [] as PhotoGroup[],
 };
@@ -74,6 +76,7 @@ const EMPTY = {
 export function getPropertyPhotos(slug: string): {
   hero: PropertyPhoto | null;
   heroPhotos: PropertyPhoto[];
+  cardPhoto: PropertyPhoto | null;
   photos: PropertyPhoto[];
   groups: PhotoGroup[];
 } {
@@ -118,7 +121,9 @@ export function getPropertyPhotos(slug: string): {
   const hero = photos.find((photo) => photo.file === manifest.hero) ?? null;
   const listed = Array.isArray(manifest.heroPhotos) ? manifest.heroPhotos.filter(isPhotoFile) : [];
   const heroPhotos = chooseHeroPhotos(photos, listed, typeof manifest.hero === "string" ? manifest.hero : null);
-  return { hero, heroPhotos, photos, groups };
+  const cardPhoto =
+    isPhotoFile(manifest.cardPhoto) ? (photos.find((photo) => photo.file === manifest.cardPhoto) ?? null) : null;
+  return { hero, heroPhotos, cardPhoto, photos, groups };
 }
 
 /** Up to three banner photos. A short gallery uses what it has. */

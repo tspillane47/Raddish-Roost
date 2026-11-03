@@ -47,7 +47,7 @@ export function DadHome({
           preload
           fetchPriority="high"
           sizes="100vw"
-          className="aspect-[2/1] w-full object-cover object-center md:aspect-[1774/443]"
+          className="h-auto w-full"
         />
       </div>
 
@@ -119,9 +119,10 @@ function StayGroup({
 function DadStayCard({ property }: { property: PropertySummary }) {
   const florida = property.guestArea === "florida";
   const town = property.locality?.trim() || (florida ? "Sanibel Island" : "Vermont");
-  const localHero = getPropertyPhotos(property.slug).heroPhotos[0] ?? null;
-  const cardImage = localHero
-    ? { src: localHero.src, alt: localHero.alt, width: localHero.width, height: localHero.height, focus: localHero.focus }
+  const gallery = getPropertyPhotos(property.slug);
+  const cardPhoto = gallery.cardPhoto ?? gallery.heroPhotos[1] ?? gallery.heroPhotos[0] ?? null;
+  const cardImage = cardPhoto
+    ? { src: cardPhoto.src, alt: cardPhoto.alt, width: cardPhoto.width, height: cardPhoto.height, focus: cardPhoto.focus }
     : property.heroImageUrl
       ? { src: property.heroImageUrl, alt: property.heroImageAlt, width: 1200, height: 900, focus: "center" as const }
       : null;

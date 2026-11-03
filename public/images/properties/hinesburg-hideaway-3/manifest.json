@@ -5,6 +5,7 @@
     "living-room-tv.webp",
     "bedroom-queen.webp"
   ],
+  "cardPhoto": "living-room-tv.webp",
   "groups": [
     {
       "id": "living",

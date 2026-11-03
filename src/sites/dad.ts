@@ -25,9 +25,9 @@ export const dadSite: SiteConfig = {
   },
   hero: {
     src: "/sites/dad/hero.webp",
-    width: 1774,
-    height: 443,
-    alt: "Illustrated Vermont autumn mountains beside a Sanibel Island beach at sunset",
+    width: 2172,
+    height: 724,
+    alt: "Illustrated Vermont autumn mountains meeting a Sanibel Island beach at sunset",
   },
   logos: [],
   artworkOrder: [

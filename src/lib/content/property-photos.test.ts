@@ -176,6 +176,8 @@ describe("property photos", () => {
       expect(hero).not.toBeNull();
       expect(heroPhotos).toHaveLength(3);
       expect(heroPhotos[0]?.file).toBe(hero?.file);
+      expect(getPropertyPhotos(slug).cardPhoto).not.toBeNull();
+      expect(getPropertyPhotos(slug).cardPhoto?.group).toBe("living");
       expect(photos.map((photo) => photo.file).sort()).toEqual(files);
       expect(groups.map((group) => group.label)).toEqual(
         expect.arrayContaining([
@@ -197,7 +199,13 @@ describe("property photos", () => {
   });
 
   it("returns nothing for a slug with no photo folder", () => {
-    expect(getPropertyPhotos("../secrets")).toEqual({ hero: null, heroPhotos: [], photos: [], groups: [] });
+    expect(getPropertyPhotos("../secrets")).toEqual({
+      hero: null,
+      heroPhotos: [],
+      cardPhoto: null,
+      photos: [],
+      groups: [],
+    });
     expect(photosForSection("extra-cabin", "house-guide")).toEqual([]);
     expect(photoSets("extra-cabin")).toEqual([]);
   });

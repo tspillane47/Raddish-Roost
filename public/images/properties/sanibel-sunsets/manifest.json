@@ -5,6 +5,7 @@
     "living-room-balcony.webp",
     "living-room-seating.webp"
   ],
+  "cardPhoto": "living-room-balcony.webp",
   "groups": [
     {
       "id": "living",
