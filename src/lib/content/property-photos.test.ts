@@ -196,6 +196,17 @@ describe("property photos", () => {
         expect(photo.alt.toLowerCase()).not.toMatch(/keypad|lockbox|door code/);
       }
     }
+
+    const cider = getPropertyPhotos("cider-loft");
+    expect(cider.hero?.file).toBe("living-room-bar.webp");
+    expect(cider.heroPhotos.map((photo) => photo.file)).toEqual([
+      "living-room-bar.webp",
+      "living-room.webp",
+      "bedroom.webp",
+    ]);
+    expect(cider.cardPhoto?.file).toBe("living-room.webp");
+    expect(cider.heroPhotos.some((photo) => photo.file === "exterior.webp")).toBe(false);
+    expect(cider.photos.some((photo) => photo.file === "exterior.webp")).toBe(true);
   });
 
   it("returns nothing for a slug with no photo folder", () => {

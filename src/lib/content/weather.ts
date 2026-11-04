@@ -85,6 +85,11 @@ function isSnow(code: number): boolean {
   return (code >= 71 && code <= 77) || code === 85 || code === 86;
 }
 
+/** Freezing drizzle / freezing rain. Hero photos use snow for these. */
+function isFreezingPrecip(code: number): boolean {
+  return code === 56 || code === 57 || code === 66 || code === 67;
+}
+
 export function isWeatherScene(value: string): value is WeatherScene {
   return (WEATHER_SCENES as readonly string[]).includes(value);
 }
@@ -231,18 +236,21 @@ export function weatherView(
   };
 }
 
-export type HeroWeatherKind = "snow" | "rain" | "storm" | "fog" | "sun";
+export type HeroWeatherKind = "snow" | "rain" | "storm";
 
 /**
- * Snow, rain, storm, and fog always show.
- * Clear day and golden hour get sunshine.
- * Cloudy and night stay clean.
+ * Photo overlay only for precipitation.
+ * Storm and drizzle count as rain. Freezing rain / drizzle use snow.
+ * Clear, cloudy, fog, and night stay clean (no sun effect).
  */
-export function heroWeatherKind(view: Pick<WeatherView, "scene">): HeroWeatherKind | null {
-  if (view.scene === "snow" || view.scene === "rain" || view.scene === "storm" || view.scene === "fog") {
-    return view.scene;
-  }
-  if (view.scene === "clear-day" || view.scene === "golden") return "sun";
+export function heroWeatherKind(
+  view: Pick<WeatherView, "scene">,
+  code?: number,
+): HeroWeatherKind | null {
+  if (view.scene === "snow") return "snow";
+  if (code !== undefined && isFreezingPrecip(code)) return "snow";
+  if (view.scene === "storm") return "storm";
+  if (view.scene === "rain") return "rain";
   return null;
 }
 
@@ -250,9 +258,7 @@ export function heroWeatherKind(view: Pick<WeatherView, "scene">): HeroWeatherKi
 export function heroWeatherCount(kind: HeroWeatherKind): number {
   if (kind === "snow") return 18;
   if (kind === "storm") return 20;
-  if (kind === "rain") return 16;
-  if (kind === "sun") return 4;
-  return 0;
+  return 16;
 }
 
 export type WeatherClimate = "vermont" | "florida";

@@ -1,9 +1,9 @@
 {
-  "hero": "exterior.webp",
+  "hero": "living-room-bar.webp",
   "heroPhotos": [
-    "exterior.webp",
+    "living-room-bar.webp",
     "living-room.webp",
-    "kitchen.webp"
+    "bedroom.webp"
   ],
   "cardPhoto": "living-room.webp",
   "groups": [

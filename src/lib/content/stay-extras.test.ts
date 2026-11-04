@@ -88,19 +88,20 @@ describe("weather lines", () => {
     expect(previewWeather("clear-day").line).not.toContain("—");
   });
 
-  it("puts weather on the hero for snow, rain, storm, fog, and sun", () => {
+  it("puts weather on the hero only for rain and snow", () => {
     expect(heroWeatherKind(weatherView(previewWeather("clear-night")))).toBeNull();
     expect(heroWeatherKind(weatherView(previewWeather("cloudy")))).toBeNull();
-    expect(heroWeatherKind(weatherView(previewWeather("clear-day")))).toBe("sun");
-    expect(heroWeatherKind(weatherView(previewWeather("golden")))).toBe("sun");
+    expect(heroWeatherKind(weatherView(previewWeather("clear-day")))).toBeNull();
+    expect(heroWeatherKind(weatherView(previewWeather("golden")))).toBeNull();
+    expect(heroWeatherKind(weatherView(previewWeather("fog")))).toBeNull();
     expect(heroWeatherKind(weatherView(previewWeather("snow")))).toBe("snow");
     expect(heroWeatherKind(weatherView(previewWeather("rain")))).toBe("rain");
     expect(heroWeatherKind(weatherView(previewWeather("storm")))).toBe("storm");
-    expect(heroWeatherKind(weatherView(previewWeather("fog")))).toBe("fog");
+    expect(heroWeatherKind(weatherView({ code: 66, scene: "rain" }), 66)).toBe("snow");
+    expect(heroWeatherKind(weatherView({ code: 56, scene: "rain" }), 56)).toBe("snow");
     expect(heroWeatherCount("snow")).toBeLessThan(20);
     expect(heroWeatherCount("storm")).toBeGreaterThan(heroWeatherCount("rain"));
     expect(heroWeatherCount("storm")).toBeLessThanOrEqual(20);
-    expect(heroWeatherCount("sun")).toBeLessThanOrEqual(6);
     const css = readFileSync(
       path.resolve(__dirname, "../../components/property/hero-weather.css"),
       "utf8",
@@ -108,6 +109,9 @@ describe("weather lines", () => {
     expect(css).toContain("pointer-events: none");
     expect(css).toContain("prefers-reduced-motion");
     expect(css).toContain("display: none !important");
+    expect(css).not.toContain("hero-ray");
+    expect(css).not.toContain('data-hero-weather="sun"');
+    expect(css).not.toContain("hero-haze");
     expect(css).not.toContain("weather-flash");
     expect(css).not.toContain("hero-gust");
   });

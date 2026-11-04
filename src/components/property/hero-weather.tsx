@@ -6,7 +6,7 @@ import "./hero-weather.css";
 
 export function HeroWeather({ weather }: { weather: WeatherSnapshot | null }) {
   const view = weather ? weatherView(weather) : null;
-  const kind = view ? heroWeatherKind(view) : null;
+  const kind = view ? heroWeatherKind(view, weather?.code) : null;
   const [node, setNode] = useState<HTMLElement | null>(null);
   const [paused, setPaused] = useState(false);
 
@@ -37,20 +37,12 @@ export function HeroWeather({ weather }: { weather: WeatherSnapshot | null }) {
       ref={setNode}
       className="hero-weather pointer-events-none"
       data-hero-weather={kind}
-      data-warm={kind === "sun" && view.scene === "golden" ? "true" : undefined}
       data-paused={paused ? "true" : "false"}
       aria-hidden="true"
     >
-      {kind === "fog" ? (
-        <>
-          <span className="hero-haze" />
-          <span className="hero-haze hero-haze-2" />
-        </>
-      ) : (
-        pieces(kind).map((piece) => (
-          <span key={piece.key} className={piece.className} style={piece.style} />
-        ))
-      )}
+      {pieces(kind).map((piece) => (
+        <span key={piece.key} className={piece.className} style={piece.style} />
+      ))}
     </div>
   );
 }
@@ -65,16 +57,15 @@ function pieces(kind: HeroWeatherKind) {
 
 function classNameFor(kind: HeroWeatherKind): string {
   if (kind === "snow") return "hero-speck hero-speck-snow";
-  if (kind === "sun") return "hero-ray";
   return "hero-speck hero-speck-rain";
 }
 
 function styleFor(kind: HeroWeatherKind, index: number): CSSProperties {
   const falling = kind === "rain" || kind === "storm";
-  const duration = falling ? 0.7 + (index % 5) * 0.16 : kind === "sun" ? 6 + index * 1.4 : 10 + (index % 6) * 1.6;
+  const duration = falling ? 0.7 + (index % 5) * 0.16 : 10 + (index % 6) * 1.6;
   return {
-    "--left": kind === "sun" ? `${12 + index * 20}%` : `${(index * 17 + 4) % 100}%`,
-    "--top": kind === "sun" ? "-18%" : `${(index * 23) % 78}%`,
+    "--left": `${(index * 17 + 4) % 100}%`,
+    "--top": `${(index * 23) % 78}%`,
     "--delay": `${-(index % 10) * (falling ? 0.18 : 0.45)}s`,
     "--dur": `${duration}s`,
     "--sway": `${index % 2 === 0 ? 16 : -20}px`,

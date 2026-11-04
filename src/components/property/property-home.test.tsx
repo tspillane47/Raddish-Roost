@@ -96,7 +96,7 @@ describe("PropertyHome", () => {
 });
 
 describe("hero weather", () => {
-  it("lays snow over the photos and leaves clear photos alone", () => {
+  it("lays snow or rain over the photos and leaves clear photos alone", () => {
     const property = previewProperty("raddish-roost");
     const { unmount } = render(<PropertyHome property={property!} weather={previewWeather("snow")} />);
     const snow = document.querySelector("[data-hero-weather='snow']");
@@ -107,9 +107,12 @@ describe("hero weather", () => {
     expect(screen.getByRole("button", { name: /dark-shingled farmhouse/ })).toBeInTheDocument();
     unmount();
 
+    const rainRender = render(<PropertyHome property={property!} weather={previewWeather("rain")} />);
+    expect(document.querySelector("[data-hero-weather='rain']")).not.toBeNull();
+    rainRender.unmount();
+
     render(<PropertyHome property={property!} weather={previewWeather("clear-day")} />);
-    expect(document.querySelector("[data-hero-weather='sun']")).not.toBeNull();
-    expect(document.querySelector("[data-hero-weather='sun']")?.querySelectorAll(".hero-ray").length).toBeLessThanOrEqual(6);
+    expect(document.querySelector("[data-hero-weather]")).toBeNull();
   });
 });
 
