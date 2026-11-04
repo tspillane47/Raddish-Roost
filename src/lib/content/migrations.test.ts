@@ -673,6 +673,10 @@ describe("dad content migrations", () => {
     path.join(root, "supabase/migrations/20261104130000_dad_direct_expedia_booking.sql"),
     "utf8",
   );
+  const dadPhotoPlaces = readFileSync(
+    path.join(root, "supabase/migrations/20261104140000_dad_photo_places.sql"),
+    "utf8",
+  );
 
   it("adds guest_area without rewriting roost content", () => {
     expect(guestArea).toContain("guest_area");
@@ -810,6 +814,36 @@ describe("dad content migrations", () => {
     expect(dadDirectExpedia).not.toContain("raddish-roost");
     expect(dadDirectExpedia).not.toContain("—");
     expect(dadDirectExpedia).not.toMatch(/http:\/\//);
+  });
+
+  it("adds photo-spotted places, renames Public House, and pins Ranch Camp near the top", () => {
+    expect(dadPhotoPlaces).toContain("s.key = 'dad'");
+    expect(dadPhotoPlaces).toContain("Hinesburgh Public House");
+    expect(dadPhotoPlaces).toContain("10516 Route 116");
+    expect(dadPhotoPlaces).toContain("dog_friendly");
+    expect(dadPhotoPlaces).toContain("Good Times Café");
+    expect(dadPhotoPlaces).toContain("Parkside Café");
+    expect(dadPhotoPlaces).toContain("Lantman''s Market");
+    expect(dadPhotoPlaces).toContain("Vermont Smoke & Cure");
+    expect(dadPhotoPlaces).toContain("Shelburne Sugarworks");
+    expect(dadPhotoPlaces).toContain("Trillium Hill Farm");
+    expect(dadPhotoPlaces).toContain("Barbarian");
+    expect(dadPhotoPlaces).toContain("The Bench");
+    expect(dadPhotoPlaces).toContain("Woodland Baking & Coffee");
+    expect(dadPhotoPlaces).toContain("Stowe Cinema 3 Plex");
+    expect(dadPhotoPlaces).toContain("Barnyard Pizza");
+    expect(dadPhotoPlaces).toContain("Guild Tavern");
+    expect(dadPhotoPlaces).toContain("Mirabelles");
+    expect(dadPhotoPlaces).toContain("('Ranch Camp', 5,");
+    expect(dadPhotoPlaces).toContain("switchback-suite");
+    expect(dadPhotoPlaces).toContain("backyard-bungalow");
+    expect(dadPhotoPlaces).toContain("landing-pad");
+    expect(dadPhotoPlaces).toContain("content_translations");
+    expect(dadPhotoPlaces).toContain("host_note stays null");
+    expect(dadPhotoPlaces).toContain("Do not set recommendation photos from listing images");
+    expect(dadPhotoPlaces).not.toContain("raddish-roost");
+    expect(dadPhotoPlaces).not.toContain("—");
+    expect(dadPhotoPlaces).not.toMatch(/\/images\/properties\//);
   });
 });
 
