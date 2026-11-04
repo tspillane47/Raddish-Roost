@@ -1,16 +1,12 @@
 import "server-only";
 import { existsSync } from "node:fs";
 import path from "node:path";
+import { DAD_GETAWAY_HERO } from "@/sites/dad-hero";
 import type { SiteHero } from "@/sites/types";
 
 /** Prefer getaway-car art when present; otherwise keep the current dad hero. */
 export function resolveDadHero(fallback: SiteHero): SiteHero {
-  const getawayPath = path.join(process.cwd(), "public/sites/dad/hero-getaway.webp");
+  const getawayPath = path.join(process.cwd(), "public", DAD_GETAWAY_HERO.src.replace(/^\//, ""));
   if (!existsSync(getawayPath)) return fallback;
-  return {
-    src: "/sites/dad/hero-getaway.webp",
-    width: fallback.width,
-    height: fallback.height,
-    alt: "Vintage getaway-car travel poster for The Getaway Club",
-  };
+  return { ...DAD_GETAWAY_HERO };
 }

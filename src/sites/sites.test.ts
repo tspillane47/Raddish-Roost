@@ -1,5 +1,8 @@
+import { existsSync } from "node:fs";
+import path from "node:path";
 import { describe, expect, it } from "vitest";
 import { dadSite } from "@/sites/dad";
+import { DAD_GETAWAY_HERO, DAD_GETAWAY_HERO_FOCUS } from "@/sites/dad-hero";
 import { getSiteConfig, roostSite } from "@/sites";
 import { sectionLabel, siteLabel } from "@/sites/labels";
 
@@ -28,6 +31,14 @@ describe("site configs", () => {
     expect(dadSite.tagline).toBe("Make a clean getaway.");
     expect(dadSite.collectionBody).toContain("No questions asked.");
     expect(dadSite.hero.src).toBe("/sites/dad/hero.webp");
+    expect(DAD_GETAWAY_HERO.src).toBe("/sites/dad/hero-getaway.webp");
+    expect(DAD_GETAWAY_HERO.width).toBe(2172);
+    expect(DAD_GETAWAY_HERO.height).toBe(724);
+    expect(DAD_GETAWAY_HERO_FOCUS).toBe("58% 52%");
+    expect(
+      existsSync(path.join(process.cwd(), "public/sites/dad/hero-getaway.webp")),
+    ).toBe(true);
+    expect(existsSync(path.join(process.cwd(), "public/sites/dad/hero.webp"))).toBe(true);
     expect(dadSite.colors.forest).toBe("#1B4332");
     expect(dadSite.colors.cream).toBe("#E8DCC8");
     expect(dadSite.colors.terracotta).toBe("#C1121F");

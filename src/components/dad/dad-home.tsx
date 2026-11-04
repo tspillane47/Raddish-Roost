@@ -6,6 +6,7 @@ import { PineIcon, ShellIcon } from "@/components/dad/region-icons";
 import { PhotoPlaceholder } from "@/components/property/photo-placeholder";
 import { getPropertyPhotos, photoObjectPosition } from "@/lib/content/property-photos";
 import type { PropertySummary } from "@/types/content";
+import { DAD_GETAWAY_HERO_FOCUS } from "@/sites/dad-hero";
 import { resolveDadHero } from "@/sites/resolve-dad-hero";
 import type { SiteConfig } from "@/sites/types";
 
@@ -21,9 +22,11 @@ export function DadHome({
   const badge = `${properties.length} Hideouts · Vermont · Sanibel`;
   const staysLabel = site.labels?.en?.ourStays;
   const hero = resolveDadHero(site.hero);
+  const usingGetawayArt = hero.src.includes("hero-getaway");
 
   return (
     <>
+      {/* Real type sits above the artwork. The getaway art has no baked-in title. */}
       <section className="relative z-10 bg-forest px-5 pb-10 pt-10 text-center text-cream md:pb-12 md:pt-14">
         <div className="mx-auto w-full max-w-3xl">
           <p className="font-[family-name:var(--font-dad-typewriter)] text-xs uppercase tracking-[0.28em] text-cream/80 md:text-sm">
@@ -46,7 +49,7 @@ export function DadHome({
         </div>
       </section>
 
-      <div className="relative z-0 bg-charcoal">
+      <div className="relative z-0 w-full overflow-hidden bg-charcoal">
         <Image
           src={hero.src}
           alt={hero.alt}
@@ -55,7 +58,8 @@ export function DadHome({
           preload
           fetchPriority="high"
           sizes="100vw"
-          className="block h-auto w-full"
+          className="block h-auto w-full object-cover object-center"
+          style={usingGetawayArt ? { objectPosition: DAD_GETAWAY_HERO_FOCUS } : undefined}
         />
       </div>
 
