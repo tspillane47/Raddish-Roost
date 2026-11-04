@@ -22,13 +22,16 @@ export function DadHome({
     <>
       <section className="relative z-10 bg-forest px-5 pb-10 pt-10 text-center text-cream md:pb-12 md:pt-14">
         <div className="mx-auto w-full max-w-3xl">
-          <p className="font-[family-name:var(--font-dad-italic)] text-xl italic md:text-2xl">The</p>
-          <h1 className="mt-1 font-[family-name:var(--font-dad-display)] text-[clamp(2.25rem,7vw,4.75rem)] leading-[1.05] tracking-tight">
-            Far <span className="text-terracotta">&amp;</span> Familiar
-          </h1>
-          <p className="mt-3 text-[0.78rem] font-semibold uppercase tracking-[0.42em] text-cream/90">
-            Collection
+          <p className="font-[family-name:var(--font-dad-italic)] text-lg italic tracking-[0.08em] text-cream/85 md:text-xl">
+            Welcome to
           </p>
+          <h1 className="mt-2 font-[family-name:var(--font-dad-display)] text-[clamp(2.4rem,8vw,5.25rem)] leading-[0.95] tracking-tight uppercase">
+            The Getaway <span className="text-terracotta">Club</span>
+          </h1>
+          <div
+            className="mx-auto mt-5 h-1.5 w-24 rounded-sm bg-mustard"
+            aria-hidden="true"
+          />
           <p className="mx-auto mt-5 max-w-xl font-[family-name:var(--font-dad-italic)] text-xl italic text-cream/95 md:text-2xl">
             {site.tagline}
           </p>

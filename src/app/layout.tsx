@@ -1,6 +1,6 @@
 import type { CSSProperties } from "react";
 import type { Metadata, Viewport } from "next";
-import { DM_Serif_Display, Fraunces, Inter, Ultra, Work_Sans } from "next/font/google";
+import { Alfa_Slab_One, DM_Serif_Display, Fraunces, Inter, Work_Sans } from "next/font/google";
 import { SiteChrome } from "@/components/layout/site-chrome";
 import { LocaleProvider } from "@/lib/i18n/locale-context";
 import { getLocale } from "@/lib/i18n/get-locale";
@@ -26,7 +26,7 @@ const display = DM_Serif_Display({
   preload: false,
 });
 
-const dadDisplay = Ultra({
+const dadDisplay = Alfa_Slab_One({
   subsets: ["latin"],
   weight: "400",
   variable: "--font-dad-display",

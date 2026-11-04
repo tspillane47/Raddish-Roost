@@ -661,6 +661,10 @@ describe("dad content migrations", () => {
     path.join(root, "supabase/migrations/20261103150000_dad_vrbo_booking_links.sql"),
     "utf8",
   );
+  const dadCheckIn = readFileSync(
+    path.join(root, "supabase/migrations/20261103160000_dad_check_in_checkout.sql"),
+    "utf8",
+  );
 
   it("adds guest_area without rewriting roost content", () => {
     expect(guestArea).toContain("guest_area");
@@ -720,6 +724,32 @@ describe("dad content migrations", () => {
     expect(dadVrbo).not.toContain("channel = 'airbnb'");
     expect(dadVrbo).not.toMatch(/http:\/\//);
     expect(dadVrbo).not.toContain("—");
+  });
+
+  it("sets dad check-in times, arrival notes, checkout checklist, and late checkout portals", () => {
+    expect(dadCheckIn).toContain("check_in_time = '4:00 PM'");
+    expect(dadCheckIn).toContain("check_out_time = '10:00 AM'");
+    expect(dadCheckIn).toContain("Your personal entry code arrives in your Airbnb messages on the day of check-in.");
+    expect(dadCheckIn).toContain("Wash any dirty dishes.");
+    expect(dadCheckIn).toContain("Lock the door on your way out.");
+    expect(dadCheckIn).toContain("That''s it. We''ll handle the rest!");
+    expect(dadCheckIn).toContain("Left something behind?");
+    expect(dadCheckIn).toContain("Park in front of the garage");
+    expect(dadCheckIn).toContain("Apartment 3");
+    expect(dadCheckIn).toContain("Apartment 4");
+    expect(dadCheckIn).toContain(
+      "https://stay.hospitable.com/6aed4c3b-8103-4db3-853f-5fd092dd3e52/upgrade?_t=sc_su",
+    );
+    expect(dadCheckIn).toContain(
+      "https://stay.hospitable.com/46d5dd47-d2f7-465a-82e6-b0976953cb91/upgrade?_t=sc_su",
+    );
+    expect(dadCheckIn).toContain("The Getaway Club");
+    expect(dadCheckIn).toContain("content_translations");
+    expect(dadCheckIn).toContain("s.key = 'dad'");
+    expect(dadCheckIn).not.toContain("raddish-roost");
+    expect(dadCheckIn).not.toContain("—");
+    expect(dadCheckIn).not.toMatch(/door code [0-9]/i);
+    expect(dadCheckIn).not.toMatch(/\b\d{1,5}\s+\w+\s+(street|st|road|rd|avenue|ave|lane|ln)\b/i);
   });
 });
 

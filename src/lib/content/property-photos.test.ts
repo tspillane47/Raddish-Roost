@@ -154,7 +154,7 @@ describe("property photos", () => {
     }
   });
 
-  it("loads Far & Familiar property galleries from their folders", () => {
+  it("loads Getaway Club property galleries from their folders", () => {
     const dadSlugs = [
       "cider-loft",
       "switchback-suite",

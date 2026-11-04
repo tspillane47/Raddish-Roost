@@ -1,13 +1,13 @@
 import type { SiteConfig } from "@/sites/types";
 
 /**
- * The Far & Familiar Collection.
- * Palette and art follow public/sites/dad/far-and-familiar-concept.png.
+ * The Getaway Club (dad site).
+ * Retro club palette; hero art stays at public/sites/dad/hero.webp.
  */
 export const dadSite: SiteConfig = {
   key: "dad",
-  name: "The Far & Familiar Collection",
-  shortName: "Far & Familiar",
+  name: "The Getaway Club",
+  shortName: "Getaway Club",
   tagline: "Good places to get away.",
   domain: null,
   seoDescription: "Good places to get away. Vacation homes in Vermont and on Sanibel Island.",
@@ -17,9 +17,9 @@ export const dadSite: SiteConfig = {
   comingSoonTitle: "Homes are on the way",
   comingSoonBody: "Check back soon for guidebooks and local tips.",
   welcome: {
-    placeName: "Far & Familiar",
-    background: "#1F3A2E",
-    ink: "#F3EFE4",
+    placeName: "Getaway Club",
+    background: "#163A4A",
+    ink: "#F1EDE4",
     showSeasonIcons: false,
     useLodgeFonts: false,
   },
@@ -41,14 +41,14 @@ export const dadSite: SiteConfig = {
     "sanibel-sunsets",
   ],
   colors: {
-    forest: "#1F3A2E",
-    sage: "#5B8A8A",
-    cream: "#F3EFE4",
-    charcoal: "#2A2622",
-    beige: "#E5DFD2",
-    terracotta: "#C45C2A",
-    muted: "#5C6B5F",
-    mustard: "#C9A227",
+    forest: "#163A4A",
+    sage: "#4A7C7A",
+    cream: "#F1EDE4",
+    charcoal: "#1A2330",
+    beige: "#D9D2C5",
+    terracotta: "#E85D04",
+    muted: "#5B6B75",
+    mustard: "#F0C808",
   },
   icons: {
     favicon: "/sites/dad/favicon.png",
