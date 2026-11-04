@@ -121,6 +121,7 @@ export function BookingChoices({
 
 function bookingLabel(channel: BookingChannel, fallback: string, translate: (key: MessageKey) => string) {
   if (channel === "direct") return translate("bookDirect");
+  if (channel === "expedia") return translate("bookExpedia");
   return fallback;
 }
 
@@ -128,6 +129,7 @@ function bookingDetail(channel: BookingChannel, fallback: string, translate: (ke
   if (channel === "direct") return translate("bookDirectDetail");
   if (channel === "airbnb") return translate("bookAirbnbDetail");
   if (channel === "vrbo") return translate("bookVrboDetail");
+  if (channel === "expedia") return translate("bookExpediaDetail");
   return fallback;
 }
 

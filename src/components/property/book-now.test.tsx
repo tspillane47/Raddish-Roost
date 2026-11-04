@@ -69,10 +69,16 @@ describe("Book Now", () => {
             {
               channel: "direct",
               name: "Book Direct",
-              detail: "Book with us directly.",
+              detail: "Best way to book with us",
               url: "https://example.com/book",
             },
             airbnb,
+            {
+              channel: "expedia",
+              name: "Book on Expedia",
+              detail: "Book this stay on Expedia.",
+              url: "https://www.expedia.com/example",
+            },
           ],
         }}
       />,
@@ -80,8 +86,9 @@ describe("Book Now", () => {
 
     const links = screen.getAllByRole("link").filter((link) => link.getAttribute("target") === "_blank");
     expect(links.map((link) => link.textContent)).toEqual([
-      "Book DirectBook with us directly.",
+      "Book DirectBest way to book with us",
       "AirbnbBook this stay on Airbnb.",
+      "Book on ExpediaBook this stay on Expedia.",
     ]);
     fireEvent.click(links[0]!);
     expect(trackBookingClick).toHaveBeenCalledWith("onion-ranch", "direct");

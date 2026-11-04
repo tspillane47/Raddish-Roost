@@ -669,6 +669,10 @@ describe("dad content migrations", () => {
     path.join(root, "supabase/migrations/20261104120000_dad_sanibel_guide.sql"),
     "utf8",
   );
+  const dadDirectExpedia = readFileSync(
+    path.join(root, "supabase/migrations/20261104130000_dad_direct_expedia_booking.sql"),
+    "utf8",
+  );
 
   it("adds guest_area without rewriting roost content", () => {
     expect(guestArea).toContain("guest_area");
@@ -778,6 +782,34 @@ describe("dad content migrations", () => {
     expect(dadSanibel).not.toContain("raddish-roost");
     expect(dadSanibel).not.toContain("—");
     expect(dadSanibel).not.toMatch(/\b\d{1,5}\s+\w+\s+(street|st|road|rd|avenue|ave|lane|ln)\b/i);
+  });
+
+  it("adds dad direct and Expedia booking links plus Cider Loft house rules", () => {
+    expect(dadDirectExpedia).toContain("s.key = 'dad'");
+    expect(dadDirectExpedia).toContain("channel = 'direct'");
+    expect(dadDirectExpedia).toContain("channel = 'expedia'");
+    expect(dadDirectExpedia).toContain("'expedia'");
+    expect(dadDirectExpedia).toContain("https://vermontstays.hospitable.rentals/property/the-cider-loft");
+    expect(dadDirectExpedia).toContain(
+      "https://vermontstays.hospitable.rentals/property/switchback-suite-at-cady-hill-forest-trailhead",
+    );
+    expect(dadDirectExpedia).toContain(
+      "https://www.expedia.com/Waterbury-Center-Hotels-The-Cider-Loft.h113672317.Hotel-Information",
+    );
+    expect(dadDirectExpedia).toContain("https://www.expedia.com/h131678123.Hotel-Information");
+    expect(dadDirectExpedia).toContain("Book Direct");
+    expect(dadDirectExpedia).toContain("Book on Expedia");
+    expect(dadDirectExpedia).toContain("Dogs welcome: one dog of 30 pounds or less");
+    expect(dadDirectExpedia).toContain("automatic $250 fine");
+    expect(dadDirectExpedia).toContain("content_translations");
+    expect(dadDirectExpedia).toContain("cider-loft");
+    expect(dadDirectExpedia).toContain("'landing-pad'");
+    expect(dadDirectExpedia).not.toMatch(
+      /'landing-pad',\s*'https:\/\/vermontstays\.hospitable\.rentals/,
+    );
+    expect(dadDirectExpedia).not.toContain("raddish-roost");
+    expect(dadDirectExpedia).not.toContain("—");
+    expect(dadDirectExpedia).not.toMatch(/http:\/\//);
   });
 });
 

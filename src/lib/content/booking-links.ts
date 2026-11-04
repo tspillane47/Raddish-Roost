@@ -1,4 +1,4 @@
-export const BOOKING_CHANNELS = ["direct", "airbnb", "vrbo"] as const;
+export const BOOKING_CHANNELS = ["direct", "airbnb", "vrbo", "expedia"] as const;
 
 export type BookingChannel = (typeof BOOKING_CHANNELS)[number];
 
@@ -15,9 +15,10 @@ export type BookingRow = {
 };
 
 const COPY: Record<BookingChannel, { name: string; detail: string }> = {
-  direct: { name: "Book Direct", detail: "Book with us directly." },
+  direct: { name: "Book Direct", detail: "Best way to book with us" },
   airbnb: { name: "Airbnb", detail: "Book this stay on Airbnb." },
   vrbo: { name: "VRBO", detail: "Book this stay on VRBO." },
+  expedia: { name: "Book on Expedia", detail: "Book this stay on Expedia." },
 };
 
 export function toBookingLinks(rows: BookingRow[]): BookingLink[] {

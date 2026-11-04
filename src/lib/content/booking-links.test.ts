@@ -2,8 +2,9 @@ import { describe, expect, it } from "vitest";
 import { toBookingLinks } from "@/lib/content/booking-links";
 
 describe("booking links", () => {
-  it("keeps https links in direct, Airbnb, then VRBO order", () => {
+  it("keeps https links in direct, Airbnb, VRBO, then Expedia order", () => {
     const links = toBookingLinks([
+      { channel: "expedia", url: "https://www.expedia.com/stay" },
       { channel: "vrbo", url: "https://www.vrbo.com/stay" },
       { channel: "airbnb", url: "https://www.airbnb.com/rooms/1" },
       { channel: "direct", url: "https://example.com/book" },
@@ -12,9 +13,10 @@ describe("booking links", () => {
       { channel: "direct", url: "javascript:alert(1)" },
     ]);
 
-    expect(links.map((link) => link.channel)).toEqual(["direct", "airbnb", "vrbo"]);
-    expect(links.map((link) => link.name)).toEqual(["Book Direct", "Airbnb", "VRBO"]);
+    expect(links.map((link) => link.channel)).toEqual(["direct", "airbnb", "vrbo", "expedia"]);
+    expect(links.map((link) => link.name)).toEqual(["Book Direct", "Airbnb", "VRBO", "Book on Expedia"]);
     expect(links[0]?.url).toBe("https://example.com/book");
+    expect(links[0]?.detail).toBe("Best way to book with us");
     expect(links[1]?.detail).toBe("Book this stay on Airbnb.");
     expect(JSON.stringify(links)).not.toContain("Best rate");
   });
