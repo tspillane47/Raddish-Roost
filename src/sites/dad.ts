@@ -1,25 +1,29 @@
+import { dadLabelsEn, dadLabelsEs, dadLabelsFr } from "@/sites/dad-labels";
 import type { SiteConfig } from "@/sites/types";
 
 /**
  * The Getaway Club (dad site).
- * Retro club palette; hero art stays at public/sites/dad/hero.webp.
+ * Playful retro heist theme: stylish escape, never actually criminal.
+ * Hero prefers public/sites/dad/hero-getaway.webp when that file exists
+ * (resolved at render via resolveDadHero).
  */
 export const dadSite: SiteConfig = {
   key: "dad",
   name: "The Getaway Club",
   shortName: "Getaway Club",
-  tagline: "Good places to get away.",
+  tagline: "Make a clean getaway.",
   domain: null,
-  seoDescription: "Good places to get away. Vacation homes in Vermont and on Sanibel Island.",
-  footerBlurb: "Vacation homes in Vermont and on Sanibel Island, each with a clear guidebook.",
-  collectionHeading: "Explore Our Stays",
-  collectionBody: "Six homes in Vermont and two on Sanibel Island.",
-  comingSoonTitle: "Homes are on the way",
+  seoDescription:
+    "The Getaway Club. Make a clean getaway. Vacation hideouts in Vermont and on Sanibel Island.",
+  footerBlurb: "Eight hideouts across Vermont and Sanibel Island. Make a clean getaway.",
+  collectionHeading: "The Hideouts",
+  collectionBody: "Eight hideouts. Six in Vermont, two on Sanibel Island. No questions asked.",
+  comingSoonTitle: "Hideouts on the way",
   comingSoonBody: "Check back soon for guidebooks and local tips.",
   welcome: {
     placeName: "Getaway Club",
-    background: "#163A4A",
-    ink: "#F1EDE4",
+    background: "#1B4332",
+    ink: "#E8DCC8",
     showSeasonIcons: false,
     useLodgeFonts: false,
   },
@@ -41,14 +45,14 @@ export const dadSite: SiteConfig = {
     "sanibel-sunsets",
   ],
   colors: {
-    forest: "#163A4A",
-    sage: "#4A7C7A",
-    cream: "#F1EDE4",
-    charcoal: "#1A2330",
-    beige: "#D9D2C5",
-    terracotta: "#E85D04",
-    muted: "#5B6B75",
-    mustard: "#F0C808",
+    forest: "#1B4332",
+    sage: "#6B9B8E",
+    cream: "#E8DCC8",
+    charcoal: "#1A1A1A",
+    beige: "#D4C4A8",
+    terracotta: "#C1121F",
+    muted: "#5C5A55",
+    mustard: "#C9A227",
   },
   icons: {
     favicon: "/sites/dad/favicon.png",
@@ -58,9 +62,14 @@ export const dadSite: SiteConfig = {
     appleTouch: "/sites/dad/apple-touch-icon.png",
   },
   nav: [
-    { label: "Our Stays", href: "/#our-stays" },
+    { label: "The Hideouts", href: "/#our-stays", plain: "Our stays" },
     { label: "Vermont", href: "/#vermont" },
     { label: "Sanibel", href: "/#sanibel" },
   ],
-  bookCta: { label: "Book a Stay", href: "/#our-stays" },
+  bookCta: { label: "Plan Your Escape", href: "/#our-stays", plain: "Book now" },
+  labels: {
+    en: dadLabelsEn,
+    es: dadLabelsEs,
+    fr: dadLabelsFr,
+  },
 };

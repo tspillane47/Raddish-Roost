@@ -2,6 +2,7 @@
 
 import Link from "next/link";
 import { useState } from "react";
+import { LuggageTagIcon } from "@/components/dad/heist-icons";
 import { LanguageToggle } from "@/components/layout/language-toggle";
 import type { SiteNavItem } from "@/sites/types";
 
@@ -14,7 +15,7 @@ export function DadHeader({
   brandName: string;
   shortName: string;
   nav: SiteNavItem[];
-  bookCta: { label: string; href: string };
+  bookCta: { label: string; href: string; plain?: string };
 }) {
   const [open, setOpen] = useState(false);
 
@@ -36,16 +37,30 @@ export function DadHeader({
             <Link
               key={item.href}
               href={item.href}
-              className="inline-flex min-h-11 shrink-0 items-center px-2.5 text-[0.7rem] font-semibold uppercase tracking-[0.16em] text-forest/85 hover:text-forest focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-forest xl:px-3 xl:tracking-[0.18em]"
+              title={item.plain}
+              className="inline-flex min-h-11 shrink-0 flex-col items-center justify-center px-2.5 text-[0.7rem] font-semibold uppercase tracking-[0.16em] text-forest/85 hover:text-forest focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-forest xl:px-3 xl:tracking-[0.18em]"
             >
-              {item.label}
+              <span>{item.label}</span>
+              {item.plain ? (
+                <span className="mt-0.5 font-[family-name:var(--font-dad-typewriter)] text-[0.55rem] font-normal normal-case tracking-wide text-muted-foreground">
+                  {item.plain}
+                </span>
+              ) : null}
             </Link>
           ))}
           <Link
             href={bookCta.href}
-            className="ml-1 inline-flex min-h-11 shrink-0 items-center rounded-md bg-terracotta px-3.5 text-[0.7rem] font-semibold uppercase tracking-[0.14em] text-cream focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-forest xl:ml-2 xl:px-4"
+            className="ml-1 inline-flex min-h-11 shrink-0 flex-col items-center justify-center rounded-sm bg-terracotta px-3.5 text-[0.7rem] font-semibold uppercase tracking-[0.14em] text-cream focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-forest xl:ml-2 xl:px-4"
           >
-            {bookCta.label}
+            <span className="inline-flex items-center gap-1.5">
+              <LuggageTagIcon className="size-3.5 shrink-0" />
+              {bookCta.label}
+            </span>
+            {bookCta.plain ? (
+              <span className="mt-0.5 font-[family-name:var(--font-dad-typewriter)] text-[0.55rem] font-normal normal-case tracking-wide text-cream/85">
+                {bookCta.plain}
+              </span>
+            ) : null}
           </Link>
           <div className="ml-1 xl:ml-2">
             <LanguageToggle />
@@ -56,7 +71,7 @@ export function DadHeader({
           <LanguageToggle />
           <button
             type="button"
-            className="inline-flex min-h-11 min-w-11 items-center justify-center rounded-md border border-beige text-forest focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-forest"
+            className="inline-flex min-h-11 min-w-11 items-center justify-center rounded-sm border border-beige text-forest focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-forest"
             aria-expanded={open}
             aria-controls="dad-mobile-nav"
             onClick={() => setOpen((value) => !value)}
@@ -78,18 +93,31 @@ export function DadHeader({
               <Link
                 key={item.href}
                 href={item.href}
-                className="inline-flex min-h-11 items-center text-sm font-semibold uppercase tracking-[0.16em] text-forest"
+                className="inline-flex min-h-11 flex-col justify-center text-sm font-semibold uppercase tracking-[0.16em] text-forest"
                 onClick={() => setOpen(false)}
               >
-                {item.label}
+                <span>{item.label}</span>
+                {item.plain ? (
+                  <span className="font-[family-name:var(--font-dad-typewriter)] text-xs font-normal normal-case tracking-wide text-muted-foreground">
+                    {item.plain}
+                  </span>
+                ) : null}
               </Link>
             ))}
             <Link
               href={bookCta.href}
-              className="mt-2 inline-flex min-h-11 items-center justify-center rounded-md bg-terracotta px-4 text-sm font-semibold uppercase tracking-[0.16em] text-cream"
+              className="mt-2 inline-flex min-h-11 flex-col items-center justify-center rounded-sm bg-terracotta px-4 text-sm font-semibold uppercase tracking-[0.16em] text-cream"
               onClick={() => setOpen(false)}
             >
-              {bookCta.label}
+              <span className="inline-flex items-center gap-2">
+                <LuggageTagIcon className="size-4 shrink-0" />
+                {bookCta.label}
+              </span>
+              {bookCta.plain ? (
+                <span className="mt-0.5 font-[family-name:var(--font-dad-typewriter)] text-xs font-normal normal-case tracking-wide text-cream/85">
+                  {bookCta.plain}
+                </span>
+              ) : null}
             </Link>
           </nav>
         </div>

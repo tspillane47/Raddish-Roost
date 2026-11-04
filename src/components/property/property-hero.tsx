@@ -9,6 +9,7 @@ import type { PropertyPhoto } from "@/lib/content/property-photos";
 import type { WeatherSnapshot } from "@/lib/content/weather";
 import { useTranslate } from "@/lib/i18n/locale-context";
 import { isMarkedSample } from "@/lib/data/map-content";
+import { useSiteConfig } from "@/sites/site-context";
 import type { PropertyGuide } from "@/types/content";
 
 const FOREST = "#263F35";
@@ -25,8 +26,9 @@ export function PropertyHero({
   weather?: WeatherSnapshot | null;
 }) {
   const { t, tf } = useTranslate();
+  const site = useSiteConfig();
   const logo = brandLogo(property.slug);
-  const accent = logo?.accent ?? FOREST;
+  const accent = logo?.accent ?? (site.key === "dad" ? site.colors.forest : FOREST);
   const sample =
     isMarkedSample(property.welcomeMessage) ||
     isMarkedSample(property.description) ||

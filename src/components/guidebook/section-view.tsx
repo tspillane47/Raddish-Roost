@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { DuffelBagIcon, KeyholeIcon, VintageKeyIcon } from "@/components/dad/heist-icons";
 import { SectionBlocks } from "@/components/guidebook/section-blocks";
 import { StayTimes } from "@/components/guidebook/stay-times";
 import { CheckoutList } from "@/components/guidebook/checkout-list";
@@ -8,11 +9,13 @@ import { ThingsToDo } from "@/components/explore/things-to-do";
 import { BookingChoices } from "@/components/property/book-now";
 import { LateCheckout } from "@/components/property/late-checkout";
 import { PropertyGallery } from "@/components/property/property-gallery";
+import { SectionThemedHeading, SiteThemedHeading } from "@/components/site/themed-heading";
 import { MERGED_BLOCK_SORT } from "@/lib/content/sections";
 import { photosForSection } from "@/lib/content/property-photos";
 import type { PerfectDay, ThingToDo } from "@/lib/content/things-to-do";
 import { isMarkedSample } from "@/lib/data/map-content";
 import { Tx } from "@/lib/i18n/locale-context";
+import { getSiteConfig } from "@/sites";
 import type { GuideSectionDetail, HouseAmenity } from "@/types/content";
 
 export function SectionView({
@@ -26,6 +29,16 @@ export function SectionView({
   itineraries?: PerfectDay[];
   accent?: string;
 }) {
+  const site = getSiteConfig();
+  const dad = site.key === "dad";
+  const titleIcon =
+    dad && (section.slug === "check-in-checkout" || section.slug === "check-in") ? (
+      <VintageKeyIcon className="size-7 shrink-0 text-forest md:size-8" />
+    ) : dad && section.slug === "things-to-do" ? (
+      <DuffelBagIcon className="size-7 shrink-0 text-forest md:size-8" />
+    ) : dad && (section.slug === "contact" || section.slug === "getting-here") ? (
+      <KeyholeIcon className="size-7 shrink-0 text-forest md:size-8" />
+    ) : null;
   const sample =
     isMarkedSample(section.summary) ||
     section.blocks.some((block) => isMarkedSample(block.title) || blockHasSample(block)) ||
@@ -48,7 +61,13 @@ export function SectionView({
       </p>
       <header id={section.slug === "contact" ? "emergency" : undefined} className="mt-4 scroll-mt-[var(--site-header)]">
         <div className="flex items-start justify-between gap-3">
-          <h1 className="font-heading text-4xl leading-tight text-charcoal md:text-5xl">{section.title}</h1>
+          <SectionThemedHeading
+            as="h1"
+            sectionSlug={section.slug}
+            fallback={section.title}
+            className="font-heading text-4xl leading-tight text-charcoal md:text-5xl"
+            icon={titleIcon}
+          />
           {sample ? (
             <span className="mt-2 shrink-0 rounded-full border border-forest px-2 py-0.5 text-xs font-medium tracking-wide text-forest">
               <Tx k="sample" />
@@ -68,9 +87,12 @@ export function SectionView({
       </header>
       {section.slug === "stay-again" && section.bookings.length > 0 ? (
         <div className="mt-8">
-          <h2 className="font-heading text-3xl text-charcoal">
-            <Tx k="bookYourStay" />
-          </h2>
+          <SiteThemedHeading
+            as="h2"
+            labelKey="stayAgain"
+            fallback={<Tx k="bookYourStay" />}
+            className="font-heading text-3xl text-charcoal"
+          />
           <div className="mt-4">
             <BookingChoices propertySlug={section.propertySlug} bookings={section.bookings} />
           </div>

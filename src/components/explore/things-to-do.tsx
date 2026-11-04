@@ -15,8 +15,10 @@ import {
   type ThingSectionId,
   type ThingToDo,
 } from "@/lib/content/things-to-do";
-import { useTranslate } from "@/lib/i18n/locale-context";
+import { useLocale, useTranslate } from "@/lib/i18n/locale-context";
 import type { MessageKey } from "@/lib/i18n/messages";
+import { siteLabel } from "@/sites/labels";
+import { useSiteConfig } from "@/sites/site-context";
 
 export function ThingsToDo({
   places,
@@ -32,9 +34,18 @@ export function ThingsToDo({
   emptyMessage?: string;
 }) {
   const { t, tf } = useTranslate();
+  const locale = useLocale();
+  const perfect = siteLabel(useSiteConfig(), "perfectDay", locale);
   const days = itineraries.filter((day) => day.stops.length > 0);
   const sections = [
-    ...(days.length > 0 ? [{ id: "perfect_day" as const, label: t("perfectDay") }] : []),
+    ...(days.length > 0
+      ? [
+          {
+            id: "perfect_day" as const,
+            label: perfect ? `${perfect.themed} · ${perfect.plain}` : t("perfectDay"),
+          },
+        ]
+      : []),
     ...THING_SECTIONS.filter((section) => places.some((place) => place.section === section.id)).map((section) => ({
       ...section,
       label: t(SECTION_KEYS[section.id]),

@@ -1,5 +1,8 @@
 import Image from "next/image";
 import Link from "next/link";
+import type { ReactNode } from "react";
+import { DuffelBagIcon, KeyholeIcon, VintageKeyIcon } from "@/components/dad/heist-icons";
+import { SectionThemedHeading } from "@/components/site/themed-heading";
 import { Essentials } from "@/components/property/essentials";
 import { PropertyHero } from "@/components/property/property-hero";
 import { PropertyLookAround } from "@/components/property/property-look";
@@ -8,10 +11,23 @@ import { brandLogo } from "@/lib/content/brand-art";
 import { getPropertyPhotos, photosForSection, photoSets } from "@/lib/content/property-photos";
 import { Tx } from "@/lib/i18n/locale-context";
 import type { WeatherSnapshot } from "@/lib/content/weather";
+import { getSiteConfig } from "@/sites";
 import type { PropertyGuide } from "@/types/content";
 
 const THUMBNAIL_SECTIONS = new Set(["getting-here", "the-house", "house-guide", "amenities"]);
 const FOREST = "#263F35";
+
+function sectionIcon(slug: string, dad: boolean): ReactNode {
+  if (!dad) return null;
+  if (slug === "check-in-checkout" || slug === "check-in") {
+    return <VintageKeyIcon className="size-5 shrink-0 text-forest" />;
+  }
+  if (slug === "things-to-do") return <DuffelBagIcon className="size-5 shrink-0 text-forest" />;
+  if (slug === "contact" || slug === "getting-here") {
+    return <KeyholeIcon className="size-5 shrink-0 text-forest" />;
+  }
+  return null;
+}
 
 export function PropertyHome({
   property,
@@ -21,7 +37,8 @@ export function PropertyHome({
   weather?: WeatherSnapshot | null;
 }) {
   const gallery = getPropertyPhotos(property.slug);
-  const accent = brandLogo(property.slug)?.accent ?? FOREST;
+  const site = getSiteConfig();
+  const accent = brandLogo(property.slug)?.accent ?? (site.key === "dad" ? site.colors.forest : FOREST);
 
   return (
     <article className="pb-16">
@@ -70,7 +87,13 @@ export function PropertyHome({
                         </span>
                       ) : null}
                       <span className="min-w-0">
-                        <h3 className="font-heading text-2xl text-charcoal">{section.title}</h3>
+                        <SectionThemedHeading
+                          as="h3"
+                          sectionSlug={section.slug}
+                          fallback={section.title}
+                          className="font-heading text-2xl text-charcoal"
+                          icon={sectionIcon(section.slug, site.key === "dad")}
+                        />
                         {section.summary ? (
                           <p className="mt-2 line-clamp-3 text-base leading-7 text-muted-foreground">{section.summary}</p>
                         ) : null}

@@ -2,8 +2,10 @@
 
 import { useState } from "react";
 import { messages, type MessageKey } from "@/lib/i18n/messages";
-import { useTranslate } from "@/lib/i18n/locale-context";
+import { useLocale, useTranslate } from "@/lib/i18n/locale-context";
 import type { GuestNoteResult } from "@/lib/content/guest-note";
+import { siteLabel } from "@/sites/labels";
+import { useSiteConfig } from "@/sites/site-context";
 
 export function GuestNote({
   propertySlug,
@@ -17,14 +19,21 @@ export function GuestNote({
   compact?: boolean;
 }) {
   const { t } = useTranslate();
+  const locale = useLocale();
+  const themed = siteLabel(useSiteConfig(), "guestNote", locale);
   const [pending, setPending] = useState(false);
   const [result, setResult] = useState<GuestNoteResult | null>(null);
 
   return (
     <section className={compact ? "rounded-xl bg-beige/50 p-4" : "rounded-2xl bg-beige/70 p-5"}>
       <h2 className={compact ? "font-heading text-2xl text-charcoal" : "font-heading text-3xl text-charcoal"}>
-        {t("guestNoteTitle")}
+        {themed?.themed ?? t("guestNoteTitle")}
       </h2>
+      {themed ? (
+        <p className="mt-1 font-[family-name:var(--font-dad-typewriter,var(--font-inter))] text-sm tracking-wide text-muted-foreground">
+          {themed.plain}
+        </p>
+      ) : null}
       <p className="mt-2 text-base leading-7">{t("guestNoteText")}</p>
       {result?.status === "sent" ? (
         <p role="status" className="mt-4 text-base leading-7 text-charcoal">

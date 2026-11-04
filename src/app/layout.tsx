@@ -1,10 +1,11 @@
 import type { CSSProperties } from "react";
 import type { Metadata, Viewport } from "next";
-import { Alfa_Slab_One, DM_Serif_Display, Fraunces, Inter, Work_Sans } from "next/font/google";
+import { Alfa_Slab_One, DM_Serif_Display, Inter, Special_Elite } from "next/font/google";
 import { SiteChrome } from "@/components/layout/site-chrome";
 import { LocaleProvider } from "@/lib/i18n/locale-context";
 import { getLocale } from "@/lib/i18n/get-locale";
 import { getSiteConfig, sitePaletteStyle } from "@/sites";
+import { SiteProvider } from "@/sites/site-context";
 import "./globals.css";
 
 export const instant = false;
@@ -35,20 +36,10 @@ const dadDisplay = Alfa_Slab_One({
   preload: false,
 });
 
-const dadItalic = Fraunces({
+const dadTypewriter = Special_Elite({
   subsets: ["latin"],
-  weight: ["500", "600"],
-  style: ["normal", "italic"],
-  variable: "--font-dad-italic",
-  display: "swap",
-  adjustFontFallback: true,
-  preload: false,
-});
-
-const dadSans = Work_Sans({
-  subsets: ["latin"],
-  weight: ["500", "600", "700"],
-  variable: "--font-dad-sans",
+  weight: "400",
+  variable: "--font-dad-typewriter",
   display: "swap",
   adjustFontFallback: true,
   preload: false,
@@ -98,15 +89,25 @@ export default async function RootLayout({ children }: LayoutProps<"/">) {
   const site = getSiteConfig();
   const fontVars =
     site.key === "dad"
-      ? `${inter.variable} ${display.variable} ${dadDisplay.variable} ${dadItalic.variable} ${dadSans.variable}`
+      ? `${inter.variable} ${display.variable} ${dadDisplay.variable} ${dadTypewriter.variable}`
       : `${inter.variable} ${display.variable}`;
+  const palette = sitePaletteStyle(site.colors) as CSSProperties;
+  const style =
+    site.key === "dad"
+      ? ({
+          ...palette,
+          "--font-heading": "var(--font-dad-display), ui-serif, Georgia, serif",
+        } as CSSProperties)
+      : palette;
 
   return (
-    <html lang={locale} className={`${fontVars} antialiased`} style={sitePaletteStyle(site.colors) as CSSProperties}>
+    <html lang={locale} className={`${fontVars} antialiased`} style={style}>
       <body className="flex min-h-dvh flex-col">
-        <LocaleProvider locale={locale}>
-          <SiteChrome>{children}</SiteChrome>
-        </LocaleProvider>
+        <SiteProvider siteKey={site.key}>
+          <LocaleProvider locale={locale}>
+            <SiteChrome>{children}</SiteChrome>
+          </LocaleProvider>
+        </SiteProvider>
       </body>
     </html>
   );

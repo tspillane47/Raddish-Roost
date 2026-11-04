@@ -1,3 +1,4 @@
+import type { Locale } from "@/lib/i18n/locale";
 import type { SiteKey } from "@/lib/site";
 
 export type SitePalette = {
@@ -8,7 +9,7 @@ export type SitePalette = {
   beige: string;
   terracotta: string;
   muted: string;
-  /** Optional accent; dad uses mustard yellow from the concept art. */
+  /** Optional accent; dad uses brass gold. */
   mustard?: string;
 };
 
@@ -49,6 +50,38 @@ export type SiteWelcome = {
 export type SiteNavItem = {
   label: string;
   href: string;
+  /** Optional plain label shown under a themed nav label. */
+  plain?: string;
+};
+
+/** Themed headline + plain guest-facing label. */
+export type SiteLabelPair = {
+  themed: string;
+  plain: string;
+};
+
+/**
+ * Optional dad-style chrome labels. Roost leaves this unset and keeps normal names.
+ * Keys map to guidebook sections and shared UI spots.
+ */
+export type SiteLabelKey =
+  | "ourStays"
+  | "bookNow"
+  | "checkInCheckout"
+  | "gettingHere"
+  | "wifi"
+  | "theHouse"
+  | "houseRules"
+  | "thingsToDo"
+  | "perfectDay"
+  | "contact"
+  | "guestNote"
+  | "stayAgain"
+  | "checkoutIntro";
+
+export type SiteLabelSet = Partial<Record<SiteLabelKey, SiteLabelPair>> & {
+  /** Rubber-stamp text when checkout is complete. */
+  checkoutStamp?: string;
 };
 
 export type SiteConfig = {
@@ -70,5 +103,7 @@ export type SiteConfig = {
   colors: SitePalette;
   icons: SiteIcons;
   nav?: SiteNavItem[];
-  bookCta?: { label: string; href: string };
+  bookCta?: { label: string; href: string; plain?: string };
+  /** Localized themed labels. When missing, UI uses normal roost names. */
+  labels?: Partial<Record<Locale, SiteLabelSet>>;
 };

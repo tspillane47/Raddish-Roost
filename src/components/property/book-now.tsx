@@ -1,10 +1,13 @@
 "use client";
 
 import { useRef } from "react";
+import { LuggageTagIcon } from "@/components/dad/heist-icons";
 import { trackBookingClick } from "@/lib/analytics/booking-click";
 import type { BookingChannel, BookingLink } from "@/lib/content/booking-links";
-import { useTranslate } from "@/lib/i18n/locale-context";
+import { useLocale, useTranslate } from "@/lib/i18n/locale-context";
 import type { MessageKey } from "@/lib/i18n/messages";
+import { siteLabel } from "@/sites/labels";
+import { useSiteConfig } from "@/sites/site-context";
 
 const CREAM = "#F7F4ED";
 
@@ -19,18 +22,31 @@ export function BookNow({
 }) {
   const dialogRef = useRef<HTMLDialogElement>(null);
   const { t } = useTranslate();
+  const locale = useLocale();
+  const site = useSiteConfig();
+  const bookLabel = siteLabel(site, "bookNow", locale);
+  const stayAgain = siteLabel(site, "stayAgain", locale);
   if (bookings.length === 0) return null;
+  const rounded = site.key === "dad" ? "rounded-sm" : "rounded-full";
 
   return (
     <>
       <button
         type="button"
-        className="mt-5 inline-flex min-h-12 items-center justify-center rounded-full px-7 text-base font-semibold shadow-sm focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-forest"
+        className={`mt-5 inline-flex min-h-12 flex-col items-center justify-center ${rounded} px-7 text-base font-semibold shadow-sm focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-forest`}
         style={{ backgroundColor: accent, color: CREAM }}
         aria-haspopup="dialog"
         onClick={() => openDialog(dialogRef.current)}
       >
-        {t("bookNow")}
+        <span className="inline-flex items-center gap-2">
+          {site.key === "dad" ? <LuggageTagIcon className="size-4 shrink-0" /> : null}
+          {bookLabel?.themed ?? t("bookNow")}
+        </span>
+        {bookLabel ? (
+          <span className="mt-0.5 font-[family-name:var(--font-dad-typewriter,var(--font-inter))] text-xs font-normal normal-case tracking-wide opacity-90">
+            {bookLabel.plain}
+          </span>
+        ) : null}
       </button>
       <dialog
         ref={dialogRef}
@@ -48,7 +64,12 @@ export function BookNow({
           <div className="relative max-h-[85dvh] w-full overflow-y-auto rounded-t-3xl bg-cream pr-[max(1.25rem,env(safe-area-inset-right))] pl-[max(1.25rem,env(safe-area-inset-left))] pt-6 text-left shadow-xl md:max-w-md md:rounded-3xl md:p-6">
             <div className="flex items-start justify-between gap-4">
               <h2 id="book-your-stay" className="font-heading text-3xl text-charcoal">
-                {t("bookYourStay")}
+                {stayAgain?.themed ?? t("bookYourStay")}
+                {stayAgain ? (
+                  <span className="mt-1 block font-[family-name:var(--font-dad-typewriter,var(--font-inter))] text-sm font-normal tracking-wide text-muted-foreground">
+                    {stayAgain.plain}
+                  </span>
+                ) : null}
               </h2>
               <button
                 type="button"
