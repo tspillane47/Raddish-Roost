@@ -4,9 +4,10 @@ import Image from "next/image";
 import { useState } from "react";
 import { SectionIcon } from "@/components/explore/section-icon";
 import {
-  currentItinerarySeason,
   directionsUrl,
+  isClassicItinerarySeason,
   placesMatchingFilters,
+  preferredPerfectDay,
   THING_FILTERS,
   THING_SECTIONS,
   type PerfectDay,
@@ -100,6 +101,7 @@ export function ThingsToDo({
         <PerfectDayPanel days={days} accent={accent} today={today} />
       ) : (
         <div id={`things-panel-${current}`} role="tabpanel" aria-labelledby={`things-tab-${current}`}>
+          {current === "beaches" ? <BeachesParkingNote /> : null}
           {filtersAvailable || filters.length > 0 ? (
             <PlaceFilters
               filters={filters}
@@ -187,12 +189,31 @@ function PlaceFilters({
   );
 }
 
+function BeachesParkingNote() {
+  const { t } = useTranslate();
+  return (
+    <p className="mt-4 text-base leading-7">
+      {t("beachesParkingBefore")}
+      <a
+        href="https://www.mysanibel.com"
+        target="_blank"
+        rel="noopener noreferrer"
+        className="text-forest underline-offset-4 hover:underline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-forest"
+      >
+        {t("beachesParkingLink")}
+      </a>
+      {t("beachesParkingAfter")}
+    </p>
+  );
+}
+
 function PerfectDayPanel({ days, accent, today }: { days: PerfectDay[]; accent: string; today: Date }) {
   const { t } = useTranslate();
-  const preferred = currentItinerarySeason(today);
-  const initial = days.some((day) => day.season === preferred) ? preferred : (days[0]?.season ?? preferred);
-  const [season, setSeason] = useState<PerfectDaySeason>(initial);
-  const day = days.find((item) => item.season === season) ?? null;
+  const classic = days.every((day) => isClassicItinerarySeason(day.season));
+  const preferred = preferredPerfectDay(days, today) ?? days[0]?.season ?? "fall";
+  const [season, setSeason] = useState<PerfectDaySeason>(preferred);
+  const selected = days.some((day) => day.season === season) ? season : preferred;
+  const day = days.find((item) => item.season === selected) ?? null;
 
   return (
     <div
@@ -201,18 +222,26 @@ function PerfectDayPanel({ days, accent, today }: { days: PerfectDay[]; accent: 
       aria-labelledby="things-tab-perfect_day"
       className="mt-4 min-w-0"
     >
-      <div role="group" aria-label={t("season")} className="flex gap-2">
-        {(["fall", "winter"] as const).map((choice) => (
+      <div
+        role="group"
+        aria-label={classic ? t("season") : t("perfectDayOptions")}
+        className="flex flex-wrap gap-2"
+      >
+        {days.map((choice) => (
           <button
-            key={choice}
+            key={choice.season}
             type="button"
-            aria-pressed={season === choice}
-            onClick={() => setSeason(choice)}
+            aria-pressed={selected === choice.season}
+            onClick={() => setSeason(choice.season)}
             className={`inline-flex min-h-11 items-center rounded-full px-4 text-base focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-forest ${
-              season === choice ? "bg-forest text-cream" : "bg-beige/80 text-charcoal"
+              selected === choice.season ? "bg-forest text-cream" : "bg-beige/80 text-charcoal"
             }`}
           >
-            {choice === "fall" ? t("fall") : t("winter")}
+            {classic && isClassicItinerarySeason(choice.season)
+              ? choice.season === "fall"
+                ? t("fall")
+                : t("winter")
+              : choice.title}
           </button>
         ))}
       </div>
@@ -257,6 +286,7 @@ function PerfectDayPanel({ days, accent, today }: { days: PerfectDay[]; accent: 
 }
 
 const SECTION_KEYS: Record<ThingSectionId, MessageKey> = {
+  beaches: "beaches",
   eat: "eat",
   drink: "drink",
   coffee: "coffee",
@@ -266,6 +296,8 @@ const SECTION_KEYS: Record<ThingSectionId, MessageKey> = {
   bike: "bike",
   winter_fun: "winterFun",
   sweet_treats: "sweetTreats",
+  groceries: "groceries",
+  on_the_water: "onTheWater",
 };
 
 const FILTER_KEYS: Record<ThingFilterId, MessageKey> = {

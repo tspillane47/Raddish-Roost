@@ -23,7 +23,7 @@ export const GUIDE_SECTIONS = [
 ] as const;
 
 /** Pages that live at /{stay}/guide/... without a card in the guidebook grid. */
-export const EXTRA_GUIDE_PAGES = ["vermont-101"] as const;
+export const EXTRA_GUIDE_PAGES = ["vermont-101", "sanibel-101"] as const;
 
 export function isExtraGuidePage(slug: string): boolean {
   return (EXTRA_GUIDE_PAGES as readonly string[]).includes(slug);

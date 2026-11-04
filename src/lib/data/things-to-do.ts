@@ -72,7 +72,7 @@ export const getThingsToDo = cache(async (slug: string): Promise<ThingsResult> =
   const siteKey = getSiteKey();
   const scopedProperty = await supabase
     .from("properties")
-    .select("id, site_id, slug, name")
+    .select("id, site_id, slug, name, guest_area")
     .eq("slug", slug)
     .eq("status", "published")
     .eq("site_id", activeSiteId())
@@ -80,7 +80,7 @@ export const getThingsToDo = cache(async (slug: string): Promise<ThingsResult> =
 
   let property = scopedProperty.data;
   let propertyError = scopedProperty.error;
-  if (propertyError && /site_id/.test(propertyError.message) && siteKey === "roost") {
+  if (propertyError && /site_id|guest_area/.test(propertyError.message) && siteKey === "roost") {
     const legacy = await supabase
       .from("properties")
       .select("id, slug, name")
@@ -177,6 +177,8 @@ export const getThingsToDo = cache(async (slug: string): Promise<ThingsResult> =
   );
 
   const copy = await loadCopy();
+  const region =
+    "guest_area" in property && property.guest_area === "florida" ? ("Florida" as const) : ("Vermont" as const);
   const places = joined.flatMap((item): ThingToDo[] => {
     const recommendation = item.recommendation;
     const section = sectionForPlace(
@@ -208,7 +210,7 @@ export const getThingsToDo = cache(async (slug: string): Promise<ThingsResult> =
         section,
         season: thingSeason(recommendation.season),
         tags: item.tags,
-        directionsUrl: directionsUrl(name, town),
+        directionsUrl: directionsUrl(name, town, region),
         photo: recommendationPhoto(name),
       },
     ];
@@ -242,7 +244,7 @@ export const getPerfectDays = cache(async (slug: string): Promise<PerfectDay[]> 
   const siteKey = getSiteKey();
   const scopedProperty = await supabase
     .from("properties")
-    .select("id, site_id")
+    .select("id, site_id, guest_area")
     .eq("slug", slug)
     .eq("status", "published")
     .eq("site_id", activeSiteId())
@@ -250,7 +252,7 @@ export const getPerfectDays = cache(async (slug: string): Promise<PerfectDay[]> 
 
   let property = scopedProperty.data;
   let propertyError = scopedProperty.error;
-  if (propertyError && /site_id/.test(propertyError.message) && siteKey === "roost") {
+  if (propertyError && /site_id|guest_area/.test(propertyError.message) && siteKey === "roost") {
     const legacy = await supabase
       .from("properties")
       .select("id")
@@ -277,14 +279,17 @@ export const getPerfectDays = cache(async (slug: string): Promise<PerfectDay[]> 
 
   const copy = await loadCopy();
   const locale = await getLocale();
+  const region =
+    "guest_area" in property && property.guest_area === "florida" ? ("Florida" as const) : ("Vermont" as const);
   const { data, error } = await supabase
     .from("itineraries")
     .select(
-      "id, season, title, itinerary_stops(id, time_label, name, detail, sort_order, recommendations(id, category, subcategory, season, name, description, host_note, town, is_active, published_at))",
+      "id, season, title, sort_order, itinerary_stops(id, time_label, name, detail, sort_order, recommendations(id, category, subcategory, season, name, description, host_note, town, is_active, published_at))",
     )
     .eq("property_id", property.id)
     .eq("is_visible", true)
-    .not("published_at", "is", null);
+    .not("published_at", "is", null)
+    .order("sort_order", { ascending: true });
 
   if (error) {
     rethrowPrerenderAbort(error);
@@ -294,40 +299,45 @@ export const getPerfectDays = cache(async (slug: string): Promise<PerfectDay[]> 
     return [];
   }
 
-  return ((data ?? []) as unknown as DayJoin[]).flatMap((day) => {
-    if (day.season !== "fall" && day.season !== "winter") return [];
-    const stops = (day.itinerary_stops ?? [])
-      .slice()
-      .sort((a, b) => a.sort_order - b.sort_order)
-      .flatMap((stop) => {
-        const name = stop.name?.trim() ?? "";
-        const detail = stop.detail?.trim() ?? "";
-        if (!name || !detail) return [];
-        const recommendation = Array.isArray(stop.recommendations) ? stop.recommendations[0] : stop.recommendations;
-        return [
-          {
-            id: stop.id,
-            timeLabel: copyText(copy, "itinerary_stops", stop.id, "time_label", stop.time_label) ?? stop.time_label,
-            name,
-            detail: copyText(copy, "itinerary_stops", stop.id, "detail", detail) ?? detail,
-            place: toPlace(recommendation, copy),
-          },
-        ];
-      });
-    if (stops.length === 0) return [];
-    return [
-      {
-        season: day.season as PerfectDaySeason,
-        title: copyText(copy, "itineraries", day.id, "title", day.title)?.trim() || t(locale, "perfectDay"),
-        stops,
-      },
-    ];
-  });
+  type DayJoinOrdered = DayJoin & { sort_order?: number };
+  return ((data ?? []) as unknown as DayJoinOrdered[])
+    .slice()
+    .sort((a, b) => (a.sort_order ?? 0) - (b.sort_order ?? 0))
+    .flatMap((day) => {
+      if (!/^[a-z][a-z0-9_]{0,39}$/.test(day.season)) return [];
+      const stops = (day.itinerary_stops ?? [])
+        .slice()
+        .sort((a, b) => a.sort_order - b.sort_order)
+        .flatMap((stop) => {
+          const name = stop.name?.trim() ?? "";
+          const detail = stop.detail?.trim() ?? "";
+          if (!name || !detail) return [];
+          const recommendation = Array.isArray(stop.recommendations) ? stop.recommendations[0] : stop.recommendations;
+          return [
+            {
+              id: stop.id,
+              timeLabel: copyText(copy, "itinerary_stops", stop.id, "time_label", stop.time_label) ?? stop.time_label,
+              name,
+              detail: copyText(copy, "itinerary_stops", stop.id, "detail", detail) ?? detail,
+              place: toPlace(recommendation, copy, region),
+            },
+          ];
+        });
+      if (stops.length === 0) return [];
+      return [
+        {
+          season: day.season as PerfectDaySeason,
+          title: copyText(copy, "itineraries", day.id, "title", day.title)?.trim() || t(locale, "perfectDay"),
+          stops,
+        },
+      ];
+    });
 });
 
 function toPlace(
   recommendation: RecommendationJoin | null | undefined,
   copy: Awaited<ReturnType<typeof loadCopy>>,
+  region: "Vermont" | "Florida" = "Vermont",
 ): ThingToDo | null {
   if (!recommendation?.is_active || !recommendation.published_at || !recommendation.name?.trim()) return null;
   const section = sectionForPlace(
@@ -344,7 +354,7 @@ function toPlace(
     tip: thingTip(copyText(copy, "recommendations", recommendation.id, "host_note", recommendation.host_note)),
     section: section ?? "see",
     season: thingSeason(recommendation.season),
-    directionsUrl: directionsUrl(name, town),
+    directionsUrl: directionsUrl(name, town, region),
     photo: recommendationPhoto(name),
   };
 }

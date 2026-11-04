@@ -1,8 +1,9 @@
-import { Bike, Coffee, IceCreamCone, Mountain, Snowflake, Utensils, Wine } from "lucide-react";
+import { Bike, Coffee, IceCreamCone, Mountain, ShoppingBasket, Snowflake, Utensils, Waves, Wine } from "lucide-react";
 import type { ThingSectionId } from "@/lib/content/things-to-do";
 
 export function SectionIcon({ id, className = "size-7" }: { id: ThingSectionId; className?: string }) {
   const props = { className, "aria-hidden": true as const, strokeWidth: 1.75 };
+  if (id === "beaches") return <Waves {...props} />;
   if (id === "eat") return <Utensils {...props} />;
   if (id === "drink") return <Wine {...props} />;
   if (id === "coffee") return <Coffee {...props} />;
@@ -11,6 +12,8 @@ export function SectionIcon({ id, className = "size-7" }: { id: ThingSectionId; 
   if (id === "hike") return <HikingBoot className={className} />;
   if (id === "bike") return <Bike {...props} />;
   if (id === "winter_fun") return <Snowflake {...props} />;
+  if (id === "groceries") return <ShoppingBasket {...props} />;
+  if (id === "on_the_water") return <Kayak className={className} />;
   return <IceCreamCone {...props} />;
 }
 
@@ -45,6 +48,26 @@ function HikingBoot({ className }: { className: string }) {
         strokeLinejoin="round"
       />
       <path d="M8 8.2h4.4" stroke="currentColor" strokeWidth="1.75" strokeLinecap="round" />
+    </svg>
+  );
+}
+
+function Kayak({ className }: { className: string }) {
+  return (
+    <svg viewBox="0 0 24 24" className={className} aria-hidden="true" fill="none">
+      <path
+        d="M3.5 13.5c2.8-1.4 5.8-2.1 8.5-2.1s5.7.7 8.5 2.1"
+        stroke="currentColor"
+        strokeWidth="1.75"
+        strokeLinecap="round"
+      />
+      <path
+        d="M4 15.2c2.6 1.1 5.3 1.6 8 1.6s5.4-.5 8-1.6"
+        stroke="currentColor"
+        strokeWidth="1.75"
+        strokeLinecap="round"
+      />
+      <path d="M12 7.5v6.2M9.5 9.2 12 11l2.5-1.8" stroke="currentColor" strokeWidth="1.75" strokeLinecap="round" strokeLinejoin="round" />
     </svg>
   );
 }

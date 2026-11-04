@@ -665,6 +665,10 @@ describe("dad content migrations", () => {
     path.join(root, "supabase/migrations/20261103160000_dad_check_in_checkout.sql"),
     "utf8",
   );
+  const dadSanibel = readFileSync(
+    path.join(root, "supabase/migrations/20261104120000_dad_sanibel_guide.sql"),
+    "utf8",
+  );
 
   it("adds guest_area without rewriting roost content", () => {
     expect(guestArea).toContain("guest_area");
@@ -750,6 +754,30 @@ describe("dad content migrations", () => {
     expect(dadCheckIn).not.toContain("—");
     expect(dadCheckIn).not.toMatch(/door code [0-9]/i);
     expect(dadCheckIn).not.toMatch(/\b\d{1,5}\s+\w+\s+(street|st|road|rd|avenue|ave|lane|ln)\b/i);
+  });
+
+  it("adds a shared Sanibel guide for both Florida condos", () => {
+    expect(dadSanibel).toContain("s.key = 'dad'");
+    expect(dadSanibel).toContain("tennisplace-a35");
+    expect(dadSanibel).toContain("sanibel-sunsets");
+    expect(dadSanibel).toContain("Bowman''s Beach");
+    expect(dadSanibel).toContain('J.N. "Ding" Darling National Wildlife Refuge');
+    expect(dadSanibel).toContain("'beaches'");
+    expect(dadSanibel).toContain("'groceries'");
+    expect(dadSanibel).toContain("'on_the_water'");
+    expect(dadSanibel).toContain("beach_day");
+    expect(dadSanibel).toContain("nature_day");
+    expect(dadSanibel).toContain("captiva_day");
+    expect(dadSanibel).toContain("The Perfect Beach Day");
+    expect(dadSanibel).toContain("rainy_day");
+    expect(dadSanibel).toContain("kid_friendly");
+    expect(dadSanibel).toContain(" Florida");
+    expect(dadSanibel).toContain("content_translations");
+    expect(dadSanibel).toContain("host_note stays null");
+    expect(dadSanibel).not.toContain("walkable");
+    expect(dadSanibel).not.toContain("raddish-roost");
+    expect(dadSanibel).not.toContain("—");
+    expect(dadSanibel).not.toMatch(/\b\d{1,5}\s+\w+\s+(street|st|road|rd|avenue|ave|lane|ln)\b/i);
   });
 });
 

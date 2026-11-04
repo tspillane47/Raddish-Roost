@@ -104,6 +104,48 @@
       "author": "Ken Gallager",
       "license": "CC BY-SA 4.0",
       "attributionRequired": true
+    },
+    {
+      "file": "blind-pass-beach.webp",
+      "sourceUrl": "https://commons.wikimedia.org/wiki/File:Blind_Pass_Florida.JPG",
+      "author": "Fredlyfish4",
+      "license": "CC BY-SA 4.0",
+      "attributionRequired": true
+    },
+    {
+      "file": "sanibel-causeway.webp",
+      "sourceUrl": "https://commons.wikimedia.org/wiki/File:Fort_Myers_to_Sanibel_Island_(51114575271).jpg",
+      "author": "G. Lamar",
+      "license": "CC BY 2.0",
+      "attributionRequired": true
+    },
+    {
+      "file": "shell-museum.webp",
+      "sourceUrl": "https://commons.wikimedia.org/wiki/File:BMNSM_local_shells_exhibit.JPG",
+      "author": "Invertzoo",
+      "license": "CC BY-SA 4.0",
+      "attributionRequired": true
+    },
+    {
+      "file": "bowmans-beach.webp",
+      "sourceUrl": "https://commons.wikimedia.org/wiki/File:Bowman%27s_Beach_Sanibel.JPG",
+      "author": "Fredlyfish4",
+      "license": "CC BY-SA 4.0",
+      "attributionRequired": true
+    },
+    {
+      "file": "sanibel-lighthouse.webp",
+      "sourceUrl": "https://commons.wikimedia.org/wiki/File:Sanibel_Island_Light.jpg",
+      "author": "Zachary Roper",
+      "license": "CC BY-SA 3.0",
+      "attributionRequired": true
+    },
+    {
+      "file": "ding-darling.webp",
+      "sourceUrl": "https://commons.wikimedia.org/wiki/File:Ding_Darling_National_Wildlife_Refuge.jpg",
+      "author": "Quadell",
+      "license": "CC BY 3.0",
+      "attributionRequired": true
     }
   ]
 }

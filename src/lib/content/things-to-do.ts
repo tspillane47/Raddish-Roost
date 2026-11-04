@@ -1,4 +1,5 @@
 export const THING_SECTIONS = [
+  { id: "beaches", label: "Beaches" },
   { id: "eat", label: "Eat" },
   { id: "drink", label: "Drink" },
   { id: "coffee", label: "Coffee" },
@@ -8,13 +9,16 @@ export const THING_SECTIONS = [
   { id: "bike", label: "Bike" },
   { id: "winter_fun", label: "Winter Fun" },
   { id: "sweet_treats", label: "Sweet Treats" },
+  { id: "groceries", label: "Groceries" },
+  { id: "on_the_water", label: "On the Water" },
 ] as const;
 
 export type ThingSectionId = (typeof THING_SECTIONS)[number]["id"];
 
 export type ThingSeason = "spring" | "summer" | "fall" | "winter";
 
-export type PerfectDaySeason = "fall" | "winter";
+/** Classic Vermont seasons, or a named option key like beach_day. */
+export type PerfectDaySeason = string;
 
 export type PerfectDayStop = {
   id: string;
@@ -30,11 +34,27 @@ export type PerfectDay = {
   stops: PerfectDayStop[];
 };
 
+export type DirectionsRegion = "Vermont" | "Florida";
+
+export function isClassicItinerarySeason(season: string): season is "fall" | "winter" {
+  return season === "fall" || season === "winter";
+}
+
 /** Fall is September through November. Winter is December through March. Other months use Fall for now. */
-export function currentItinerarySeason(date: Date): PerfectDaySeason {
+export function currentItinerarySeason(date: Date): "fall" | "winter" {
   const month = date.getMonth();
   if (month === 11 || month <= 2) return "winter";
   return "fall";
+}
+
+/** Prefer the seasonal day when present; otherwise the first named option. */
+export function preferredPerfectDay(days: PerfectDay[], today: Date): PerfectDaySeason | null {
+  if (days.length === 0) return null;
+  if (days.every((day) => isClassicItinerarySeason(day.season))) {
+    const preferred = currentItinerarySeason(today);
+    if (days.some((day) => day.season === preferred)) return preferred;
+  }
+  return days[0]?.season ?? null;
 }
 
 export const THING_FILTERS = [
@@ -89,8 +109,12 @@ export function seasonLabel(season: ThingSeason | null): string | null {
   return season ? SEASON_LABELS[season] : null;
 }
 
-export function directionsUrl(name: string, town: string | null): string {
-  const query = [name.trim(), town?.trim(), "Vermont"].filter((part) => part && part.length > 0).join(" ");
+export function directionsUrl(
+  name: string,
+  town: string | null,
+  region: DirectionsRegion = "Vermont",
+): string {
+  const query = [name.trim(), town?.trim(), region].filter((part) => part && part.length > 0).join(" ");
   return `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(query)}`;
 }
 

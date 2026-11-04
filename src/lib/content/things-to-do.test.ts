@@ -4,11 +4,13 @@ import {
   currentItinerarySeason,
   directionsUrl,
   placesMatchingFilters,
+  preferredPerfectDay,
   sectionForPlace,
   stayHasThingSections,
   THING_SECTIONS,
   thingSeason,
   thingTip,
+  type PerfectDay,
   type ThingToDo,
 } from "@/lib/content/things-to-do";
 
@@ -21,6 +23,25 @@ describe("things to do", () => {
     expect(directionsUrl("The Reservoir", null)).toBe(
       "https://www.google.com/maps/search/?api=1&query=The%20Reservoir%20Vermont",
     );
+    expect(directionsUrl("Bowman's Beach", "Sanibel", "Florida")).toBe(
+      "https://www.google.com/maps/search/?api=1&query=Bowman's%20Beach%20Sanibel%20Florida",
+    );
+  });
+
+  it("prefers Fall/Winter seasonally, but keeps named options in order", () => {
+    const classic: PerfectDay[] = [
+      { season: "fall", title: "Our perfect day", stops: [] },
+      { season: "winter", title: "Our perfect day", stops: [] },
+    ];
+    expect(preferredPerfectDay(classic, new Date(2026, 9, 30))).toBe("fall");
+    expect(preferredPerfectDay(classic, new Date(2027, 0, 15))).toBe("winter");
+
+    const named: PerfectDay[] = [
+      { season: "beach_day", title: "The Perfect Beach Day", stops: [] },
+      { season: "nature_day", title: "The Nature Lover's Day", stops: [] },
+      { season: "captiva_day", title: "A Day on Captiva", stops: [] },
+    ];
+    expect(preferredPerfectDay(named, new Date(2026, 11, 1))).toBe("beach_day");
   });
 
   it("keeps a blank tip empty", () => {
@@ -52,6 +73,7 @@ describe("things to do", () => {
     expect(currentItinerarySeason(new Date(2027, 0, 15))).toBe("winter");
     expect(currentItinerarySeason(new Date(2027, 2, 31))).toBe("winter");
     expect(THING_SECTIONS.map((section) => section.id)).toEqual([
+      "beaches",
       "eat",
       "drink",
       "coffee",
@@ -61,7 +83,12 @@ describe("things to do", () => {
       "bike",
       "winter_fun",
       "sweet_treats",
+      "groceries",
+      "on_the_water",
     ]);
+    expect(sectionForPlace({ subcategory: "beaches", category: "outdoors" }, true)).toBe("beaches");
+    expect(sectionForPlace({ subcategory: "groceries", category: "shopping" }, true)).toBe("groceries");
+    expect(sectionForPlace({ subcategory: "on_the_water", category: "outdoors" }, true)).toBe("on_the_water");
   });
 });
 
@@ -113,6 +140,13 @@ describe("recommendation photos", () => {
     expect(recommendationPhoto("Cady Hill Forest")).toBeNull();
     expect(recommendationPhoto("Ben & Jerry's Factory")).toBeNull();
     expect(recommendationPhoto("Cold Hollow Cider Mill")).toBeNull();
+    expect(recommendationPhoto("Bowman's Beach")?.src).toBe("/images/recommendations/bowmans-beach.webp");
+    expect(recommendationPhoto("Bowman's Beach")?.credit?.author).toBe("Fredlyfish4");
+    expect(recommendationPhoto('J.N. "Ding" Darling National Wildlife Refuge')?.src).toBe(
+      "/images/recommendations/ding-darling.webp",
+    );
+    expect(recommendationPhoto("Turner Beach")).toBeNull();
+    expect(recommendationPhoto("Island biking")).toBeNull();
   });
 
   it("keeps a place only when it has every selected tag", () => {

@@ -221,6 +221,67 @@ describe("Things to Do", () => {
     expect(screen.getByRole("status")).toHaveTextContent("Things to do have not been added yet.");
   });
 
+  it("shows Beaches after Perfect Day and named day option titles", () => {
+    const beach: ThingToDo = {
+      id: "bowmans",
+      name: "Bowman's Beach",
+      town: "Sanibel",
+      description: "A quieter, more natural beach on the west end.",
+      tip: null,
+      section: "beaches",
+      season: null,
+      tags: ["kid_friendly"],
+      directionsUrl:
+        "https://www.google.com/maps/search/?api=1&query=Bowman%27s%20Beach%20Sanibel%20Florida",
+      photo: null,
+    };
+    const days: PerfectDay[] = [
+      {
+        season: "beach_day",
+        title: "The Perfect Beach Day",
+        stops: [
+          {
+            id: "morning",
+            timeLabel: "Morning",
+            name: "Sanibel Sprout",
+            detail: "Morning coffee.",
+            place: null,
+          },
+        ],
+      },
+      {
+        season: "nature_day",
+        title: "The Nature Lover's Day",
+        stops: [
+          {
+            id: "nature-morning",
+            timeLabel: "Morning",
+            name: "The Sanibel Cafe",
+            detail: "Breakfast first.",
+            place: null,
+          },
+        ],
+      },
+    ];
+
+    render(<ThingsToDo places={[beach]} itineraries={days} today={new Date(2026, 6, 4)} />);
+
+    const tabs = screen.getAllByRole("tab");
+    expect(tabs[0]).toHaveAccessibleName("Perfect Day");
+    expect(tabs[1]).toHaveAccessibleName("Beaches");
+    expect(screen.getByRole("button", { name: "The Perfect Beach Day" })).toHaveAttribute("aria-pressed", "true");
+    fireEvent.click(screen.getByRole("button", { name: "The Nature Lover's Day" }));
+    expect(screen.getByText("Breakfast first.")).toBeInTheDocument();
+
+    fireEvent.click(screen.getByRole("tab", { name: "Beaches" }));
+    expect(screen.getByText(/Beach parking on Sanibel is paid/)).toBeInTheDocument();
+    expect(screen.getByRole("link", { name: /City of Sanibel's beach parking page/ })).toHaveAttribute(
+      "href",
+      "https://www.mysanibel.com",
+    );
+    expect(screen.getByRole("heading", { name: "Bowman's Beach" })).toBeInTheDocument();
+  });
+
   it("filters with chips and leaves Perfect Day unfiltered", () => {
     const tagged: ThingToDo[] = places.map((place, index) => ({
       ...place,

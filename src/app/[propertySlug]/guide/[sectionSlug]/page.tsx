@@ -4,6 +4,7 @@ import { notFound } from "next/navigation";
 import { PreviewBanner } from "@/components/layout/preview-banner";
 import { Tx } from "@/lib/i18n/locale-context";
 import { SectionFallback, SectionView } from "@/components/guidebook/section-view";
+import { Sanibel101 } from "@/components/guidebook/sanibel-101";
 import { Vermont101 } from "@/components/guidebook/vermont-101";
 import { brandLogo } from "@/lib/content/brand-art";
 import type { PerfectDay, ThingToDo } from "@/lib/content/things-to-do";
@@ -16,8 +17,21 @@ export async function generateMetadata({ params }: SectionParams): Promise<Metad
   const { propertySlug, sectionSlug } = await params;
   if (sectionSlug === "vermont-101") {
     const stay = await getPropertyGuide(propertySlug);
+    if (stay.ok && stay.property.guestArea === "florida") {
+      return { title: "Not found", robots: { index: false, follow: false } };
+    }
     return {
       title: stay.ok ? `Vermont 101 · ${stay.property.name}` : "Vermont 101",
+      robots: { index: false, follow: false },
+    };
+  }
+  if (sectionSlug === "sanibel-101") {
+    const stay = await getPropertyGuide(propertySlug);
+    if (stay.ok && stay.property.guestArea !== "florida") {
+      return { title: "Not found", robots: { index: false, follow: false } };
+    }
+    return {
+      title: stay.ok ? `Sanibel 101 · ${stay.property.name}` : "Sanibel 101",
       robots: { index: false, follow: false },
     };
   }
@@ -38,7 +52,7 @@ export default function GuideSectionPage({ params }: SectionParams) {
 
 async function SectionContent({ params }: SectionParams) {
   const { propertySlug, sectionSlug } = await params;
-  if (sectionSlug === "vermont-101") {
+  if (sectionSlug === "vermont-101" || sectionSlug === "sanibel-101") {
     const stay = await getPropertyGuide(propertySlug);
     if (!stay.ok) {
       if (stay.error === "not_found") notFound();
@@ -53,11 +67,16 @@ async function SectionContent({ params }: SectionParams) {
         </div>
       );
     }
-    if (stay.property.guestArea === "florida") notFound();
+    if (sectionSlug === "vermont-101" && stay.property.guestArea === "florida") notFound();
+    if (sectionSlug === "sanibel-101" && stay.property.guestArea !== "florida") notFound();
     return (
       <>
         {stay.source === "preview" ? <PreviewBanner /> : null}
-        <Vermont101 propertySlug={stay.property.slug} propertyName={stay.property.name} />
+        {sectionSlug === "sanibel-101" ? (
+          <Sanibel101 propertySlug={stay.property.slug} propertyName={stay.property.name} />
+        ) : (
+          <Vermont101 propertySlug={stay.property.slug} propertyName={stay.property.name} />
+        )}
       </>
     );
   }

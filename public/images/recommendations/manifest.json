@@ -74,6 +74,36 @@
       "name": "Winooski Falls and river trails",
       "file": "winooski-falls.webp",
       "alt": "Winooski Falls on the Winooski River, with water spilling over the rock ledge and a brick mill chimney behind the trees."
+    },
+    {
+      "name": "Blind Pass Beach",
+      "file": "blind-pass-beach.webp",
+      "alt": "Blind Pass between Sanibel and Captiva, with water and shoreline at the pass."
+    },
+    {
+      "name": "Causeway Beach Park",
+      "file": "sanibel-causeway.webp",
+      "alt": "The Sanibel Causeway spanning turquoise bay water under a bright sky."
+    },
+    {
+      "name": "Bailey-Matthews National Shell Museum & Aquarium",
+      "file": "shell-museum.webp",
+      "alt": "Shell exhibits inside the Bailey-Matthews National Shell Museum on Sanibel Island."
+    },
+    {
+      "name": "Bowman's Beach",
+      "file": "bowmans-beach.webp",
+      "alt": "Bowman's Beach on Sanibel Island, a wide sandy Gulf shore with dunes and open sky."
+    },
+    {
+      "name": "Lighthouse Beach Park",
+      "file": "sanibel-lighthouse.webp",
+      "alt": "The historic Sanibel Island Light rising above palms near Lighthouse Beach Park."
+    },
+    {
+      "name": "J.N. \"Ding\" Darling National Wildlife Refuge",
+      "file": "ding-darling.webp",
+      "alt": "Wetland landscape in J.N. Ding Darling National Wildlife Refuge on Sanibel Island."
     }
   ]
 }

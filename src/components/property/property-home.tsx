@@ -104,7 +104,21 @@ export function PropertyHome({
               })}
             </ul>
           )}
-          {property.guestArea === "florida" ? null : (
+          {property.guestArea === "florida" ? (
+            <Link
+              href={`/${property.slug}/guide/sanibel-101`}
+              className="mt-4 flex min-h-24 items-center rounded-2xl border border-beige px-4 py-4 focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-forest"
+            >
+              <span>
+                <h3 className="font-heading text-2xl text-charcoal">
+                  <Tx k="sanibel101" />
+                </h3>
+                <p className="mt-2 text-base leading-7 text-muted-foreground">
+                  <Tx k="sanibel101Blurb" />
+                </p>
+              </span>
+            </Link>
+          ) : (
             <Link
               href={`/${property.slug}/guide/vermont-101`}
               className="mt-4 flex min-h-24 items-center rounded-2xl border border-beige px-4 py-4 focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-forest"
