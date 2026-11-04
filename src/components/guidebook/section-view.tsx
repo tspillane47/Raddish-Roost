@@ -4,6 +4,7 @@ import { SectionBlocks } from "@/components/guidebook/section-blocks";
 import { StayTimes } from "@/components/guidebook/stay-times";
 import { CheckoutList } from "@/components/guidebook/checkout-list";
 import { GuestNote } from "@/components/guidebook/guest-note";
+import { FlyingOut } from "@/components/guidebook/flying-out";
 import { NearbyEssentials } from "@/components/guidebook/nearby-essentials";
 import { ThingsToDo } from "@/components/explore/things-to-do";
 import { BookingChoices } from "@/components/property/book-now";
@@ -122,6 +123,7 @@ export function SectionView({
             {section.slug === "getting-here" ? (
               <>
                 <ParkingNote summary={section.parkingSummary} />
+                <FlyingOut propertySlug={section.propertySlug} portalUrl={section.guestPortalUrl} />
                 <NearbyEssentials items={section.nearbyEssentials} />
               </>
             ) : null}

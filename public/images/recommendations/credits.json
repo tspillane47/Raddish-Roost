@@ -146,6 +146,20 @@
       "author": "Quadell",
       "license": "CC BY 3.0",
       "attributionRequired": true
+    },
+    {
+      "file": "black-cap-coffee.webp",
+      "sourceUrl": "https://commons.wikimedia.org/wiki/File:Black_Cap_Coffee_and_Beer_downtown_Stowe_VT_July_2016.jpg",
+      "author": "Artaxerxes",
+      "license": "CC BY-SA 3.0",
+      "attributionRequired": true
+    },
+    {
+      "file": "von-trapp-bierhall.webp",
+      "sourceUrl": "https://commons.wikimedia.org/wiki/File:Von_Trapp_Bierhall.jpg",
+      "author": "Seasider53",
+      "license": "CC BY-SA 4.0",
+      "attributionRequired": true
     }
   ]
 }

@@ -677,6 +677,10 @@ describe("dad content migrations", () => {
     path.join(root, "supabase/migrations/20261104140000_dad_photo_places.sql"),
     "utf8",
   );
+  const dadAreaGuidebooks = readFileSync(
+    path.join(root, "supabase/migrations/20261104150000_dad_area_guidebooks.sql"),
+    "utf8",
+  );
 
   it("adds guest_area without rewriting roost content", () => {
     expect(guestArea).toContain("guest_area");
@@ -844,6 +848,41 @@ describe("dad content migrations", () => {
     expect(dadPhotoPlaces).not.toContain("raddish-roost");
     expect(dadPhotoPlaces).not.toContain("—");
     expect(dadPhotoPlaces).not.toMatch(/\/images\/properties\//);
+  });
+
+  it("beefs up Hinesburg, Stowe, and South Burlington guidebooks and restores The Pour House", () => {
+    expect(dadAreaGuidebooks).toContain("s.key = 'dad'");
+    expect(dadAreaGuidebooks).toContain("Papa Nick''s");
+    expect(dadAreaGuidebooks).toContain("Paisley Hippo Sandwich Shop");
+    expect(dadAreaGuidebooks).toContain("Moondog Tavern");
+    expect(dadAreaGuidebooks).toContain("Bake Shop at Red Wagon Plants");
+    expect(dadAreaGuidebooks).toContain("Doc Ponds");
+    expect(dadAreaGuidebooks).toContain("Grant''s");
+    expect(dadAreaGuidebooks).toContain("Idletyme");
+    expect(dadAreaGuidebooks).toContain("The Roastery: Movement Coffee Roasters");
+    expect(dadAreaGuidebooks).toContain("Stowe Bee Bakery");
+    expect(dadAreaGuidebooks).toContain("GiraKofi");
+    expect(dadAreaGuidebooks).toContain("Black Cap Coffee");
+    expect(dadAreaGuidebooks).toContain("von Trapp Brewing and Bierhall");
+    expect(dadAreaGuidebooks).toContain("Lower Bar");
+    expect(dadAreaGuidebooks).toContain("The Pour House");
+    expect(dadAreaGuidebooks).toContain("Windjammer Restaurant and Upper Deck Pub");
+    expect(dadAreaGuidebooks).toContain("Kestrel Coffee Roasters");
+    expect(dadAreaGuidebooks).toContain("Clover Cafe");
+    expect(dadAreaGuidebooks).toContain("Good Times Cafe / Matryoshka''s Bakery");
+    expect(dadAreaGuidebooks).toContain("Klinger''s Bread Co");
+    expect(dadAreaGuidebooks).toContain("The Mill Market");
+    expect(dadAreaGuidebooks).toContain("'groceries'");
+    expect(dadAreaGuidebooks).toContain("('Ranch Camp', 5,");
+    expect(dadAreaGuidebooks).toContain("dog_friendly");
+    expect(dadAreaGuidebooks).toContain("walkable");
+    expect(dadAreaGuidebooks).toContain("content_translations");
+    expect(dadAreaGuidebooks).toContain("host_note stays null");
+    expect(dadAreaGuidebooks).toContain("Do not set recommendation photos from listing images");
+    expect(dadAreaGuidebooks).not.toContain("raddish-roost");
+    expect(dadAreaGuidebooks).not.toContain("—");
+    expect(dadAreaGuidebooks).not.toMatch(/\bstar rating\b/i);
+    expect(dadAreaGuidebooks).not.toMatch(/\/images\/properties\//);
   });
 });
 

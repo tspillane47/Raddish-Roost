@@ -145,8 +145,16 @@ describe("recommendation photos", () => {
     expect(recommendationPhoto('J.N. "Ding" Darling National Wildlife Refuge')?.src).toBe(
       "/images/recommendations/ding-darling.webp",
     );
+    expect(recommendationPhoto("Black Cap Coffee")?.src).toBe("/images/recommendations/black-cap-coffee.webp");
+    expect(recommendationPhoto("Black Cap Coffee")?.credit?.author).toBe("Artaxerxes");
+    expect(recommendationPhoto("von Trapp Brewing and Bierhall")?.src).toBe(
+      "/images/recommendations/von-trapp-bierhall.webp",
+    );
+    expect(recommendationPhoto("von Trapp Brewing and Bierhall")?.credit?.author).toBe("Seasider53");
     expect(recommendationPhoto("Turner Beach")).toBeNull();
     expect(recommendationPhoto("Island biking")).toBeNull();
+    expect(recommendationPhoto("Papa Nick's")).toBeNull();
+    expect(recommendationPhoto("The Mill Market")).toBeNull();
   });
 
   it("keeps a place only when it has every selected tag", () => {

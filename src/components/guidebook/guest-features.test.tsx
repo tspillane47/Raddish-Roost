@@ -75,6 +75,21 @@ describe("nearby essentials", () => {
     expect(screen.queryByRole("heading", { name: "Nearby Essentials" })).not.toBeInTheDocument();
   });
 
+  it("adds Flying Out on Getting Here with drive time and late checkout tip", () => {
+    const gettingHere = previewGuideSection("shallot-chalet", "getting-here");
+    expect(gettingHere).not.toBeNull();
+    render(<SectionView section={gettingHere!} />);
+    expect(screen.getByRole("heading", { name: "Flying Out" })).toBeInTheDocument();
+    expect(
+      screen.getByText("About 10 minutes to Burlington International Airport (BTV)."),
+    ).toBeInTheDocument();
+    expect(screen.getByText(/Plan to be at BTV 2 hours/)).toBeInTheDocument();
+    expect(screen.getByRole("link", { name: "Flying out late? Request a late checkout" })).toHaveAttribute(
+      "href",
+      expect.stringContaining("stay.hospitable.com"),
+    );
+  });
+
   it("uses a saved map link when one is present", () => {
     render(
       <NearbyEssentials
