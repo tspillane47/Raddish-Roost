@@ -14,6 +14,8 @@ describe("locale", () => {
 
   it("keeps a saved choice ahead of the browser language", () => {
     expect(requestLocale("es", "fr-FR,fr;q=0.9")).toBe("es");
+    expect(requestLocale("en", "es-MX,es;q=0.9")).toBe("en");
+    expect(requestLocale("fr", "en-US,en;q=0.9")).toBe("fr");
     expect(requestLocale(null, "fr")).toBe("fr");
     expect(parseLocale("de")).toBe("en");
   });

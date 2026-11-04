@@ -47,6 +47,8 @@ function localeFor(request: NextRequest): Locale {
 }
 
 function rememberLocale(request: NextRequest, response: NextResponse, locale: Locale): NextResponse {
+  // Keep the cookie attributes aligned with setLocale() so client and proxy
+  // writes replace the same cookie instead of stacking duplicates.
   if (request.cookies.get(LOCALE_COOKIE)?.value !== locale) {
     response.cookies.set(LOCALE_COOKIE, locale, {
       path: "/",

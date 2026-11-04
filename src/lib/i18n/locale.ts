@@ -43,6 +43,7 @@ export function requestLocale(cookieValue: string | null | undefined, acceptLang
   return localeFromAcceptLanguage(acceptLanguage);
 }
 
+/** Cookie write string for non-Server-Action callers (tests / global-error). Prefer setLocale(). */
 export function localeCookie(locale: Locale): string {
   return `${LOCALE_COOKIE}=${locale}; Path=/; Max-Age=${YEAR}; SameSite=Lax`;
 }

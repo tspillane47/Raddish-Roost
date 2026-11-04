@@ -1,17 +1,32 @@
 "use client";
 
-import { useRouter } from "next/navigation";
-import { LOCALES, localeCookie, type Locale } from "@/lib/i18n/locale";
+import { useEffect, useState, useTransition } from "react";
+import { LOCALES, type Locale } from "@/lib/i18n/locale";
 import { useTranslate } from "@/lib/i18n/locale-context";
+import { setLocale } from "@/lib/i18n/set-locale";
 
 export function LanguageToggle() {
-  const router = useRouter();
   const { locale, t } = useTranslate();
+  const [pendingLocale, setPendingLocale] = useState<Locale | null>(null);
+  const [, startTransition] = useTransition();
+  const active = pendingLocale ?? locale;
+
+  useEffect(() => {
+    if (pendingLocale && locale === pendingLocale) {
+      setPendingLocale(null);
+    }
+  }, [locale, pendingLocale]);
 
   function choose(next: Locale) {
-    if (next === locale) return;
-    document.cookie = localeCookie(next);
-    router.refresh();
+    if (next === active) return;
+    setPendingLocale(next);
+    startTransition(async () => {
+      try {
+        await setLocale(next);
+      } catch {
+        setPendingLocale(null);
+      }
+    });
   }
 
   return (
@@ -25,10 +40,10 @@ export function LanguageToggle() {
           ) : null}
           <button
             type="button"
-            aria-pressed={locale === code}
+            aria-pressed={active === code}
             onClick={() => choose(code)}
             className={`inline-flex size-11 items-center justify-center rounded-full text-sm font-semibold uppercase focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-forest ${
-              locale === code ? "bg-forest text-cream" : "text-forest"
+              active === code ? "bg-forest text-cream" : "text-forest"
             }`}
           >
             {code}
