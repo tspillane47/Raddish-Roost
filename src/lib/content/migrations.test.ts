@@ -685,6 +685,10 @@ describe("dad content migrations", () => {
     path.join(root, "supabase/migrations/20261104160000_dad_stay_essentials.sql"),
     "utf8",
   );
+  const dadRenameSanibel = readFileSync(
+    path.join(root, "supabase/migrations/20261105120000_dad_rename_sanibel_landing_pets.sql"),
+    "utf8",
+  );
 
   it("adds guest_area without rewriting roost content", () => {
     expect(guestArea).toContain("guest_area");
@@ -911,6 +915,22 @@ describe("dad content migrations", () => {
     expect(dadStayEssentials).toContain("backyard-bungalow");
     expect(dadStayEssentials).not.toContain("raddish-roost");
     expect(dadStayEssentials).not.toContain("—");
+  });
+
+  it("renames Sanibel condos and marks Landing Pad dog friendly", () => {
+    expect(dadRenameSanibel).toContain("s.key = 'dad'");
+    expect(dadRenameSanibel).toContain("shell-game");
+    expect(dadRenameSanibel).toContain("The Shell Game");
+    expect(dadRenameSanibel).toContain("safe-harbor");
+    expect(dadRenameSanibel).toContain("Safe Harbor");
+    expect(dadRenameSanibel).toContain("Steps from Dixie Beach");
+    expect(dadRenameSanibel).toContain("Canal views, a pool, and dolphins from the porch");
+    expect(dadRenameSanibel).toContain("Dogs welcome: one dog");
+    expect(dadRenameSanibel).toContain("landing-pad");
+    expect(dadRenameSanibel).toContain("content_translations");
+    expect(dadRenameSanibel).toContain("tennisplace-a35 -> shell-game");
+    expect(dadRenameSanibel).not.toContain("raddish-roost");
+    expect(dadRenameSanibel).not.toContain("—");
   });
 });
 

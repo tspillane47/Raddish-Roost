@@ -41,8 +41,8 @@ export const dadSite: SiteConfig = {
     "hinesburg-hideaway-4",
     "backyard-bungalow",
     "landing-pad",
-    "tennisplace-a35",
-    "sanibel-sunsets",
+    "shell-game",
+    "safe-harbor",
   ],
   colors: {
     forest: "#1B4332",

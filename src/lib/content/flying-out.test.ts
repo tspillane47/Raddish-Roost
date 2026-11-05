@@ -12,6 +12,6 @@ describe("flying out drive times", () => {
     expect(flyingOutDriveKey("raddish-roost")).toBe("flyingOutDriveRaddishRoost");
     expect(flyingOutDriveKey("shallot-chalet")).toBe("flyingOutDriveWinooski");
     expect(flyingOutDriveKey("onion-ranch")).toBe("flyingOutDriveWinooski");
-    expect(flyingOutDriveKey("sanibel-sunsets")).toBeNull();
+    expect(flyingOutDriveKey("safe-harbor")).toBeNull();
   });
 });

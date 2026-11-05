@@ -194,6 +194,9 @@ function DadStayCard({ property, beach }: { property: PropertySummary; beach: bo
             {property.name}
           </Link>
         </h4>
+        {property.tagline ? (
+          <p className="text-sm leading-6 text-charcoal/90">{property.tagline}</p>
+        ) : null}
         <p className="font-[family-name:var(--font-dad-typewriter)] text-sm tracking-wide text-muted-foreground">
           {town}
         </p>

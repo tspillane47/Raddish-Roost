@@ -112,24 +112,45 @@ export function BookingChoices({
   bookings: BookingLink[];
 }) {
   const { t } = useTranslate();
+  const site = useSiteConfig();
   if (bookings.length === 0) return null;
+  const dad = site.key === "dad";
 
   return (
     <ul className="grid list-none gap-3 p-0">
-      {bookings.map((booking) => (
-        <li key={booking.channel}>
-          <a
-            href={booking.url}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="flex min-h-16 flex-col justify-center rounded-2xl border border-beige bg-cream px-5 py-4 focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-forest hover:bg-beige/60"
-            onClick={() => trackBookingClick(propertySlug, booking.channel)}
-          >
-            <span className="font-heading text-2xl text-charcoal">{bookingLabel(booking.channel, booking.name, t)}</span>
-            <span className="mt-1 text-base leading-7 text-muted-foreground">{bookingDetail(booking.channel, booking.detail, t)}</span>
-          </a>
-        </li>
-      ))}
+      {bookings.map((booking) => {
+        const direct = dad && booking.channel === "direct";
+        return (
+          <li key={booking.channel} className={direct ? "relative pt-3" : undefined}>
+            {direct ? (
+              <span
+                aria-hidden="true"
+                className="pointer-events-none absolute top-0 right-3 z-10 rotate-[-8deg] border-2 border-terracotta bg-cream/95 px-2 py-1 font-[family-name:var(--font-dad-typewriter,var(--font-inter))] text-[0.65rem] font-bold tracking-[0.12em] text-terracotta shadow-sm motion-reduce:rotate-0"
+              >
+                {t("bestPriceStamp")}
+              </span>
+            ) : null}
+            <a
+              href={booking.url}
+              target="_blank"
+              rel="noopener noreferrer"
+              className={
+                direct
+                  ? "relative flex min-h-16 flex-col justify-center rounded-sm border-2 border-terracotta bg-beige/80 px-5 py-4 shadow-[2px_3px_0_rgba(193,18,31,0.18)] focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-forest hover:bg-beige"
+                  : "flex min-h-16 flex-col justify-center rounded-2xl border border-beige bg-cream px-5 py-4 focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-forest hover:bg-beige/60"
+              }
+              onClick={() => trackBookingClick(propertySlug, booking.channel)}
+            >
+              <span className="font-heading text-2xl text-charcoal">
+                {bookingLabel(booking.channel, booking.name, t)}
+              </span>
+              <span className="mt-1 text-base leading-7 text-muted-foreground">
+                {bookingDetail(booking.channel, booking.detail, t)}
+              </span>
+            </a>
+          </li>
+        );
+      })}
     </ul>
   );
 }

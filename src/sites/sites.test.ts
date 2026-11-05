@@ -34,7 +34,7 @@ describe("site configs", () => {
     expect(DAD_GETAWAY_HERO.src).toBe("/sites/dad/hero-getaway.webp");
     expect(DAD_GETAWAY_HERO.width).toBe(2172);
     expect(DAD_GETAWAY_HERO.height).toBe(724);
-    expect(DAD_GETAWAY_HERO_FOCUS).toBe("58% 52%");
+    expect(DAD_GETAWAY_HERO_FOCUS).toBe("50% 48%");
     expect(
       existsSync(path.join(process.cwd(), "public/sites/dad/hero-getaway.webp")),
     ).toBe(true);

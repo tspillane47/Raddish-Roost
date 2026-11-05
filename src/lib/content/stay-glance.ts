@@ -49,17 +49,17 @@ export const DAD_STAY_GLANCE: Record<string, StayGlance> = {
   "landing-pad": {
     entry: "keypad",
     parkingKey: "glanceParkingDriveway",
-    pets: false,
+    pets: true,
     laundry: "none",
   },
-  "tennisplace-a35": {
+  "shell-game": {
     entry: "lockbox",
     parkingKey: "glanceParkingDedicated",
     pets: false,
     laundry: "coin_op",
     minStayKey: "sanibelMinStay",
   },
-  "sanibel-sunsets": {
+  "safe-harbor": {
     entry: "lockbox",
     parkingKey: "glanceParkingDedicated",
     pets: false,

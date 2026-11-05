@@ -12,4 +12,4 @@ export const DAD_GETAWAY_HERO: SiteHero = {
 };
 
 /** CSS object-position for the getaway wagon on narrow screens. */
-export const DAD_GETAWAY_HERO_FOCUS = "58% 52%";
+export const DAD_GETAWAY_HERO_FOCUS = "50% 48%";
