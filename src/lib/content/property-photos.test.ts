@@ -162,8 +162,8 @@ describe("property photos", () => {
       "hinesburg-hideaway-4",
       "backyard-bungalow",
       "landing-pad",
-      "shell-game",
-      "safe-harbor",
+      "tennisplace-a35",
+      "sanibel-sunsets",
     ] as const;
 
     for (const slug of dadSlugs) {

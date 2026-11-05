@@ -689,6 +689,10 @@ describe("dad content migrations", () => {
     path.join(root, "supabase/migrations/20261105120000_dad_rename_sanibel_landing_pets.sql"),
     "utf8",
   );
+  const dadUndoSanibelRename = readFileSync(
+    path.join(root, "supabase/migrations/20261105130000_dad_undo_sanibel_rename.sql"),
+    "utf8",
+  );
 
   it("adds guest_area without rewriting roost content", () => {
     expect(guestArea).toContain("guest_area");
@@ -931,6 +935,25 @@ describe("dad content migrations", () => {
     expect(dadRenameSanibel).toContain("tennisplace-a35 -> shell-game");
     expect(dadRenameSanibel).not.toContain("raddish-roost");
     expect(dadRenameSanibel).not.toContain("—");
+  });
+
+  it("undoes only the Sanibel rename and leaves Landing Pad pets alone", () => {
+    expect(dadUndoSanibelRename).toContain("s.key = 'dad'");
+    expect(dadUndoSanibelRename).toContain("tennisplace-a35");
+    expect(dadUndoSanibelRename).toContain("A35 Tennisplace");
+    expect(dadUndoSanibelRename).toContain("sanibel-sunsets");
+    expect(dadUndoSanibelRename).toContain("Sanibel Sunsets");
+    expect(dadUndoSanibelRename).toContain("A waterfront condo steps from Dixie Beach");
+    expect(dadUndoSanibelRename).toContain("A canal-side condo with stylish updates and island calm");
+    expect(dadUndoSanibelRename).toContain("shell-game");
+    expect(dadUndoSanibelRename).toContain("safe-harbor");
+    expect(dadUndoSanibelRename).toContain("The Shell Game");
+    expect(dadUndoSanibelRename).toContain("Safe Harbor");
+    expect(dadUndoSanibelRename).toContain("content_translations");
+    expect(dadUndoSanibelRename).not.toContain("landing-pad");
+    expect(dadUndoSanibelRename).not.toContain("Dogs welcome");
+    expect(dadUndoSanibelRename).not.toContain("raddish-roost");
+    expect(dadUndoSanibelRename).not.toContain("—");
   });
 });
 

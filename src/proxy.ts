@@ -6,7 +6,6 @@ import { GUIDE_SECTIONS, isExtraGuidePage } from "@/lib/content/sections";
 import { SAMPLE_PROPERTIES } from "@/lib/content/sample-catalog";
 import { guideSectionFromPath, slugToReject } from "@/lib/routing/property-path";
 import { guideRedirectRequest } from "@/lib/routing/section-redirect";
-import { propertySlugRedirectPath } from "@/lib/routing/property-slug-redirect";
 import { getSiteKey, guideSectionRequest, publishedSlugsRequest } from "@/lib/site";
 import { getSupabaseEnv } from "@/lib/supabase/env";
 import { propertySlugSchema } from "@/lib/validation/slug";
@@ -127,13 +126,6 @@ async function guideSectionMissing(pathname: string): Promise<boolean> {
 export async function proxy(request: NextRequest) {
   const locale = localeFor(request);
   const pathname = request.nextUrl.pathname;
-
-  const renamed = propertySlugRedirectPath(pathname);
-  if (renamed && renamed !== pathname) {
-    const url = request.nextUrl.clone();
-    url.pathname = renamed;
-    return rememberLocale(request, NextResponse.redirect(url, 308), locale);
-  }
 
   const rejected = slugToReject(pathname, await publishedSlugs());
   if (rejected) return rememberLocale(request, notFoundResponse(locale), locale);

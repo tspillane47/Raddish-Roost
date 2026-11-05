@@ -14,16 +14,16 @@ describe("dad stay glance", () => {
         "hinesburg-hideaway-3",
         "hinesburg-hideaway-4",
         "landing-pad",
-        "safe-harbor",
-        "shell-game",
+        "sanibel-sunsets",
         "switchback-suite",
+        "tennisplace-a35",
       ].sort(),
     );
     expect(stayGlanceFor("cider-loft")?.entry).toBe("keypad");
-    expect(stayGlanceFor("shell-game")?.entry).toBe("lockbox");
+    expect(stayGlanceFor("tennisplace-a35")?.entry).toBe("lockbox");
     expect(stayGlanceFor("landing-pad")?.laundry).toBe("none");
     expect(stayGlanceFor("backyard-bungalow")?.laundry).toBe("in_unit");
-    expect(stayGlanceFor("safe-harbor")?.minStayKey).toBe("sanibelMinStay");
+    expect(stayGlanceFor("sanibel-sunsets")?.minStayKey).toBe("sanibelMinStay");
     expect(stayGlanceFor("raddish-roost")).toBeNull();
   });
 
@@ -34,6 +34,6 @@ describe("dad stay glance", () => {
     expect(isPetFriendlyStay("backyard-bungalow")).toBe(true);
     expect(isPetFriendlyStay("landing-pad")).toBe(true);
     expect(isPetFriendlyStay("switchback-suite")).toBe(false);
-    expect(isPetFriendlyStay("shell-game")).toBe(false);
+    expect(isPetFriendlyStay("tennisplace-a35")).toBe(false);
   });
 });
