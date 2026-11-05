@@ -681,6 +681,10 @@ describe("dad content migrations", () => {
     path.join(root, "supabase/migrations/20261104150000_dad_area_guidebooks.sql"),
     "utf8",
   );
+  const dadStayEssentials = readFileSync(
+    path.join(root, "supabase/migrations/20261104160000_dad_stay_essentials.sql"),
+    "utf8",
+  );
 
   it("adds guest_area without rewriting roost content", () => {
     expect(guestArea).toContain("guest_area");
@@ -883,6 +887,30 @@ describe("dad content migrations", () => {
     expect(dadAreaGuidebooks).not.toContain("—");
     expect(dadAreaGuidebooks).not.toMatch(/\bstar rating\b/i);
     expect(dadAreaGuidebooks).not.toMatch(/\/images\/properties\//);
+  });
+
+  it("sets dad stay essentials for times, entry, parking, pets, laundry, and thermostat", () => {
+    expect(dadStayEssentials).toContain("s.key = 'dad'");
+    expect(dadStayEssentials).toContain("check_in_time = '4:00 PM'");
+    expect(dadStayEssentials).toContain("check_out_time = '10:00 AM'");
+    expect(dadStayEssentials).toContain("Park out back by the fence");
+    expect(dadStayEssentials).toContain("Park anywhere in the back lot");
+    expect(dadStayEssentials).toContain("Park in front of your unit only");
+    expect(dadStayEssentials).toContain("Use your one dedicated parking spot");
+    expect(dadStayEssentials).toContain("Your entry code is sent through your Airbnb or VRBO messages before arrival");
+    expect(dadStayEssentials).toContain("Your lockbox code is sent through your Airbnb or VRBO messages before arrival");
+    expect(dadStayEssentials).toContain("Use the thermostat to set a comfortable temperature");
+    expect(dadStayEssentials).toContain("We don't provide streaming subscriptions");
+    expect(dadStayEssentials).toContain("Coin-operated washer and dryer on the premises");
+    expect(dadStayEssentials).toContain("Washer and dryer in the unit");
+    expect(dadStayEssentials).toContain("There is no laundry at this stay");
+    expect(dadStayEssentials).toContain("Pets are not allowed");
+    expect(dadStayEssentials).toContain("Weekly stays only");
+    expect(dadStayEssentials).toContain("several steep stairs");
+    expect(dadStayEssentials).toContain("content_translations");
+    expect(dadStayEssentials).toContain("backyard-bungalow");
+    expect(dadStayEssentials).not.toContain("raddish-roost");
+    expect(dadStayEssentials).not.toContain("—");
   });
 });
 

@@ -4,8 +4,10 @@ import type { ReactNode } from "react";
 import { DuffelBagIcon, KeyholeIcon, VintageKeyIcon } from "@/components/dad/heist-icons";
 import { SectionThemedHeading } from "@/components/site/themed-heading";
 import { Essentials } from "@/components/property/essentials";
+import { GoodToKnow } from "@/components/property/good-to-know";
 import { PropertyHero } from "@/components/property/property-hero";
 import { PropertyLookAround } from "@/components/property/property-look";
+import { StayGlance } from "@/components/property/stay-glance";
 import { WeatherCard } from "@/components/property/weather-card";
 import { brandLogo } from "@/lib/content/brand-art";
 import { getPropertyPhotos, photosForSection, photoSets } from "@/lib/content/property-photos";
@@ -44,6 +46,8 @@ export function PropertyHome({
     <article className="pb-16">
       <PropertyHero property={property} heroPhotos={gallery.heroPhotos} photos={gallery.photos} weather={weather} />
       <div className="mx-auto w-full max-w-6xl px-5">
+        {site.key === "dad" ? <StayGlance propertySlug={property.slug} /> : null}
+        {site.key === "dad" ? <GoodToKnow propertySlug={property.slug} /> : null}
         {property.welcomeMessage ? (
           <section className="mt-12" aria-labelledby="welcome-note">
             <h2 id="welcome-note" className="sr-only">

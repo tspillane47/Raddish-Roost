@@ -3,6 +3,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import { BookNow } from "@/components/property/book-now";
+import { MinStayNote } from "@/components/property/good-to-know";
 import { HeroBanner } from "@/components/property/hero-banner";
 import { brandLogo } from "@/lib/content/brand-art";
 import type { PropertyPhoto } from "@/lib/content/property-photos";
@@ -103,6 +104,7 @@ export function PropertyHero({
           {property.tagline ? (
             <p className="mx-auto mt-3 max-w-2xl text-lg leading-8 text-forest md:mx-0">{property.tagline}</p>
           ) : null}
+          {site.key === "dad" ? <MinStayNote propertySlug={property.slug} /> : null}
           <BookNow propertySlug={property.slug} bookings={property.bookings} accent={accent} />
         </div>
       </div>

@@ -4,7 +4,9 @@ import type { ReactNode } from "react";
 import { DuffelBagIcon, KeyholeIcon } from "@/components/dad/heist-icons";
 import { PineIcon, ShellIcon } from "@/components/dad/region-icons";
 import { PhotoPlaceholder } from "@/components/property/photo-placeholder";
+import { isPetFriendlyStay } from "@/lib/content/stay-glance";
 import { getPropertyPhotos, photoObjectPosition } from "@/lib/content/property-photos";
+import { Tx } from "@/lib/i18n/locale-context";
 import type { PropertySummary } from "@/types/content";
 import { DAD_GETAWAY_HERO_FOCUS } from "@/sites/dad-hero";
 import { resolveDadHero } from "@/sites/resolve-dad-hero";
@@ -195,6 +197,11 @@ function DadStayCard({ property, beach }: { property: PropertySummary; beach: bo
         <p className="font-[family-name:var(--font-dad-typewriter)] text-sm tracking-wide text-muted-foreground">
           {town}
         </p>
+        {isPetFriendlyStay(property.slug) ? (
+          <p className="w-fit border border-forest/30 bg-cream px-2 py-0.5 font-[family-name:var(--font-dad-typewriter)] text-[0.65rem] font-semibold uppercase tracking-[0.14em] text-forest">
+            <Tx k="petFriendly" />
+          </p>
+        ) : null}
         <Link
           href={`/${property.slug}`}
           className="mt-auto inline-flex min-h-11 items-center gap-2 font-[family-name:var(--font-dad-typewriter)] text-sm font-semibold uppercase tracking-[0.12em] text-terracotta focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-forest"

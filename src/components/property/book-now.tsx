@@ -4,6 +4,7 @@ import { useRef } from "react";
 import { LuggageTagIcon } from "@/components/dad/heist-icons";
 import { trackBookingClick } from "@/lib/analytics/booking-click";
 import type { BookingChannel, BookingLink } from "@/lib/content/booking-links";
+import { stayGlanceFor } from "@/lib/content/stay-glance";
 import { useLocale, useTranslate } from "@/lib/i18n/locale-context";
 import type { MessageKey } from "@/lib/i18n/messages";
 import { siteLabel } from "@/sites/labels";
@@ -80,12 +81,26 @@ export function BookNow({
               </button>
             </div>
             <div className="mt-5 pb-[max(1.5rem,env(safe-area-inset-bottom))] md:pb-0">
+              <BookingMinStay propertySlug={propertySlug} />
               <BookingChoices propertySlug={propertySlug} bookings={bookings} />
             </div>
           </div>
         </div>
       </dialog>
     </>
+  );
+}
+
+function BookingMinStay({ propertySlug }: { propertySlug: string }) {
+  const { t } = useTranslate();
+  const site = useSiteConfig();
+  if (site.key !== "dad") return null;
+  const glance = stayGlanceFor(propertySlug);
+  if (!glance?.minStayKey) return null;
+  return (
+    <p className="mb-4 rounded-sm border border-dashed border-terracotta/50 bg-beige/70 px-4 py-3 text-sm leading-6 text-charcoal">
+      <span className="font-medium">{t("minStayLabel")}</span> {t(glance.minStayKey)}
+    </p>
   );
 }
 
