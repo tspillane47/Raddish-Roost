@@ -3,6 +3,11 @@ import type { MessageKey } from "@/lib/i18n/messages";
 export type EntryKind = "keypad" | "lockbox";
 export type LaundryKind = "in_unit" | "coin_op" | "none";
 
+export type StayGlanceExtra = {
+  key: MessageKey;
+  kind: "pool" | "tennis";
+};
+
 export type StayGlance = {
   entry: EntryKind;
   parkingKey: MessageKey;
@@ -10,6 +15,7 @@ export type StayGlance = {
   laundry: LaundryKind;
   goodToKnowKey?: MessageKey;
   minStayKey?: MessageKey;
+  extras?: StayGlanceExtra[];
 };
 
 /** Dad-only at-a-glance facts for property pages and stay cards. */
@@ -54,17 +60,27 @@ export const DAD_STAY_GLANCE: Record<string, StayGlance> = {
   },
   "tennisplace-a35": {
     entry: "lockbox",
-    parkingKey: "glanceParkingDedicated",
+    parkingKey: "glanceParkingCovered",
     pets: false,
     laundry: "coin_op",
     minStayKey: "sanibelMinStay",
+    goodToKnowKey: "goodToKnowSanibelPets",
+    extras: [
+      { key: "glanceSharedPool", kind: "pool" },
+      { key: "glanceTennisPickleball", kind: "tennis" },
+    ],
   },
   "sanibel-sunsets": {
     entry: "lockbox",
-    parkingKey: "glanceParkingDedicated",
+    parkingKey: "glanceParkingCovered",
     pets: false,
     laundry: "coin_op",
     minStayKey: "sanibelMinStay",
+    goodToKnowKey: "goodToKnowSanibelPets",
+    extras: [
+      { key: "glanceSharedPool", kind: "pool" },
+      { key: "glanceTennisPickleball", kind: "tennis" },
+    ],
   },
 };
 
@@ -74,6 +90,10 @@ export function stayGlanceFor(slug: string): StayGlance | null {
 
 export function isPetFriendlyStay(slug: string): boolean {
   return DAD_STAY_GLANCE[slug]?.pets === true;
+}
+
+export function hasWhatsIncluded(slug: string): boolean {
+  return slug === "tennisplace-a35" || slug === "sanibel-sunsets";
 }
 
 export function entryLabelKey(entry: EntryKind): MessageKey {

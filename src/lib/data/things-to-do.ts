@@ -32,6 +32,8 @@ type RecommendationJoin = {
   description: string | null;
   host_note: string | null;
   town?: string | null;
+  address?: string | null;
+  maps_url?: string | null;
   is_active: boolean;
   published_at: string | null;
 };
@@ -46,6 +48,8 @@ type LinkRow = {
 };
 
 const VOICE_COLUMNS =
+  "id, sort_order, host_note, custom_description, guest_tags, recommendations(id, category, subcategory, season, name, description, host_note, town, address, maps_url, is_active, published_at)";
+const VOICE_COLUMNS_NO_MAPS =
   "id, sort_order, host_note, custom_description, guest_tags, recommendations(id, category, subcategory, season, name, description, host_note, town, is_active, published_at)";
 const TAGGED_COLUMNS =
   "sort_order, guest_tags, recommendations(id, category, subcategory, season, name, description, host_note, town, is_active, published_at)";
@@ -114,6 +118,16 @@ export const getThingsToDo = cache(async (slug: string): Promise<ThingsResult> =
 
   let rows = (voice.data ?? []) as unknown as LinkRow[];
   let listError = voice.error;
+  if (listError && /address|maps_url/i.test(listError.message)) {
+    const withoutMaps = await supabase
+      .from("property_recommendations")
+      .select(VOICE_COLUMNS_NO_MAPS)
+      .eq("property_id", property.id)
+      .not("published_at", "is", null)
+      .order("sort_order", { ascending: true });
+    rows = (withoutMaps.data ?? []) as unknown as LinkRow[];
+    listError = withoutMaps.error;
+  }
   if (listError && /host_note|custom_description|Could not find the 'id' column/i.test(listError.message)) {
     const tagged = await supabase
       .from("property_recommendations")
@@ -210,7 +224,14 @@ export const getThingsToDo = cache(async (slug: string): Promise<ThingsResult> =
         section,
         season: thingSeason(recommendation.season),
         tags: item.tags,
-        directionsUrl: directionsUrl(name, town, region),
+        directionsUrl:
+          recommendation.maps_url?.trim() ||
+          directionsUrl(
+            name,
+            town,
+            region,
+            typeof recommendation.address === "string" ? recommendation.address : null,
+          ),
         photo: recommendationPhoto(name),
       },
     ];

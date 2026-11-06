@@ -1,6 +1,17 @@
 "use client";
 
-import { KeyRound, LockKeyhole, Car, PawPrint, Ban, Shirt, Thermometer } from "lucide-react";
+import {
+  KeyRound,
+  LockKeyhole,
+  Car,
+  PawPrint,
+  Ban,
+  Shirt,
+  Thermometer,
+  Waves,
+  Trophy,
+} from "lucide-react";
+import type { LucideIcon } from "lucide-react";
 import {
   entryLabelKey,
   laundryLabelKey,
@@ -17,12 +28,16 @@ export function StayGlance({ propertySlug }: { propertySlug: string }) {
   const EntryIcon = glance.entry === "lockbox" ? LockKeyhole : KeyRound;
   const PetsIcon = glance.pets ? PawPrint : Ban;
 
-  const items = [
+  const items: { icon: LucideIcon; label: string }[] = [
     { icon: EntryIcon, label: t(entryLabelKey(glance.entry)) },
     { icon: Car, label: t(glance.parkingKey) },
     { icon: PetsIcon, label: t(petsLabelKey(glance.pets)) },
     { icon: Shirt, label: t(laundryLabelKey(glance.laundry)) },
     { icon: Thermometer, label: t("glanceThermostat") },
+    ...(glance.extras ?? []).map((extra) => ({
+      icon: extra.kind === "pool" ? Waves : Trophy,
+      label: t(extra.key),
+    })),
   ];
 
   return (

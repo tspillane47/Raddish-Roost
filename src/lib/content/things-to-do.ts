@@ -113,8 +113,12 @@ export function directionsUrl(
   name: string,
   town: string | null,
   region: DirectionsRegion = "Vermont",
+  address: string | null = null,
 ): string {
-  const query = [name.trim(), town?.trim(), region].filter((part) => part && part.length > 0).join(" ");
+  const street = address?.trim() || null;
+  const query = street
+    ? [name.trim(), street, region].filter((part) => part && part.length > 0).join(" ")
+    : [name.trim(), town?.trim(), region].filter((part) => part && part.length > 0).join(" ");
   return `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(query)}`;
 }
 

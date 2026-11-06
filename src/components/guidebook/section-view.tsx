@@ -10,7 +10,9 @@ import { ThingsToDo } from "@/components/explore/things-to-do";
 import { BookingChoices } from "@/components/property/book-now";
 import { LateCheckout } from "@/components/property/late-checkout";
 import { PropertyGallery } from "@/components/property/property-gallery";
+import { WhatsIncluded } from "@/components/property/whats-included";
 import { SectionThemedHeading, SiteThemedHeading } from "@/components/site/themed-heading";
+import { hasWhatsIncluded } from "@/lib/content/stay-glance";
 import { MERGED_BLOCK_SORT } from "@/lib/content/sections";
 import { photosForSection } from "@/lib/content/property-photos";
 import type { PerfectDay, ThingToDo } from "@/lib/content/things-to-do";
@@ -178,29 +180,45 @@ function HouseBody({ section }: { section: GuideSectionDetail }) {
   const how = section.blocks.filter((block) => block.sortOrder < MERGED_BLOCK_SORT);
   const showHere = here.length > 0 || section.amenities.length > 0;
   const showHow = how.length > 0;
+  const included = hasWhatsIncluded(section.propertySlug);
 
   if (!showHere && !showHow) {
     return (
-      <p role="status" className="text-lg leading-8">
-        <Tx k="sectionEmpty" />
-      </p>
+      <>
+        <WhatsIncluded propertySlug={section.propertySlug} />
+        <p role="status" className={included ? "mt-8 text-lg leading-8" : "text-lg leading-8"}>
+          <Tx k="sectionEmpty" />
+        </p>
+      </>
     );
   }
 
   return (
     <>
+      <WhatsIncluded propertySlug={section.propertySlug} />
       {showHere ? (
-        <section aria-labelledby="whats-here-heading">
+        <section
+          aria-labelledby="whats-here-heading"
+          className={included ? "mt-8" : undefined}
+        >
           <h2 id="whats-here-heading" className="font-heading text-3xl text-charcoal">
             <Tx k="whatsHere" />
           </h2>
           <div className="mt-4">
             {here.length > 0 ? <SectionBlocks blocks={here} /> : <AmenityList amenities={section.amenities} />}
+            {here.length > 0 && section.amenities.length > 0 ? (
+              <div className="mt-4">
+                <AmenityList amenities={section.amenities} />
+              </div>
+            ) : null}
           </div>
         </section>
       ) : null}
       {showHow ? (
-        <section aria-labelledby="how-things-work-heading">
+        <section
+          aria-labelledby="how-things-work-heading"
+          className={included || showHere ? "mt-8" : undefined}
+        >
           <h2 id="how-things-work-heading" className="font-heading text-3xl text-charcoal">
             <Tx k="howThingsWork" />
           </h2>

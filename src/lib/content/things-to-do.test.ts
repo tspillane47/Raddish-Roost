@@ -23,6 +23,9 @@ describe("things to do", () => {
     expect(directionsUrl("The Reservoir", null)).toBe(
       "https://www.google.com/maps/search/?api=1&query=The%20Reservoir%20Vermont",
     );
+    expect(
+      directionsUrl("Sanibel Marina", "Sanibel", "Florida", "634 North Yachtsman Drive, Sanibel"),
+    ).toContain("634%20North%20Yachtsman%20Drive");
     expect(directionsUrl("Bowman's Beach", "Sanibel", "Florida")).toBe(
       "https://www.google.com/maps/search/?api=1&query=Bowman's%20Beach%20Sanibel%20Florida",
     );

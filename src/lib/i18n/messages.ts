@@ -176,18 +176,32 @@ const en = {
   glanceParkingHinesburg: "Park in front of your unit",
   glanceParkingDriveway: "Driveway parking",
   glanceParkingDedicated: "One dedicated parking spot",
+  glanceParkingCovered: "Dedicated covered parking",
   glancePetsAllowed: "Pets allowed",
   glanceNoPets: "No pets",
   glanceLaundryInUnit: "Washer and dryer in unit",
   glanceLaundryCoinOp: "Coin-op laundry on site",
   glanceLaundryNone: "No laundry",
   glanceThermostat: "Thermostat",
+  glanceSharedPool: "Shared pool",
+  glanceTennisPickleball: "Tennis and pickleball courts",
   petFriendly: "Pet friendly",
+  whatsIncluded: "What's Included",
+  includedKayak: "Two-person kayak",
+  includedKayakDetail: "The paddles are in the storage locker in front of your parking space.",
+  includedBikes: "Bikes and helmets",
+  includedBikesDetail:
+    "The bikes are kept inside the condo between stays to protect them from the salt air. During your stay you can leave them in the parking area. A bike lock is provided.",
+  includedBoatSlip: "Boat slip",
+  includedBoatSlipDetail:
+    "Bringing or renting a boat? You can dock it at slip #6 on the dock in front of the condo. The slip is shared between our two condos, so please check with us first if you're planning to use it.",
   goodToKnowTitle: "Good to know",
   goodToKnowCiderLoftStairs:
     "Heads up: there are several steep stairs up to the unit. They're steeper than standard stairs, so pack light or plan to make a couple of trips.",
   goodToKnowBackyardTraffic:
     "The Bungalow is on a main road, so you may hear some traffic noise. A fan or white noise app helps if you're a light sleeper.",
+  goodToKnowSanibelPets:
+    "The HOA doesn't allow pets on the property. But you'll have plenty of animal company: iguanas, dolphins, and manatees can be spotted every day.",
   minStayLabel: "Minimum stay:",
   sanibelMinStay:
     "Weekly stays only. 2-week minimum in February, March, and April. 1-week minimum the rest of the year.",
@@ -458,18 +472,32 @@ const es: Record<MessageKey, string> = {
   glanceParkingHinesburg: "Aparca solo delante de tu unidad",
   glanceParkingDriveway: "Aparcamiento en la entrada",
   glanceParkingDedicated: "Una plaza de aparcamiento dedicada",
+  glanceParkingCovered: "Aparcamiento cubierto dedicado",
   glancePetsAllowed: "Se admiten mascotas",
   glanceNoPets: "No se admiten mascotas",
   glanceLaundryInUnit: "Lavadora y secadora en la unidad",
   glanceLaundryCoinOp: "Lavandería de monedas en el edificio",
   glanceLaundryNone: "Sin lavandería",
   glanceThermostat: "Termostato",
+  glanceSharedPool: "Piscina compartida",
+  glanceTennisPickleball: "Pistas de tenis y pickleball",
   petFriendly: "Admite mascotas",
+  whatsIncluded: "Qué incluye",
+  includedKayak: "Kayak para dos",
+  includedKayakDetail: "Los remos están en el trastero delante de tu plaza de aparcamiento.",
+  includedBikes: "Bicis y cascos",
+  includedBikesDetail:
+    "Las bicis se guardan dentro del condo entre estancias para protegerlas del aire salado. Durante tu estancia puedes dejarlas en el aparcamiento. Hay candado.",
+  includedBoatSlip: "Amarre para barco",
+  includedBoatSlipDetail:
+    "¿Traes o alquilas un barco? Puedes amarrarlo en el slip #6 del muelle delante del condo. El amarre se comparte entre nuestros dos condos, así que avísanos antes si piensas usarlo.",
   goodToKnowTitle: "Conviene saber",
   goodToKnowCiderLoftStairs:
     "Aviso: hay varias escaleras empinadas hasta la unidad. Son más empinadas de lo habitual, así que viaja ligero o sube en un par de viajes.",
   goodToKnowBackyardTraffic:
     "El Bungalow está en una carretera principal, así que puede oírse algo de tráfico. Un ventilador o una app de ruido blanco ayudan si duermes ligero.",
+  goodToKnowSanibelPets:
+    "La HOA no permite mascotas en la propiedad. Pero tendrás compañía animal de sobra: iguanas, delfines y manatíes se ven cada día.",
   minStayLabel: "Estancia mínima:",
   sanibelMinStay:
     "Solo estancias semanales. Mínimo de 2 semanas en febrero, marzo y abril. Mínimo de 1 semana el resto del año.",
@@ -741,18 +769,32 @@ const fr: Record<MessageKey, string> = {
   glanceParkingHinesburg: "Stationnez seulement devant votre unité",
   glanceParkingDriveway: "Stationnement dans l'allée",
   glanceParkingDedicated: "Une place de stationnement dédiée",
+  glanceParkingCovered: "Stationnement couvert dédié",
   glancePetsAllowed: "Animaux acceptés",
   glanceNoPets: "Animaux non acceptés",
   glanceLaundryInUnit: "Laveuse et sécheuse dans l'unité",
   glanceLaundryCoinOp: "Buanderie à monnaies sur place",
   glanceLaundryNone: "Pas de buanderie",
   glanceThermostat: "Thermostat",
+  glanceSharedPool: "Piscine partagée",
+  glanceTennisPickleball: "Courts de tennis et de pickleball",
   petFriendly: "Animaux acceptés",
+  whatsIncluded: "Ce qui est inclus",
+  includedKayak: "Kayak pour deux",
+  includedKayakDetail: "Les pagaies sont dans le casier de rangement devant votre place de stationnement.",
+  includedBikes: "Vélos et casques",
+  includedBikesDetail:
+    "Les vélos restent à l'intérieur du condo entre les séjours pour les protéger de l'air salé. Pendant votre séjour, vous pouvez les laisser sur le stationnement. Un antivol est fourni.",
+  includedBoatSlip: "Place de bateau",
+  includedBoatSlipDetail:
+    "Vous amenez ou louez un bateau? Vous pouvez l'amarrer au slip #6 sur le quai devant le condo. La place est partagée entre nos deux condos, alors prévenez-nous d'abord si vous comptez l'utiliser.",
   goodToKnowTitle: "Bon à savoir",
   goodToKnowCiderLoftStairs:
     "Attention: il y a plusieurs escaliers raides jusqu'à l'unité. Ils sont plus raides que la normale, alors voyagez léger ou montez en deux fois.",
   goodToKnowBackyardTraffic:
     "Le Bungalow donne sur une route principale, vous pouvez donc entendre un peu de circulation. Un ventilateur ou une appli de bruit blanc aide si vous dormez léger.",
+  goodToKnowSanibelPets:
+    "L'HOA n'autorise pas les animaux sur la propriété. Mais vous aurez de la compagnie: iguanes, dauphins et lamantins se voient chaque jour.",
   minStayLabel: "Séjour minimum:",
   sanibelMinStay:
     "Séjours hebdomadaires seulement. Minimum de 2 semaines en février, mars et avril. Minimum d'1 semaine le reste de l'année.",

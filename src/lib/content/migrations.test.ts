@@ -693,6 +693,10 @@ describe("dad content migrations", () => {
     path.join(root, "supabase/migrations/20261105130000_dad_undo_sanibel_rename.sql"),
     "utf8",
   );
+  const dadSanibelCondoDetails = readFileSync(
+    path.join(root, "supabase/migrations/20261105140000_dad_sanibel_condo_details.sql"),
+    "utf8",
+  );
 
   it("adds guest_area without rewriting roost content", () => {
     expect(guestArea).toContain("guest_area");
@@ -954,6 +958,31 @@ describe("dad content migrations", () => {
     expect(dadUndoSanibelRename).not.toContain("Dogs welcome");
     expect(dadUndoSanibelRename).not.toContain("raddish-roost");
     expect(dadUndoSanibelRename).not.toContain("—");
+  });
+
+  it("adds shared Sanibel condo details without renaming", () => {
+    expect(dadSanibelCondoDetails).toContain("s.key = 'dad'");
+    expect(dadSanibelCondoDetails).toContain("tennisplace-a35");
+    expect(dadSanibelCondoDetails).toContain("sanibel-sunsets");
+    expect(dadSanibelCondoDetails).toContain("Tennisplace is one of the best locations on Sanibel");
+    expect(dadSanibelCondoDetails).toContain("dedicated covered parking");
+    expect(dadSanibelCondoDetails).toContain("Wi-Fi is included");
+    expect(dadSanibelCondoDetails).toContain("smart TV");
+    expect(dadSanibelCondoDetails).toContain("Coin-operated washer and dryer on site");
+    expect(dadSanibelCondoDetails).toContain("Tennis courts and pickleball courts");
+    expect(dadSanibelCondoDetails).toContain("The HOA doesn't allow pets");
+    expect(dadSanibelCondoDetails).toContain("iguanas, dolphins, and manatees");
+    expect(dadSanibelCondoDetails).toContain("Sanibel Marina");
+    expect(dadSanibelCondoDetails).toContain("Jensen''s Marina");
+    expect(dadSanibelCondoDetails).toContain("634 North Yachtsman Drive");
+    expect(dadSanibelCondoDetails).toContain("15107 Captiva Drive");
+    expect(dadSanibelCondoDetails).toContain("slip #6");
+    expect(dadSanibelCondoDetails).toContain("'on_the_water'");
+    expect(dadSanibelCondoDetails).toContain("content_translations");
+    expect(dadSanibelCondoDetails).not.toContain("shell-game");
+    expect(dadSanibelCondoDetails).not.toContain("safe-harbor");
+    expect(dadSanibelCondoDetails).not.toContain("raddish-roost");
+    expect(dadSanibelCondoDetails).not.toContain("—");
   });
 });
 

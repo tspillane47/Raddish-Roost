@@ -21,9 +21,15 @@ describe("dad stay glance", () => {
     );
     expect(stayGlanceFor("cider-loft")?.entry).toBe("keypad");
     expect(stayGlanceFor("tennisplace-a35")?.entry).toBe("lockbox");
+    expect(stayGlanceFor("tennisplace-a35")?.parkingKey).toBe("glanceParkingCovered");
+    expect(stayGlanceFor("tennisplace-a35")?.extras?.map((item) => item.key)).toEqual([
+      "glanceSharedPool",
+      "glanceTennisPickleball",
+    ]);
     expect(stayGlanceFor("landing-pad")?.laundry).toBe("none");
     expect(stayGlanceFor("backyard-bungalow")?.laundry).toBe("in_unit");
     expect(stayGlanceFor("sanibel-sunsets")?.minStayKey).toBe("sanibelMinStay");
+    expect(stayGlanceFor("sanibel-sunsets")?.goodToKnowKey).toBe("goodToKnowSanibelPets");
     expect(stayGlanceFor("raddish-roost")).toBeNull();
   });
 
