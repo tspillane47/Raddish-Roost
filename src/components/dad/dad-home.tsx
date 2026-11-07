@@ -10,7 +10,7 @@ import { Tx } from "@/lib/i18n/locale-context";
 import type { PropertySummary } from "@/types/content";
 import { DAD_GETAWAY_HERO_FOCUS } from "@/sites/dad-hero";
 import { resolveDadHero } from "@/sites/resolve-dad-hero";
-import type { SiteConfig } from "@/sites/types";
+import type { ComingSoonStay, SiteConfig } from "@/sites/types";
 
 export function DadHome({
   site,
@@ -94,6 +94,7 @@ export function DadHome({
           title="Vermont"
           icon={<PineIcon className="size-5 shrink-0 text-forest" />}
           properties={vermont}
+          comingSoon={site.comingSoon ?? []}
         />
         <StayGroup
           id="sanibel"
@@ -113,13 +114,17 @@ function StayGroup({
   icon,
   properties,
   beach = false,
+  comingSoon = [],
 }: {
   id: string;
   title: string;
   icon: ReactNode;
   properties: PropertySummary[];
   beach?: boolean;
+  comingSoon?: ComingSoonStay[];
 }) {
+  const empty = properties.length === 0 && comingSoon.length === 0;
+
   return (
     <section id={id} aria-labelledby={`${id}-heading`} className="mt-14 scroll-mt-24">
       <div className="mb-6 flex items-center gap-3">
@@ -131,16 +136,28 @@ function StayGroup({
           {title}
         </h3>
       </div>
-      {properties.length === 0 ? (
+      {empty ? (
         <p className="rounded-sm bg-beige/60 px-5 py-8 text-base leading-7">Hideouts coming soon.</p>
       ) : (
-        <ul className="grid list-none gap-6 p-0 sm:grid-cols-2 sm:gap-8 lg:grid-cols-3 xl:grid-cols-4">
-          {properties.map((property) => (
-            <li key={property.slug} className="min-w-0">
-              <DadStayCard property={property} beach={beach} />
-            </li>
-          ))}
-        </ul>
+        <>
+          <ul className="grid list-none gap-6 p-0 sm:grid-cols-2 sm:gap-8 lg:grid-cols-3 xl:grid-cols-4">
+            {properties.map((property) => (
+              <li key={property.slug} className="min-w-0">
+                <DadStayCard property={property} beach={beach} />
+              </li>
+            ))}
+            {comingSoon.map((stay) => (
+              <li key={stay.id} className="min-w-0">
+                <DadComingSoonCard stay={stay} />
+              </li>
+            ))}
+          </ul>
+          {comingSoon.length > 0 ? (
+            <p className="mt-5 font-[family-name:var(--font-dad-typewriter)] text-sm tracking-wide text-muted-foreground">
+              <Tx k="comingSoonWaterburyNote" />
+            </p>
+          ) : null}
+        </>
       )}
     </section>
   );
@@ -212,5 +229,99 @@ function DadStayCard({ property, beach }: { property: PropertySummary; beach: bo
         </Link>
       </div>
     </article>
+  );
+}
+
+function DadComingSoonCard({ stay }: { stay: ComingSoonStay }) {
+  return (
+    <article className="relative flex h-full min-w-0 flex-col rounded-sm border border-beige bg-beige shadow-[2px_3px_0_rgba(26,26,26,0.08)]">
+      <div
+        aria-hidden="true"
+        className="pointer-events-none absolute top-4 right-2 z-10 rotate-[-8deg] border-2 border-terracotta bg-cream/95 px-2 py-1 font-[family-name:var(--font-dad-typewriter)] text-[0.65rem] font-bold tracking-[0.12em] text-terracotta shadow-sm motion-reduce:rotate-0"
+      >
+        <Tx k="comingSoonStamp" />
+      </div>
+      <div className="relative m-3 mb-0 overflow-hidden rounded-sm bg-cream shadow-[1px_2px_0_rgba(26,26,26,0.12)]">
+        <span
+          className="pointer-events-none absolute -top-1 left-1/2 z-10 size-3 -translate-x-1/2 rounded-full bg-charcoal/70 shadow-sm"
+          aria-hidden="true"
+        />
+        {stay.photoSrc ? (
+          <Image
+            src={stay.photoSrc}
+            alt=""
+            width={1200}
+            height={900}
+            className="aspect-[4/3] w-full object-cover"
+            sizes="(max-width: 640px) calc(100vw - 2.5rem), (max-width: 1280px) 45vw, 22rem"
+          />
+        ) : (
+          <ComingSoonPlaceholder kind={stay.placeholder} />
+        )}
+      </div>
+      <div className="flex min-w-0 flex-1 flex-col gap-2 p-4 pt-3">
+        <h4 className="font-[family-name:var(--font-dad-display)] text-xl leading-snug break-words text-forest sm:text-2xl">
+          {stay.name}
+        </h4>
+        <p className="font-[family-name:var(--font-dad-typewriter)] text-sm tracking-wide text-muted-foreground">
+          {stay.locality}
+        </p>
+        <p className="font-[family-name:var(--font-dad-typewriter)] text-sm font-semibold tracking-wide text-terracotta">
+          <Tx k="openingYear" />
+        </p>
+      </div>
+    </article>
+  );
+}
+
+/** Manila photo slot with a light silhouette. Swap in photoSrc on the stay when ready. */
+function ComingSoonPlaceholder({ kind }: { kind: ComingSoonStay["placeholder"] }) {
+  return (
+    <div
+      className="relative flex aspect-[4/3] items-end justify-center overflow-hidden bg-[#E6D7B8]"
+      aria-hidden="true"
+    >
+      <div
+        className="absolute inset-0 opacity-40"
+        style={{
+          backgroundImage:
+            "radial-gradient(circle at 20% 15%, rgba(232,220,200,0.9), transparent 42%), radial-gradient(circle at 80% 20%, rgba(212,196,168,0.85), transparent 45%)",
+        }}
+      />
+      {kind === "cabin" ? <CabinSilhouette /> : <MountainSilhouette />}
+    </div>
+  );
+}
+
+function MountainSilhouette() {
+  return (
+    <svg
+      viewBox="0 0 320 180"
+      className="relative mb-3 h-[58%] w-[88%] text-forest/35"
+      fill="currentColor"
+      role="presentation"
+    >
+      <path d="M28 156 L108 54 L148 102 L188 70 L292 156 Z" />
+      <path className="text-sage/45" fill="currentColor" d="M70 156 L148 78 L210 128 L248 104 L300 156 Z" />
+      <rect x="0" y="156" width="320" height="24" className="text-beige/80" fill="currentColor" />
+    </svg>
+  );
+}
+
+function CabinSilhouette() {
+  return (
+    <svg
+      viewBox="0 0 320 180"
+      className="relative mb-2 h-[62%] w-[78%] text-forest/40"
+      fill="currentColor"
+      role="presentation"
+    >
+      <path d="M70 118 L160 48 L250 118 Z" />
+      <rect x="92" y="118" width="136" height="52" />
+      <rect x="146" y="132" width="28" height="38" className="text-cream/70" fill="currentColor" />
+      <rect x="112" y="132" width="22" height="18" className="text-cream/55" fill="currentColor" />
+      <rect x="186" y="132" width="22" height="18" className="text-cream/55" fill="currentColor" />
+      <rect x="0" y="168" width="320" height="12" className="text-beige/80" fill="currentColor" />
+    </svg>
   );
 }

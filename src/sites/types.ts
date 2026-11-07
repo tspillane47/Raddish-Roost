@@ -84,6 +84,17 @@ export type SiteLabelSet = Partial<Record<SiteLabelKey, SiteLabelPair>> & {
   checkoutStamp?: string;
 };
 
+/** Homepage-only teaser. Not a published property and not in the database. */
+export type ComingSoonStay = {
+  id: string;
+  name: string;
+  locality: string;
+  /** Optional photo later; leave unset for the branded placeholder. */
+  photoSrc?: string;
+  /** mountain or cabin silhouette while waiting on real photos. */
+  placeholder: "mountain" | "cabin";
+};
+
 export type SiteConfig = {
   key: SiteKey;
   name: string;
@@ -96,6 +107,8 @@ export type SiteConfig = {
   collectionBody: string;
   comingSoonTitle: string;
   comingSoonBody: string;
+  /** Dad homepage teasers only. Not routed, not booked, not in Supabase. */
+  comingSoon?: ComingSoonStay[];
   welcome: SiteWelcome;
   hero: SiteHero;
   logos: SiteLogo[];

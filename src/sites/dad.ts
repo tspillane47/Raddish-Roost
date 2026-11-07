@@ -20,6 +20,20 @@ export const dadSite: SiteConfig = {
   collectionBody: "Eight hideouts. Six in Vermont, two on Sanibel Island. No questions asked.",
   comingSoonTitle: "Hideouts on the way",
   comingSoonBody: "Check back soon for guidebooks and local tips.",
+  comingSoon: [
+    {
+      id: "reservoir-retreat",
+      name: "The Reservoir Retreat",
+      locality: "Waterbury, VT",
+      placeholder: "mountain",
+    },
+    {
+      id: "bear-den",
+      name: "The Bear Den",
+      locality: "Waterbury, VT",
+      placeholder: "cabin",
+    },
+  ],
   welcome: {
     placeName: "Getaway Club",
     background: "#1B4332",

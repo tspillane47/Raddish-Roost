@@ -52,6 +52,12 @@ describe("site configs", () => {
     expect(dadSite.bookCta?.label).toBe("Plan Your Escape");
     expect(dadSite.bookCta?.plain).toBe("Book now");
     expect(dadSite.artworkOrder).toHaveLength(8);
+    expect(dadSite.comingSoon?.map((stay) => stay.name)).toEqual([
+      "The Reservoir Retreat",
+      "The Bear Den",
+    ]);
+    expect(dadSite.comingSoon?.every((stay) => stay.locality === "Waterbury, VT")).toBe(true);
+    expect(dadSite.comingSoon?.every((stay) => !stay.photoSrc)).toBe(true);
     expect(siteLabel(dadSite, "checkInCheckout", "en")?.themed).toContain("Clean Getaway");
     expect(sectionLabel(dadSite, "things-to-do", "es")?.plain).toBe("Cosas que hacer");
     expect(sectionLabel(dadSite, "wifi", "fr")?.themed).toBe("Comms");
