@@ -1011,6 +1011,10 @@ describe("multi-site migrations", () => {
     path.join(root, "supabase/migrations/20261112120200_errin_perfect_days.sql"),
     "utf8",
   );
+  const errinVrboExpedia = readFileSync(
+    path.join(root, "supabase/migrations/20261112130000_errin_vrbo_expedia_booking.sql"),
+    "utf8",
+  );
 
   it("adds sites, scopes properties and settings to roost, and keeps slug uniqueness global", () => {
     expect(sites).toContain("create table if not exists public.sites");
@@ -1126,6 +1130,41 @@ describe("multi-site migrations", () => {
     expect(errinPerfectDays).not.toContain("raddish-roost");
     expect(errinPerfectDays).not.toContain("tennisplace-a35");
     expect(errinPerfectDays).not.toContain("—");
+  });
+
+  it("adds errin VRBO and Expedia booking links without direct yet", () => {
+    expect(errinVrboExpedia).toContain("begin;");
+    expect(errinVrboExpedia.trimEnd().endsWith("commit;")).toBe(true);
+    expect(errinVrboExpedia).toContain("s.key = 'errin'");
+    expect(errinVrboExpedia).toContain("winooski-flat");
+    expect(errinVrboExpedia).toContain("mill-house");
+    expect(errinVrboExpedia).toContain("maple-street-flat");
+    expect(errinVrboExpedia).toContain("https://www.vrbo.com/3213347407ha");
+    expect(errinVrboExpedia).toContain("https://www.vrbo.com/3161258");
+    expect(errinVrboExpedia).toContain("https://www.vrbo.com/1824841");
+    expect(errinVrboExpedia).toContain(
+      "https://www.expedia.com/Winooski-Hotels-Cozy-2bdrm-Apt-Walk-Downtown-Bring-Your-Pets.h92786475.Hotel-Information",
+    );
+    expect(errinVrboExpedia).toContain(
+      "https://www.expedia.com/Winooski-Hotels-Large-Cozy-And-Peaceful-Apartment-Walk-Anywhere.h89988135.Hotel-Information",
+    );
+    expect(errinVrboExpedia).toContain(
+      "https://www.expedia.com/Burlington-Hotels-Cozy-2-Bedroom-Clean-And-Quiet-Maple-St-Walk-Anywhere.h44268702.Hotel-Information",
+    );
+    expect(errinVrboExpedia).toContain("channel = 'vrbo'");
+    expect(errinVrboExpedia).toContain("channel = 'expedia'");
+    expect(errinVrboExpedia).toContain("'expedia'");
+    expect(errinVrboExpedia).toContain("sort_order = 20");
+    expect(errinVrboExpedia).toContain("sort_order = 30");
+    expect(errinVrboExpedia).toContain("sort_order = 10");
+    expect(errinVrboExpedia).toContain("should not have direct booking links yet");
+    expect(errinVrboExpedia).toContain("channel in ('airbnb', 'vrbo', 'direct', 'expedia', 'other')");
+    expect(errinVrboExpedia).not.toContain("'direct', 'Book Direct'");
+    expect(errinVrboExpedia).not.toContain("Book Direct");
+    expect(errinVrboExpedia).not.toContain("raddish-roost");
+    expect(errinVrboExpedia).not.toContain("tennisplace-a35");
+    expect(errinVrboExpedia).not.toContain("cider-loft");
+    expect(errinVrboExpedia).not.toContain("—");
   });
 
   it("copies host tips onto property links and preserves tip translations", () => {
