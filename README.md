@@ -15,7 +15,7 @@ npm test
 npm run build
 ```
 
-`npm run dev` and `npm run dev:roost` serve the Vermont Roost Collection (default `SITE_KEY=roost`). `npm run dev:dad` serves The Getaway Club. `npm run dev:errin` serves Errin's Digs.
+`npm run dev` and `npm run dev:roost` serve the Vermont Roost Collection (default `SITE_KEY=roost`). `npm run dev:dad` serves The Getaway Club. `npm run dev:errin` serves Queen City Stays.
 
 ## Environment
 

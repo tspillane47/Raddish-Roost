@@ -999,6 +999,10 @@ describe("multi-site migrations", () => {
     path.join(root, "supabase/migrations/20261112000000_errin_site.sql"),
     "utf8",
   );
+  const errinProperties = readFileSync(
+    path.join(root, "supabase/migrations/20261112120000_errin_properties.sql"),
+    "utf8",
+  );
 
   it("adds sites, scopes properties and settings to roost, and keeps slug uniqueness global", () => {
     expect(sites).toContain("create table if not exists public.sites");
@@ -1021,7 +1025,7 @@ describe("multi-site migrations", () => {
 
   it("adds the errin site without touching roost or dad properties", () => {
     expect(errinSite).toContain("'errin'");
-    expect(errinSite).toContain("Errin''s Digs");
+    expect(errinSite).toContain("Queen City Stays");
     expect(errinSite).toContain("c1000000-0000-4000-8000-000000000003");
     expect(errinSite).toContain("allow_indexing");
     expect(errinSite).toContain("'false'::jsonb");
@@ -1033,6 +1037,44 @@ describe("multi-site migrations", () => {
     expect(errinSite).not.toContain("raddish-roost");
     expect(errinSite).not.toContain("tennisplace-a35");
     expect(errinSite).not.toContain("—");
+  });
+
+  it("adds errin properties with Queen City slugs and isolated Things to Do links", () => {
+    expect(errinProperties).toContain("begin;");
+    expect(errinProperties.trimEnd().endsWith("commit;")).toBe(true);
+    expect(errinProperties).toContain("drop table if exists errin_host_tips;");
+    expect(errinProperties).toContain("create temporary table errin_host_tips");
+    expect(errinProperties).toContain("sites.key = 'errin'");
+    expect(errinProperties).toContain("winooski-flat");
+    expect(errinProperties).toContain("mill-house");
+    expect(errinProperties).toContain("maple-street-flat");
+    expect(errinProperties).toContain("The Winooski Flat");
+    expect(errinProperties).toContain("The Mill House");
+    expect(errinProperties).toContain("The Maple Street Flat");
+    expect(errinProperties).toContain("Queen City Stays");
+    expect(errinProperties).toContain("713480623074475985");
+    expect(errinProperties).toContain("708762878064619345");
+    expect(errinProperties).toContain("39766625");
+    expect(errinProperties).toContain("seed_guidebook_sections");
+    expect(errinProperties).toContain("Message Errin on Airbnb if you need anything before then.");
+    expect(errinProperties).toContain("shallot-chalet");
+    expect(errinProperties).toContain("property_recommendations");
+    expect(errinProperties).toContain("errin_host_tips");
+    expect(errinProperties).toContain("44.4914");
+    expect(errinProperties).toContain("44.4759");
+    expect(errinProperties).toContain("Winooski VT");
+    expect(errinProperties).toContain("Burlington VT");
+    expect(errinProperties).toContain("content_translations");
+    expect(errinProperties).not.toMatch(
+      /property_recommendations[\s\S]*?guest_tags = excluded\.guest_tags,\s*updated_at = now\(\)/,
+    );
+    expect(errinProperties).not.toContain("apres-pad");
+    expect(errinProperties).not.toContain("double-decker");
+    expect(errinProperties).not.toContain("maple-street-mogul");
+    expect(errinProperties).not.toContain("update public.recommendations");
+    expect(errinProperties).not.toContain("raddish-roost");
+    expect(errinProperties).not.toContain("tennisplace-a35");
+    expect(errinProperties).not.toContain("—");
   });
 
   it("copies host tips onto property links and preserves tip translations", () => {

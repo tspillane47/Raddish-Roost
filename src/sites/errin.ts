@@ -26,9 +26,9 @@ export const errinSite: SiteConfig = {
   },
   hero: {
     src: "/sites/errin/hero.webp",
-    width: 1600,
-    height: 900,
-    alt: "Quiet architectural interior with soft natural light",
+    width: 2172,
+    height: 724,
+    alt: "Autumn evening on a Burlington street with lake and mountains beyond",
   },
   logos: [],
   artworkOrder: ["winooski-flat", "mill-house", "maple-street-flat"],

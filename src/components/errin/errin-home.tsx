@@ -19,16 +19,31 @@ export function ErrinHome({
     <div className="bg-[var(--cream)] text-[var(--charcoal)]">
       <section className="relative w-full overflow-hidden">
         {hasHero ? (
-          <Image
-            src={site.hero.src}
-            alt={site.hero.alt}
-            width={site.hero.width}
-            height={site.hero.height}
-            preload
-            fetchPriority="high"
-            sizes="100vw"
-            className="block h-[min(72svh,40rem)] w-full object-cover"
-          />
+          <>
+            <Image
+              src={site.hero.src}
+              alt={site.hero.alt}
+              width={site.hero.width}
+              height={site.hero.height}
+              preload
+              fetchPriority="high"
+              sizes="100vw"
+              className="block h-[min(68svh,36rem)] w-full object-cover object-[78%_36%] sm:object-[72%_40%] md:h-[min(62svh,34rem)] md:object-[68%_42%]"
+            />
+            {/* Headline sits in the open sky on the right; soft scrub keeps type readable. */}
+            <div className="pointer-events-none absolute inset-0">
+              <div className="mx-auto flex h-full w-full max-w-6xl items-start justify-end px-5 pt-14 sm:pt-16 md:items-center md:pt-0 md:pr-6 lg:pr-10">
+                <div className="max-w-[13.5rem] rounded-sm bg-[color-mix(in_srgb,var(--cream)_72%,transparent)] px-3 py-3 sm:max-w-[18rem] sm:px-4 sm:py-4 md:max-w-md md:bg-transparent md:px-0 md:py-0">
+                  <p className="text-[0.65rem] font-medium uppercase tracking-[0.28em] text-[var(--charcoal)]/70 md:text-[0.7rem]">
+                    {site.shortName}
+                  </p>
+                  <h1 className="mt-2 font-[family-name:var(--font-errin-display,var(--font-display))] text-[clamp(2.1rem,7.5vw,4.25rem)] leading-[0.95] tracking-tight text-[var(--charcoal)] [text-shadow:0_1px_0_rgb(250_249_246_/_0.9),0_0_24px_rgb(250_249_246_/_0.55)] md:mt-3">
+                    {site.name}
+                  </h1>
+                </div>
+              </div>
+            </div>
+          </>
         ) : (
           <div className="flex h-[min(62svh,34rem)] w-full items-end bg-[var(--beige)] px-5 pb-12 md:pb-16">
             <div className="mx-auto w-full max-w-6xl">
@@ -44,12 +59,7 @@ export function ErrinHome({
       </section>
 
       <div className="mx-auto w-full max-w-6xl px-5 pt-8 md:pt-10">
-        {hasHero ? (
-          <h1 className="max-w-3xl font-[family-name:var(--font-errin-display,var(--font-display))] text-[clamp(2.5rem,7vw,4.75rem)] leading-[0.95] tracking-tight text-[var(--charcoal)]">
-            {site.name}
-          </h1>
-        ) : null}
-        <p className={`max-w-2xl text-base leading-7 text-[var(--muted)] md:text-lg ${hasHero ? "mt-4" : ""}`}>
+        <p className="max-w-2xl text-base leading-7 text-[var(--muted)] md:text-lg">
           {site.tagline}
         </p>
         <p className="mt-3 text-sm leading-6 tracking-wide text-[var(--muted)]">

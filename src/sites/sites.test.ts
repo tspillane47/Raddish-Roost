@@ -71,24 +71,34 @@ describe("site configs", () => {
     expect(dadSite.name).toBe("The Getaway Club");
   });
 
-  it("matches the Errin's Digs apres-ski placeholder brand", () => {
+  it("matches the Queen City Stays editorial brand", () => {
     expect(errinSite.key).toBe("errin");
-    expect(errinSite.name).toBe("Errin's Digs");
-    expect(errinSite.tagline).toBe("Ski hard. Apres harder.");
-    expect(errinSite.comingSoonTitle).toContain("Grab your shades");
-    expect(errinSite.comingSoonBody).toContain("Three cozy hideaways");
-    expect(errinSite.artworkOrder).toEqual([]);
-    expect(errinSite.colors.terracotta).toBe("#FF2D95");
-    expect(errinSite.colors.sage).toBe("#00E5C0");
-    expect(errinSite.colors.forest).toBe("#6B2D8B");
-    expect(errinSite.colors.mustard).toBe("#FFE566");
+    expect(errinSite.name).toBe("Queen City Stays");
+    expect(errinSite.tagline).toBe("Modern stays in Burlington and Winooski.");
+    expect(errinSite.collectionHeading).toBe("Where are you staying?");
+    expect(errinSite.artworkOrder).toEqual([
+      "winooski-flat",
+      "mill-house",
+      "maple-street-flat",
+    ]);
+    expect(errinSite.colors.cream).toBe("#FAF9F6");
+    expect(errinSite.colors.charcoal).toBe("#141414");
+    expect(errinSite.colors.beige).toBe("#E7E3DC");
+    expect(errinSite.colors.forest).toBe("#3D5A6C");
+    expect(errinSite.colors.terracotta).toBe("#A5543E");
     expect(errinSite.hero.src).toBe("/sites/errin/hero.webp");
-    expect(errinHeroFileExists(errinSite.hero)).toBe(false);
+    expect(errinSite.hero.width).toBe(2172);
+    expect(errinSite.hero.height).toBe(724);
+    expect(errinHeroFileExists(errinSite.hero)).toBe(true);
+    expect(existsSync(path.join(process.cwd(), "public/sites/errin/hero.webp"))).toBe(true);
     expect(existsSync(path.join(process.cwd(), "public/sites/errin/favicon.png"))).toBe(true);
     expect(existsSync(path.join(process.cwd(), "public/sites/errin/icon-512.png"))).toBe(true);
     expect(JSON.stringify(errinSite)).not.toContain("—");
+    expect(JSON.stringify(errinSite)).not.toContain("Errin's Digs");
     expect(JSON.stringify(errinSite)).not.toContain("The Getaway Club");
     expect(JSON.stringify(errinSite)).not.toContain("Vermont Roost");
+    expect(JSON.stringify(errinSite)).not.toContain("#FF2D95");
+    expect(JSON.stringify(errinSite)).not.toContain("Monoton");
   });
 
   it("resolves the active site from SITE_KEY", () => {
@@ -96,6 +106,6 @@ describe("site configs", () => {
     expect(getSiteConfig("dad").key).toBe("dad");
     expect(getSiteConfig("dad").name).toBe("The Getaway Club");
     expect(getSiteConfig("errin").key).toBe("errin");
-    expect(getSiteConfig("errin").name).toBe("Errin's Digs");
+    expect(getSiteConfig("errin").name).toBe("Queen City Stays");
   });
 });
