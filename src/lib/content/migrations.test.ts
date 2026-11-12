@@ -1003,6 +1003,14 @@ describe("multi-site migrations", () => {
     path.join(root, "supabase/migrations/20261112120000_errin_properties.sql"),
     "utf8",
   );
+  const errinThings = readFileSync(
+    path.join(root, "supabase/migrations/20261112120100_errin_things_to_do.sql"),
+    "utf8",
+  );
+  const errinPerfectDays = readFileSync(
+    path.join(root, "supabase/migrations/20261112120200_errin_perfect_days.sql"),
+    "utf8",
+  );
 
   it("adds sites, scopes properties and settings to roost, and keeps slug uniqueness global", () => {
     expect(sites).toContain("create table if not exists public.sites");
@@ -1039,12 +1047,9 @@ describe("multi-site migrations", () => {
     expect(errinSite).not.toContain("—");
   });
 
-  it("adds errin properties with Queen City slugs and isolated Things to Do links", () => {
+  it("adds errin properties only for homepage cards and guidebooks", () => {
     expect(errinProperties).toContain("begin;");
     expect(errinProperties.trimEnd().endsWith("commit;")).toBe(true);
-    expect(errinProperties).toContain("drop table if exists errin_host_tips;");
-    expect(errinProperties).toContain("create temporary table errin_host_tips");
-    expect(errinProperties).toContain("sites.key = 'errin'");
     expect(errinProperties).toContain("winooski-flat");
     expect(errinProperties).toContain("mill-house");
     expect(errinProperties).toContain("maple-street-flat");
@@ -1056,25 +1061,71 @@ describe("multi-site migrations", () => {
     expect(errinProperties).toContain("708762878064619345");
     expect(errinProperties).toContain("39766625");
     expect(errinProperties).toContain("seed_guidebook_sections");
-    expect(errinProperties).toContain("Message Errin on Airbnb if you need anything before then.");
-    expect(errinProperties).toContain("shallot-chalet");
-    expect(errinProperties).toContain("property_recommendations");
-    expect(errinProperties).toContain("errin_host_tips");
+    expect(errinProperties).toContain("nearby_essentials");
     expect(errinProperties).toContain("44.4914");
     expect(errinProperties).toContain("44.4759");
     expect(errinProperties).toContain("Winooski VT");
     expect(errinProperties).toContain("Burlington VT");
     expect(errinProperties).toContain("content_translations");
-    expect(errinProperties).not.toMatch(
-      /property_recommendations[\s\S]*?guest_tags = excluded\.guest_tags,\s*updated_at = now\(\)/,
-    );
+    expect(errinProperties).toContain("drop table if exists public.errin_host_tips;");
+    expect(errinProperties).not.toContain("shallot-chalet");
+    expect(errinProperties).not.toContain("property_recommendations");
+    expect(errinProperties).not.toContain("create table errin_host_tips");
+    expect(errinProperties).not.toContain("create temporary table errin_host_tips");
+    expect(errinProperties).not.toContain("insert into errin_host_tips");
+    expect(errinProperties).not.toContain("itineraries");
     expect(errinProperties).not.toContain("apres-pad");
-    expect(errinProperties).not.toContain("double-decker");
-    expect(errinProperties).not.toContain("maple-street-mogul");
     expect(errinProperties).not.toContain("update public.recommendations");
     expect(errinProperties).not.toContain("raddish-roost");
     expect(errinProperties).not.toContain("tennisplace-a35");
     expect(errinProperties).not.toContain("—");
+  });
+
+  it("links errin Things to Do with CTE host tips only", () => {
+    expect(errinThings).toContain("begin;");
+    expect(errinThings.trimEnd().endsWith("commit;")).toBe(true);
+    expect(errinThings).toContain("drop table if exists public.errin_host_tips;");
+    expect(errinThings).toContain("with errin_host_tips(place_name, tip, tip_es, tip_fr) as (");
+    expect(errinThings).toContain("left join errin_host_tips tip on tip.place_name = place.name");
+    expect(errinThings).toContain("property_recommendations");
+    expect(errinThings).toContain("shallot-chalet");
+    expect(errinThings).toContain("winooski-flat");
+    expect(errinThings).toContain("mill-house");
+    expect(errinThings).toContain("maple-street-flat");
+    expect(errinThings).toContain("s.key = 'errin'");
+    expect(errinThings).not.toMatch(
+      /property_recommendations[\s\S]*?guest_tags = excluded\.guest_tags,\s*updated_at = now\(\)/,
+    );
+    expect(errinThings).not.toContain("create temporary table errin_host_tips");
+    expect(errinThings).not.toContain("create table errin_host_tips");
+    expect(errinThings).not.toContain("insert into errin_host_tips");
+    expect(errinThings).not.toContain("update public.recommendations");
+    expect(errinThings).not.toContain("itineraries");
+    expect(errinThings).not.toContain("raddish-roost");
+    expect(errinThings).not.toContain("tennisplace-a35");
+    expect(errinThings).not.toContain("—");
+  });
+
+  it("clones errin Perfect Days with simple insert conflict updates", () => {
+    expect(errinPerfectDays).toContain("begin;");
+    expect(errinPerfectDays.trimEnd().endsWith("commit;")).toBe(true);
+    expect(errinPerfectDays).toContain("drop table if exists public.errin_host_tips;");
+    expect(errinPerfectDays).toContain("insert into public.itineraries");
+    expect(errinPerfectDays).toContain("insert into public.itinerary_stops");
+    expect(errinPerfectDays).toContain("on conflict (itinerary_id, sort_order) do update");
+    expect(errinPerfectDays).toContain("shallot-chalet");
+    expect(errinPerfectDays).toContain("winooski-flat");
+    expect(errinPerfectDays).toContain("mill-house");
+    expect(errinPerfectDays).toContain("s.key = 'errin'");
+    expect(errinPerfectDays).not.toContain("update public.itinerary_stops dest_stop");
+    expect(errinPerfectDays).not.toContain("maple-street-flat");
+    expect(errinPerfectDays).not.toContain("create table errin_host_tips");
+    expect(errinPerfectDays).not.toContain("create temporary table errin_host_tips");
+    expect(errinPerfectDays).not.toContain("insert into errin_host_tips");
+    expect(errinPerfectDays).not.toContain("update public.recommendations");
+    expect(errinPerfectDays).not.toContain("raddish-roost");
+    expect(errinPerfectDays).not.toContain("tennisplace-a35");
+    expect(errinPerfectDays).not.toContain("—");
   });
 
   it("copies host tips onto property links and preserves tip translations", () => {
