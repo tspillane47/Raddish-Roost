@@ -28,7 +28,7 @@ export const errinSite: SiteConfig = {
     src: "/sites/errin/hero.webp",
     width: 2172,
     height: 724,
-    alt: "Autumn evening on a Burlington street with lake and mountains beyond",
+    alt: "Autumn evening at a Winooski house with deck, with Burlington, the lake, and mountains beyond",
   },
   logos: [],
   artworkOrder: ["winooski-flat", "mill-house", "maple-street-flat"],
