@@ -84,7 +84,8 @@ describe("site configs", () => {
     expect(errinSite.colors.cream).toBe("#FAF9F6");
     expect(errinSite.colors.charcoal).toBe("#141414");
     expect(errinSite.colors.beige).toBe("#E7E3DC");
-    expect(errinSite.colors.forest).toBe("#3D5A6C");
+    expect(errinSite.colors.forest).toBe("#2C4555");
+    expect(errinSite.colors.muted).toBe("#4A4A4A");
     expect(errinSite.colors.terracotta).toBe("#A5543E");
     expect(errinSite.hero.src).toBe("/sites/errin/hero.webp");
     expect(errinSite.hero.width).toBe(2172);

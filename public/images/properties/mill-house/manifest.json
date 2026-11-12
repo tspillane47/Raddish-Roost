@@ -1,0 +1,257 @@
+{
+  "hero": "living-room.webp",
+  "heroPhotos": [
+    "living-room.webp",
+    "living-room-2.webp",
+    "kitchen.webp"
+  ],
+  "cardPhoto": "living-room.webp",
+  "groups": [
+    {
+      "id": "living",
+      "label": "Living Spaces",
+      "preview": [
+        "living-room.webp",
+        "living-room-2.webp",
+        "living-room-fireplace.webp"
+      ]
+    },
+    {
+      "id": "kitchen-dining",
+      "label": "Kitchen and Dining",
+      "preview": [
+        "dining-to-living.webp",
+        "kitchen.webp",
+        "kitchen-2.webp"
+      ]
+    },
+    {
+      "id": "bedrooms",
+      "label": "Bedrooms",
+      "preview": [
+        "bedroom-blush.webp",
+        "bedroom.webp",
+        "bedroom-blush-2.webp"
+      ]
+    },
+    {
+      "id": "bath-laundry",
+      "label": "Bath and Laundry",
+      "preview": [
+        "laundry.webp",
+        "bathroom.webp",
+        "bathroom-shower.webp"
+      ]
+    },
+    {
+      "id": "outside",
+      "label": "Outside and Around Town",
+      "preview": [
+        "exterior-rear-deck.webp"
+      ]
+    }
+  ],
+  "photos": [
+    {
+      "file": "laundry.webp",
+      "width": 1440,
+      "height": 1920,
+      "alt": "White stacked front-loading washer and dryer tucked into a narrow utility closet.",
+      "sections": [
+        "amenities",
+        "house-guide"
+      ],
+      "group": "bath-laundry"
+    },
+    {
+      "file": "dining-to-living.webp",
+      "width": 1440,
+      "height": 1080,
+      "alt": "View from a white kitchen counter into a dark-wood dining set with the living room sofa beyond.",
+      "sections": [
+        "the-house",
+        "amenities"
+      ],
+      "group": "kitchen-dining"
+    },
+    {
+      "file": "living-room.webp",
+      "width": 1440,
+      "height": 1080,
+      "alt": "Bright living room with a large off-white sectional, rustic coffee table, and patterned area rug before two windows.",
+      "sections": [
+        "the-house",
+        "amenities"
+      ],
+      "group": "living"
+    },
+    {
+      "file": "kitchen.webp",
+      "width": 1440,
+      "height": 1080,
+      "alt": "Bright kitchen with white cabinets, gray tile backsplash, stainless range, and aqua curtains.",
+      "sections": [
+        "the-house",
+        "amenities",
+        "house-guide"
+      ],
+      "group": "kitchen-dining"
+    },
+    {
+      "file": "living-room-2.webp",
+      "width": 1440,
+      "height": 1080,
+      "alt": "Living room angled toward a cream sectional, coffee table, desk nook, and glass-paneled entry door.",
+      "sections": [
+        "the-house",
+        "amenities",
+        "wifi"
+      ],
+      "group": "living"
+    },
+    {
+      "file": "exterior-rear-deck.webp",
+      "width": 1440,
+      "height": 1080,
+      "alt": "Two-story black wooden rear deck and stairs on a gray brick house.",
+      "sections": [
+        "getting-here",
+        "the-house"
+      ],
+      "group": "outside"
+    },
+    {
+      "file": "bedroom-blush.webp",
+      "width": 1440,
+      "height": 1080,
+      "alt": "Bright bedroom with dusty-rose bedding and curtains, white honeycomb shades, and a light-wood dresser.",
+      "sections": [
+        "the-house",
+        "amenities"
+      ],
+      "group": "bedrooms"
+    },
+    {
+      "file": "bathroom.webp",
+      "width": 1440,
+      "height": 1080,
+      "alt": "Bathroom vanity with chrome faucet, mirrored medicine cabinet, and light blue walls.",
+      "sections": [
+        "the-house",
+        "amenities"
+      ],
+      "group": "bath-laundry"
+    },
+    {
+      "file": "bedroom.webp",
+      "width": 1440,
+      "height": 1080,
+      "alt": "Cozy gray bedroom with navy curtains, blue floral art, dual nightstands, and a rattan papasan chair.",
+      "sections": [
+        "the-house",
+        "amenities"
+      ],
+      "group": "bedrooms"
+    },
+    {
+      "file": "living-room-fireplace.webp",
+      "width": 1440,
+      "height": 1080,
+      "alt": "Living-room corner with a wall-mounted TV above a black entertainment center and electric fireplace.",
+      "sections": [
+        "amenities",
+        "the-house"
+      ],
+      "group": "living"
+    },
+    {
+      "file": "bathroom-shower.webp",
+      "width": 1440,
+      "height": 1920,
+      "alt": "White subway-tiled tub and shower with chrome fixtures and a dark pleated curtain.",
+      "sections": [
+        "amenities"
+      ],
+      "group": "bath-laundry"
+    },
+    {
+      "file": "bedroom-blush-2.webp",
+      "width": 1440,
+      "height": 1080,
+      "alt": "Bedroom with dusty-rose bedding, light blue walls, floral art, and a wood dresser beside an open doorway.",
+      "sections": [
+        "the-house",
+        "amenities"
+      ],
+      "group": "bedrooms"
+    },
+    {
+      "file": "kitchen-2.webp",
+      "width": 1440,
+      "height": 1080,
+      "alt": "Kitchen overview with stainless refrigerator, white sink run, teal curtains, and a breakfast bar with stools.",
+      "sections": [
+        "the-house",
+        "amenities"
+      ],
+      "group": "kitchen-dining"
+    },
+    {
+      "file": "dining-to-kitchen.webp",
+      "width": 1440,
+      "height": 1080,
+      "alt": "Dining table with a red protea arrangement looking through a pass-through into a white-cabinet kitchen.",
+      "sections": [
+        "the-house",
+        "amenities",
+        "house-guide"
+      ],
+      "group": "kitchen-dining"
+    },
+    {
+      "file": "dining-room.webp",
+      "width": 1440,
+      "height": 1080,
+      "alt": "Dark-wood dining table and chairs on hardwood floors with a view into an adjacent bedroom.",
+      "sections": [
+        "the-house",
+        "amenities"
+      ],
+      "group": "kitchen-dining"
+    },
+    {
+      "file": "kitchen-breakfast-bar.webp",
+      "width": 1440,
+      "height": 1080,
+      "alt": "Breakfast bar with Mill House guest binder, microwave, and open shelves of coffee gear and games.",
+      "sections": [
+        "the-house",
+        "amenities",
+        "house-guide"
+      ],
+      "group": "kitchen-dining"
+    },
+    {
+      "file": "bathroom-towels.webp",
+      "width": 1440,
+      "height": 1920,
+      "alt": "Bathroom vanity beside a recessed shelf stacked with fresh white and black towels.",
+      "sections": [
+        "amenities",
+        "house-guide"
+      ],
+      "group": "bath-laundry"
+    },
+    {
+      "file": "bathroom-2.webp",
+      "width": 1440,
+      "height": 1080,
+      "alt": "Full bathroom view with subway-tiled tub-shower, navy curtain, and light blue walls.",
+      "sections": [
+        "amenities",
+        "house-guide"
+      ],
+      "group": "bath-laundry"
+    }
+  ]
+}

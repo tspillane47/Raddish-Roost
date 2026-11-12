@@ -29,7 +29,8 @@ export function PropertyHero({
   const { t, tf } = useTranslate();
   const site = useSiteConfig();
   const logo = brandLogo(property.slug);
-  const accent = logo?.accent ?? (site.key === "dad" ? site.colors.forest : FOREST);
+  const accent =
+    logo?.accent ?? (site.key === "roost" ? FOREST : site.colors.forest);
   const sample =
     isMarkedSample(property.welcomeMessage) ||
     isMarkedSample(property.description) ||
@@ -59,7 +60,7 @@ export function PropertyHero({
           </div>
         ) : site.key === "errin" ? (
           <div className="flex h-[45svh] max-h-[480px] min-h-40 items-end bg-[var(--beige)] px-5 pb-8">
-            <p className="mx-auto w-full max-w-6xl text-[0.7rem] font-medium uppercase tracking-[0.24em] text-[var(--muted)]">
+            <p className="mx-auto w-full max-w-6xl text-[0.7rem] font-medium uppercase tracking-[0.24em] text-[var(--muted-foreground)]">
               {t("photoSoon")}
             </p>
           </div>

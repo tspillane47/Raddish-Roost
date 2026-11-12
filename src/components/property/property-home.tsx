@@ -40,7 +40,8 @@ export function PropertyHome({
 }) {
   const gallery = getPropertyPhotos(property.slug);
   const site = getSiteConfig();
-  const accent = brandLogo(property.slug)?.accent ?? (site.key === "dad" ? site.colors.forest : FOREST);
+  const accent =
+    brandLogo(property.slug)?.accent ?? (site.key === "roost" ? FOREST : site.colors.forest);
 
   return (
     <article className="pb-16">

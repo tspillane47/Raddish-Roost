@@ -30,14 +30,18 @@ export function ErrinHome({
               sizes="100vw"
               className="block h-[min(68svh,36rem)] w-full object-cover object-[78%_36%] sm:object-[72%_40%] md:h-[min(62svh,34rem)] md:object-[68%_42%]"
             />
-            {/* Headline sits in the open sky on the right; soft scrub keeps type readable. */}
+            {/* Dark gradient keeps white brand type readable over the photo. */}
+            <div
+              className="pointer-events-none absolute inset-0 bg-[linear-gradient(105deg,transparent_18%,rgb(20_20_20_/_0.28)_48%,rgb(14_14_14_/_0.72)_100%)]"
+              aria-hidden="true"
+            />
             <div className="pointer-events-none absolute inset-0">
               <div className="mx-auto flex h-full w-full max-w-6xl items-start justify-end px-5 pt-14 sm:pt-16 md:items-center md:pt-0 md:pr-6 lg:pr-10">
-                <div className="max-w-[13.5rem] rounded-sm bg-[color-mix(in_srgb,var(--cream)_72%,transparent)] px-3 py-3 sm:max-w-[18rem] sm:px-4 sm:py-4 md:max-w-md md:bg-transparent md:px-0 md:py-0">
-                  <p className="text-[0.65rem] font-medium uppercase tracking-[0.28em] text-[var(--charcoal)]/70 md:text-[0.7rem]">
+                <div className="max-w-[13.5rem] sm:max-w-[18rem] md:max-w-md">
+                  <p className="text-[0.65rem] font-medium uppercase tracking-[0.28em] text-white/90 md:text-[0.7rem]">
                     {site.shortName}
                   </p>
-                  <h1 className="mt-2 font-[family-name:var(--font-errin-display,var(--font-display))] text-[clamp(2.1rem,7.5vw,4.25rem)] leading-[0.95] tracking-tight text-[var(--charcoal)] [text-shadow:0_1px_0_rgb(250_249_246_/_0.9),0_0_24px_rgb(250_249_246_/_0.55)] md:mt-3">
+                  <h1 className="mt-2 font-[family-name:var(--font-errin-display,var(--font-display))] text-[clamp(2.1rem,7.5vw,4.25rem)] leading-[0.95] tracking-tight text-white md:mt-3">
                     {site.name}
                   </h1>
                 </div>
@@ -47,7 +51,7 @@ export function ErrinHome({
         ) : (
           <div className="flex h-[min(62svh,34rem)] w-full items-end bg-[var(--beige)] px-5 pb-12 md:pb-16">
             <div className="mx-auto w-full max-w-6xl">
-              <p className="text-[0.7rem] font-medium uppercase tracking-[0.28em] text-[var(--muted)]">
+              <p className="text-[0.7rem] font-medium uppercase tracking-[0.28em] text-[var(--muted-foreground)]">
                 {site.shortName}
               </p>
               <h1 className="mt-4 max-w-3xl font-[family-name:var(--font-errin-display,var(--font-display))] text-[clamp(2.75rem,8vw,5.5rem)] leading-[0.95] tracking-tight text-[var(--charcoal)]">
@@ -59,10 +63,10 @@ export function ErrinHome({
       </section>
 
       <div className="mx-auto w-full max-w-6xl px-5 pt-8 md:pt-10">
-        <p className="max-w-2xl text-base leading-7 text-[var(--muted)] md:text-lg">
+        <p className="max-w-2xl text-base leading-7 text-[var(--muted-foreground)] md:text-lg">
           {site.tagline}
         </p>
-        <p className="mt-3 text-sm leading-6 tracking-wide text-[var(--muted)]">
+        <p className="mt-3 text-sm leading-6 tracking-wide text-[var(--muted-foreground)]">
           <Tx k="errinHostedBy" />
         </p>
         <div className="mt-8 h-px w-full bg-[var(--beige)]" aria-hidden="true" />
@@ -73,7 +77,7 @@ export function ErrinHome({
         aria-labelledby="where-staying-heading"
         className="mx-auto w-full max-w-6xl scroll-mt-24 px-5 pb-20 pt-12 md:pb-28 md:pt-16"
       >
-        <p className="text-[0.7rem] font-medium uppercase tracking-[0.28em] text-[var(--muted)]">
+        <p className="text-[0.7rem] font-medium uppercase tracking-[0.28em] text-[var(--muted-foreground)]">
           <Tx k="staysLabel" />
         </p>
         <h2
@@ -82,7 +86,7 @@ export function ErrinHome({
         >
           {site.collectionHeading}
         </h2>
-        <p className="mt-4 max-w-2xl text-base leading-7 text-[var(--muted)]">{site.collectionBody}</p>
+        <p className="mt-4 max-w-2xl text-base leading-7 text-[var(--muted-foreground)]">{site.collectionBody}</p>
 
         {properties.length === 0 ? (
           <p role="status" className="mt-12 border border-[var(--beige)] px-5 py-10 text-base leading-7">
@@ -135,9 +139,9 @@ function ErrinStayCard({ property }: { property: PropertySummary }) {
             {property.name}
           </Link>
         </h3>
-        <p className="text-[0.7rem] font-medium uppercase tracking-[0.22em] text-[var(--muted)]">{town}</p>
+        <p className="text-[0.7rem] font-medium uppercase tracking-[0.22em] text-[var(--muted-foreground)]">{town}</p>
         {property.tagline ? (
-          <p className="text-base leading-7 text-[var(--muted)]">{property.tagline}</p>
+          <p className="text-base leading-7 text-[var(--muted-foreground)]">{property.tagline}</p>
         ) : null}
         <Link
           href={`/${property.slug}`}
@@ -160,7 +164,7 @@ export function ErrinPhotoPlaceholder({ name }: { name: string }) {
       <p className="max-w-[12rem] font-[family-name:var(--font-errin-display,var(--font-display))] text-xl leading-snug tracking-tight text-[var(--charcoal)]">
         {name}
       </p>
-      <p className="text-[0.65rem] font-medium uppercase tracking-[0.24em] text-[var(--muted)]">
+      <p className="text-[0.65rem] font-medium uppercase tracking-[0.24em] text-[var(--muted-foreground)]">
         <Tx k="photoSoon" />
       </p>
     </div>

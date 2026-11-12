@@ -1,0 +1,308 @@
+{
+  "hero": "living-room-4.webp",
+  "heroPhotos": [
+    "living-room-4.webp",
+    "living-room-3.webp",
+    "living-room-2.webp"
+  ],
+  "cardPhoto": "living-room-4.webp",
+  "groups": [
+    {
+      "id": "living",
+      "label": "Living Spaces",
+      "preview": [
+        "living-room.webp",
+        "living-room-entry.webp",
+        "living-room-tv.webp"
+      ]
+    },
+    {
+      "id": "kitchen-dining",
+      "label": "Kitchen and Dining",
+      "preview": [
+        "kitchen.webp",
+        "kitchen-2.webp",
+        "kitchen-3.webp"
+      ]
+    },
+    {
+      "id": "bedrooms",
+      "label": "Bedrooms",
+      "preview": [
+        "bedroom.webp",
+        "bedroom-2.webp",
+        "bedroom-3.webp"
+      ]
+    },
+    {
+      "id": "bath-laundry",
+      "label": "Bath and Laundry",
+      "preview": [
+        "bathroom.webp",
+        "bathroom-amenities.webp",
+        "bathroom-shower.webp"
+      ]
+    }
+  ],
+  "photos": [
+    {
+      "file": "bedroom.webp",
+      "width": 1440,
+      "height": 1920,
+      "alt": "Bedroom with white and cream bedding, a red accent pillow, and matching red bedside lamps.",
+      "sections": [
+        "the-house",
+        "amenities"
+      ],
+      "group": "bedrooms"
+    },
+    {
+      "file": "bedroom-2.webp",
+      "width": 1440,
+      "height": 1080,
+      "alt": "Compact bedroom with a grey quilted bed and a red accent pillow.",
+      "sections": [
+        "the-house",
+        "amenities"
+      ],
+      "group": "bedrooms"
+    },
+    {
+      "file": "living-room.webp",
+      "width": 1440,
+      "height": 1080,
+      "alt": "Living room with hardwood floors, a black armchair, and a view toward the entry and bathroom.",
+      "sections": [
+        "the-house",
+        "house-guide"
+      ],
+      "group": "living"
+    },
+    {
+      "file": "living-room-entry.webp",
+      "width": 1440,
+      "height": 1080,
+      "alt": "Living area with recliner, coffee table, and a small bar seating nook near the front door.",
+      "sections": [
+        "the-house",
+        "amenities",
+        "house-guide"
+      ],
+      "group": "living"
+    },
+    {
+      "file": "living-room-tv.webp",
+      "width": 1440,
+      "height": 1920,
+      "alt": "Living area with wall-mounted TV above a pub table and stools beside an open bathroom.",
+      "sections": [
+        "the-house",
+        "amenities",
+        "house-guide"
+      ],
+      "group": "living"
+    },
+    {
+      "file": "bedroom-3.webp",
+      "width": 1440,
+      "height": 1080,
+      "alt": "Bright bedroom with a grey quilted bed, wooden dresser with towels, and a view into the living room.",
+      "sections": [
+        "the-house",
+        "amenities"
+      ],
+      "group": "bedrooms"
+    },
+    {
+      "file": "kitchen.webp",
+      "width": 1440,
+      "height": 1080,
+      "alt": "Kitchen with dark wood cabinets, white refrigerator, and a coffee station.",
+      "sections": [
+        "the-house",
+        "amenities",
+        "house-guide"
+      ],
+      "group": "kitchen-dining"
+    },
+    {
+      "file": "bedroom-4.webp",
+      "width": 1440,
+      "height": 1920,
+      "alt": "Bed with plush white bedding and a red accent pillow in natural light.",
+      "sections": [
+        "the-house",
+        "amenities"
+      ],
+      "group": "bedrooms"
+    },
+    {
+      "file": "living-room-kitchen.webp",
+      "width": 1440,
+      "height": 1080,
+      "alt": "Living room with dark sofa looking through to a kitchen with dark wood cabinets.",
+      "sections": [
+        "the-house",
+        "amenities"
+      ],
+      "group": "living"
+    },
+    {
+      "file": "living-room-2.webp",
+      "width": 1440,
+      "height": 1080,
+      "alt": "Cozy living room with a dark sofa, recliner, and stone-top coffee table on a patterned rug.",
+      "sections": [
+        "the-house",
+        "amenities"
+      ],
+      "group": "living"
+    },
+    {
+      "file": "living-room-3.webp",
+      "width": 1440,
+      "height": 1080,
+      "alt": "Bright living room with a charcoal sofa, matching armchair, and rustic coffee table.",
+      "sections": [
+        "the-house",
+        "amenities",
+        "house-guide"
+      ],
+      "group": "living"
+    },
+    {
+      "file": "bathroom.webp",
+      "width": 1440,
+      "height": 1080,
+      "alt": "Compact bathroom with a dark wood vanity, tiled floor, and grey towels on a rack.",
+      "sections": [
+        "the-house",
+        "amenities"
+      ],
+      "group": "bath-laundry"
+    },
+    {
+      "file": "bedroom-5.webp",
+      "width": 1440,
+      "height": 1920,
+      "alt": "Bedroom with a wooden headboard, white bedding, and matching red bedside lamps.",
+      "sections": [
+        "the-house",
+        "amenities"
+      ],
+      "group": "bedrooms"
+    },
+    {
+      "file": "kitchen-2.webp",
+      "width": 1440,
+      "height": 1920,
+      "alt": "Kitchen with dark wood cabinets looking through to a bright bedroom.",
+      "sections": [
+        "the-house",
+        "amenities",
+        "house-guide"
+      ],
+      "group": "kitchen-dining"
+    },
+    {
+      "file": "bedroom-6.webp",
+      "width": 1440,
+      "height": 1080,
+      "alt": "Bright bedroom with a wooden bed frame, grey bedding, and sheer white curtains.",
+      "sections": [
+        "the-house",
+        "amenities"
+      ],
+      "group": "bedrooms"
+    },
+    {
+      "file": "bathroom-amenities.webp",
+      "width": 1440,
+      "height": 1920,
+      "alt": "Open medicine cabinet stocked with labeled guest toiletries and amenities.",
+      "sections": [
+        "the-house",
+        "amenities"
+      ],
+      "group": "bath-laundry"
+    },
+    {
+      "file": "kitchen-3.webp",
+      "width": 1440,
+      "height": 1920,
+      "alt": "Kitchen with a gas stove looking through to a bedroom with a dresser and TV.",
+      "sections": [
+        "the-house",
+        "amenities",
+        "house-rules"
+      ],
+      "group": "kitchen-dining"
+    },
+    {
+      "file": "bathroom-shower.webp",
+      "width": 1440,
+      "height": 1920,
+      "alt": "Clean white walk-in shower with built-in shelves and provided toiletries.",
+      "sections": [
+        "amenities",
+        "house-guide"
+      ],
+      "group": "bath-laundry"
+    },
+    {
+      "file": "bathroom-2.webp",
+      "width": 1440,
+      "height": 1080,
+      "alt": "Compact bathroom with a dark vanity, toilet, and towels on a wall rack.",
+      "sections": [
+        "the-house",
+        "amenities"
+      ],
+      "group": "bath-laundry"
+    },
+    {
+      "file": "living-room-overview.webp",
+      "width": 1440,
+      "height": 1920,
+      "alt": "Entry view of the living room, high-top dining area, and kitchen beyond.",
+      "sections": [
+        "the-house",
+        "amenities"
+      ],
+      "group": "living"
+    },
+    {
+      "file": "bathroom-shower-2.webp",
+      "width": 1440,
+      "height": 1920,
+      "alt": "White bathtub-shower with a brushed-nickel showerhead and toiletries on built-in shelves.",
+      "sections": [
+        "the-house",
+        "amenities"
+      ],
+      "group": "bath-laundry"
+    },
+    {
+      "file": "living-room-4.webp",
+      "width": 1440,
+      "height": 1080,
+      "alt": "Inviting living room with a charcoal sofa, recliner, and warm lamp lighting.",
+      "sections": [
+        "the-house",
+        "amenities",
+        "house-guide"
+      ],
+      "group": "living"
+    },
+    {
+      "file": "bedroom-hallway.webp",
+      "width": 1440,
+      "height": 1080,
+      "alt": "View from the foot of a grey quilted bed through an open door into a hallway.",
+      "sections": [
+        "the-house"
+      ],
+      "group": "bedrooms"
+    }
+  ]
+}

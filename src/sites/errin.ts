@@ -33,13 +33,13 @@ export const errinSite: SiteConfig = {
   logos: [],
   artworkOrder: ["winooski-flat", "mill-house", "maple-street-flat"],
   colors: {
-    forest: "#3D5A6C", // Lake Champlain slate blue (primary accent)
-    sage: "#3D5A6C",
+    forest: "#2C4555", // darkened slate blue for AA contrast on cream/stone
+    sage: "#2C4555",
     cream: "#FAF9F6", // warm white
     charcoal: "#141414", // ink
     beige: "#E7E3DC", // stone
     terracotta: "#A5543E", // muted brick, used sparingly
-    muted: "#6B6560",
+    muted: "#4A4A4A", // secondary text floor for AA on cream/stone
     mustard: "#A5543E",
   },
   icons: {

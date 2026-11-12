@@ -10,6 +10,7 @@ import { brandLogo } from "@/lib/content/brand-art";
 import type { PerfectDay, ThingToDo } from "@/lib/content/things-to-do";
 import { getGuideSection, getPropertyGuide } from "@/lib/data/properties";
 import { getPerfectDays, getThingsToDo } from "@/lib/data/things-to-do";
+import { getSiteConfig } from "@/sites";
 
 type SectionParams = { params: Promise<{ propertySlug: string; sectionSlug: string }> };
 
@@ -108,7 +109,7 @@ async function SectionContent({ params }: SectionParams) {
         section={result.section}
         places={places}
         itineraries={itineraries}
-        accent={brandLogo(propertySlug)?.accent}
+        accent={brandLogo(propertySlug)?.accent ?? getSiteConfig().colors.forest}
       />
     </>
   );

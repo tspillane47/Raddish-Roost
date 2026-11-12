@@ -1,0 +1,259 @@
+{
+  "hero": "living-room.webp",
+  "heroPhotos": [
+    "living-room.webp",
+    "living-room-fireplace.webp",
+    "balcony.webp"
+  ],
+  "cardPhoto": "living-room.webp",
+  "groups": [
+    {
+      "id": "living",
+      "label": "Living Spaces",
+      "preview": [
+        "living-room.webp",
+        "living-room-2.webp",
+        "living-room-fireplace.webp"
+      ]
+    },
+    {
+      "id": "kitchen-dining",
+      "label": "Kitchen and Dining",
+      "preview": [
+        "kitchen-entry.webp",
+        "kitchen-appliances.webp",
+        "kitchen-doorway.webp"
+      ]
+    },
+    {
+      "id": "bedrooms",
+      "label": "Bedrooms",
+      "preview": [
+        "bedroom.webp",
+        "bedroom-2.webp",
+        "bedroom-to-kitchen.webp"
+      ]
+    },
+    {
+      "id": "bath-laundry",
+      "label": "Bath and Laundry",
+      "preview": [
+        "bathroom.webp"
+      ]
+    },
+    {
+      "id": "outside",
+      "label": "Outside and Around Town",
+      "preview": [
+        "exterior-deck-stairs.webp",
+        "deck-access.webp",
+        "balcony.webp"
+      ]
+    }
+  ],
+  "photos": [
+    {
+      "file": "exterior-deck-stairs.webp",
+      "width": 1440,
+      "height": 3122,
+      "alt": "Grey brick house with a two-story black wooden deck and exterior staircase.",
+      "sections": [
+        "getting-here",
+        "the-house"
+      ],
+      "group": "outside"
+    },
+    {
+      "file": "kitchen-entry.webp",
+      "width": 1440,
+      "height": 1080,
+      "alt": "Kitchen with stainless refrigerator looking toward an open entry door.",
+      "sections": [
+        "the-house",
+        "amenities"
+      ],
+      "group": "kitchen-dining"
+    },
+    {
+      "file": "bathroom.webp",
+      "width": 1440,
+      "height": 885,
+      "alt": "Small bathroom with a curved glass corner shower and white vanity under a sloped ceiling.",
+      "sections": [
+        "the-house",
+        "amenities"
+      ],
+      "group": "bath-laundry"
+    },
+    {
+      "file": "kitchen-appliances.webp",
+      "width": 1440,
+      "height": 1080,
+      "alt": "Kitchen corner with stainless refrigerator, white stove, and coffee station on a butcher-block counter.",
+      "sections": [
+        "the-house",
+        "amenities",
+        "house-guide"
+      ],
+      "group": "kitchen-dining"
+    },
+    {
+      "file": "living-room.webp",
+      "width": 1440,
+      "height": 1080,
+      "alt": "Cozy living area with a black sofa, rustic coffee table, and patterned rug under a sloped ceiling.",
+      "sections": [
+        "the-house",
+        "amenities"
+      ],
+      "group": "living"
+    },
+    {
+      "file": "bedroom.webp",
+      "width": 1440,
+      "height": 1080,
+      "alt": "Bedroom with striped bedding, bedside lamp, and an open closet.",
+      "sections": [
+        "the-house",
+        "amenities"
+      ],
+      "group": "bedrooms"
+    },
+    {
+      "file": "bedroom-2.webp",
+      "width": 1440,
+      "height": 1080,
+      "alt": "Bedroom under a sloped ceiling with striped white linens and a white nightstand.",
+      "sections": [
+        "the-house",
+        "amenities"
+      ],
+      "group": "bedrooms"
+    },
+    {
+      "file": "living-room-2.webp",
+      "width": 1440,
+      "height": 1080,
+      "alt": "Living room with dark leather sofa, light wood coffee table, and patterned rug.",
+      "sections": [
+        "the-house",
+        "amenities",
+        "house-guide"
+      ],
+      "group": "living"
+    },
+    {
+      "file": "deck-access.webp",
+      "width": 1440,
+      "height": 1080,
+      "alt": "Open door leading from hardwood floors onto a wooden deck with two wicker chairs.",
+      "sections": [
+        "the-house",
+        "amenities"
+      ],
+      "group": "outside"
+    },
+    {
+      "file": "kitchen-doorway.webp",
+      "width": 1440,
+      "height": 1080,
+      "alt": "Doorway view into a kitchen with stainless refrigerator and coffee station.",
+      "sections": [
+        "the-house",
+        "amenities"
+      ],
+      "group": "kitchen-dining"
+    },
+    {
+      "file": "kitchen.webp",
+      "width": 1440,
+      "height": 1080,
+      "alt": "Kitchen with white cabinets, wood counters, subway tile, and a black refrigerator.",
+      "sections": [
+        "the-house",
+        "amenities",
+        "house-guide"
+      ],
+      "group": "kitchen-dining"
+    },
+    {
+      "file": "bedroom-to-kitchen.webp",
+      "width": 1440,
+      "height": 1080,
+      "alt": "View from a paneled bedroom through an open door into the kitchen.",
+      "sections": [
+        "the-house"
+      ],
+      "group": "bedrooms"
+    },
+    {
+      "file": "kitchen-2.webp",
+      "width": 1440,
+      "height": 1080,
+      "alt": "Bright kitchen with white appliances and butcher-block counters opening to the living room.",
+      "sections": [
+        "the-house",
+        "amenities",
+        "house-guide"
+      ],
+      "group": "kitchen-dining"
+    },
+    {
+      "file": "bedroom-3.webp",
+      "width": 1440,
+      "height": 1080,
+      "alt": "Bedroom with navy bedding and a view into the adjacent kitchen.",
+      "sections": [
+        "the-house",
+        "amenities"
+      ],
+      "group": "bedrooms"
+    },
+    {
+      "file": "bedroom-4.webp",
+      "width": 1440,
+      "height": 1080,
+      "alt": "Cozy bedroom with striped white comforter under a sloped ceiling.",
+      "sections": [
+        "the-house",
+        "amenities"
+      ],
+      "group": "bedrooms"
+    },
+    {
+      "file": "balcony.webp",
+      "width": 1440,
+      "height": 1080,
+      "alt": "Private wooden balcony with two black wicker chairs and a small side table.",
+      "sections": [
+        "the-house",
+        "amenities"
+      ],
+      "group": "outside"
+    },
+    {
+      "file": "living-room-fireplace.webp",
+      "width": 1440,
+      "height": 1080,
+      "alt": "Living room corner with a wall-mounted TV above an electric fireplace.",
+      "sections": [
+        "the-house",
+        "wifi",
+        "amenities"
+      ],
+      "group": "living"
+    },
+    {
+      "file": "dining-nook.webp",
+      "width": 1440,
+      "height": 1920,
+      "alt": "Wooden corner breakfast nook with a whitewashed frame and warm wood tabletop.",
+      "sections": [
+        "the-house",
+        "house-guide",
+        "amenities"
+      ],
+      "group": "kitchen-dining"
+    }
+  ]
+}

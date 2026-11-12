@@ -44,15 +44,17 @@ export function WeatherCard({ weather }: { weather: WeatherSnapshot }) {
       >
         <div className="flex items-start justify-between gap-4">
           <div className="min-w-0">
-            <p className="text-[0.7rem] font-medium uppercase tracking-[0.22em] text-[var(--muted)]">
+            <p className="text-[0.7rem] font-medium uppercase tracking-[0.22em] text-[var(--muted-foreground)]">
               {t("weather")}
             </p>
             <p className="mt-3 font-[family-name:var(--font-errin-display,var(--font-display))] text-[3rem] leading-none tracking-tight text-[var(--charcoal)]">
               {weather.temp}°<span className="sr-only"> {t("fahrenheit")}</span>
             </p>
-            <p className="mt-2 text-sm leading-5 text-[var(--muted)]">{conditionLabel(condition, t)}</p>
+            <p className="mt-2 text-sm leading-5 text-[var(--muted-foreground)]">
+              {conditionLabel(condition, t)}
+            </p>
           </div>
-          <p className="pt-7 text-right text-sm leading-6 text-[var(--muted)]">
+          <p className="pt-7 text-right text-sm leading-6 text-[var(--muted-foreground)]">
             <span className="block">{tf("weatherHigh", { temp: weather.high })}</span>
             <span className="block">{tf("weatherLow", { temp: weather.low })}</span>
           </p>
@@ -61,7 +63,7 @@ export function WeatherCard({ weather }: { weather: WeatherSnapshot }) {
         <ol className="mt-4 grid list-none grid-cols-3 gap-3 p-0">
           {weather.days.map((day) => (
             <li key={day.label} className="min-w-0">
-              <p className="text-[0.65rem] font-medium uppercase tracking-[0.18em] text-[var(--muted)]">
+              <p className="text-[0.65rem] font-medium uppercase tracking-[0.18em] text-[var(--muted-foreground)]">
                 {dayName(day, locale, t)}
               </p>
               <p className="mt-1 text-sm tabular-nums text-[var(--charcoal)]">

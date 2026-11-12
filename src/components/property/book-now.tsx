@@ -29,13 +29,14 @@ export function BookNow({
   const stayAgain = siteLabel(site, "stayAgain", locale);
   if (bookings.length === 0) return null;
   const rounded = site.key === "dad" ? "rounded-sm" : "rounded-full";
+  const buttonInk = site.key === "errin" ? site.colors.cream : CREAM;
 
   return (
     <>
       <button
         type="button"
         className={`mt-5 inline-flex min-h-12 flex-col items-center justify-center ${rounded} px-7 text-base font-semibold shadow-sm focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-forest`}
-        style={{ backgroundColor: accent, color: CREAM }}
+        style={{ backgroundColor: accent, color: buttonInk }}
         aria-haspopup="dialog"
         onClick={() => openDialog(dialogRef.current)}
       >
