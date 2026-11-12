@@ -8,6 +8,7 @@ import { photoFrame } from "@/components/property/property-look";
 import { PropertyTools } from "@/components/property/property-tools";
 import { previewWeather } from "@/lib/content/weather";
 import { previewProperty } from "@/lib/data/map-content";
+import { SiteProvider } from "@/sites/site-context";
 
 vi.mock("next/link", () => ({
   default: ({ href, children, ...props }: { href: string; children: ReactNode } & Record<string, unknown>) => (
@@ -170,6 +171,50 @@ describe("weather card", () => {
     expect(card).toHaveAttribute("data-scene", "snow");
     expect(card).toHaveAttribute("data-cold", "true");
     expect(card.querySelectorAll(".weather-flake").length).toBeLessThanOrEqual(40);
+  });
+
+  it("renders the errin editorial sky without roost weather classes", () => {
+    const { unmount } = render(
+      <SiteProvider siteKey="errin">
+        <WeatherCard
+          weather={{
+            temp: 48,
+            code: 61,
+            high: 55,
+            low: 39,
+            scene: "rain",
+            line: null,
+            days: [
+              { label: "Today", code: 61, high: 55, low: 39 },
+              { label: "Sat", code: 2, high: 52, low: 34 },
+              { label: "Sun", code: 0, high: 50, low: 32 },
+            ],
+          }}
+        />
+      </SiteProvider>,
+    );
+
+    const card = screen.getByRole("region", { name: "Weather" });
+    expect(card.classList.contains("errin-weather-card")).toBe(true);
+    expect(card.classList.contains("weather-card")).toBe(false);
+    expect(card).toHaveAttribute("data-scene", "rain");
+    expect(card).toHaveAttribute("data-tone", "dark");
+    expect(card.querySelector(".errin-weather-sky")).toHaveAttribute("aria-hidden", "true");
+    expect(card.querySelectorAll(".errin-weather-drop").length).toBeGreaterThan(0);
+    expect(card.querySelector(".weather-sky")).toBeNull();
+    expect(card).toHaveTextContent("48°");
+    expect(card).toHaveTextContent("High 55°");
+    unmount();
+
+    render(
+      <SiteProvider siteKey="errin">
+        <WeatherCard weather={previewWeather("clear-night")} />
+      </SiteProvider>,
+    );
+    const night = screen.getByRole("region", { name: "Weather" });
+    expect(night).toHaveAttribute("data-scene", "clear-night");
+    expect(night.querySelectorAll(".errin-weather-star").length).toBeGreaterThan(0);
+    expect(night.querySelector(".errin-weather-moon")).not.toBeNull();
   });
 });
 

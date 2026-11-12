@@ -6,6 +6,7 @@ import { intlLocale } from "@/lib/i18n/locale";
 import { useTranslate } from "@/lib/i18n/locale-context";
 import { messages, type MessageKey } from "@/lib/i18n/messages";
 import { useSiteConfig } from "@/sites/site-context";
+import "./errin-weather-card.css";
 import "./weather-card.css";
 
 export function WeatherCard({ weather }: { weather: WeatherSnapshot }) {
@@ -39,39 +40,47 @@ export function WeatherCard({ weather }: { weather: WeatherSnapshot }) {
   if (site.key === "errin") {
     return (
       <section
+        ref={setNode}
         aria-label={t("weather")}
-        className="w-full border border-[var(--beige)] bg-[var(--cream)] px-5 py-5"
+        data-scene={view.scene}
+        data-tone={view.tone}
+        data-night={view.night ? "true" : "false"}
+        data-paused={paused ? "true" : "false"}
+        className="errin-weather-card relative w-full overflow-hidden rounded-md border px-5 py-5"
       >
-        <div className="flex items-start justify-between gap-4">
-          <div className="min-w-0">
-            <p className="text-[0.7rem] font-medium uppercase tracking-[0.22em] text-[var(--muted-foreground)]">
-              {t("weather")}
-            </p>
-            <p className="mt-3 font-[family-name:var(--font-errin-display,var(--font-display))] text-[3rem] leading-none tracking-tight text-[var(--charcoal)]">
-              {weather.temp}°<span className="sr-only"> {t("fahrenheit")}</span>
-            </p>
-            <p className="mt-2 text-sm leading-5 text-[var(--muted-foreground)]">
-              {conditionLabel(condition, t)}
+        <div className="errin-weather-sky" aria-hidden="true">
+          <ErrinSky view={view} />
+        </div>
+        <div className="errin-weather-copy relative z-10">
+          <div className="flex items-start justify-between gap-4">
+            <div className="min-w-0">
+              <p className="errin-weather-muted text-[0.7rem] font-medium uppercase tracking-[0.22em]">
+                {t("weather")}
+              </p>
+              <p className="mt-3 font-[family-name:var(--font-errin-display,var(--font-display))] text-[3rem] leading-none tracking-tight">
+                {weather.temp}°<span className="sr-only"> {t("fahrenheit")}</span>
+              </p>
+              <p className="errin-weather-muted mt-2 text-sm leading-5">{conditionLabel(condition, t)}</p>
+            </div>
+            <p className="errin-weather-muted pt-7 text-right text-sm leading-6">
+              <span className="block">{tf("weatherHigh", { temp: weather.high })}</span>
+              <span className="block">{tf("weatherLow", { temp: weather.low })}</span>
             </p>
           </div>
-          <p className="pt-7 text-right text-sm leading-6 text-[var(--muted-foreground)]">
-            <span className="block">{tf("weatherHigh", { temp: weather.high })}</span>
-            <span className="block">{tf("weatherLow", { temp: weather.low })}</span>
-          </p>
+          <div className="errin-weather-rule mt-5 h-px w-full" aria-hidden="true" />
+          <ol className="mt-4 grid list-none grid-cols-3 gap-3 p-0">
+            {weather.days.map((day) => (
+              <li key={day.label} className="min-w-0">
+                <p className="errin-weather-muted text-[0.65rem] font-medium uppercase tracking-[0.18em]">
+                  {dayName(day, locale, t)}
+                </p>
+                <p className="mt-1 text-sm tabular-nums">
+                  {day.high}° / {day.low}°
+                </p>
+              </li>
+            ))}
+          </ol>
         </div>
-        <div className="mt-5 h-px w-full bg-[var(--beige)]" aria-hidden="true" />
-        <ol className="mt-4 grid list-none grid-cols-3 gap-3 p-0">
-          {weather.days.map((day) => (
-            <li key={day.label} className="min-w-0">
-              <p className="text-[0.65rem] font-medium uppercase tracking-[0.18em] text-[var(--muted-foreground)]">
-                {dayName(day, locale, t)}
-              </p>
-              <p className="mt-1 text-sm tabular-nums text-[var(--charcoal)]">
-                {day.high}° / {day.low}°
-              </p>
-            </li>
-          ))}
-        </ol>
       </section>
     );
   }
@@ -183,6 +192,34 @@ function Sky({ view }: { view: ReturnType<typeof weatherView> }) {
   );
 }
 
+/** Soft editorial sky for Queen City Stays. Uses the same weatherView flags as roost/dad. */
+function ErrinSky({ view }: { view: ReturnType<typeof weatherView> }) {
+  return (
+    <>
+      {view.sun ? <ErrinSun /> : null}
+      {view.moon ? <ErrinMoon /> : null}
+      {marks(view.stars, 3).map((mark) => (
+        <span key={mark.key} className="errin-weather-star" style={mark.style} />
+      ))}
+      {Array.from({ length: view.clouds }, (_, index) => (
+        <span key={index} className={`errin-weather-cloud errin-weather-cloud-${index + 1}`} />
+      ))}
+      {marks(view.raindrops, 7).map((mark) => (
+        <span key={mark.key} className="errin-weather-drop" style={mark.style} />
+      ))}
+      {marks(view.snowflakes, 11).map((mark) => (
+        <span key={mark.key} className="errin-weather-flake" style={mark.style} />
+      ))}
+      {view.fog
+        ? [1, 2, 3].map((band) => (
+            <span key={band} className={`errin-weather-fogband errin-weather-fogband-${band}`} />
+          ))
+        : null}
+      {view.lightning ? <span className="errin-weather-lightning" /> : null}
+    </>
+  );
+}
+
 function Sun() {
   return (
     <div className="weather-sun">
@@ -206,10 +243,41 @@ function Sun() {
   );
 }
 
+function ErrinSun() {
+  return (
+    <div className="errin-weather-sun">
+      <div className="errin-weather-sun-glow" />
+      <svg className="errin-weather-rays" viewBox="0 0 80 80" aria-hidden="true">
+        {Array.from({ length: 8 }, (_, index) => (
+          <line
+            key={index}
+            x1="40"
+            y1="10"
+            x2="40"
+            y2="16"
+            stroke="rgba(220, 180, 120, 0.45)"
+            strokeWidth="1.25"
+            strokeLinecap="round"
+            transform={`rotate(${index * 45} 40 40)`}
+          />
+        ))}
+      </svg>
+    </div>
+  );
+}
+
 function Moon() {
   return (
     <div className="weather-moon">
       <div className="weather-moon-glow" />
+    </div>
+  );
+}
+
+function ErrinMoon() {
+  return (
+    <div className="errin-weather-moon">
+      <div className="errin-weather-moon-glow" />
     </div>
   );
 }

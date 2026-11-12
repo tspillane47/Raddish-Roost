@@ -115,6 +115,29 @@ describe("weather lines", () => {
     expect(css).not.toContain("weather-flash");
     expect(css).not.toContain("hero-gust");
   });
+
+  it("keeps errin weather scenes soft, clipped, and pausable", () => {
+    const css = readFileSync(
+      path.resolve(__dirname, "../../components/property/errin-weather-card.css"),
+      "utf8",
+    );
+    expect(css).toContain(".errin-weather-card");
+    expect(css).toContain('data-scene="clear-day"');
+    expect(css).toContain('data-scene="clear-night"');
+    expect(css).toContain('data-scene="cloudy"');
+    expect(css).toContain('data-scene="rain"');
+    expect(css).toContain('data-scene="snow"');
+    expect(css).toContain('data-scene="fog"');
+    expect(css).toContain('data-scene="storm"');
+    expect(css).toContain('data-scene="golden"');
+    expect(css).toContain("overflow: hidden");
+    expect(css).toContain("prefers-reduced-motion");
+    expect(css).toContain('data-paused="true"');
+    expect(css).toContain("animation-play-state: paused");
+    expect(css).toContain("--errin-weather-ink: #141414");
+    expect(css).toContain("--errin-weather-ink: #faf9f6");
+    expect(css).not.toContain(".weather-card");
+  });
 });
 
 describe("nearby essentials", () => {
