@@ -21,7 +21,11 @@ export default function HomePage() {
     );
   }
   if (site.key === "errin") {
-    return <ErrinHome site={site} />;
+    return (
+      <Suspense fallback={<ErrinHome site={site} properties={[]} />}>
+        <ErrinHomeSlot />
+      </Suspense>
+    );
   }
 
   return (
@@ -65,6 +69,26 @@ async function DadHomeSlot() {
     );
   }
   return <DadHome site={site} properties={orderLikeArtwork(result.data, site.artworkOrder)} />;
+}
+
+async function ErrinHomeSlot() {
+  const site = getSiteConfig();
+  const result = await getPublishedProperties();
+  if (!result.ok) {
+    return (
+      <div className="mx-auto w-full max-w-6xl px-5 py-16">
+        <p role="alert" className="border border-[var(--beige)] bg-[var(--beige)]/60 px-5 py-8 text-base leading-7">
+          <Tx k="guidebookFailed" />
+        </p>
+      </div>
+    );
+  }
+  return (
+    <ErrinHome
+      site={site}
+      properties={orderLikeArtwork(result.data, site.artworkOrder)}
+    />
+  );
 }
 
 function HomeBodyFallback() {

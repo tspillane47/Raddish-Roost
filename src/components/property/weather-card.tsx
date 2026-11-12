@@ -5,9 +5,11 @@ import { weatherCondition, weatherView, type WeatherDay, type WeatherSnapshot } 
 import { intlLocale } from "@/lib/i18n/locale";
 import { useTranslate } from "@/lib/i18n/locale-context";
 import { messages, type MessageKey } from "@/lib/i18n/messages";
+import { useSiteConfig } from "@/sites/site-context";
 import "./weather-card.css";
 
 export function WeatherCard({ weather }: { weather: WeatherSnapshot }) {
+  const site = useSiteConfig();
   const view = weatherView(weather);
   const { locale, t, tf } = useTranslate();
   const [node, setNode] = useState<HTMLElement | null>(null);
@@ -33,6 +35,44 @@ export function WeatherCard({ weather }: { weather: WeatherSnapshot }) {
       document.removeEventListener("visibilitychange", sync);
     };
   }, [node]);
+
+  if (site.key === "errin") {
+    return (
+      <section
+        aria-label={t("weather")}
+        className="w-full border border-[var(--beige)] bg-[var(--cream)] px-5 py-5"
+      >
+        <div className="flex items-start justify-between gap-4">
+          <div className="min-w-0">
+            <p className="text-[0.7rem] font-medium uppercase tracking-[0.22em] text-[var(--muted)]">
+              {t("weather")}
+            </p>
+            <p className="mt-3 font-[family-name:var(--font-errin-display,var(--font-display))] text-[3rem] leading-none tracking-tight text-[var(--charcoal)]">
+              {weather.temp}°<span className="sr-only"> {t("fahrenheit")}</span>
+            </p>
+            <p className="mt-2 text-sm leading-5 text-[var(--muted)]">{conditionLabel(condition, t)}</p>
+          </div>
+          <p className="pt-7 text-right text-sm leading-6 text-[var(--muted)]">
+            <span className="block">{tf("weatherHigh", { temp: weather.high })}</span>
+            <span className="block">{tf("weatherLow", { temp: weather.low })}</span>
+          </p>
+        </div>
+        <div className="mt-5 h-px w-full bg-[var(--beige)]" aria-hidden="true" />
+        <ol className="mt-4 grid list-none grid-cols-3 gap-3 p-0">
+          {weather.days.map((day) => (
+            <li key={day.label} className="min-w-0">
+              <p className="text-[0.65rem] font-medium uppercase tracking-[0.18em] text-[var(--muted)]">
+                {dayName(day, locale, t)}
+              </p>
+              <p className="mt-1 text-sm tabular-nums text-[var(--charcoal)]">
+                {day.high}° / {day.low}°
+              </p>
+            </li>
+          ))}
+        </ol>
+      </section>
+    );
+  }
 
   return (
     <section

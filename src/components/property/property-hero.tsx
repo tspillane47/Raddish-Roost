@@ -57,6 +57,12 @@ export function PropertyHero({
               className="object-cover"
             />
           </div>
+        ) : site.key === "errin" ? (
+          <div className="flex h-[45svh] max-h-[480px] min-h-40 items-end bg-[var(--beige)] px-5 pb-8">
+            <p className="mx-auto w-full max-w-6xl text-[0.7rem] font-medium uppercase tracking-[0.24em] text-[var(--muted)]">
+              {t("photoSoon")}
+            </p>
+          </div>
         ) : (
           <div
             className="h-[45svh] max-h-[480px] min-h-40"
@@ -65,7 +71,11 @@ export function PropertyHero({
         )}
         <Link
           href="/"
-          className="absolute top-4 left-4 z-10 inline-flex min-h-11 items-center rounded-full bg-cream/95 px-4 text-base text-forest shadow-sm focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-forest"
+          className={
+            site.key === "errin"
+              ? "absolute top-4 left-4 z-10 inline-flex min-h-11 items-center border border-[var(--beige)] bg-[var(--cream)] px-4 text-base text-[var(--forest)] focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[var(--forest)]"
+              : "absolute top-4 left-4 z-10 inline-flex min-h-11 items-center rounded-full bg-cream/95 px-4 text-base text-forest shadow-sm focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-forest"
+          }
         >
           {t("allStays")}
         </Link>

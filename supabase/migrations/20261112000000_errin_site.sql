@@ -13,7 +13,7 @@ insert into public.sites (id, key, name, domain, settings)
 values (
   'c1000000-0000-4000-8000-000000000003',
   'errin',
-  'Errin''s Digs',
+  'Queen City Stays',
   null,
   '{}'::jsonb
 )
@@ -28,7 +28,7 @@ select s.id, v.key, v.value
 from public.sites s
 join (
   values
-    ('brand_name', '"Errin''s Digs"'::jsonb),
+    ('brand_name', '"Queen City Stays"'::jsonb),
     ('allow_indexing', 'false'::jsonb),
     ('active_seasons', '{"spring":false,"summer":false,"fall":false,"winter":false}'::jsonb),
     ('public_site_url', '""'::jsonb)
@@ -46,7 +46,7 @@ begin
   from public.sites
   where key = 'errin'
     and id = 'c1000000-0000-4000-8000-000000000003'
-    and name = 'Errin''s Digs';
+    and name = 'Queen City Stays';
 
   select count(*) into settings_count
   from public.site_settings ss

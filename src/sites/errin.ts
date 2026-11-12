@@ -1,27 +1,26 @@
 import type { SiteConfig } from "@/sites/types";
 
 /**
- * Errin's Digs (errin site).
- * Temporary 1980s apres-ski placeholder until real brand details land.
- * Swap name, colors, fonts, hero, and logos here when ready.
+ * Queen City Stays (errin site).
+ * Editorial, Dwell-inspired look. Swap hero, logos, and copy here as details land.
  */
 export const errinSite: SiteConfig = {
   key: "errin",
-  name: "Errin's Digs",
-  shortName: "Errin's Digs",
-  tagline: "Ski hard. Apres harder.",
+  name: "Queen City Stays",
+  shortName: "Queen City Stays",
+  tagline: "Modern stays in Burlington and Winooski.",
   domain: null,
   seoDescription:
-    "Errin's Digs. Ski hard. Apres harder. Cozy ski-trip hideaways coming soon.",
-  footerBlurb: "Three cozy hideaways for your next ski trip. Details coming soon.",
-  collectionHeading: "Coming soon. Grab your shades.",
-  collectionBody: "Three cozy hideaways for your next ski trip. Details coming soon.",
-  comingSoonTitle: "Coming soon. Grab your shades.",
-  comingSoonBody: "Three cozy hideaways for your next ski trip. Details coming soon.",
+    "Queen City Stays. Modern stays in Burlington and Winooski. Hosted by Errin.",
+  footerBlurb: "Modern stays in Burlington and Winooski. Hosted by Errin.",
+  collectionHeading: "Where are you staying?",
+  collectionBody: "Three calm apartments for your next trip to Burlington and Winooski.",
+  comingSoonTitle: "Where are you staying?",
+  comingSoonBody: "Three calm apartments for your next trip to Burlington and Winooski.",
   welcome: {
-    placeName: "Errin's Digs",
-    background: "#0A1628",
-    ink: "#FFFAFE",
+    placeName: "Queen City Stays",
+    background: "#FAF9F6",
+    ink: "#141414",
     showSeasonIcons: false,
     useLodgeFonts: false,
   },
@@ -29,20 +28,19 @@ export const errinSite: SiteConfig = {
     src: "/sites/errin/hero.webp",
     width: 1600,
     height: 900,
-    alt: "Neon mountain under a striped sunset with crossed skis and retro sunglasses",
+    alt: "Quiet architectural interior with soft natural light",
   },
   logos: [],
-  artworkOrder: [],
+  artworkOrder: ["winooski-flat", "mill-house", "maple-street-flat"],
   colors: {
-    // Mapped onto the shared palette slots so layout CSS vars keep working.
-    forest: "#6B2D8B", // grape purple
-    sage: "#00E5C0", // electric teal
-    cream: "#FFFAFE", // snowy white
-    charcoal: "#0A1628", // deep navy
-    beige: "#FFE0F0", // soft pink snow
-    terracotta: "#FF2D95", // hot pink
-    muted: "#5C4A6E",
-    mustard: "#FFE566", // sunshine yellow
+    forest: "#3D5A6C", // Lake Champlain slate blue (primary accent)
+    sage: "#3D5A6C",
+    cream: "#FAF9F6", // warm white
+    charcoal: "#141414", // ink
+    beige: "#E7E3DC", // stone
+    terracotta: "#A5543E", // muted brick, used sparingly
+    muted: "#6B6560",
+    mustard: "#A5543E",
   },
   icons: {
     favicon: "/sites/errin/favicon.png",
@@ -52,7 +50,7 @@ export const errinSite: SiteConfig = {
     appleTouch: "/sites/errin/apple-touch-icon.png",
   },
   nav: [
-    { label: "The Digs", href: "/#coming-soon", plain: "Our stays" },
+    { label: "Stays", href: "/#where-staying", plain: "Where are you staying?" },
   ],
-  bookCta: { label: "Coming Soon", href: "/#coming-soon", plain: "Coming soon" },
+  bookCta: { label: "Book a stay", href: "/#where-staying", plain: "Book now" },
 };

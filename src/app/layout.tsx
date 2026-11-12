@@ -1,6 +1,13 @@
 import type { CSSProperties } from "react";
 import type { Metadata, Viewport } from "next";
-import { Alfa_Slab_One, DM_Serif_Display, Inter, Monoton, Special_Elite } from "next/font/google";
+import {
+  Alfa_Slab_One,
+  DM_Serif_Display,
+  Instrument_Serif,
+  Inter,
+  Inter_Tight,
+  Special_Elite,
+} from "next/font/google";
 import { SiteChrome } from "@/components/layout/site-chrome";
 import { LocaleProvider } from "@/lib/i18n/locale-context";
 import { getLocale } from "@/lib/i18n/get-locale";
@@ -45,10 +52,18 @@ const dadTypewriter = Special_Elite({
   preload: false,
 });
 
-const errinDisplay = Monoton({
+const errinDisplay = Instrument_Serif({
   subsets: ["latin"],
   weight: "400",
   variable: "--font-errin-display",
+  display: "swap",
+  adjustFontFallback: true,
+  preload: false,
+});
+
+const errinSans = Inter_Tight({
+  subsets: ["latin"],
+  variable: "--font-errin-sans",
   display: "swap",
   adjustFontFallback: true,
   preload: false,
@@ -100,7 +115,7 @@ export default async function RootLayout({ children }: LayoutProps<"/">) {
     site.key === "dad"
       ? `${inter.variable} ${display.variable} ${dadDisplay.variable} ${dadTypewriter.variable}`
       : site.key === "errin"
-        ? `${inter.variable} ${display.variable} ${errinDisplay.variable}`
+        ? `${inter.variable} ${display.variable} ${errinDisplay.variable} ${errinSans.variable}`
         : `${inter.variable} ${display.variable}`;
   const palette = sitePaletteStyle(site.colors) as CSSProperties;
   const style =
@@ -112,13 +127,16 @@ export default async function RootLayout({ children }: LayoutProps<"/">) {
       : site.key === "errin"
         ? ({
             ...palette,
-            "--font-heading": "var(--font-errin-display), var(--font-inter), ui-sans-serif, system-ui, sans-serif",
+            "--font-heading": "var(--font-errin-display), ui-serif, Georgia, serif",
+            "--font-sans": "var(--font-errin-sans), var(--font-inter), ui-sans-serif, system-ui, sans-serif",
           } as CSSProperties)
         : palette;
 
   return (
     <html lang={locale} className={`${fontVars} antialiased`} style={style}>
-      <body className="flex min-h-dvh flex-col">
+      <body
+        className={`flex min-h-dvh flex-col ${site.key === "errin" ? "font-[family-name:var(--font-errin-sans,var(--font-inter))]" : ""}`}
+      >
         <SiteProvider siteKey={site.key}>
           <LocaleProvider locale={locale}>
             <SiteChrome>{children}</SiteChrome>
