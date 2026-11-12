@@ -1,11 +1,13 @@
 import { getSiteKey, type SiteKey } from "@/lib/site";
 import { dadSite } from "@/sites/dad";
+import { errinSite } from "@/sites/errin";
 import { roostSite } from "@/sites/roost";
 import type { SiteConfig, SitePalette } from "@/sites/types";
 
 const SITES: Record<SiteKey, SiteConfig> = {
   roost: roostSite,
   dad: dadSite,
+  errin: errinSite,
 };
 
 export function getSiteConfig(siteKey: SiteKey = getSiteKey()): SiteConfig {
@@ -49,5 +51,5 @@ export function sitePaletteStyle(colors: SitePalette): Record<string, string> {
   };
 }
 
-export { dadSite, roostSite };
+export { dadSite, errinSite, roostSite };
 export type { SiteConfig, SiteHero, SiteLogo, SitePalette } from "@/sites/types";

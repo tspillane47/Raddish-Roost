@@ -1,4 +1,4 @@
-export const SITE_KEYS = ["roost", "dad"] as const;
+export const SITE_KEYS = ["roost", "dad", "errin"] as const;
 
 export type SiteKey = (typeof SITE_KEYS)[number];
 
@@ -6,15 +6,17 @@ export const DEFAULT_SITE_KEY: SiteKey = "roost";
 
 export const ROOST_SITE_ID = "c1000000-0000-4000-8000-000000000001";
 export const DAD_SITE_ID = "c1000000-0000-4000-8000-000000000002";
+export const ERRIN_SITE_ID = "c1000000-0000-4000-8000-000000000003";
 
 export const SITE_IDS: Record<SiteKey, string> = {
   roost: ROOST_SITE_ID,
   dad: DAD_SITE_ID,
+  errin: ERRIN_SITE_ID,
 };
 
 export function parseSiteKey(value: string | null | undefined): SiteKey | null {
   const raw = value?.trim().toLowerCase();
-  if (raw === "roost" || raw === "dad") return raw;
+  if (raw === "roost" || raw === "dad" || raw === "errin") return raw;
   return null;
 }
 

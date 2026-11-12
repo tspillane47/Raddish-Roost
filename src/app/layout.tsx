@@ -1,6 +1,6 @@
 import type { CSSProperties } from "react";
 import type { Metadata, Viewport } from "next";
-import { Alfa_Slab_One, DM_Serif_Display, Inter, Special_Elite } from "next/font/google";
+import { Alfa_Slab_One, DM_Serif_Display, Inter, Monoton, Special_Elite } from "next/font/google";
 import { SiteChrome } from "@/components/layout/site-chrome";
 import { LocaleProvider } from "@/lib/i18n/locale-context";
 import { getLocale } from "@/lib/i18n/get-locale";
@@ -40,6 +40,15 @@ const dadTypewriter = Special_Elite({
   subsets: ["latin"],
   weight: "400",
   variable: "--font-dad-typewriter",
+  display: "swap",
+  adjustFontFallback: true,
+  preload: false,
+});
+
+const errinDisplay = Monoton({
+  subsets: ["latin"],
+  weight: "400",
+  variable: "--font-errin-display",
   display: "swap",
   adjustFontFallback: true,
   preload: false,
@@ -90,7 +99,9 @@ export default async function RootLayout({ children }: LayoutProps<"/">) {
   const fontVars =
     site.key === "dad"
       ? `${inter.variable} ${display.variable} ${dadDisplay.variable} ${dadTypewriter.variable}`
-      : `${inter.variable} ${display.variable}`;
+      : site.key === "errin"
+        ? `${inter.variable} ${display.variable} ${errinDisplay.variable}`
+        : `${inter.variable} ${display.variable}`;
   const palette = sitePaletteStyle(site.colors) as CSSProperties;
   const style =
     site.key === "dad"
@@ -98,7 +109,12 @@ export default async function RootLayout({ children }: LayoutProps<"/">) {
           ...palette,
           "--font-heading": "var(--font-dad-display), ui-serif, Georgia, serif",
         } as CSSProperties)
-      : palette;
+      : site.key === "errin"
+        ? ({
+            ...palette,
+            "--font-heading": "var(--font-errin-display), var(--font-inter), ui-sans-serif, system-ui, sans-serif",
+          } as CSSProperties)
+        : palette;
 
   return (
     <html lang={locale} className={`${fontVars} antialiased`} style={style}>

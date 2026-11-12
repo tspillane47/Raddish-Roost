@@ -4,6 +4,7 @@ import { ComingSoon } from "@/components/homepage/coming-soon";
 import { WelcomeLodge } from "@/components/homepage/welcome-lodge";
 import { PropertyCardFallback, PropertyCardGrid } from "@/components/homepage/property-card";
 import { DadHome } from "@/components/dad/dad-home";
+import { ErrinHome } from "@/components/errin/errin-home";
 import { PreviewBanner } from "@/components/layout/preview-banner";
 import { Tx } from "@/lib/i18n/locale-context";
 import { orderLikeArtwork } from "@/lib/content/brand-art";
@@ -18,6 +19,9 @@ export default function HomePage() {
         <DadHomeSlot />
       </Suspense>
     );
+  }
+  if (site.key === "errin") {
+    return <ErrinHome site={site} />;
   }
 
   return (

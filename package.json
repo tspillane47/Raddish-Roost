@@ -6,6 +6,7 @@
     "dev": "next dev",
     "dev:roost": "SITE_KEY=roost next dev",
     "dev:dad": "SITE_KEY=dad next dev",
+    "dev:errin": "SITE_KEY=errin next dev",
     "build": "next build",
     "start": "next start",
     "lint": "eslint",

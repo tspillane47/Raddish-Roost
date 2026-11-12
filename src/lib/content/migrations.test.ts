@@ -995,6 +995,10 @@ describe("multi-site migrations", () => {
     path.join(root, "supabase/migrations/20261103120100_property_recommendation_voice.sql"),
     "utf8",
   );
+  const errinSite = readFileSync(
+    path.join(root, "supabase/migrations/20261112000000_errin_site.sql"),
+    "utf8",
+  );
 
   it("adds sites, scopes properties and settings to roost, and keeps slug uniqueness global", () => {
     expect(sites).toContain("create table if not exists public.sites");
@@ -1013,6 +1017,22 @@ describe("multi-site migrations", () => {
     expect(sites).not.toMatch(/drop table/i);
     expect(sites).not.toContain("properties_slug_unique");
     expect(sites).not.toContain("—");
+  });
+
+  it("adds the errin site without touching roost or dad properties", () => {
+    expect(errinSite).toContain("'errin'");
+    expect(errinSite).toContain("Errin''s Digs");
+    expect(errinSite).toContain("c1000000-0000-4000-8000-000000000003");
+    expect(errinSite).toContain("allow_indexing");
+    expect(errinSite).toContain("'false'::jsonb");
+    expect(errinSite).toContain("brand_name");
+    expect(errinSite).toContain("active_seasons");
+    expect(errinSite).toContain("public_site_url");
+    expect(errinSite).toContain("s.key = 'errin'");
+    expect(errinSite).not.toContain("insert into public.properties");
+    expect(errinSite).not.toContain("raddish-roost");
+    expect(errinSite).not.toContain("tennisplace-a35");
+    expect(errinSite).not.toContain("—");
   });
 
   it("copies host tips onto property links and preserves tip translations", () => {

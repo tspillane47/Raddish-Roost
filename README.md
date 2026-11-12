@@ -10,11 +10,12 @@ Indexing is off. Search engines are asked not to crawl the site (`src/app/robots
 npm run dev
 npm run dev:roost
 npm run dev:dad
+npm run dev:errin
 npm test
 npm run build
 ```
 
-`npm run dev` and `npm run dev:roost` serve the Vermont Roost Collection (default `SITE_KEY=roost`). `npm run dev:dad` serves Dad's placeholder site from the same codebase.
+`npm run dev` and `npm run dev:roost` serve the Vermont Roost Collection (default `SITE_KEY=roost`). `npm run dev:dad` serves The Getaway Club. `npm run dev:errin` serves Errin's Digs.
 
 ## Environment
 
@@ -26,7 +27,7 @@ cp .env.example .env.local
 
 `NEXT_PUBLIC_SUPABASE_URL` and `NEXT_PUBLIC_SUPABASE_ANON_KEY` come from Supabase → Project Settings → API. Use the anon public key. Do not put the service role key in this app.
 
-`SITE_KEY` chooses which branded site this process serves. Use `roost` (the default when unset) or `dad`. Both sites share one Supabase project; each deployment only shows that site's properties. Per-site names, hero art, welcome band, logos, colors, icons, and SEO copy live in `src/sites/roost.ts` and `src/sites/dad.ts`.
+`SITE_KEY` chooses which branded site this process serves. Use `roost` (the default when unset), `dad`, or `errin`. All sites share one Supabase project; each deployment only shows that site's properties. Per-site names, hero art, welcome band, logos, colors, icons, and SEO copy live in `src/sites/roost.ts`, `src/sites/dad.ts`, and `src/sites/errin.ts`.
 
 Until those values are set, the roost site shows a labeled preview of the three properties. After they are set, pages read published rows from Supabase. Restart the dev server after changing `.env.local`.
 

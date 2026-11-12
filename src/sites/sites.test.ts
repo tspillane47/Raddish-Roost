@@ -2,9 +2,11 @@ import { existsSync } from "node:fs";
 import path from "node:path";
 import { describe, expect, it } from "vitest";
 import { dadSite } from "@/sites/dad";
+import { errinSite } from "@/sites/errin";
 import { DAD_GETAWAY_HERO, DAD_GETAWAY_HERO_FOCUS } from "@/sites/dad-hero";
 import { getSiteConfig, roostSite } from "@/sites";
 import { sectionLabel, siteLabel } from "@/sites/labels";
+import { errinHeroFileExists } from "@/sites/resolve-errin-hero";
 
 describe("site configs", () => {
   it("keeps the roost brand assets and name unchanged", () => {
@@ -69,9 +71,31 @@ describe("site configs", () => {
     expect(dadSite.name).toBe("The Getaway Club");
   });
 
+  it("matches the Errin's Digs apres-ski placeholder brand", () => {
+    expect(errinSite.key).toBe("errin");
+    expect(errinSite.name).toBe("Errin's Digs");
+    expect(errinSite.tagline).toBe("Ski hard. Apres harder.");
+    expect(errinSite.comingSoonTitle).toContain("Grab your shades");
+    expect(errinSite.comingSoonBody).toContain("Three cozy hideaways");
+    expect(errinSite.artworkOrder).toEqual([]);
+    expect(errinSite.colors.terracotta).toBe("#FF2D95");
+    expect(errinSite.colors.sage).toBe("#00E5C0");
+    expect(errinSite.colors.forest).toBe("#6B2D8B");
+    expect(errinSite.colors.mustard).toBe("#FFE566");
+    expect(errinSite.hero.src).toBe("/sites/errin/hero.webp");
+    expect(errinHeroFileExists(errinSite.hero)).toBe(false);
+    expect(existsSync(path.join(process.cwd(), "public/sites/errin/favicon.png"))).toBe(true);
+    expect(existsSync(path.join(process.cwd(), "public/sites/errin/icon-512.png"))).toBe(true);
+    expect(JSON.stringify(errinSite)).not.toContain("—");
+    expect(JSON.stringify(errinSite)).not.toContain("The Getaway Club");
+    expect(JSON.stringify(errinSite)).not.toContain("Vermont Roost");
+  });
+
   it("resolves the active site from SITE_KEY", () => {
     expect(getSiteConfig("roost").key).toBe("roost");
     expect(getSiteConfig("dad").key).toBe("dad");
     expect(getSiteConfig("dad").name).toBe("The Getaway Club");
+    expect(getSiteConfig("errin").key).toBe("errin");
+    expect(getSiteConfig("errin").name).toBe("Errin's Digs");
   });
 });
