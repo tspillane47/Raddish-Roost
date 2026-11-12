@@ -28,35 +28,38 @@ export function ErrinHome({
               preload
               fetchPriority="high"
               sizes="100vw"
-              className="block h-[min(68svh,36rem)] w-full object-cover object-[18%_42%] sm:object-[22%_44%] md:h-[min(62svh,34rem)] md:object-[26%_46%]"
+              // Keep sky at the top. Prefer a tall enough frame that object-cover crops
+              // horizontally (so the right bias can hide the tall house under centered type).
+              // Narrow phones crop from the sides, not the top.
+              className="block h-[min(56svh,26rem)] w-full object-cover object-[86%_0%] sm:h-[min(52svh,28rem)] sm:object-[82%_0%] md:h-[min(58svh,32rem)] md:object-[80%_0%]"
             />
-            {/* House sits left; darken the left so white type stays AA-readable. */}
+            {/* Soft top wash in the sky only; pale gray uses dark ink for AA. */}
             <div
-              className="pointer-events-none absolute inset-0 bg-[linear-gradient(95deg,rgb(14_14_14_/_0.72)_0%,rgb(20_20_20_/_0.42)_38%,transparent_72%)]"
+              className="pointer-events-none absolute inset-x-0 top-0 h-[38%] bg-[linear-gradient(180deg,rgb(250_249_246_/_0.7)_0%,rgb(250_249_246_/_0.3)_58%,transparent_100%)]"
               aria-hidden="true"
             />
-            <div className="pointer-events-none absolute inset-0">
-              <div className="mx-auto flex h-full w-full max-w-6xl items-end px-5 pb-10 sm:pb-12 md:items-center md:pb-0 md:pl-6 lg:pl-10">
-                <div className="max-w-[16rem] sm:max-w-[20rem] md:max-w-lg">
-                  <p className="text-[0.65rem] font-medium uppercase tracking-[0.28em] text-white md:text-[0.7rem]">
-                    <Tx k="errinHeroPlaces" />
-                  </p>
-                  <h1 className="mt-2 font-[family-name:var(--font-errin-display,var(--font-display))] text-[clamp(2.1rem,7.5vw,4.25rem)] leading-[0.95] tracking-tight text-white md:mt-3">
+            <div className="pointer-events-none absolute inset-x-0 top-0 z-10">
+              <div className="mx-auto flex w-full max-w-6xl justify-center px-5 pt-2.5 sm:pt-3 md:pt-4">
+                <div className="max-w-[16rem] text-center sm:max-w-[20rem] md:max-w-lg">
+                  <h1 className="font-[family-name:var(--font-errin-display,var(--font-display))] text-[clamp(1.5rem,3.4vw,2.25rem)] leading-[0.95] tracking-tight text-[var(--charcoal)]">
                     {site.name}
                   </h1>
+                  <p className="mt-1 text-[0.55rem] font-medium uppercase tracking-[0.22em] text-[var(--muted-foreground)] sm:mt-1.5 sm:text-[0.6rem] md:text-[0.65rem]">
+                    <Tx k="errinHeroPlaces" />
+                  </p>
                 </div>
               </div>
             </div>
           </>
         ) : (
-          <div className="flex h-[min(62svh,34rem)] w-full items-end bg-[var(--beige)] px-5 pb-12 md:pb-16">
-            <div className="mx-auto w-full max-w-6xl">
-              <p className="text-[0.7rem] font-medium uppercase tracking-[0.28em] text-[var(--muted-foreground)]">
-                <Tx k="errinHeroPlaces" />
-              </p>
-              <h1 className="mt-4 max-w-3xl font-[family-name:var(--font-errin-display,var(--font-display))] text-[clamp(2.75rem,8vw,5.5rem)] leading-[0.95] tracking-tight text-[var(--charcoal)]">
+          <div className="flex h-[min(62svh,34rem)] w-full items-start justify-center bg-[var(--beige)] px-5 pt-10 md:pt-14">
+            <div className="w-full max-w-3xl text-center">
+              <h1 className="font-[family-name:var(--font-errin-display,var(--font-display))] text-[clamp(2.75rem,8vw,5.5rem)] leading-[0.95] tracking-tight text-[var(--charcoal)]">
                 {site.name}
               </h1>
+              <p className="mt-3 text-[0.7rem] font-medium uppercase tracking-[0.28em] text-[var(--muted-foreground)]">
+                <Tx k="errinHeroPlaces" />
+              </p>
             </div>
           </div>
         )}
