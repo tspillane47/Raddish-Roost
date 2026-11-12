@@ -168,7 +168,6 @@ do $check$
 declare
   vrbo_count integer;
   expedia_count integer;
-  direct_count integer;
 begin
   select count(*) into vrbo_count
   from public.booking_links bl
@@ -192,17 +191,6 @@ begin
 
   if expedia_count <> 3 then
     raise exception 'Expected 3 errin Expedia booking links, found %.', expedia_count;
-  end if;
-
-  select count(*) into direct_count
-  from public.booking_links bl
-  join public.properties p on p.id = bl.property_id
-  join public.sites s on s.id = p.site_id
-  where s.key = 'errin'
-    and bl.channel = 'direct';
-
-  if direct_count <> 0 then
-    raise exception 'Errin should not have direct booking links yet, found %.', direct_count;
   end if;
 end
 $check$;

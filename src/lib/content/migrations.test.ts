@@ -1015,6 +1015,10 @@ describe("multi-site migrations", () => {
     path.join(root, "supabase/migrations/20261112130000_errin_vrbo_expedia_booking.sql"),
     "utf8",
   );
+  const errinDirectHouse = readFileSync(
+    path.join(root, "supabase/migrations/20261112140000_errin_direct_and_house.sql"),
+    "utf8",
+  );
 
   it("adds sites, scopes properties and settings to roost, and keeps slug uniqueness global", () => {
     expect(sites).toContain("create table if not exists public.sites");
@@ -1157,7 +1161,6 @@ describe("multi-site migrations", () => {
     expect(errinVrboExpedia).toContain("sort_order = 20");
     expect(errinVrboExpedia).toContain("sort_order = 30");
     expect(errinVrboExpedia).toContain("sort_order = 10");
-    expect(errinVrboExpedia).toContain("should not have direct booking links yet");
     expect(errinVrboExpedia).toContain("channel in ('airbnb', 'vrbo', 'direct', 'expedia', 'other')");
     expect(errinVrboExpedia).not.toContain("'direct', 'Book Direct'");
     expect(errinVrboExpedia).not.toContain("Book Direct");
@@ -1165,6 +1168,38 @@ describe("multi-site migrations", () => {
     expect(errinVrboExpedia).not.toContain("tennisplace-a35");
     expect(errinVrboExpedia).not.toContain("cider-loft");
     expect(errinVrboExpedia).not.toContain("—");
+  });
+
+  it("adds errin direct booking and The House amenities with ES/FR", () => {
+    expect(errinDirectHouse).toContain("begin;");
+    expect(errinDirectHouse.trimEnd().endsWith("commit;")).toBe(true);
+    expect(errinDirectHouse).toContain("s.key = 'errin'");
+    expect(errinDirectHouse).toContain("channel = 'direct'");
+    expect(errinDirectHouse).toContain("sort_order = 0");
+    expect(errinDirectHouse).toContain(
+      "https://enjoyvtliving.directbyhost.com/property/quiet-cozy-2bdrm-walk-anywhere-pet-friendly",
+    );
+    expect(errinDirectHouse).toContain(
+      "https://enjoyvtliving.directbyhost.com/property/quiet-peaceful-2bdrm-walk-to-town-pet-friendly",
+    );
+    expect(errinDirectHouse).toContain(
+      "https://enjoyvtliving.directbyhost.com/property/cozy-maple-st-2-bedrm-apt-walk-anywhere-park-free",
+    );
+    expect(errinDirectHouse).toContain("insert into public.amenities");
+    expect(errinDirectHouse).toContain("In-unit washer and dryer");
+    expect(errinDirectHouse).toContain("Two large decks");
+    expect(errinDirectHouse).toContain("Coin-operated washer and dryer");
+    expect(errinDirectHouse).toContain("Window AC");
+    expect(errinDirectHouse).toContain("Pets welcome");
+    expect(errinDirectHouse).toContain("Keypad entry");
+    expect(errinDirectHouse).toContain("'es'");
+    expect(errinDirectHouse).toContain("'fr'");
+    expect(errinDirectHouse).toContain("Se admiten mascotas");
+    expect(errinDirectHouse).toContain("Animaux bienvenus");
+    expect(errinDirectHouse).not.toContain("raddish-roost");
+    expect(errinDirectHouse).not.toContain("tennisplace-a35");
+    expect(errinDirectHouse).not.toContain("cider-loft");
+    expect(errinDirectHouse).not.toContain("—");
   });
 
   it("copies host tips onto property links and preserves tip translations", () => {
