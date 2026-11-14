@@ -16,10 +16,12 @@ export function BookNow({
   propertySlug,
   bookings,
   accent,
+  dialogLabelId = "book-your-stay",
 }: {
   propertySlug: string;
   bookings: BookingLink[];
   accent: string;
+  dialogLabelId?: string;
 }) {
   const dialogRef = useRef<HTMLDialogElement>(null);
   const { t } = useTranslate();
@@ -52,7 +54,7 @@ export function BookNow({
       </button>
       <dialog
         ref={dialogRef}
-        aria-labelledby="book-your-stay"
+        aria-labelledby={dialogLabelId}
         className="m-0 h-dvh max-h-none w-full max-w-none overscroll-none border-0 bg-transparent p-0 backdrop:bg-charcoal/45"
         onClick={(event) => {
           const target = event.target;
@@ -65,7 +67,7 @@ export function BookNow({
         <div data-dismiss="true" className="flex h-full items-end justify-center md:items-center">
           <div className="relative max-h-[85dvh] w-full overflow-y-auto rounded-t-3xl bg-cream pr-[max(1.25rem,env(safe-area-inset-right))] pl-[max(1.25rem,env(safe-area-inset-left))] pt-6 text-left shadow-xl md:max-w-md md:rounded-3xl md:p-6">
             <div className="flex items-start justify-between gap-4">
-              <h2 id="book-your-stay" className="font-heading text-3xl text-charcoal">
+              <h2 id={dialogLabelId} className="font-heading text-3xl text-charcoal">
                 {stayAgain?.themed ?? t("bookYourStay")}
                 {stayAgain ? (
                   <span className="mt-1 block font-[family-name:var(--font-dad-typewriter,var(--font-inter))] text-sm font-normal tracking-wide text-muted-foreground">

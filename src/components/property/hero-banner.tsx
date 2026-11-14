@@ -13,10 +13,12 @@ export function HeroBanner({
   photos,
   gallery,
   weather = null,
+  frameClassName,
 }: {
   photos: PropertyPhoto[];
   gallery: PropertyPhoto[];
   weather?: WeatherSnapshot | null;
+  frameClassName?: string;
 }) {
   const scrollerRef = useRef<HTMLDivElement>(null);
   const frame = useRef(0);
@@ -61,7 +63,7 @@ export function HeroBanner({
 
   return (
     <>
-      <div className="relative h-[45svh] max-h-[480px] min-h-40">
+      <div className={frameClassName ?? "relative h-[45svh] max-h-[480px] min-h-40"}>
         <div
           ref={scrollerRef}
           aria-label={t("stayPhotos")}
@@ -97,7 +99,7 @@ export function HeroBanner({
         </div>
         <HeroWeather weather={weather} />
         {photos.length > 1 ? (
-          <div className="absolute inset-x-0 bottom-16 z-10 flex justify-center md:hidden">
+          <div className={`absolute inset-x-0 z-10 flex justify-center md:hidden ${frameClassName ? "bottom-1" : "bottom-16"}`}>
             {photos.map((photo, index) => (
               <button
                 key={photo.file}

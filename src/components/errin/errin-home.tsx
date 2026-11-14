@@ -20,8 +20,9 @@ export function ErrinHome({
       <section className="relative w-full overflow-hidden">
         {hasHero ? (
           <div
-            className="relative mx-auto w-full md:w-[var(--errin-hero-width)]"
+            className="relative mx-auto w-[var(--errin-hero-phone)] md:w-[var(--errin-hero-width)]"
             style={{
+              ["--errin-hero-phone" as string]: `min(100%, calc(40svh * ${site.hero.width} / ${site.hero.height}))`,
               ["--errin-hero-width" as string]: `min(100%, 1800px, calc(85svh * ${site.hero.width} / ${site.hero.height}))`,
             }}
           >
@@ -33,26 +34,26 @@ export function ErrinHome({
               preload
               fetchPriority="high"
               sizes="(max-width: 767px) 100vw, min(100vw, 1800px)"
-              // Phones stay a tall crop: house on the left, open sky for the title.
-              // md+ follows the photo ratio so the porch and stairs stay in frame.
+              // Under md the frame follows the photo, capped at 40svh, so the house stays whole.
+              // md+ keeps the wide frame with the title in the open sky.
               style={{ aspectRatio: `${site.hero.width} / ${site.hero.height}` }}
-              className="block h-[min(62svh,32rem)] w-full object-cover object-[42%_0%] sm:h-[min(58svh,30rem)] sm:object-[38%_0%] md:h-auto md:max-h-[85svh] md:w-full md:object-contain md:object-center"
+              className="block h-auto w-full max-h-[40svh] object-contain object-center md:max-h-[85svh]"
             />
             <div
-              className="pointer-events-none absolute inset-x-0 top-0 h-[46%] bg-[linear-gradient(180deg,rgb(250_249_246_/_0.55)_0%,rgb(250_249_246_/_0.18)_55%,transparent_100%)] md:h-[42%]"
+              className="pointer-events-none absolute inset-x-0 top-0 hidden h-[42%] bg-[linear-gradient(180deg,rgb(250_249_246_/_0.55)_0%,rgb(250_249_246_/_0.18)_55%,transparent_100%)] md:block"
               aria-hidden="true"
             />
-            <div className="pointer-events-none absolute top-[5%] right-[4%] left-[40%] z-10 text-center sm:left-[36%] md:top-[8%] md:right-[7%] md:left-[48%]">
-              <h1 className="font-[family-name:var(--font-errin-display,var(--font-display))] text-[clamp(1.35rem,4vw,2.35rem)] leading-[0.95] tracking-tight text-[var(--charcoal)]">
+            <div className="px-5 pt-3 pb-1 text-center md:pointer-events-none md:absolute md:top-[8%] md:right-[7%] md:left-[48%] md:z-10 md:px-0 md:pt-0 md:pb-0">
+              <h1 className="font-[family-name:var(--font-errin-display,var(--font-display))] text-[1.65rem] leading-[0.95] tracking-tight text-[var(--charcoal)] md:text-[clamp(1.35rem,4vw,2.35rem)]">
                 {site.name}
               </h1>
-              <p className="mt-1 text-[0.55rem] font-medium uppercase tracking-[0.16em] text-[var(--muted-foreground)] sm:mt-1.5 sm:text-[0.6rem] md:text-[0.68rem] md:tracking-[0.2em]">
+              <p className="mt-1 text-[0.62rem] font-medium uppercase tracking-[0.14em] text-[var(--muted-foreground)] md:text-[0.68rem] md:tracking-[0.2em]">
                 <Tx k="errinHeroPlaces" />
               </p>
             </div>
           </div>
         ) : (
-          <div className="flex h-[min(62svh,34rem)] w-full items-start justify-center bg-[var(--beige)] px-5 pt-10 md:pt-14">
+          <div className="flex w-full items-center justify-center bg-[var(--beige)] px-5 py-8 md:h-[min(62svh,34rem)] md:items-start md:pt-14">
             <div className="w-full max-w-3xl text-center">
               <h1 className="font-[family-name:var(--font-errin-display,var(--font-display))] text-[clamp(2.75rem,8vw,5.5rem)] leading-[0.95] tracking-tight text-[var(--charcoal)]">
                 {site.name}
@@ -65,38 +66,33 @@ export function ErrinHome({
         )}
       </section>
 
-      <div className="mx-auto w-full max-w-6xl px-5 pt-8 md:pt-10">
-        <p className="max-w-2xl text-base leading-7 text-[var(--muted-foreground)] md:text-lg">
-          {site.tagline}
-        </p>
-        <p className="mt-3 text-sm leading-6 tracking-wide text-[var(--muted-foreground)]">
-          <Tx k="errinHostedBy" />
-        </p>
-        <div className="mt-8 h-px w-full bg-[var(--beige)]" aria-hidden="true" />
-      </div>
-
       <section
         id="where-staying"
         aria-labelledby="where-staying-heading"
-        className="mx-auto w-full max-w-6xl scroll-mt-24 px-5 pb-20 pt-12 md:pb-28 md:pt-16"
+        className="mx-auto w-full max-w-6xl scroll-mt-24 px-5 pt-4 pb-2 md:pt-5 md:pb-4"
       >
-        <p className="text-[0.7rem] font-medium uppercase tracking-[0.28em] text-[var(--muted-foreground)]">
+        <p className="hidden text-[0.7rem] font-medium uppercase tracking-[0.28em] text-[var(--muted-foreground)] md:block">
           <Tx k="staysLabel" />
         </p>
         <h2
           id="where-staying-heading"
-          className="mt-3 font-[family-name:var(--font-errin-display,var(--font-display))] text-3xl tracking-tight text-[var(--charcoal)] md:text-4xl"
+          className="font-[family-name:var(--font-errin-display,var(--font-display))] text-[2.15rem] leading-[0.95] tracking-tight text-[var(--charcoal)] md:mt-2 md:text-4xl"
         >
           {site.collectionHeading}
         </h2>
-        <p className="mt-4 max-w-2xl text-base leading-7 text-[var(--muted-foreground)]">{site.collectionBody}</p>
+        <p className="mt-2 text-sm leading-5 text-[var(--muted-foreground)] md:mt-2 md:max-w-2xl md:text-base md:leading-7">
+          <span className="md:hidden">
+            <Tx k="errinTapGuide" />
+          </span>
+          <span className="hidden md:inline">{site.collectionBody}</span>
+        </p>
 
         {properties.length === 0 ? (
-          <p role="status" className="mt-12 border border-[var(--beige)] px-5 py-10 text-base leading-7">
+          <p role="status" className="mt-6 border border-[var(--beige)] px-5 py-8 text-base leading-7 md:mt-10">
             {site.comingSoonBody}
           </p>
         ) : (
-          <ul className="mt-12 grid list-none gap-12 p-0 md:grid-cols-3 md:gap-8">
+          <ul className="mt-3 grid list-none gap-2 p-0 md:mt-5 md:grid-cols-3 md:gap-8">
             {properties.map((property) => (
               <li key={property.slug} className="min-w-0">
                 <ErrinStayCard property={property} />
@@ -105,6 +101,16 @@ export function ErrinHome({
           </ul>
         )}
       </section>
+
+      <div className="mx-auto w-full max-w-6xl px-5 pt-5 pb-16 md:pt-8 md:pb-28">
+        <div className="h-px w-full bg-[var(--beige)]" aria-hidden="true" />
+        <p className="mt-6 max-w-2xl text-base leading-7 text-[var(--muted-foreground)] md:text-lg">
+          {site.tagline}
+        </p>
+        <p className="mt-3 text-sm leading-6 tracking-wide text-[var(--muted-foreground)]">
+          <Tx k="errinHostedBy" />
+        </p>
+      </div>
     </div>
   );
 }
@@ -115,47 +121,54 @@ function ErrinStayCard({ property }: { property: PropertySummary }) {
   const town = property.locality?.trim() || "Vermont";
 
   return (
-    <article className="group flex h-full min-w-0 flex-col">
+    <article className="group min-w-0">
       <Link
         href={`/${property.slug}`}
-        className="block overflow-hidden bg-[var(--beige)] focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[var(--forest)]"
+        className="flex min-h-16 items-center gap-3 border border-[var(--beige)] bg-[var(--cream)] px-2 py-2 focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[var(--forest)] md:h-full md:flex-col md:items-stretch md:gap-0 md:border-0 md:bg-transparent md:p-0"
       >
         {photo ? (
-          <Image
-            src={photo.src}
-            alt={photo.alt}
-            width={photo.width}
-            height={photo.height}
-            className="aspect-[4/3] w-full object-cover motion-safe:transition-transform motion-safe:duration-500 motion-safe:group-hover:scale-[1.02]"
-            sizes="(max-width: 768px) calc(100vw - 2.5rem), 22rem"
-          />
-        ) : (
-          <ErrinPhotoPlaceholder name={property.name} />
-        )}
-      </Link>
-      <div className="mt-5 flex min-w-0 flex-1 flex-col gap-2">
-        <h3 className="font-[family-name:var(--font-errin-display,var(--font-display))] text-2xl leading-snug tracking-tight text-[var(--charcoal)]">
-          <Link
-            href={`/${property.slug}`}
-            className="focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[var(--forest)]"
-          >
-            {property.name}
-          </Link>
-        </h3>
-        <p className="text-[0.7rem] font-medium uppercase tracking-[0.22em] text-[var(--muted-foreground)]">{town}</p>
-        {property.tagline ? (
-          <p className="text-base leading-7 text-[var(--muted-foreground)]">{property.tagline}</p>
-        ) : null}
-        <Link
-          href={`/${property.slug}`}
-          className="mt-auto inline-flex min-h-11 items-center gap-3 pt-2 text-sm tracking-wide text-[var(--forest)] focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[var(--forest)]"
-        >
-          <span className="border-b border-[var(--forest)]/40 pb-0.5">
-            <Tx k="exploreStay" />
+          <span className="relative size-14 shrink-0 overflow-hidden bg-[var(--beige)] md:aspect-[4/3] md:size-auto md:w-full">
+            <Image
+              src={photo.src}
+              alt=""
+              fill
+              sizes="(max-width: 767px) 56px, 22rem"
+              className="object-cover motion-safe:md:transition-transform motion-safe:md:duration-500 motion-safe:md:group-hover:scale-[1.02]"
+            />
           </span>
-          <span aria-hidden="true">→</span>
-        </Link>
-      </div>
+        ) : (
+          <>
+            <span
+              className="flex size-14 shrink-0 items-center justify-center bg-[var(--beige)] font-[family-name:var(--font-errin-display,var(--font-display))] text-lg text-[var(--charcoal)] md:hidden"
+              aria-hidden="true"
+            >
+              {property.name.slice(0, 1)}
+            </span>
+            <span className="hidden md:block">
+              <ErrinPhotoPlaceholder name={property.name} />
+            </span>
+          </>
+        )}
+        <span className="flex min-w-0 flex-1 items-center gap-3 md:mt-5 md:flex-col md:items-start md:gap-2">
+          <span className="min-w-0 flex-1">
+            <h3 className="font-[family-name:var(--font-errin-display,var(--font-display))] text-lg leading-tight tracking-tight text-[var(--charcoal)] md:text-2xl md:leading-snug">
+              {property.name}
+            </h3>
+            <p className="mt-0.5 text-[0.65rem] font-medium uppercase tracking-[0.16em] text-[var(--muted-foreground)] md:mt-2 md:text-[0.7rem] md:tracking-[0.22em]">
+              {town}
+            </p>
+            {property.tagline ? (
+              <p className="mt-2 hidden text-base leading-7 text-[var(--muted-foreground)] md:block">{property.tagline}</p>
+            ) : null}
+          </span>
+          <span className="inline-flex shrink-0 items-center gap-3 text-sm tracking-wide text-[var(--forest)] md:mt-auto md:min-h-11 md:pt-2">
+            <span className="hidden border-b border-[var(--forest)]/40 pb-0.5 md:inline">
+              <Tx k="exploreStay" />
+            </span>
+            <span aria-hidden="true">→</span>
+          </span>
+        </span>
+      </Link>
     </article>
   );
 }

@@ -6,11 +6,34 @@ import { useTranslate } from "@/lib/i18n/locale-context";
 export function LateCheckout({
   propertySlug,
   portalUrl,
+  compact = false,
 }: {
   propertySlug: string;
   portalUrl: string | null;
+  compact?: boolean;
 }) {
   const { t } = useTranslate();
+  if (compact) {
+    return (
+      <p className="text-sm leading-5 md:mt-3 md:rounded-xl md:bg-cream md:px-4 md:py-3 md:text-base md:leading-7">
+        {portalUrl ? (
+          <a
+            href={portalUrl}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="font-medium text-forest underline-offset-4 hover:underline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-forest"
+            onClick={() => trackLateCheckoutClick(propertySlug)}
+          >
+            <span className="md:hidden">{t("lateCheckoutShort")}</span>
+            <span className="hidden md:inline">{t("requestLateCheckout")}</span>
+          </a>
+        ) : (
+          <span className="md:hidden">{t("lateCheckoutShort")}</span>
+        )}
+        {portalUrl ? <span className="hidden md:inline"> {t("lateCheckoutText")}</span> : <span className="hidden md:inline">{t("lateCheckoutText")}</span>}
+      </p>
+    );
+  }
   return (
     <div className="mt-3 rounded-xl bg-cream px-4 py-3">
       <p className="font-heading text-xl text-charcoal">{t("lateCheckoutTitle")}</p>

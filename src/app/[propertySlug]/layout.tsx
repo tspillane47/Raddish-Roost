@@ -3,6 +3,7 @@ import { PropertyDock } from "@/components/property/property-dock";
 import { PropertyTools } from "@/components/property/property-tools";
 import { getPropertyGuide } from "@/lib/data/properties";
 import { propertySlugSchema } from "@/lib/validation/slug";
+import { getSiteConfig } from "@/sites";
 
 export default function PropertyLayout({
   children,
@@ -32,9 +33,10 @@ async function PropertyFrame({
   if (!result.ok && result.error === "not_found") return children;
 
   const slug = result.ok ? result.property.slug : propertySlug;
+  const site = getSiteConfig();
   return (
     <>
-      <PropertyTools slug={slug} />
+      {site.key === "errin" ? null : <PropertyTools slug={slug} />}
       {children}
       <PropertyDock slug={slug} />
     </>

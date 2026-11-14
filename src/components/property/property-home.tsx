@@ -3,6 +3,7 @@ import Link from "next/link";
 import type { ReactNode } from "react";
 import { DuffelBagIcon, KeyholeIcon, VintageKeyIcon } from "@/components/dad/heist-icons";
 import { SectionThemedHeading } from "@/components/site/themed-heading";
+import { BookNow } from "@/components/property/book-now";
 import { Essentials } from "@/components/property/essentials";
 import { GoodToKnow } from "@/components/property/good-to-know";
 import { PropertyHero } from "@/components/property/property-hero";
@@ -40,6 +41,7 @@ export function PropertyHome({
 }) {
   const gallery = getPropertyPhotos(property.slug);
   const site = getSiteConfig();
+  const errin = site.key === "errin";
   const accent =
     brandLogo(property.slug)?.accent ?? (site.key === "roost" ? FOREST : site.colors.forest);
 
@@ -49,6 +51,19 @@ export function PropertyHome({
       <div className="mx-auto w-full max-w-6xl px-5">
         {site.key === "dad" ? <StayGlance propertySlug={property.slug} /> : null}
         {site.key === "dad" ? <GoodToKnow propertySlug={property.slug} /> : null}
+        {errin ? (
+          <div className="mt-4 md:mt-12">
+            <Essentials property={property} compact />
+            <div className="mt-4 flex justify-center md:hidden">
+              <BookNow
+                propertySlug={property.slug}
+                bookings={property.bookings}
+                accent={accent}
+                dialogLabelId="book-your-stay-phone"
+              />
+            </div>
+          </div>
+        ) : null}
         {property.welcomeMessage ? (
           <section className="mt-12" aria-labelledby="welcome-note">
             <h2 id="welcome-note" className="sr-only">
@@ -62,10 +77,16 @@ export function PropertyHome({
             <WeatherCard weather={weather} />
           </div>
         ) : null}
-        <div className="mt-12">
-          <Essentials property={property} />
-        </div>
-        <section id="guidebook" aria-labelledby="guidebook-heading" className="mt-16 scroll-mt-[var(--site-header)]">
+        {errin ? null : (
+          <div className="mt-12">
+            <Essentials property={property} />
+          </div>
+        )}
+        <section
+          id="guidebook"
+          aria-labelledby="guidebook-heading"
+          className={`${errin ? "mt-10 md:mt-16" : "mt-16"} scroll-mt-[var(--site-header)]`}
+        >
           <h2 id="guidebook-heading" className="font-heading text-3xl text-forest">
             <Tx k="guidebook" />
           </h2>

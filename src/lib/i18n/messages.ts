@@ -75,6 +75,7 @@ const en = {
   lateCheckoutTitle: "Want to stay a little longer?",
   lateCheckoutText:
     "You can request a late checkout through your guest portal. Requests depend on availability. To log in, enter the booker's last name or phone number.",
+  lateCheckoutShort: "Request a late checkout in your guest portal.",
   requestLateCheckout: "Request Late Checkout",
   checkoutChecklist: "Checkout checklist",
   reviewNote:
@@ -191,6 +192,7 @@ const en = {
   comingSoonWaterburyNote: "New hideouts coming to Waterbury in 2027.",
   errinHostedBy: "Hosted by Errin. Superhost. 8 years of hosting.",
   errinHeroPlaces: "Winooski  ·  Burlington  ·  Vermont",
+  errinTapGuide: "Tap your apartment for your guide.",
   staysLabel: "Stays",
   whatsIncluded: "What's Included",
   includedKayak: "Two-person kayak",
@@ -377,6 +379,7 @@ const es: Record<MessageKey, string> = {
   lateCheckoutTitle: "¿Quieres quedarte un poco más?",
   lateCheckoutText:
     "Puedes pedir una salida más tarde en tu portal de huésped. Depende de la disponibilidad. Para entrar, usa el apellido o el teléfono de quien reservó.",
+  lateCheckoutShort: "Pide una salida más tarde en tu portal de huésped.",
   requestLateCheckout: "Pedir salida más tarde",
   checkoutChecklist: "Lista de salida",
   reviewNote:
@@ -493,6 +496,7 @@ const es: Record<MessageKey, string> = {
   comingSoonWaterburyNote: "Nuevos refugios llegan a Waterbury en 2027.",
   errinHostedBy: "Anfitriona: Errin. Superhost. 8 años de experiencia.",
   errinHeroPlaces: "Winooski  ·  Burlington  ·  Vermont",
+  errinTapGuide: "Toca tu apartamento para ver tu guía.",
   staysLabel: "Estancias",
   whatsIncluded: "Qué incluye",
   includedKayak: "Kayak para dos",
@@ -679,6 +683,7 @@ const fr: Record<MessageKey, string> = {
   lateCheckoutTitle: "Vous voulez rester un peu plus longtemps ?",
   lateCheckoutText:
     "Vous pouvez demander un départ plus tard dans votre portail invité. Cela dépend des disponibilités. Pour vous connecter, entrez le nom de famille ou le téléphone de la personne qui a réservé.",
+  lateCheckoutShort: "Demandez un départ plus tard dans votre portail invité.",
   requestLateCheckout: "Demander un départ plus tard",
   checkoutChecklist: "Liste de départ",
   reviewNote:
@@ -796,6 +801,7 @@ const fr: Record<MessageKey, string> = {
   comingSoonWaterburyNote: "De nouvelles planques arrivent à Waterbury en 2027.",
   errinHostedBy: "Hébergé par Errin. Superhost. 8 ans d'expérience.",
   errinHeroPlaces: "Winooski  ·  Burlington  ·  Vermont",
+  errinTapGuide: "Touchez votre appartement pour ouvrir votre guide.",
   staysLabel: "Séjours",
   whatsIncluded: "Ce qui est inclus",
   includedKayak: "Kayak pour deux",

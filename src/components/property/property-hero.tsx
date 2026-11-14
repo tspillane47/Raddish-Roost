@@ -44,9 +44,24 @@ export function PropertyHero({
     <header>
       <div className="relative">
         {heroPhotos.length > 0 ? (
-          <HeroBanner photos={heroPhotos} gallery={photos} weather={weather} />
+          <HeroBanner
+            photos={heroPhotos}
+            gallery={photos}
+            weather={weather}
+            frameClassName={
+              site.key === "errin"
+                ? "relative h-[16svh] max-h-32 min-h-24 md:h-[45svh] md:max-h-[480px] md:min-h-40"
+                : undefined
+            }
+          />
         ) : remote ? (
-          <div className="relative h-[45svh] max-h-[480px] min-h-40 overflow-hidden">
+          <div
+            className={
+              site.key === "errin"
+                ? "relative h-[16svh] max-h-32 min-h-24 overflow-hidden md:h-[45svh] md:max-h-[480px] md:min-h-40"
+                : "relative h-[45svh] max-h-[480px] min-h-40 overflow-hidden"
+            }
+          >
             <Image
               src={remote.src}
               alt={remote.alt}
@@ -59,7 +74,7 @@ export function PropertyHero({
             />
           </div>
         ) : site.key === "errin" ? (
-          <div className="flex h-[45svh] max-h-[480px] min-h-40 items-end bg-[var(--beige)] px-5 pb-8">
+          <div className="flex h-[16svh] max-h-32 min-h-24 items-end bg-[var(--beige)] px-5 pb-6 md:h-[45svh] md:max-h-[480px] md:min-h-40 md:pb-8">
             <p className="mx-auto w-full max-w-6xl text-[0.7rem] font-medium uppercase tracking-[0.24em] text-[var(--muted-foreground)]">
               {t("photoSoon")}
             </p>
@@ -103,7 +118,7 @@ export function PropertyHero({
             </div>
           </div>
         ) : null}
-        <div className={`${logo ? "mt-5" : "mt-8"} text-center md:text-left`}>
+        <div className={`${logo ? "mt-5" : site.key === "errin" ? "mt-4 md:mt-8" : "mt-8"} text-center md:text-left`}>
           {sample ? (
             <p className="mb-3">
               <span className="rounded-full bg-beige px-2 py-0.5 text-xs font-medium tracking-wide text-forest">
@@ -111,12 +126,30 @@ export function PropertyHero({
               </span>
             </p>
           ) : null}
-          <h1 className="font-heading text-4xl leading-tight break-words text-charcoal md:text-5xl">{property.name}</h1>
+          <h1
+            className={`font-heading leading-tight break-words text-charcoal ${
+              site.key === "errin" ? "text-3xl md:text-5xl" : "text-4xl md:text-5xl"
+            }`}
+          >
+            {property.name}
+          </h1>
           {property.tagline ? (
-            <p className="mx-auto mt-3 max-w-2xl text-lg leading-8 text-forest md:mx-0">{property.tagline}</p>
+            <p
+              className={`mx-auto max-w-2xl text-forest md:mx-0 ${
+                site.key === "errin" ? "mt-2 text-base leading-6 md:mt-3 md:text-lg md:leading-8" : "mt-3 text-lg leading-8"
+              }`}
+            >
+              {property.tagline}
+            </p>
           ) : null}
           {site.key === "dad" ? <MinStayNote propertySlug={property.slug} /> : null}
-          <BookNow propertySlug={property.slug} bookings={property.bookings} accent={accent} />
+          {site.key === "errin" ? (
+            <div className="max-md:hidden">
+              <BookNow propertySlug={property.slug} bookings={property.bookings} accent={accent} />
+            </div>
+          ) : (
+            <BookNow propertySlug={property.slug} bookings={property.bookings} accent={accent} />
+          )}
         </div>
       </div>
     </header>
