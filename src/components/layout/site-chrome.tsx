@@ -1,6 +1,7 @@
 import { Suspense } from "react";
 import { connection } from "next/server";
 import { DadHeader } from "@/components/dad/dad-header";
+import { ErrinHeader } from "@/components/errin/errin-header";
 import { SiteFooter } from "@/components/layout/site-footer";
 import { SiteHeader } from "@/components/layout/site-header";
 import { t } from "@/lib/i18n/translate";
@@ -13,6 +14,8 @@ export function SiteChrome({ children }: { children: React.ReactNode }) {
   const headerFallback =
     site.key === "dad" && site.nav && site.bookCta ? (
       <DadHeader brandName={site.name} shortName={site.shortName} nav={site.nav} bookCta={site.bookCta} />
+    ) : site.key === "errin" ? (
+      <ErrinHeader brandName={site.name} />
     ) : (
       <SiteHeader brandName={site.name} />
     );
@@ -62,6 +65,7 @@ async function HeaderSlot() {
       <DadHeader brandName={brandName} shortName={site.shortName} nav={site.nav} bookCta={site.bookCta} />
     );
   }
+  if (site.key === "errin") return <ErrinHeader brandName={brandName} />;
   return <SiteHeader brandName={brandName} />;
 }
 

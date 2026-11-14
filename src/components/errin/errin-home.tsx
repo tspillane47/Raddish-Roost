@@ -19,7 +19,12 @@ export function ErrinHome({
     <div className="bg-[var(--cream)] text-[var(--charcoal)]">
       <section className="relative w-full overflow-hidden">
         {hasHero ? (
-          <>
+          <div
+            className="relative mx-auto w-full md:w-[var(--errin-hero-width)]"
+            style={{
+              ["--errin-hero-width" as string]: `min(100%, 1800px, calc(85svh * ${site.hero.width} / ${site.hero.height}))`,
+            }}
+          >
             <Image
               src={site.hero.src}
               alt={site.hero.alt}
@@ -27,30 +32,25 @@ export function ErrinHome({
               height={site.hero.height}
               preload
               fetchPriority="high"
-              sizes="100vw"
-              // Keep sky at the top. Prefer a tall enough frame that object-cover crops
-              // horizontally (so the right bias can hide the tall house under centered type).
-              // Narrow phones crop from the sides, not the top.
-              className="block h-[min(56svh,26rem)] w-full object-cover object-[86%_0%] sm:h-[min(52svh,28rem)] sm:object-[82%_0%] md:h-[min(58svh,32rem)] md:object-[80%_0%]"
+              sizes="(max-width: 767px) 100vw, min(100vw, 1800px)"
+              // Phones stay a tall crop: house on the left, open sky for the title.
+              // md+ follows the photo ratio so the porch and stairs stay in frame.
+              style={{ aspectRatio: `${site.hero.width} / ${site.hero.height}` }}
+              className="block h-[min(62svh,32rem)] w-full object-cover object-[42%_0%] sm:h-[min(58svh,30rem)] sm:object-[38%_0%] md:h-auto md:max-h-[85svh] md:w-full md:object-contain md:object-center"
             />
-            {/* Soft top wash in the sky only; pale gray uses dark ink for AA. */}
             <div
-              className="pointer-events-none absolute inset-x-0 top-0 h-[38%] bg-[linear-gradient(180deg,rgb(250_249_246_/_0.7)_0%,rgb(250_249_246_/_0.3)_58%,transparent_100%)]"
+              className="pointer-events-none absolute inset-x-0 top-0 h-[46%] bg-[linear-gradient(180deg,rgb(250_249_246_/_0.55)_0%,rgb(250_249_246_/_0.18)_55%,transparent_100%)] md:h-[42%]"
               aria-hidden="true"
             />
-            <div className="pointer-events-none absolute inset-x-0 top-0 z-10">
-              <div className="mx-auto flex w-full max-w-6xl justify-center px-5 pt-2.5 sm:pt-3 md:pt-4">
-                <div className="max-w-[16rem] text-center sm:max-w-[20rem] md:max-w-lg">
-                  <h1 className="font-[family-name:var(--font-errin-display,var(--font-display))] text-[clamp(1.5rem,3.4vw,2.25rem)] leading-[0.95] tracking-tight text-[var(--charcoal)]">
-                    {site.name}
-                  </h1>
-                  <p className="mt-1 text-[0.55rem] font-medium uppercase tracking-[0.22em] text-[var(--muted-foreground)] sm:mt-1.5 sm:text-[0.6rem] md:text-[0.65rem]">
-                    <Tx k="errinHeroPlaces" />
-                  </p>
-                </div>
-              </div>
+            <div className="pointer-events-none absolute top-[5%] right-[4%] left-[40%] z-10 text-center sm:left-[36%] md:top-[8%] md:right-[7%] md:left-[48%]">
+              <h1 className="font-[family-name:var(--font-errin-display,var(--font-display))] text-[clamp(1.35rem,4vw,2.35rem)] leading-[0.95] tracking-tight text-[var(--charcoal)]">
+                {site.name}
+              </h1>
+              <p className="mt-1 text-[0.55rem] font-medium uppercase tracking-[0.16em] text-[var(--muted-foreground)] sm:mt-1.5 sm:text-[0.6rem] md:text-[0.68rem] md:tracking-[0.2em]">
+                <Tx k="errinHeroPlaces" />
+              </p>
             </div>
-          </>
+          </div>
         ) : (
           <div className="flex h-[min(62svh,34rem)] w-full items-start justify-center bg-[var(--beige)] px-5 pt-10 md:pt-14">
             <div className="w-full max-w-3xl text-center">
