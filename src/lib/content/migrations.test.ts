@@ -1019,6 +1019,10 @@ describe("multi-site migrations", () => {
     path.join(root, "supabase/migrations/20261112140000_errin_direct_and_house.sql"),
     "utf8",
   );
+  const errinGuidebook = readFileSync(
+    path.join(root, "supabase/migrations/20261113180000_errin_guidebook_details.sql"),
+    "utf8",
+  );
 
   it("adds sites, scopes properties and settings to roost, and keeps slug uniqueness global", () => {
     expect(sites).toContain("create table if not exists public.sites");
@@ -1200,6 +1204,53 @@ describe("multi-site migrations", () => {
     expect(errinDirectHouse).not.toContain("tennisplace-a35");
     expect(errinDirectHouse).not.toContain("cider-loft");
     expect(errinDirectHouse).not.toContain("—");
+  });
+
+  it("fills errin check-in, parking, entry, and checkout without secrets", () => {
+    expect(errinGuidebook).toContain("begin;");
+    expect(errinGuidebook.trimEnd().endsWith("commit;")).toBe(true);
+    expect(errinGuidebook).toContain("s.key = 'errin'");
+    expect(errinGuidebook).toContain("mill-house");
+    expect(errinGuidebook).toContain("winooski-flat");
+    expect(errinGuidebook).toContain("maple-street-flat");
+    expect(errinGuidebook).toContain("check_in_time = '4:00 PM'");
+    expect(errinGuidebook).toContain("check_out_time = '10:00 AM'");
+    expect(errinGuidebook).toContain(
+      "https://stay.hospitable.com/e2832b80-e24c-4180-9b90-7073c53a6231",
+    );
+    expect(errinGuidebook).toContain("on the LEFT side only.");
+    expect(errinGuidebook).toContain("on the RIGHT side only.");
+    expect(errinGuidebook).toContain("shed marked #1");
+    expect(errinGuidebook).toContain("Apartment A is on the bottom level.");
+    expect(errinGuidebook).toContain("Apartment B is on the top level, up the stairs.");
+    expect(errinGuidebook).toContain("rounded front porch");
+    expect(errinGuidebook).toContain(
+      "Heads up: the kitchen light switch is right above your head as you walk in the door.",
+    );
+    expect(errinGuidebook).toContain("Wash any dirty dishes.");
+    expect(errinGuidebook).toContain("Lock the door.");
+    expect(errinGuidebook).toContain("That''s it, we''ll handle the rest.");
+    expect(errinGuidebook).toContain(
+      "If something is left behind and needs to be shipped, there is a $15 fee plus shipping costs.",
+    );
+    expect(errinGuidebook).toContain(
+      "Questions anytime? Message Errin through Airbnb or your booking platform.",
+    );
+    expect(errinGuidebook).toContain(
+      "Your address, door code, and Wi-Fi details are sent in your Airbnb or booking messages before arrival.",
+    );
+    expect(errinGuidebook).toContain("'es'");
+    expect(errinGuidebook).toContain("'fr'");
+    expect(errinGuidebook).toContain("lado IZQUIERDO");
+    expect(errinGuidebook).toContain("côté DROIT");
+    expect(errinGuidebook).toContain("house_rules");
+    expect(errinGuidebook).not.toContain("raddish-roost");
+    expect(errinGuidebook).not.toContain("cider-loft");
+    expect(errinGuidebook).not.toContain("tennisplace-a35");
+    expect(errinGuidebook).not.toContain("—");
+    expect(errinGuidebook).not.toContain("–");
+    expect(errinGuidebook).not.toMatch(/door code [0-9]/i);
+    expect(errinGuidebook).not.toMatch(/\b\d{1,5}\s+\w+\s+(street|st|road|rd|avenue|ave|lane|ln)\b/i);
   });
 
   it("copies host tips onto property links and preserves tip translations", () => {
