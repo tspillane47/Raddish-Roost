@@ -11,36 +11,39 @@ import type { PerfectDay, ThingToDo } from "@/lib/content/things-to-do";
 import { getGuideSection, getPropertyGuide } from "@/lib/data/properties";
 import { getPerfectDays, getThingsToDo } from "@/lib/data/things-to-do";
 import { getSiteConfig } from "@/sites";
+import { withSiteUrl } from "@/sites/site-url";
 
 type SectionParams = { params: Promise<{ propertySlug: string; sectionSlug: string }> };
 
 export async function generateMetadata({ params }: SectionParams): Promise<Metadata> {
   const { propertySlug, sectionSlug } = await params;
+  const site = getSiteConfig();
+  const path = `/${propertySlug}/guide/${sectionSlug}`;
   if (sectionSlug === "vermont-101") {
     const stay = await getPropertyGuide(propertySlug);
     if (stay.ok && stay.property.guestArea === "florida") {
-      return { title: "Not found", robots: { index: false, follow: false } };
+      return withSiteUrl(site, path, { title: "Not found", robots: { index: false, follow: false } });
     }
-    return {
+    return withSiteUrl(site, path, {
       title: stay.ok ? `Vermont 101 · ${stay.property.name}` : "Vermont 101",
       robots: { index: false, follow: false },
-    };
+    });
   }
   if (sectionSlug === "sanibel-101") {
     const stay = await getPropertyGuide(propertySlug);
     if (stay.ok && stay.property.guestArea !== "florida") {
-      return { title: "Not found", robots: { index: false, follow: false } };
+      return withSiteUrl(site, path, { title: "Not found", robots: { index: false, follow: false } });
     }
-    return {
+    return withSiteUrl(site, path, {
       title: stay.ok ? `Sanibel 101 · ${stay.property.name}` : "Sanibel 101",
       robots: { index: false, follow: false },
-    };
+    });
   }
   const result = await getGuideSection(propertySlug, sectionSlug);
-  return {
+  return withSiteUrl(site, path, {
     title: result.ok ? `${result.section.title} · ${result.section.propertyName}` : "Guide",
     robots: { index: false, follow: false },
-  };
+  });
 }
 
 export default function GuideSectionPage({ params }: SectionParams) {

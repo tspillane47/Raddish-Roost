@@ -9,7 +9,7 @@ export const errinSite: SiteConfig = {
   name: "Queen City Stays",
   shortName: "Queen City Stays",
   tagline: "Modern stays in Burlington and Winooski.",
-  domain: null,
+  domain: "https://queencitystaysvt.com",
   seoDescription:
     "Queen City Stays. Modern stays in Burlington and Winooski. Hosted by Errin.",
   footerBlurb: "Modern stays in Burlington and Winooski. Hosted by Errin.",

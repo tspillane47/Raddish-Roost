@@ -8,6 +8,8 @@ import type { PropertyGuide } from "@/types/content";
 import { weatherPreviewScene, withWeatherPreview, type WeatherSnapshot } from "@/lib/content/weather";
 import { getPropertyGuide } from "@/lib/data/properties";
 import { getStayWeather } from "@/lib/weather/forecast";
+import { getSiteConfig } from "@/sites";
+import { withSiteUrl } from "@/sites/site-url";
 
 type PropertyParams = {
   params: Promise<{ propertySlug: string }>;
@@ -17,10 +19,11 @@ type PropertyParams = {
 export async function generateMetadata({ params }: PropertyParams): Promise<Metadata> {
   const { propertySlug } = await params;
   const result = await getPropertyGuide(propertySlug);
-  return {
+  return withSiteUrl(getSiteConfig(), `/${propertySlug}`, {
     title: result.ok ? result.property.name : "Stay",
+    description: result.ok ? result.property.tagline ?? undefined : undefined,
     robots: { index: false, follow: false },
-  };
+  });
 }
 
 export default function PropertyPage({ params, searchParams }: PropertyParams) {

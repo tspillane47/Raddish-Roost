@@ -5,6 +5,7 @@ import { dadSite } from "@/sites/dad";
 import { errinSite } from "@/sites/errin";
 import { DAD_GETAWAY_HERO, DAD_GETAWAY_HERO_FOCUS } from "@/sites/dad-hero";
 import { getSiteConfig, roostSite } from "@/sites";
+import { siteOrigin, siteUrl } from "@/sites/site-url";
 import { sectionLabel, siteLabel } from "@/sites/labels";
 import { errinHeroFileExists } from "@/sites/resolve-errin-hero";
 
@@ -87,6 +88,11 @@ describe("site configs", () => {
     expect(errinSite.colors.forest).toBe("#2C4555");
     expect(errinSite.colors.muted).toBe("#4A4A4A");
     expect(errinSite.colors.terracotta).toBe("#A5543E");
+    expect(errinSite.domain).toBe("https://queencitystaysvt.com");
+    expect(siteOrigin(errinSite)).toBe("https://queencitystaysvt.com");
+    expect(siteUrl(errinSite, "/winooski-flat")).toBe("https://queencitystaysvt.com/winooski-flat");
+    expect(siteOrigin(roostSite)).toBeNull();
+    expect(siteOrigin(dadSite)).toBeNull();
     expect(errinSite.hero.src).toBe("/sites/errin/hero.webp");
     expect(errinSite.hero.width).toBe(2172);
     expect(errinSite.hero.height).toBe(724);

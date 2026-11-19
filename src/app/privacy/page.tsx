@@ -2,10 +2,12 @@ import type { Metadata } from "next";
 import { Tx } from "@/lib/i18n/locale-context";
 import { getLocale } from "@/lib/i18n/get-locale";
 import { t } from "@/lib/i18n/translate";
+import { getSiteConfig } from "@/sites";
+import { withSiteUrl } from "@/sites/site-url";
 
 export async function generateMetadata(): Promise<Metadata> {
   const locale = await getLocale();
-  return { title: t(locale, "privacy") };
+  return withSiteUrl(getSiteConfig(), "/privacy", { title: t(locale, "privacy") });
 }
 
 export default function PrivacyPage() {

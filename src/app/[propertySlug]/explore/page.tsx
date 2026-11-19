@@ -1,14 +1,17 @@
 import { Suspense } from "react";
 import type { Metadata } from "next";
 import { redirect } from "next/navigation";
+import { getSiteConfig } from "@/sites";
+import { withSiteUrl } from "@/sites/site-url";
 
 type ExploreParams = { params: Promise<{ propertySlug: string }> };
 
-export async function generateMetadata(): Promise<Metadata> {
-  return {
+export async function generateMetadata({ params }: ExploreParams): Promise<Metadata> {
+  const { propertySlug } = await params;
+  return withSiteUrl(getSiteConfig(), `/${propertySlug}/guide/things-to-do`, {
     title: "Things to Do",
     robots: { index: false, follow: false },
-  };
+  });
 }
 
 export default function ExplorePage({ params }: ExploreParams) {

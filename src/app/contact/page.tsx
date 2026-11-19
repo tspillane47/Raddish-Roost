@@ -5,12 +5,13 @@ import { Tx } from "@/lib/i18n/locale-context";
 import { getLocale } from "@/lib/i18n/get-locale";
 import { t } from "@/lib/i18n/translate";
 import { getSiteConfig } from "@/sites";
+import { withSiteUrl } from "@/sites/site-url";
 
 export async function generateMetadata(): Promise<Metadata> {
   const site = getSiteConfig();
   if (site.key === "dad") return { title: "Not Found" };
   const locale = await getLocale();
-  return { title: t(locale, "contact") };
+  return withSiteUrl(site, "/contact", { title: t(locale, "contact") });
 }
 
 export default function ContactPage() {

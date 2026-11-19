@@ -12,6 +12,7 @@ import { SiteChrome } from "@/components/layout/site-chrome";
 import { LocaleProvider } from "@/lib/i18n/locale-context";
 import { getLocale } from "@/lib/i18n/get-locale";
 import { getSiteConfig, sitePaletteStyle } from "@/sites";
+import { withSiteUrl } from "@/sites/site-url";
 import { SiteProvider } from "@/sites/site-context";
 import "./globals.css";
 
@@ -71,7 +72,7 @@ const errinSans = Inter_Tight({
 
 export async function generateMetadata(): Promise<Metadata> {
   const site = getSiteConfig();
-  return {
+  return withSiteUrl(site, "/", {
     title: {
       default: site.name,
       template: `%s · ${site.name}`,
@@ -95,7 +96,7 @@ export async function generateMetadata(): Promise<Metadata> {
       ],
       apple: [{ url: site.icons.appleTouch }],
     },
-  };
+  });
 }
 
 export function generateViewport(): Viewport {
